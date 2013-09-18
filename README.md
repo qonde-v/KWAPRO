@@ -1,10 +1,9 @@
 
-
 # 1. What Is KWAPRO?
 
 KWAPRO is a package of software tools that is planned to facilitate users to collect, organize, share and, to use the knowledge efficiently. we decided to make it as an open-sourced software project and to receive any feedbacks and supports to make it more useful and powerful.  As one of the fundamental modules, the KWAPRO Question and Answer (KPQA) is released at present.
 
-#### Current version: 0.8.15
+#### Current version: 0.8.15 (Lunar)
 
 # 2. KPQA
 
@@ -41,5 +40,5 @@ Any comments and feedbacks from you are warmly appreciated, and please write to 
 
 # 6. Next version of KWAPRO
 
-Next version of KWAPRO will be more simple and asier to deploy with more smooth interactions.  Some planned improvements include deployment process optimization, mobile support, and more user-friendly interface, as well as RDF capabilities of the data.
+Next version of KWAPRO will be more simple and easier to deploy with more smooth interactions.  Some planned improvements include deployment process optimization, mobile support, and more user-friendly interface, as well as RDF capabilities of the data.
 
