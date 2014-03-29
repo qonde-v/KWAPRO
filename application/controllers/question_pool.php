@@ -49,7 +49,6 @@
 	function latest_question_load($uId)
 	{
 	   $data = $this->Question_process->get_latest_asked_question($uId,array('start'=>0,'end'=>9));
-
 	   $retStr = "";
 	   foreach($data as $item)
 	   {
