@@ -26,7 +26,7 @@
 			echo 0;
 		else{
 			$this->db->select('*');
-	        $this->db->where('uId',$user);
+	        $this->db->where('username',$user);
 	        $this->db->where('passwd',MD5($pwd));
 			$this->db->from('user');
 			$query = $this->db->get();
