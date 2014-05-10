@@ -37,13 +37,7 @@
 				$info["uid"] = $row->uId;
 				$info["email"] = $row->email;
 				$info["langCode"] = $row->langCode;
-				if($row->gender==1){
-					$info["gender"] = 'ÄÐ';
-				}elseif($row['gender']==0){
-					$info["gender"] = 'Å®';
-				}else{
-					$info["gender"] = '';
-				}
+				$info["gender"] = $row->gender;
 				$info["birthday"] = $row->birthday;
 			}
 			echo json_encode($info);
