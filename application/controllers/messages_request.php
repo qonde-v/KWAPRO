@@ -51,12 +51,13 @@
 		  $to_user_id = $post_arr['uId'];
 		  if($to_user_id != '')
 		  {
-		  	$data = array('from_uId'=>$from_user_id,'title'=>$post_arr['title'], 'content'=>str_replace("\n","<BR/>",$post_arr['content']),'to_uId'=>$to_user_id);
+		  	$data = array('from_uId'=>$from_user_id,'title'=>$post_arr['title'], 'content'=>str_replace("\n","<BR/>",$post_arr['content']),'to_uId'=>$to_user_id,
+			'type'=>$post_arr['type'],'related_id'=>$post_arr['related_id']);
 			$time = time();
 			$data['message_id'] = $time.'_'.$data['from_uId'].'_'.$data['to_uId'];
 			$data['time'] = date("Y-m-d H:i:s", $time);
-			$message_source['stId'] = ONLINE;
-			$message_source['sendPlace'] = '';
+			$data['stId'] = ONLINE;
+			$data['sendPlace'] = '';
 			  //print_r($data);
 			 $message_id = $this->Message_management->message_reply($data);
 			 //$event_id = $this->Db_event_operate->event_insert(array('nId'=>$node_id,'event_type'=>EVENT_TYPE_CONTENT));

@@ -1,6 +1,6 @@
 ﻿<?php
 
-$lang['register_page_title']        ='KwaPro 注册';
+$lang['register_page_title']        ='TIT 注册';
 
 $lang['register_title']             ='填写您的用户注册信息';
 $lang['register_username']          ='账号：';
@@ -31,7 +31,7 @@ $lang['invite_code']                ='邀请码';
 
 $lang['get_password_email_text']    ='<p>%s</p><p>您好，您的密码暂时被设置为<b>\'%s\'</b>，为了安全起见，请您尽快登录<a href="http://kwapro.com">http://kwapro.com</a>修改密码。</p>';
 $lang['get_password_email_subject'] ='取回密码';
-$lang['get_password_title']         ='KwaPro 取回密码';
+$lang['get_password_title']         ='TIT 取回密码';
 $lang['get_password_label']					='取回密码';
 $lang['get_password_username']      ='用户名:';
 $lang['get_password_email']         ='邮箱:';

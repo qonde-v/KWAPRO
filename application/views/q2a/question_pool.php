@@ -1,17 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8">
     <title><?php echo $question_pool_page_title;?></title>
     <meta name="description" content="">
     <meta name="author" content="">
+	<link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
     <link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" />
 	<link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
 	
     <style type="text/css">
       body {
-        padding-top: 50px;
+        padding-top: 0px;
       }
     </style>
     <!-- Le fav and touch icons -->
@@ -19,15 +20,7 @@
   </head>
 
   <body>
-
-    <div class="topbar">
-      <div class="topbar-inner">
-        <div class="container-fluid">
-          <a class="brand" href="#">Kwapro</a>
-          <?php include("header.php"); ?>
-        </div>
-      </div>
-    </div>
+  <?php include("header.php"); ?>
 
  <div id="main_area" class="container">
      <div class="row">
@@ -70,6 +63,10 @@
           </div>
         </div>
       </div>
+	  <form class="pull-left" action="<?php echo $base.'asking';?>">
+         <?php echo $header_search;?><input type="text" name="search" placeholder="<?php echo $header_search;?>" />
+      </form>
+	  <input type="hidden" value="<?php echo $base; ?>" id="header_base" />
   </div>  
    <div class="foot">
 	    <?php include("footer.php");?>

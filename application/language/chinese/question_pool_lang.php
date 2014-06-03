@@ -1,9 +1,9 @@
 <?php
 
-$lang['question_pool_page_title']               ='KwaPro 问题库';
-$lang['question_pool_tag_title']                ='KwaPro 标签相关问题';
+$lang['question_pool_page_title']               ='TIT 问题库';
+$lang['question_pool_tag_title']                ='TIT 标签相关问题';
 
-$lang['question_pool_head_label']				='kwapro 所有问题:';
+$lang['question_pool_head_label']				='TIT 所有问题:';
 
 $lang['question_pool_answer_num']               ='回答';
 $lang['question_pool_follow_num']               ='关注';

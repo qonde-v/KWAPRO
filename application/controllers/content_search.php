@@ -39,7 +39,7 @@
 	 
 	 //mashup data search
 	 function mashup_data_search()
-	 {
+	 {echo 11;
 	 	if($this->Auth->request_access_check())
 	 	{
 	 		$keyword = $this->input->get('q',TRUE);

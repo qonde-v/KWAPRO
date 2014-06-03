@@ -14,6 +14,7 @@
 		 $this->load->model('q2a/Right_nav_data');
          $this->load->model('q2a/Load_common_label');
          $this->load->model('q2a/Ip_location');
+		 $this->load->model('q2a/News_data');
 	 }
 
 	function index()

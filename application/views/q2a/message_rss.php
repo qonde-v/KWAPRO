@@ -53,7 +53,7 @@
 								<option value="0">------</option>
                             </select>-->
 							<button class="btn primary span2" id="filter_rss_msg" data-loading-text="<?php echo $messages_wait;?>"><?php echo $rss_message_filter_btn;?></button>
-                            <!--<input type="text" name="rss_search" placeholder="鎴栬�呯洿鎺ヨ緭鍏ュ叧閿瘝鎼滅储" class="pull-right span4"/>-->
+                            <!--<input type="text" name="rss_search" placeholder="或者直接输入关键词搜索" class="pull-right span4"/>-->
                         	</form>
 						
 							<?php if($cate_name != ''):?>

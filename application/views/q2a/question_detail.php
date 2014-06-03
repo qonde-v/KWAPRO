@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8">
     <title><?php echo $question_detail_page_title;?></title>
     <meta name="description" content="">
     <meta name="author" content="">
+	<link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
     <link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" />
 	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $base.'css/TextboxList.css'; ?>" />
@@ -13,25 +14,13 @@
 	<!--[if lt IE 9]>
 		<script src="<?php echo $base.'js/html5.js';?>"></script>
 	<![endif]-->
-    <style type="text/css">
-      body {
-        padding-top: 50px;
-      }
-    </style>
+
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="<?php echo $base.'img/kwapro.ico';?>">
   </head>
 
   <body>
-
-    <div class="topbar">
-      <div class="topbar-inner">
-        <div class="container-fluid">
-          <a class="brand" href="#">Kwapro</a>
-          <?php include("header.php"); ?>
-        </div>
-      </div>
-    </div>
+  <?php include("header.php"); ?>
 
  <div id="main_body" class="container">
      <div class="row">
@@ -42,6 +31,7 @@
             <!--/div-->
             
 	    <input type="hidden" id="base" value="<?php echo $base;?>"></input>
+		<input type="hidden" value="<?php echo $base; ?>" id="header_base" />  
 			
             <div class="span10">
 		 		<!--middle-->

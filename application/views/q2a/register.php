@@ -1,18 +1,16 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8">
     <title><?php echo $register_page_title;?></title>
     <meta name="description" content="">
     <meta name="author" content="">
+	<link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
     <link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" />
 	<link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
 	
     <style type="text/css">
-      body {
-        padding-top: 50px;
-      }
       div.color {
 	  	border-right-width:2px;
 	  	border-right-style:solid;
@@ -20,19 +18,12 @@
 	  }
     </style>
     <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="<?php echo $base.'img/kwapro.ico';?>">
   </head>
 
   <body>
 
-    <div class="topbar">
-      <div class="topbar-inner">
-        <div class="container-fluid">
-          <a class="brand" href="#">Kwapro</a>
-          <?php include("header.php"); ?>
-        </div>
-      </div>
-    </div>
+ <?php include("header.php"); ?>
+  
 
  <div id="" class="container">
          <div class="row">
@@ -78,33 +69,6 @@
 							    
     				</div>
     				 
-    				 <div class="span5 offset1">
-    				  <div class="row">
-    				   <ul class="media-grid">
-							    <li>
-							    	<a href="#">
-							    	  <img class="thumbnail span2" src="<?php echo $base.'img/kwapro.ico';?>" alt=""/>
-							    	  <strong class="label important">kwa</strong>fu
-							    	</a>
-							    	
-							    </li>
-							    <li>
-							    	<a href="#">
-							    	  <img class="thumbnail span2" src="<?php echo $base.'img/pro.ico';?>" alt=""/>
-							    	  <strong class="label success">pro</strong>metheus
-							    	</a>
-							    	
-							    </li>
-							 </ul> 
-					  </div>
-					  
-					  	<div class="row">
-					  		<hr/>
-					  		<strong>KWAPRO:</strong><?php echo $register_intro_text;?>
-    					</div>	
-    					
-    									  		 
-    				</div>
     				
     			</div>
     		</div>

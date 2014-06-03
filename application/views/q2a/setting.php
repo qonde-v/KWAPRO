@@ -95,7 +95,7 @@
     					   	<th><?php echo $profile_language_type;?></th>
     					   	<td>
 								<select id="Language">
-    					    		<option value="zh" <?php if($langCode=='zh'){echo "selected='selected'";}?>>ä¸­æ–‡</option>
+    					    		<option value="zh" <?php if($langCode=='zh'){echo "selected='selected'";}?>>ÖÐÎÄ</option>
                                     <option value="en" <?php if($langCode=='en'){echo "selected='selected'";}?>>English</option>
                                     <!--option value="de" <?php if($langCode=='de'){echo "selected='selected'";}?>>Deutsch</option>
                                     <option value="it" <?php if($langCode=='it'){echo "selected='selected'";}?>>Italiano</option-->
@@ -245,7 +245,7 @@
     					<div class="tab-pane" id="privacy">
     					  <table border="0" >
     					  	<tr>
-	    					   	<th class="span3"><?php echo $profile_private_gender;?>ï¼š</th>
+	    					   	<th class="span3"><?php echo $profile_private_gender;?>£º</th>
 	    					   	<td class="span1 offset1">
 									<input name="privacy_gender" id="gender_visible" type="radio" <?php if($privacy_data[GENDER] == 1){echo "checked";}?>/><?php echo $profile_public?>
 								</td>
@@ -254,7 +254,7 @@
 								</td>
     					   </tr> 					   
     					   <tr>
-	    					   	<th class="span3"><?php echo $profile_private_birthday;?>ï¼š</th>
+	    					   	<th class="span3"><?php echo $profile_private_birthday;?>£º</th>
 	    					   	<td class="span1 offset1">
 									<input name="privacy_birth" id="birthday_visible" type="radio" <?php if($privacy_data[BIRTHDAY] == 1){echo "checked";}?>/><?php echo $profile_public?>
 								</td>
@@ -263,7 +263,7 @@
 								</td>
     					   </tr>					   
     					   <tr>
-	    					   	<th class="span3"><?php echo $profile_private_location;?>ï¼š</th>
+	    					   	<th class="span3"><?php echo $profile_private_location;?>£º</th>
 	    					   	<td class="span1 offset1">
 									<input name="privacy_place" id="location_visible" type="radio" <?php if($privacy_data[CURRENT_LOCATION] == 1){echo "checked";}?>/><?php echo $profile_public?>
 								</td>
@@ -274,7 +274,7 @@
 						   
 						   <?php $account_type=array(EMAIL=>'Email',GTALK=>'Gtalk',QQ=>'QQ',SMS=>'SMS',MSN=>'MSN'); foreach($account_type as $key=>$item):?>
 			                <tr>
-			                    <th class="span3"><?php echo $item;?>ï¼š</th>
+			                    <th class="span3"><?php echo $item;?>£º</th>
 			                    <td class="span1 offset1">
 			                    	<input type="radio" name="<?php echo $item;?>_visible" id="<?php echo $item;?>_visible" value=1 <?php if($privacy_data[$key] == 1){echo "checked";}?>/><?php echo $profile_public?>
 								</td>
@@ -359,7 +359,7 @@
 				<tr>
 					<td>
 						<select size="9" id="country" name="" type="text" class="place_select">
-							<option id="zh">ä¸­å›½</option>
+							<option id="zh">ÖÐ¹ú</option>
 							<option id="en">Britain</option>
 							<option id="de">Germany</option>
 							<option id="it">Italy</option>

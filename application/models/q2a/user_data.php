@@ -464,6 +464,25 @@
 		return $result;
 	 }
 
+	 //get user's gender
+	 //return: user's gender
+	 function get_user_gender($uId)
+	 {
+	    //
+        $this->db->select('gender');
+        $this->db->where('uId',$uId);
+        $query = $this->db->get('user');
+        if($query->num_rows() > 0)
+        {
+            $row = $query->row();
+            return $row->gender;
+        }
+        else
+        {
+            return NULL;
+        }
+	 }
+
   }
 
 

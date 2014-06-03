@@ -64,7 +64,7 @@
 	    $this->form_validation->set_rules('password', 'lang:password', 'required|callback_pswd_length_check');
 	    $this->form_validation->set_rules('passwordc', 'lang:password_confirmation', 'required|callback_passwd_check');
 	    $this->form_validation->set_rules('email', 'lang:email', 'required|callback_email_valid_check|callback_email_used_check');
-	    $this->form_validation->set_rules('invite_code', 'lang:invite_code', 'required|callback_invite_code_check');
+	    //$this->form_validation->set_rules('invite_code', 'lang:invite_code', 'required|callback_invite_code_check');
 
 		return $this->form_validation->run();
 	}

@@ -1,35 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8">
     <title><?php echo $asking_page_title;?></title>
     <meta name="description" content="">
     <meta name="author" content="">
-    
+    <link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
     <link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/autocomplete.css';?>" />
 	
-    <style type="text/css">
-      body {
-        padding-top: 50px;
-      }
-    </style>
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="<?php echo $base.'img/kwapro.ico';?>">
   </head>
   
   <body>
-
-    <div class="topbar">
-      <div class="topbar-inner">
-        <div class="container-fluid">
-          <a class="brand" href="#">Kwapro</a>
-          <?php include("header.php"); ?>
-        </div>
-      </div>
-    </div>
-
+    <?php include("header.php"); ?>
 
  	<div class="container">
  		<div class="row">
@@ -141,7 +127,7 @@
  			</div>
  		</div>
  	</div>
- 	     
+ 	<input type="hidden" value="<?php echo $base; ?>" id="header_base" />     
     <div class="foot">
     	<?php include("footer.php"); ?>
 	</div><!--footer-->
