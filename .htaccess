@@ -1,5 +1,5 @@
 RewriteEngine on
-RewriteBase /tit/
+RewriteBase /TIT/
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond $1 !^(index\.php|images|robots\.txt|files)

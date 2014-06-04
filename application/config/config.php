@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= "http://localhost/KWAPRO/";
+$config['base_url']	= "http://localhost/TIT/";
 $config['base_photoupload_path']	= "upload/user_photo/";
 
 
