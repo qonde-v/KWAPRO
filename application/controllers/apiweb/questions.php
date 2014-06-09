@@ -33,27 +33,27 @@
 		$retStr["question_expire_time"]：
 		$retStr["question_stat_id"]：
 		$retStr["tags"]：标签
+		$retStr["answerdata"]：回答信息
 	 */ 
 	function index()
 	{
 		$uId ='';
 		$start = trim($_POST["start"]);
 		$end = trim($_POST["end"]);
+		$answernum = trim($_POST["answernum"]);
 	   $data = $this->Question_process->get_latest_asked_question($uId,array('start'=>$start,'end'=>$end));
 	   $retStr = array();
 	   foreach($data as $item)
 	   {
 	        $item['question_answer_num'] = $this->Question_data->get_answer_num($item['nId']);
-			if(iconv_strlen($item['text'],"UTF-8") > 30)
-			{
-		   		$item['text'] = iconv_substr($item['text'],0,30,"UTF-8")."...";
-			}
-			else
-			{
-				$item['text'] = iconv_substr($item['text'],0,30,"UTF-8");
+			$item['text'] = iconv_substr($item['text'],0,30,"UTF-8");
+			$answerdata = $this->Question_data->get_question_related_data($item['nId']);
+			if($answernum!=0){
+				$item['answerdata'] = array_slice($answerdata,0,$answernum,true);
+			}else{
+				$item['answerdata'] = $answerdata;
 			}
 			$retStr[]=$item;
-
 	   }
 	   echo json_encode($retStr);
 

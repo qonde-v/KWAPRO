@@ -121,7 +121,6 @@
 
 	   $uId = $this->session->userdata('uId');
 	   $data = $this->Question_process->get_user_answered($uId, $range);
-dump($data);
 	   $retStr = "";
 	   foreach($data as $item)
 	   {
