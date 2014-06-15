@@ -309,10 +309,11 @@
 	 //output: array of array('tag_name','tag_id','count')
 	 function get_hot_tags($data)
 	 {
-	    $num = isset($data['num']) ? isset($data['num']) : 10;
-		$lang_code = isset($data['lang_code']) ? isset($data['lang_code']) : 'zh';
+	    $num = isset($data['num']) ? $data['num'] : 10;
+	    $startnum = isset($data['startnum']) ? $data['startnum'] : 0;
+		$lang_code = isset($data['lang_code']) ? $data['lang_code'] : 'zh';
 
-		$sql = "SELECT tag_name,tag_id,count FROM tag WHERE langCode = '{$lang_code}' ORDER BY count DESC LIMIT {$num}";
+		$sql = "SELECT tag_name,tag_id,count FROM tag WHERE langCode = '{$lang_code}' ORDER BY count DESC LIMIT {$startnum},{$num}";
 		$query = $this->db->query($sql);
 
 		$tag_data = array();
