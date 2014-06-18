@@ -102,7 +102,8 @@
 	function login_session_process($data)
 	{
 	    $data['status'] = 'LOGIN';
-            $this->session->set_userdata($data);
+		$data['site']='WebSite';
+        $this->session->set_userdata($data);
 	}
 
 	function logout()

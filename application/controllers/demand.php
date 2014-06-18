@@ -206,7 +206,7 @@
 				$html .= '<td width="85%" height="40" valign="middle" align="left" ><a href="#" class="Red14">'. $i.'、'.$item['title'].'</a></td>';
 				$html .= '<td width="15%" height="40" valign="middle" align="right">';
 				$html .= '<div class="red_bt15" style="width:35px; text-align:center;float:left"><a href="'.$base.'demand/publish" class="White14">发布</a></div> &nbsp;&nbsp;&nbsp;&nbsp;';
-				$html .= '<div class="red_bt15" style="width:45px; text-align:center;float:right"><a href="'.$base.'design/practice" class="White14">去设计</a></div>';
+				$html .= '<div class="red_bt15" style="width:45px; text-align:center;float:right"><a href="'.$base.'design/practice?id='.$item['id'].'" class="White14">去设计</a></div>';
 				$html .= '</td>';
 				$html .= '</tr>';
 				$html .= '<tr>';

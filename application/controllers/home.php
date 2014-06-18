@@ -27,8 +27,10 @@
 
 	   if($this->Auth->login_check())
 	   {
-	     $user_id = $this->session->userdata('uId');
-		 $data['login'] = "login";
+		 if($this->session->userdata('site')=='WebSite'){
+			$user_id = $this->session->userdata('uId');
+			$data['login'] = "login";
+		 }
 	   }
 
 	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
@@ -39,6 +41,31 @@
 	   $data['question_view'] = $this->generate_latest_question_view($user_id);
 	   $data['left_part_view'] = $this->generate_left_part_view($language);
        $data['language'] = $language;
+
+
+	   //get news//////////
+	   $clothing_f = array();
+	   $clothing_f = $this->News_data->get_newslist(array('type'=>2), 1);
+	   foreach($clothing_f as $val){
+			$data['clothing_f'] = $val;
+	   }
+
+	   $clothing_list = array();
+	   $clothing_list = $this->News_data->get_newslist(array('type'=>2), 3,1);
+	   $data['clothing_list'] = $clothing_list;
+
+	   $sport_list = array();
+	   $sport_list = $this->News_data->get_newslist(array('type'=>1), 3);
+	   $data['sport_list'] = $sport_list;
+
+	   $sport_list = array();
+	   $sport_list = $this->News_data->get_newslist(array('type'=>3), 8);
+	   foreach($sport_list as $val){
+			$data['star_list'][] = $val['pricefilename'];
+	   }
+
+	   ///////////////////
+
        $label = $this->load_label($language);
        $data = array_merge($data,$label);
 	   $this->load->view('q2a/default',$data);

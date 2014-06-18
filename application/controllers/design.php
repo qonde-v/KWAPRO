@@ -10,6 +10,7 @@
 		 $this->load->helper('kpc_define');
 
 		 $this->load->database();
+		 $this->load->library('security');
 		 $this->load->library('session');
 		 $this->load->model('q2a/User_activity');
 		 $this->load->model('q2a/Auth');
@@ -17,6 +18,7 @@
 
          $this->load->model('q2a/User_profile');
 		$this->load->model('q2a/User_data');
+		$this->load->model('q2a/Photo_upload');
 		 $this->load->model('q2a/Right_nav_data');
 		 $this->load->model('q2a/Invite_data_process');
          $this->load->model('q2a/Load_common_label');
@@ -43,7 +45,6 @@
 
 	   $data = array('base'=>$base);
 	   $data['login'] = "login";
-
 
 	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
 	   $data = array_merge($right_data,$data);
@@ -76,6 +77,7 @@
 	{
 	   //$this->output->cache(1);
 	   $base = $this->config->item('base_url');
+	   $base_photoupload_path = $this->config->item('base_photoupload_path');
 
 	   //login permission check
 	   $this->Auth->permission_check("login/");
@@ -85,7 +87,7 @@
 
 	   $language = $this->Ip_location->get_language();
 
-	   $data = array('base'=>$base);
+	   $data = array('base'=>$base,'base_photoupload_path'=>$base_photoupload_path);
 	   $data['login'] = "login";
 		
 		//get demand
@@ -99,18 +101,35 @@
 	   $condition='';
 	   $arr_de=$data['demand'];
 	   if(!empty($arr_de)){
-		$condition =  'strength between '.($arr_de['strength']-1).' and '.($arr_de['strength']+1);
-		$condition .=  ' and sporttime between '.($arr_de['sporttime']-1).' and '.($arr_de['sporttime']+1);
-		$condition .=  ' and temperature between '.($arr_de['temperature']-1).' and '.($arr_de['temperature']+1);
-		$condition .=  ' and humidity between '.($arr_de['humidity']-1).' and '.($arr_de['humidity']+1);
-		$condition .=  ' and proficiency between '.($arr_de['proficiency']-1).' and '.($arr_de['proficiency']+1);
-	   }
-	   $result_s=array();
-	   $result_s=$this->Demand_management->get_similar_data($condition);
-	   foreach($result_s as $val){
-		   $data['similar']=$val;
-	   }
-print_r($data['similar']);
+			$condition=array('id'=>$arr_de['id'],'strength'=>$arr_de['strength'],'sporttime'=>$arr_de['sporttime'],'temperature'=>$arr_de['temperature'],'humidity'=>$arr_de['humidity'],'proficiency'=>$arr_de['proficiency']);
+		   $result_s=array();
+		   $result_s=$this->Demand_management->get_similar_data($condition);
+		   foreach($result_s as $val){
+			   $data['similar']=$val;
+		   }
+		}
+
+
+		//get design Pictures
+		$design_pic = array();
+		$this->db->select('*');
+		$query = $this->db->get('design_pic');
+		foreach($query->result_array() as $val)
+		{
+			array_push($design_pic,$val);
+		}		
+		$data['design_pic']=$design_pic;
+
+		//get fabrics
+		$fabric = array();
+		$this->db->select('*');
+		$this->db->limit(7,0);
+		$query = $this->db->get('fabrics');
+		foreach($query->result_array() as $val)
+		{
+			array_push($fabric,$val);
+		}		
+		$data['fabric']=$fabric;
 
 	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
 	   $data = array_merge($right_data,$data);
@@ -172,6 +191,7 @@ print_r($data['similar']);
 	{
 	   //$this->output->cache(1);
 	   $base = $this->config->item('base_url');
+	   $base_photoupload_path = $this->config->item('base_photoupload_path');
 
 	   //login permission check
 	   $this->Auth->permission_check("login/");
@@ -181,7 +201,7 @@ print_r($data['similar']);
 
 	   $language = $this->Ip_location->get_language();
 
-	   $data = array('base'=>$base);
+	   $data = array('base'=>$base,'base_photoupload_path'=>$base_photoupload_path);
 	   $data['login'] = "login";
 	   $result=array();
 	   
@@ -196,12 +216,123 @@ print_r($data['similar']);
 				array_push($result,$row);
 			}
 		}
-		
 	   foreach($result as $val){
 		   $data['design']=$val;
 	   }
+
+
+	    $this->db->select('*');
+		$this->db->where('design_id',$_GET['id']);
+		$query = $this->db->get('design_pic');
+		$result = array();
+		if($query->num_rows() > 0)
+		{
+			foreach($query->result_array() as $row)
+			{
+				array_push($result,$row);
+			}
+		}		
+		$data['design_pic']=$result;
+
+		$result_s=array();
+		$result_s=$this->Demand_management->get_fabric($data['design']['fabric']);
+		foreach($result_s as $val){
+		   $data['fabric']=$val;
+		}
+
+		$result_d=array();
+		$result_d=$this->Demand_management->get_user_demand($data['design']['demand_id']);
+		foreach($result_d as $val){
+			  $data['demand']=$val;
+		}
+
+
 		$this->load->view('q2a/design_detail',$data);
 	}
+
+
+	function save_pic()
+	 {
+	 	if($this->Auth->request_access_check())
+		{
+			$post_arr = array();
+			foreach($_POST as $key => $value)
+			{
+				$post_value = $this->input->post($key);
+				$post_arr[$key] = $post_value;
+			}
+			
+
+			$scale = 1;
+			$base = $this->config->item('base_url');
+			$base_photoupload_path = $this->config->item('base_photoupload_path');
+			$user_id = $this->session->userdata('uId');
+
+			$msg = $this->Photo_upload->user_photo_upload(array('user_id'=>$user_id, 'file_id'=>'design_pic'));
+			if(UPDATE_SUCCESS == $msg)
+			{
+				$file_name = $this->security->sanitize_filename($_FILES['design_pic']['name']);
+
+				 $img_src = $base.$base_photoupload_path.'temp/'.$file_name;
+
+				
+				/*$save_thumb_path = "./".$base_photoupload_path.$user_id."/".$post_arr['filename'];
+				$temp_thumb_path = "./".$base_photoupload_path."temp/".$post_arr['filename'];
+
+				$new_uid_folder = "./".$base_photoupload_path.$user_id."/";
+							if(!file_exists($new_uid_folder))
+							{
+									mkdir($new_uid_folder,0777);
+							}
+
+				if(file_exists($save_thumb_path))
+				{
+					unlink($save_thumb_path);
+				}
+				$this->Image_process->resizeThumbnailImage($save_thumb_path,$temp_thumb_path,$post_arr['w'],$post_arr['h'],$post_arr['x1'],$post_arr['y1'],$scale);
+				$this->Photo_upload->user_photo_save(array('uId'=>$user_id,'photo_name'=>$post_arr['filename'],'photo_type'=>1));
+				$msg = $this->Check_process->get_prompt_msg(array('pre'=>'profile','code'=> UPDATE_SUCCESS));
+				$user_photo_path = $base.$base_photoupload_path.$user_id."/".$post_arr['filename'];
+				echo $user_photo_path."##".$msg;*/
+				echo "<img id=\"original_img\" border=\"1\" style=\"display:none\" src=\"".$img_src."\"/>";
+			}
+			else
+			  {
+				echo $this->Check_process->get_prompt_msg(array('pre'=>'design','code'=> $msg));
+			  }
+		}
+	 }
+
+
+	function designok()
+	{
+		$post_arr = array();
+		$pic_arr = array();
+		$picdata = array();
+		foreach($_POST as $key=>$value)
+		{
+			$post_value = $this->input->post($key,TRUE);
+			if(substr($key,0,10)=='design_pic') $pic_arr[$key] = $post_value ? $post_value : 0;
+			else $post_arr[$key] = $post_value ? $post_value : 0;
+		}
+		$post_arr['title'] = str_replace("\n","<BR/>",$post_arr['title']);
+		$post_arr['createdate'] = date("Y-m-d H:i:s", time());
+		$userid=$this->session->userdata('uId');
+		$post_arr['uId'] = $userid;
+		$post_arr['username'] = $this->User_data->get_username(array('uId'=>$userid));
+
+		$design_id=$this->Demand_management->design_record_insert($post_arr);
+		$picdata['design_id']=$design_id;
+		$picdata['createdate'] = date("Y-m-d H:i:s", time());
+		foreach($pic_arr as $val)
+		{
+			$picdata['pic_url']=$val;
+			$this->Demand_management->designpic_record_insert($picdata);
+		}
+
+		echo '保存设计成功';
+	}
+
 
 }
 
