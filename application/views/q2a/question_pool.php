@@ -14,6 +14,11 @@
       body {
         padding-top: 0px;
       }
+	  table th, table td {
+		  padding: 5px 4px 9px;
+		  line-height: 18px;
+		  text-align: left;
+		}
     </style>
     <!-- Le fav and touch icons -->
     <link rel="shortcut icon" href="<?php echo $base.'img/kwapro.ico';?>">
@@ -43,22 +48,30 @@
 				            <th class="span6 blue"><?php echo $question_pool_q_desc;?></th>
 				          </tr>
 				        </thead>
-				        <tbody id="content">
+				        <tbody id="content" >
 				          	<?php echo $question_view;?> 
 				        </tbody>
 				      </table>
+					  <?php if($total_page > 1):?>	
 				      <div class="pagination">
 						    <ul id="<?php echo $total_page;?>">
 						    	<li class="first"><a href="#" id="pagination_1"><?php echo $page_split_first;?></a></li>
 						    	<li class="prev disabled"><a href="#" id="pagination_0">&larr; <?php echo $page_split_previous;?></a></li>
 								<li class="active"><a href="#" id="pagination_1">1</a></li>
+								<?php if($total_page > 10):?>
 								<?php for($i=2;$i<=10;$i++):?>
 									<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
 								<?php endfor;?>
+								<?php else:?>
+								<?php for($i=2;$i<=$total_page;$i++):?>
+									<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
+								<?php endfor;?>
+								<?php endif;?>
 								<li class="next"><a href="#" id="pagination_2"><?php echo $page_split_next;?> &rarr;</a></li>
 								<li class="last"><a href="#" id="<?php echo 'pagination_'.$total_page;?>"><?php echo $page_split_last;?></a></li>
 						    </ul>
 					  </div>
+					  <?php endif;?>
 		    </div>
           </div>
         </div>

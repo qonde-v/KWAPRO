@@ -29,7 +29,7 @@ $( "#strength" ).val($( "#slider" ).slider( "value" ) );
 
 
 $( "#slider1" ).slider({
-value:2,
+value:<?php echo $demand['sporttime'];?>,
 min: 0,
 max: 24,
 step: 0.5,

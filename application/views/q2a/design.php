@@ -106,6 +106,13 @@
 		<table width="100%" border="0" cellpadding="0" cellspacing="10" align="center" style="border:1px #f4f4f7 solid;">
           <tr>
             <td width="100%" height="40" valign="middle" align="left" colspan="2"><a href="<?php echo $base.'design/design_detail?id='.$item['id'];?>" class="Red14"><?php echo $i.'、'.$item['title']?></a></td>
+			<td width="15%" height="40" valign="middle" align="right">
+			<div class="anniu_g" style="width:60px; text-align:center;float:left">
+				<?php if($item['status']==0){?><a href="<?php echo $base.'design/publish';?>" class="White14">提交仿真</a><?}?>
+				<?php if($item['status']==1){?><a href="<?php echo $base.'design/publish';?>" class="White14">等待仿真</a><?}?>
+				<?php if($item['status']==2){?><a href="<?php echo $base.'design/publish';?>" class="White14">查看仿真</a><?}?>
+			</div>
+			</td>
           </tr>
 		  <tr>
             <td width="50%" height="40" valign="middle" align="left"><a href="#" class="DBlue"><?php echo $item['viewnum']?></a> 浏览 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="DBlue"><?php echo $item['messnum']?></a> 留言 &nbsp;&nbsp;&nbsp;&nbsp;</td>
