@@ -15,21 +15,28 @@
 
 	 //check if current user has been login
 	 //input: redirect url if user have not yet login
-	 function permission_check($redirect_url)
+	 function permission_check($redirect_url,$site="WebSite")
 	 {
-		 if(!$this->login_check())
+		 if(!$this->login_check($site))
 		 {
 		    redirect($redirect_url);
 		 }
 	 }
 
-	 function login_check()
+	 function login_check($site="WebSite")
 	 {
 	     $session_id = $this->session->userdata('session_id');
 		 $sess_data = $this->Session_process->session_userdata($session_id);
 		 if((isset($sess_data['status']) && ($sess_data['status'] == 'LOGIN')))
 		 {
-		    return TRUE;
+			 if($site!=$sess_data['site'])
+			 {
+				 return FALSE;
+			 }
+			 else
+			 {
+				 return TRUE;
+			 }
 		 }
 		 else
 		 {
