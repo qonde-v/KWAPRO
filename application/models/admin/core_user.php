@@ -73,16 +73,14 @@ class Core_user extends CI_Model {
 	 * 根据ID获取订单信息
 	 * @param $oid id
 	 */
-	function show_one($oid){
-		$this->db->where('oid', $oid);
+	function show_one($id){
+		$this->db->where('id', $id);
 		$query = $this->db->get(self::$TABLE);
 		$data = array(
-			'oid'=>'',
+			'id'=>'',
 			'pwd' => '',
 			'userCode' => '',
 			'username' => '',
-			'wxopenid' => '',
-			'pid' => '',
 			'nickname' => '',
 			'tel' => '',
 			'idcard' => '',
@@ -107,32 +105,11 @@ class Core_user extends CI_Model {
 		if ($query->num_rows() > 0){
 			foreach ($query->result() as $row){
 				$data = array(
-					'oid'=>$row->oid,
+					'id'=>$row->id,
 					'pwd' => $row->pwd,
 					'userCode' => $row->userCode,
-					'username' => $row->username,
-					'wxopenid' => $row->wxopenid,
-					'pid' => $row->pid,
 					'nickname' => $row->nickname,
-					'tel' => $row->tel,
-					'idcard' => $this->encrypt->decode($row->idcard),
-					'certification' => $row->certification,
-					'bankname' => $row->bankname,
-					'bankaccount' => $this->encrypt->decode($row->bankaccount),
-					'wxno' => $row->wxno,
-					'email' => $row->email,
-					'address' => $row->address,
 					'createTime' => $row->createTime == '0000-00-00 00:00:00' ? '' : date('Y-m-d H:i:s', strtotime($row->createTime)),
-					'lastSubscribe' => $row->lastSubscribe == '0000-00-00 00:00:00' ? '' : date('Y-m-d H:i:s', strtotime($row->lastSubscribe)),
-					'wxsex' => $row->wxsex,
-					'wxcity' => $row->wxcity,
-					'wxprovince' => $row->wxprovince,
-					'wxcountry' => $row->wxcountry,
-					'wxheadimgurl' => $row->wxheadimgurl,
-					'teamcode' => $row->teamcode,
-					'teamname' => $row->teamname,
-					'isBred' => $row->isBred,
-					'isSubscribe' => $row->isSubscribe,
 					'roleId' => $row->roleId
 				);
 			}
@@ -238,13 +215,8 @@ class Core_user extends CI_Model {
 	}
 	
 	function update($data, $id){
-		$data["idcard"] = $this->encrypt->encode($data["idcard"]);
-		$data["bankaccount"] = $this->encrypt->encode($data["bankaccount"]);
-		
-		$this->db->where('oid', $id);
+		$this->db->where('id', $id);
 		$this->db->update(self::$TABLE, $data);
-		$data["idcard"] = $this->encrypt->decode($data["idcard"]);
-		$data["bankaccount"] = $this->encrypt->decode($data["bankaccount"]);
 		return $data;
 	}
 	

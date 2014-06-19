@@ -3,8 +3,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>用户信息管理</title>
-<!-- <link href="<?php echo $base."css/style_1.css";?>" rel="stylesheet" type="text/css" id="cssfile"/> -->
-<link href="<?php echo $base."css/tag.css";?>" rel="stylesheet"	type="text/css" />
 <link href="<?php echo $base."css/bootstrap.css";?>" rel="stylesheet" type="text/css" id="cssfile"/>
 
 
@@ -13,7 +11,7 @@
 <body>
 
 <?include("page_head.php");?>
-<input type="hidden" id="uri" value="<?php echo $base."order/"?>"/>
+<input type="hidden" id="uri" value="<?php echo $base."admin/news"?>"/>
 	<div class="container-fluid">
 	<div class="row-fluid">
 		<?include(dirname(__FILE__).'/nav.php');?>
@@ -26,15 +24,15 @@
 				<form action="<?php echo $base.$uri?>" name="frm_table" method="post" id="frm_table">
 				<table id="companyInfo" width="100%">
 					<tr>
+						<th width="13%">用户名</th>
+						<td>
+							<input class="txtInput" type="hidden" name="userCode" value="<?=$info['userCode']?>"/>
+							<?=$info['userCode']?>
+						</td>
 						<th width="13%">昵称</th>
 						<td width="37%">
 							<input class="txtInput" type="hidden" name="nickname" value="<?=$info['nickname']?>"/>
 							<?=$info['nickname']?>
-						</td>
-						<th width="13%">工号</th>
-						<td>
-							<input class="txtInput" type="hidden" name="userCode" value="<?=$info['userCode']?>"/>
-							<?=$info['userCode']?>
 						</td>
 					</tr>
 					<tr>
@@ -54,9 +52,7 @@
 					<button type="submit"   id="submit1" class="btn btn-primary">保存</button>
 					
 				</div>
-				<input class="txtInput" type="hidden" name="idcard" value="<?=$info['idcard']?>"/>
-				<input class="txtInput" type="hidden" name="bankaccount" value="<?=$info['bankaccount']?>"/>
-				<input type="hidden" name="oid" value="<?=$info['oid']?>"/>
+				<input type="hidden" name="id" value="<?=$info['id']?>"/>
 				</form>
 				
 			</div>
