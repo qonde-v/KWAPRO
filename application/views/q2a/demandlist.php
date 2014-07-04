@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" />
 <link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
 <script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"></script>
-
+<script src="<?php echo $base.'js/kwapro_event.jquery.js';?>"></script>
 </head>
 <?php include("header_n.php"); ?>
 <!------------ 头部结束 ------------->
@@ -16,69 +16,52 @@
 
 
 <!------------ 内容开始 -------------> 
-
+<input type="hidden" id="base" value="<?php echo $base;?>"></input>
 
 <div id="main">
 <div id="main_nr">
 <div id="index_lx">
 <div class="red_bt16" style="width:150px; margin-bottom:10px;">需 &nbsp;&nbsp; 求</div>
-<div class="gray_q_bt14" style="width:825px; height:40px; margin-bottom:10px;">当前设计 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  需求：<b>5665   </b>        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        设计：<b>9889</b>
+<div class="gray_q_bt14" style="width:825px; height:40px; margin-bottom:10px;">当前设计 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  需求：<b><?=$inbox_num?>   </b>        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        设计：<b><?=$t_designnum?></b>
 
 </div>
-
+<span id="content">
+<?php foreach($demands as $item):?>
 <div class="index_l_xwnrx">
 	<div class="index_l_xwnr_tpx"><a href="#"><img src="<?php echo $base.'img/index_l001.png';?>" align="absmiddle" border="0" width="231" height="160"/></a></div>
 	<div class="index_l_xqnr">
-	<a href="#" class="Red16"><b>在桑拿天跑步的大人</b></a><br>
+	<a href="#" class="Red16"><b><?php echo $item['title'];?></b></a><br>
 	<div class="index_l_xqnr_w">
-参与设计： 8<br>
-发 布 人： 张三丰<br>
-发布时间：2014-03-25
+参与设计： <?=$item['designnum']?><br>
+发 布 人： <?=$item['username']?><br>
+发布时间：<?=$item['createdate']?>
 	</div>
-	<div class="index_l_xqnr_an"><div class="anniu_g" style="text-align:center;"><a href="#" class="White20"> 查看详情 </a></div></div>
+	<div class="index_l_xqnr_an"><div class="anniu_g" style="text-align:center;"><a href="<?php echo $base.'demand/demand_detail?id='.$item['id'];?>" class="White20"> 查看详情 </a></div></div>
 	</div>
 </div>
+<?php endforeach;?>
+</span>
 
-<div class="index_l_xwnrx">
-	<div class="index_l_xwnr_tpx"><a href="#"><img src="<?php echo $base.'img/index_l002.png';?>" align="absmiddle" border="0" width="231" height="160"/></a></div>
-	<div class="index_l_xqnr">
-	<a href="#" class="Red16"><b>在桑拿天跑步的大人</b></a><br>
-	<div class="index_l_xqnr_w">
-参与设计： 8<br>
-发 布 人： 张三丰<br>
-发布时间：2014-03-25
-	</div>
-	<div class="index_l_xqnr_an"><div class="anniu_g" style="text-align:center;"><a href="#" class="White20"> 查看详情 </a></div></div>
-	</div>
-</div>
-
-<div class="index_l_xwnrx">
-	<div class="index_l_xwnr_tpx"><a href="#"><img src="<?php echo $base.'img/index_l003.png';?>" align="absmiddle" border="0" width="231" height="160"/></a></div>
-	<div class="index_l_xqnr">
-	<a href="#" class="Red16"><b>在桑拿天跑步的大人</b></a><br>
-	<div class="index_l_xqnr_w">
-参与设计： 8<br>
-发 布 人： 张三丰<br>
-发布时间：2014-03-25
-	</div>
-	<div class="index_l_xqnr_an"><div class="anniu_g" style="text-align:center;"><a href="#" class="White20"> 查看详情 </a></div></div>
-	</div>
-</div>
-
-
-<div class="index_l_xwnrx">
-	<div class="index_l_xwnr_tpx"><a href="#"><img src="<?php echo $base.'img/index_l001.png';?>" align="absmiddle" border="0" width="231" height="160"/></a></div>
-	<div class="index_l_xqnr">
-	<a href="#" class="Red16"><b>在桑拿天跑步的大人</b></a><br>
-	<div class="index_l_xqnr_w">
-参与设计： 8<br>
-发 布 人： 张三丰<br>
-发布时间：2014-03-25
-	</div>
-	<div class="index_l_xqnr_an"><div class="anniu_g" style="text-align:center;"><a href="#" class="White20"> 查看详情 </a></div></div>
-	</div>
-</div>
-
+					<?php if($inbox_page_num > 1):?>	
+					  <div class="pagination" >
+						    <ul id="<?php echo $inbox_page_num;?>">
+						    	<li class="first"><a href="#" id="pagination_1">首页</a></li>
+						    	<li class="prev disabled"><a href="#" id="pagination_0">&larr; 上一页</a></li>
+								<li class="active"><a href="#" id="pagination_1">1</a></li>
+								<?php if($inbox_page_num > 10):?>
+								<?php for($i=2;$i<=10;$i++):?>
+									<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
+								<?php endfor;?>
+								<?php else:?>
+								<?php for($i=2;$i<=$inbox_page_num;$i++):?>
+									<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
+								<?php endfor;?>
+								<?php endif;?>
+								<li class="next"><a href="#" id="pagination_2">下一页&rarr;</a></li>
+								<li class="last"><a href="#" id="<?php echo 'pagination_'.$inbox_page_num;?>">尾页</a></li>
+						    </ul>
+					  </div>
+					  <?php endif;?>
 
 
 </div>
@@ -150,4 +133,35 @@
 <?php include("footer.php"); ?>
 
 </body>
+
+<script>
+$(function(){
+	$('.pagination ul li').live('click',switch_page);
+});
+
+function switch_page()
+{
+	var index = parseInt($(this).children().attr('id').split('_')[1]);
+	var ul_obj = $(this).parent();
+	if(index == $('.active',ul_obj).children().attr('id').split('_')[1])
+	{
+		return;
+	}
+	var total_page_num = parseInt(ul_obj.attr('id'));
+
+	var lang = {'lang_first':$('.first a').html(),'lang_previous':$('.prev a').html(),'lang_next':$('.next a').html(),'lang_last':$('.last a').html()};
+	var pagena_num = (total_page_num > 5) ? 5 : total_page_num;
+	
+	var url = $('#base').val() + 'demand/sort_demandlist/';
+	var post_str = 'index=' + index;
+	
+	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
+		$('#content').html(html);
+		pagenation_controller_update(ul_obj,{'index':index,'total':total_page_num,'pagena_num':pagena_num,'lang':lang});
+	}};
+	jQuery.ajax(ajax);
+}
+
+</script>
+
 </html>

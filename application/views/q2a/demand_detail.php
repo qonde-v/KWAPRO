@@ -91,7 +91,7 @@ $( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
 <div id="main_nr">
 <div id="index_lx">
 <div class="red_bt16" style="width:150px; margin-bottom:10px;">需 &nbsp;&nbsp; 求</div>
-<div class="gray_q_bt14" style="width:825px; height:40px; margin-bottom:10px;">当前设计：<b>555   </b>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   需求：<b>5665   </b>        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        设计：<b>9889</b>
+<div class="gray_q_bt14" style="width:825px; height:40px; margin-bottom:10px;">当前设计：<b>   </b>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   需求：<b><?=$t_demandnum?>   </b>        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        设计：<b><?=$t_designnum?></b>
 
 </div>
 
@@ -170,6 +170,9 @@ $( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
               <td width="100%" height="30" align="left" valign="middle">
 			  <div class="anniu_g" style="width:180px; text-align:center;">
 <a href="#" class="White14" onclick="javascript:document.getElementById('new_msg_modal').className='modal';">留&nbsp;&nbsp;&nbsp;言</a></div></td>
+<td width="100%" height="30" align="left" valign="middle">
+			  <div class="anniu_g" style="width:180px; text-align:center;">
+<a href="<?php echo $base.'design/practice?id='.$demand['id'];?>" class="White14">发布设计</a></div></td>
             </tr>
 			</table>
 	</div>

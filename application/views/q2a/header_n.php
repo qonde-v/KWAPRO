@@ -22,7 +22,7 @@ $("#tooltip").css({
         <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
           <tr>
             <!-- <td width="5%" height="50" valign="bottom" align="left"></td> -->
-			<td width="45%" valign="middle" align="left" class=" fWhite topr topt"><a href="<?php echo $base;?>" class="White14">首页</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'news/?type=1';?>" class="White14">运动</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'news/?type=2';?>" class="White14">服装</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'news/?type=3';?>" class="White14">明星</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'question_pool/';?>" class="White14">问答</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'design/';?>" class="White14">设计实现</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'demand/';?>" class="White14">个人空间</a></td>
+			<td width="45%" valign="middle" align="left" class=" fWhite topr topt"><a href="<?php echo $base;?>" class="White14">首页</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'news/?type=1';?>" class="White14">运动</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'news/?type=2';?>" class="White14">服装</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'news/?type=3';?>" class="White14">明星</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'question_pool/';?>" class="White14">问答</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'demand/demandlist/';?>" class="White14">设计实现</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'demand/';?>" class="White14">个人空间</a></td>
 			<td width="55%" valign="middle" align="left" >
 			<?php if(!isset($login)):?>
 			 <form method="post" action="" style="float:right;margin:10px 30px 10px 0px" name="login" onsubmit="return false;">

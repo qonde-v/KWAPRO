@@ -1,7 +1,7 @@
 <?php
   class News extends CI_Controller
   {
-	  var $pre_msg_num=2;
+	  var $pre_msg_num=5;
     function __construct()
 	 {
 	    parent::__construct();
@@ -89,7 +89,7 @@
 				$html .= '<img src="'.$base.'upload/uploadimages/'.$item['pricefilename'].'" align="absmiddle" border="0" width="93" height="126" class="img_k"/>';
 				$html .= '</td>';
 				$html .= '<td width="80%" valign="top" align="left" style="line-height:22px;">
-					<a href="'.$base.'news/news_detail?id='.$item['id'].'" class="Red14"><font class="fDOrange14">'.$item['title'].'</font></a><br><br>'.$item['content'].'...<br>';
+					<a href="'.$base.'news/news_detail?id='.$item['ID'].'" class="Red14"><font class="fDOrange14">'.$item['title'].'</font></a><br><br>'.$item['content'].'...<br>';
 				$html .= '</td>';			
 				$html .= '</tr>';
 				$html .= '<tr>';

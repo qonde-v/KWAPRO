@@ -115,16 +115,31 @@
 	   //$this->output->cache(1);
 	   $base = $this->config->item('base_url');
 
-	   //login permission check
-	   $this->Auth->permission_check("login/");
-
-	   //get current login user id
-	   $user_id = $this->session->userdata('uId');
-
-	   $language = $this->Ip_location->get_language();
-
 	   $data = array('base'=>$base);
-	   $data['login'] = "login";
+	   //$data['login'] = "login";
+
+	    $demands=array();;
+		$pre_msg_num = $this->pre_msg_num;
+	    $range = array('start'=>0,'end'=>$pre_msg_num-1);
+		$this->db->select('id,title,designnum,viewnum,messnum,createdate');
+ 		$t_query=$this->db->get('demand');
+		$data['inbox_num']=	$t_query->num_rows();
+
+		$this->db->order_by('createdate','desc');
+		$this->db->limit($range['end']-$range['start']+1,$range['start']);
+		$query = $this->db->get('demand'); 
+		foreach($query->result_array() as $row)
+		{
+			array_push($demands,$row);
+		}
+		$data['demands'] = $demands;
+		$data['pre_msg_num'] = $this->pre_msg_num;
+		$data['inbox_page_num'] = ($data['inbox_num'] == 0) ? 1 : ceil($data['inbox_num']/$data['pre_msg_num']);
+
+		$this->db->select('id');
+ 		$d_query=$this->db->get('design');
+		$data['t_designnum']=	$d_query->num_rows();
+
 		$this->load->view('q2a/demandlist',$data);
 	}
 
@@ -135,7 +150,7 @@
 	   $base = $this->config->item('base_url');
 
 	   //login permission check
-	   $this->Auth->permission_check("login/");
+	   //$this->Auth->permission_check("login/");
 
 	   //get current login user id
 	   $user_id = $this->session->userdata('uId');
@@ -143,12 +158,22 @@
 	   $language = $this->Ip_location->get_language();
 
 	   $data = array('base'=>$base);
-	   $data['login'] = "login";
+	   //$data['login'] = "login";
 	   $result=array();
 	   $result=$this->Demand_management->get_user_demand($_GET['id']);
 	   foreach($result as $val){
 		   $data['demand']=$val;
 	   }
+		
+		$this->db->select('id');
+ 		$t_query=$this->db->get('demand');
+		$data['t_demandnum']=	$t_query->num_rows();
+
+
+	    $this->db->select('id');
+ 		$d_query=$this->db->get('design');
+		$data['t_designnum']=	$d_query->num_rows();
+
 		$this->load->view('q2a/demand_detail',$data);
 	}
 
@@ -203,7 +228,7 @@
 			foreach($demands as $item){
 				$i++;
 				$html .= '<tr>';
-				$html .= '<td width="85%" height="40" valign="middle" align="left" ><a href="#" class="Red14">'. $i.'、'.$item['title'].'</a></td>';
+				$html .= '<td width="85%" height="40" valign="middle" align="left" ><a href="'.$base.'demand/demand_detail?id='.$item['id'].'" class="Red14">'. $i.'、'.$item['title'].'</a></td>';
 				$html .= '<td width="15%" height="40" valign="middle" align="right">';
 				$html .= '<div class="red_bt15" style="width:35px; text-align:center;float:left"><a href="'.$base.'demand/publish" class="White14">发布</a></div> &nbsp;&nbsp;&nbsp;&nbsp;';
 				$html .= '<div class="red_bt15" style="width:45px; text-align:center;float:right"><a href="'.$base.'design/practice?id='.$item['id'].'" class="White14">去设计</a></div>';
@@ -216,6 +241,53 @@
 				$html .= '<a href="#" class="DBlue">'.$item['messnum'].'</a> 留言 &nbsp;&nbsp;&nbsp;&nbsp;</td>';
 				$html .= '<td width="50%" height="40" valign="middle" align="right" class="fGray">'.$item['createdate'].'</td>';
 			    $html .= '</tr>';
+
+			}
+		}
+		echo $html;
+
+	}
+
+
+
+	function sort_demandlist()
+	{
+
+		$base = $this->config->item('base_url');
+		$user_id = $this->session->userdata('uId');
+		$index = $this->input->post('index',TRUE);
+		$pre_num = $this->pre_msg_num;
+		$range = array('start'=>($index-1)*$pre_num, 'end'=>$index*$pre_num-1);
+		$data = array('uId'=>$user_id,'range'=>$range);
+
+		$demands=array();
+		$this->db->select('*');
+		$this->db->order_by('createdate','desc');
+		$this->db->limit($range['end']-$range['start']+1,$range['start']);
+		$query = $this->db->get('demand');
+		foreach($query->result_array() as $row)
+		{
+			array_push($demands,$row);
+		}
+
+		$html = '';
+		if(!empty($demands))
+		{
+			$i=0;
+			foreach($demands as $item){
+				$i++;
+				$html .= '<div class="index_l_xwnrx">';
+				$html .='<div class="index_l_xwnr_tpx"><a href="#"><img src="'.$base.'img/index_l001.png" align="absmiddle" border="0" width="231" height="160"/></a></div>';
+				$html .= '<div class="index_l_xqnr">';
+				$html .= '<a href="#" class="Red16"><b>'. $item['title'].'</b></a><br>';
+				$html .= '<div class="index_l_xqnr_w">';
+				$html .= '参与设计： '.$item['designnum'].'<br>';
+				$html .= '发 布 人： '.$item['username'].'<br>';
+				$html .= '发布时间：'.$item['createdate'];
+				$html .= '</div>';
+				$html .= '<div class="index_l_xqnr_an"><div class="anniu_g" style="text-align:center;"><a href="'.$base.'demand/demand_detail?id='.$item['id'].'" class="White20"> 查看详情 </a></div></div>';
+				$html .= '</div>';
+				$html .= '</div>';	
 
 			}
 		}

@@ -145,6 +145,16 @@
 		return $result;
 	 }
 
+     function update_designnum($demand_id)
+     {
+     	//if(!empty($demand_id))
+		//{
+           $this->db->where('id',$demand_id);
+           $this->db->set('designnum', 'designnum+1', FALSE);
+           $this->db->update('demand');
+		//}
+     }
+
   }
   
   

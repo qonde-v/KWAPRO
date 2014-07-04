@@ -325,10 +325,12 @@
 		$picdata['design_id']=$design_id;
 		$picdata['createdate'] = date("Y-m-d H:i:s", time());
 		foreach($pic_arr as $val)
-		{
+		{ 
 			$picdata['pic_url']=$val;
 			$this->Demand_management->designpic_record_insert($picdata);
 		}
+		//update designnum
+		$this->Demand_management->update_designnum($post_arr['demand_id']);
 
 		echo '保存设计成功';
 	}

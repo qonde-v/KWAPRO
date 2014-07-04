@@ -32,8 +32,7 @@
 <input type="hidden" id="type" value="<?php echo $type;?>"></input>
 <div class="index_news">
 	<div class="index_liebiao_zw">
-	<table>
-	<tbody id="content">
+	<span id="content">
 	<?php foreach($news as $item):?>
 	<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
 		  <tr>
@@ -48,10 +47,8 @@
           </tr>
 	</table>
 	<?php endforeach;?>
-	</tbody>
+	</span>
 
-	<tr>
-		<td width="100%" height="45" valign="middle" align="center">
 		<?php if($inbox_page_num > 1):?>	
 		  <div class="pagination">
 				<ul id="<?php echo $inbox_page_num;?>">
@@ -73,11 +70,7 @@
 		  </div>
 		  <?php endif;?>
         
-		
-        </td>
-	</tr>
 
-	</table>
 
 	</div>
 	
@@ -144,7 +137,7 @@ function switch_page()
 	var total_page_num = parseInt(ul_obj.attr('id'));
 
 	var lang = {'lang_first':$('.first a').html(),'lang_previous':$('.prev a').html(),'lang_next':$('.next a').html(),'lang_last':$('.last a').html()};
-	var pagena_num = (total_page_num > 2) ? 2 : total_page_num;
+	var pagena_num = (total_page_num > 5) ? 5 : total_page_num;
 	
 	var url = $('#base').val() + 'news/sort_news/' ;
 	var post_str = 'index=' + index + '&type=' + $('#type').val();
