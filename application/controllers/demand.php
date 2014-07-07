@@ -122,9 +122,11 @@
 		$pre_msg_num = $this->pre_msg_num;
 	    $range = array('start'=>0,'end'=>$pre_msg_num-1);
 		$this->db->select('id,title,designnum,viewnum,messnum,createdate');
+		$this->db->where('status',1);
  		$t_query=$this->db->get('demand');
 		$data['inbox_num']=	$t_query->num_rows();
 
+		$this->db->where('status',1);
 		$this->db->order_by('createdate','desc');
 		$this->db->limit($range['end']-$range['start']+1,$range['start']);
 		$query = $this->db->get('demand'); 
@@ -142,7 +144,6 @@
 
 		$this->load->view('q2a/demandlist',$data);
 	}
-
 	
 	function demand_detail()
 	{
@@ -211,7 +212,7 @@
 		$data = array('uId'=>$user_id,'range'=>$range);
 
 		$demands=array();
-		$this->db->select('id,title,designnum,viewnum,messnum,createdate');
+		$this->db->select('*');
 		$this->db->where('uId',$user_id);
 		$this->db->order_by('createdate','desc');
 		$this->db->limit($range['end']-$range['start']+1,$range['start']);
@@ -230,7 +231,11 @@
 				$html .= '<tr>';
 				$html .= '<td width="85%" height="40" valign="middle" align="left" ><a href="'.$base.'demand/demand_detail?id='.$item['id'].'" class="Red14">'. $i.'、'.$item['title'].'</a></td>';
 				$html .= '<td width="15%" height="40" valign="middle" align="right">';
-				$html .= '<div class="red_bt15" style="width:35px; text-align:center;float:left"><a href="'.$base.'demand/publish" class="White14">发布</a></div> &nbsp;&nbsp;&nbsp;&nbsp;';
+				if($item['status']==0){
+					$html .= '<div class="red_bt15" style="width:45px; text-align:center;float:left"><a href="#" onclick="javascript:updatestatus('.$item['id'].',1);" class="White14">发布</a></div> &nbsp;&nbsp;&nbsp;&nbsp;';
+				}else{
+					$html .= '<div class="red_bt15" style="width:45px; text-align:center;float:left"><a href="#" onclick="javascript:updatestatus('.$item['id'].',0);" class="White14">不发布</a></div> &nbsp;&nbsp;&nbsp;&nbsp;';
+				}
 				$html .= '<div class="red_bt15" style="width:45px; text-align:center;float:right"><a href="'.$base.'design/practice?id='.$item['id'].'" class="White14">去设计</a></div>';
 				$html .= '</td>';
 				$html .= '</tr>';
@@ -262,6 +267,7 @@
 
 		$demands=array();
 		$this->db->select('*');
+		$this->db->where('status',1);
 		$this->db->order_by('createdate','desc');
 		$this->db->limit($range['end']-$range['start']+1,$range['start']);
 		$query = $this->db->get('demand');
@@ -269,6 +275,7 @@
 		{
 			array_push($demands,$row);
 		}
+
 
 		$html = '';
 		if(!empty($demands))
@@ -294,6 +301,20 @@
 		echo $html;
 
 	}
+	
+	function update_status()
+	{
+
+		$demand_id = $this->input->post('demand_id',TRUE);
+		$status = $this->input->post('status',TRUE);
+		$this->Demand_management->update_status($demand_id,$status);
+
+		echo '状态更新成功';
+
+	   
+	}
+
+
  }
 
  /*End of file*/

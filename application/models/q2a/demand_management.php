@@ -155,6 +155,13 @@
 		//}
      }
 
+	 function update_status($demand_id,$status)
+     {
+           $this->db->where('id',$demand_id);
+           $this->db->set('status', $status);
+           $this->db->update('demand');
+     }
+
   }
   
   

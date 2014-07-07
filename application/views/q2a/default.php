@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
 <title>TIT系统</title>
@@ -32,7 +32,7 @@
 </div>
 <div id="index_r">
 <div class="anniu_g" style="text-align:center;">
-<a class="White20" href="#"> 开 始 定 制 </a>
+<a class="White20" href="<?php echo $base.'demand/publish';?>"> 开 始 定 制 </a>
 </div>
 </div>
 </div>

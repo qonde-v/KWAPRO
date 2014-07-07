@@ -105,7 +105,7 @@
           <tr>
             <td width="85%" height="40" valign="middle" align="left" ><a href="<?php echo $base.'demand/demand_detail?id='.$item['id'];?>" class="Red14"><?php echo $i.'、'.$item['title']?></a></td>
 			<td width="15%" height="40" valign="middle" align="right">
-			<div class="red_bt15" style="width:35px; text-align:center;float:left"><a href="<?php echo $base.'demand/publish';?>" class="White14">发布</a></div> &nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="red_bt15" style="width:45px; text-align:center;float:left"><?php if($item['status']==0){?><a href="#" onclick="javascript:updatestatus(<?=$item['id']?>,1);" class="White14">发布</a><?php }else{?><a href="#" onclick="javascript:updatestatus(<?=$item['id']?>,0);" class="White14">不发布</a><?php }?></div> &nbsp;&nbsp;&nbsp;&nbsp;
 			<div class="red_bt15" style="width:45px; text-align:center;float:right"><a href="<?php echo $base.'design/practice?id='.$item['id'];?>" class="White14">去设计</a></div>
 			</td>
           </tr>
@@ -198,6 +198,18 @@ function switch_page()
 	jQuery.ajax(ajax);
 }
 
+function updatestatus(demand_id,status)
+{
+	var url = $('#base').val() + 'demand/update_status/';
+	var post_str = 'demand_id='+demand_id+'&status=' + status;
+	
+	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
+		alert(html);
+		window.location.reload();
+	}};
+	jQuery.ajax(ajax);
+	//
+}
 </script>
 
 </html>
