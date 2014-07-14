@@ -29,7 +29,6 @@
 				<!-- user dropdown starts  -->
 				<div class="btn-group pull-right"  style="padding-top:25px; padding-right:25px;">
 				<?php if(!isset($login)):?> 
-            		第一次使用好运来公众平台？
 					<a href="javascript:regedit()">立即注册</a>
 				<?php endif; ?> 
             	<?php if(isset($login)):?> 

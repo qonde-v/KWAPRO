@@ -45,24 +45,31 @@
 
 	   //get news//////////
 	   $clothing_f = array();
-	   $clothing_f = $this->News_data->get_newslist(array('type'=>2), 1);
+	   $clothing_f = $this->News_data->get_newslist(array('type'=>2,'isfirst'=>1), 1);
 	   foreach($clothing_f as $val){
 			$data['clothing_f'] = $val;
 	   }
 
 	   $clothing_list = array();
-	   $clothing_list = $this->News_data->get_newslist(array('type'=>2), 3,1);
+	   $clothing_list = $this->News_data->get_newslist(array('type'=>2,'isfirst'=>1), 3,1);
 	   $data['clothing_list'] = $clothing_list;
 
 	   $sport_list = array();
-	   $sport_list = $this->News_data->get_newslist(array('type'=>1), 3);
+	   $sport_list = $this->News_data->get_newslist(array('type'=>1,'isfirst'=>1), 3);
 	   $data['sport_list'] = $sport_list;
 
-	   $sport_list = array();
-	   $sport_list = $this->News_data->get_newslist(array('type'=>3), 8);
-	   foreach($sport_list as $val){
+	   $star_list = array();
+	   $star_list = $this->News_data->get_newslist(array('type'=>3,'isfirst'=>1), 8);
+	   foreach($star_list as $val){
 			$data['star_list'][] = $val['pricefilename'];
 	   }
+
+	   //jinghuatuijian
+	   $best_list = array();
+	   $best_list = $this->News_data->get_newslist('', 2);
+	   $data['best_list'] = $best_list;
+
+		
 
 	   ///////////////////
 

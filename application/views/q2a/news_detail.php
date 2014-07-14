@@ -60,27 +60,27 @@
 <div class="text_k_black text_sjxq" style="margin-top:10px;">
 <table width="97%" border="0" cellpadding="0" cellspacing="0" align="center">
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_01.png';?>" align="absmiddle" border="0"/></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_01.png';?>" align="absmiddle" border="0"/></td>
 			  <td width="85%" align="left" valign="middle">创建一个需求</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_02.png';?>" align="absmiddle" border="0"/></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_02.png';?>" align="absmiddle" border="0"/></td>
 			  <td width="85%" align="left" valign="middle">选择你的需求参数</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_03.png';?>" align="absmiddle" border="0"/></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_03.png';?>" align="absmiddle" border="0"/></td>
 			  <td width="85%" align="left" valign="middle">描述你的需求</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_04.png';?>" align="absmiddle" border="0"/></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_04.png';?>" align="absmiddle" border="0"/></td>
 			  <td width="85%" align="left" valign="middle">发布需求</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"></td>
 			  <td width="85%" align="left" valign="middle">-> 对外发布，让别人为你服务</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"></td>
 			  <td width="85%" align="left" valign="middle">-> 自己动手设计</td>
             </tr>
 </table>
@@ -97,19 +97,15 @@
 
  </div>
 
-<div class="black_bt22" style="text-align:center; margin-bottom:15px;"> 最新动态 </div>
+<div class="black_bt22" style="text-align:center; margin-bottom:15px;"> 精 华 推 荐 </div>
 
-
+<?php foreach($best_list as $item):?>
 <div class="index_r_xwnr_tpx" style="margin-bottom:15px;">
-<img src="<?php echo $base.'img/index_r001.png';?>" align="absmiddle" border="0" width="294" height="201"/><br>
-<div class="index_r_sjxq_bt">参与人：<a href="#" class="Red14">李小小</a>  参与时间：2014-03-25</div>
+<img src="<?php echo $base.'upload/uploadimages/'.$item['pricefilename'];?>" align="absmiddle" border="0" width="294" height="201"/><br>
+<div class="index_r_sjxq_bt"><?=$item['title']?></div>
 </div>
 <br><br>
-
-<div class="index_r_xwnr_tpx">
-<img src="<?php echo $base.'img/index_r002.png';?>" align="absmiddle" border="0" width="294" height="201"/><br>
-<div class="index_r_sjxq_bt">参与人：<a href="#" class="Red14">李小小</a>  参与时间：2014-03-25</div>
-</div>
+<?php endforeach;?>
 
 </div>
 </div>

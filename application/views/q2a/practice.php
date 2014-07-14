@@ -19,8 +19,8 @@ $(function() {
 $( "#slider" ).slider({
 value:<?php if(!empty($similar)) echo $similar['strength']; else echo 0;?>,
 min: 1,
-max: 10,
-step: 1,
+max: 1.5,
+step: 0.1,
 slide: function( event, ui ) {
 $( "#strength" ).val(ui.value );
 }
@@ -31,8 +31,8 @@ $( "#strength" ).val($( "#slider" ).slider( "value" ) );
 $( "#slider1" ).slider({
 value:<?php if(!empty($similar)) echo $similar['sporttime']; else echo 0;?>,
 min: 0,
-max: 24,
-step: 0.5,
+max: 2,
+step: 0.1,
 slide: function( event, ui ) {
 $( "#sporttime" ).val(ui.value );
 }
@@ -64,8 +64,8 @@ $( "#humidity" ).val($( "#slider3" ).slider( "value" ) );
 
 $( "#slider4" ).slider({
 value:<?php if(!empty($similar)) echo $similar['proficiency']; else echo 0;?>,
-min: 1,
-max: 10,
+min: 0,
+max: 100,
 step: 1,
 slide: function( event, ui ) {
 $( "#proficiency" ).val(ui.value );
@@ -73,11 +73,40 @@ $( "#proficiency" ).val(ui.value );
 });
 $( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
 
+$( "#slider5" ).slider({
+value:<?php if(!empty($similar)) echo $similar['age']; else echo 0;?>,
+min: 10,
+max: 70,
+step: 1,
+slide: function( event, ui ) {
+$( "#age" ).val(ui.value );
+}
+});
+$( "#age" ).val($( "#slider5" ).slider( "value" ) );
+
+$( "#slider6" ).slider({
+value:<?php if(!empty($similar)) echo $similar['weight']; else echo 0;?>,
+min: 20,
+max: 150,
+step: 1,
+slide: function( event, ui ) {
+$( "#weight" ).val(ui.value );
+}
+});
+$( "#weight" ).val($( "#slider6" ).slider( "value" ) );
 });
 </script>
 <script>
 function gonext(bz){
 	var ob;
+	if(bz==3){
+		if($('input:radio[name="selecttemp"]:checked').val()==-1){
+			//alert('无类似设计请选择空白模板');
+			$('.modal-body').html('无类似设计请选择空白模板');
+			$('#msg_modal').css('display','block');
+			return;
+		}
+	}
 	for(i=1;i<=4;i++){
 		ob=document.getElementById('buzhou'+i);
 		ob1=document.getElementById('sheji'+i);
@@ -246,7 +275,7 @@ function generate_query_str(data)
 <br><br>
  <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
           <tr>
-            <td width="100%" height="40" valign="middle" align="left" colspan="2"><input type="radio" id="selecttemp" name="selecttemp" value="<?php if (!empty($similar)) echo $similar['id']; else echo 0;?>"  /><div class="anniu_g" style="width:150px;text-align:center;display:inline"><a href="#" class="White14">选择类似设计作为模板</a></div></td>
+            <td width="100%" height="40" valign="middle" align="left" colspan="2"><input type="radio" id="selecttemp" name="selecttemp" value="<?php if (!empty($similar)) echo $similar['id']; else echo -1;?>"  /><div class="anniu_g" style="width:150px;text-align:center;display:inline"><a href="#" class="White14">选择类似设计作为模板</a></div></td>
           </tr>
 			<?php if (!empty($similar)){?>
 		  <tr>
@@ -268,15 +297,15 @@ function generate_query_str(data)
 			<td valign="middle" align="left">
 			<div  style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
 			强度： 
-			<font size="2" color="f6931f">轻&nbsp;&nbsp;松</font>
+			<font size="2" color="f6931f">1(轻松)</font>
 			<div id="slider" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">激&nbsp;&nbsp;烈</font>
+			<font size="2" color="f6931f">1.5(激烈)</font>
 			</div>
 			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
 			时间： 
 			<font size="2" color="f6931f">0Hour</font>
 			<div id="slider1" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">24Hour</font>
+			<font size="2" color="f6931f">2Hour</font>
 			</div>
 			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
 			温度： 
@@ -290,13 +319,28 @@ function generate_query_str(data)
 			<div id="slider3" style="width:200px;display:inline-block"></div>
 			<font size="2" color="f6931f">100</font>
 			</div>
-			<div style="padding:5px;border:1px solid #D9D9D9;">
+			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
 			熟练度：
-			<font size="2" color="f6931f">初学者</font>
+			<font size="2" color="f6931f">0(初学者)</font>
 			<div id="slider4" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">运动达人</font>
+			<font size="2" color="f6931f">100(运动达人)</font>
 			<input type="hidden" id="proficiency" name="proficiency" >
 			</div>
+			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
+			年龄：
+			<font size="2" color="f6931f">10</font>
+			<div id="slider5" style="width:200px;display:inline-block"></div>
+			<font size="2" color="f6931f">70</font>
+			<input type="hidden" id="age" name="age" >
+			</div>
+			<div style="padding:5px;border:1px solid #D9D9D9;">
+			体重：
+			<font size="2" color="f6931f">20kg</font>
+			<div id="slider6" style="width:200px;display:inline-block"></div>
+			<font size="2" color="f6931f">150kg</font>
+			<input type="hidden" id="weight" name="weight" >
+			</div>
+
 
 			</td>
           </tr>
@@ -411,7 +455,7 @@ function generate_query_str(data)
 </div>
 
 <div id="msg_modal" class="modal hide">
-	<div class="modal-header"><a href="#" class="close">&times;</a><h3>&nbsp;</h3></div>
+	<div class="modal-header"><a href="#" onclick="$('#msg_modal').css('display','none');" class="close">&times;</a><h3>&nbsp;</h3></div>
 	<div class="modal-body"></div>
 	<div class="modal-footer"><button class="btn primary" onclick="$('#msg_modal').css('display','none');">确定</button></div>
 </div>

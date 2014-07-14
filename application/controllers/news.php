@@ -23,6 +23,7 @@
 		 $this->load->model('q2a/Kpc_manage');
          $this->load->model('q2a/Ip_location');
          $this->load->model('q2a/User_privacy');
+		 $this->load->model('q2a/News_data');
 	 }
 
 	function index()
@@ -34,16 +35,24 @@
 
 	   $data = array('base'=>$base);
 		$data['type'] = empty($_GET['type'])?1:$_GET['type'];
+		$data['cdt_name'] = empty($_GET['cdt_name'])?'':$_GET['cdt_name'];
+
 	   //get news 
+		$where="type = ".$data['type'];
+		if($data['cdt_name']!=''){
+			$where .= " and (title like '%".$data['cdt_name']."%' or content like '%".$data['cdt_name']."%')";
+		}
 		$news=array();;
 		$pre_msg_num = $this->pre_msg_num;
 	    $range = array('start'=>0,'end'=>$pre_msg_num-1);
 		$this->db->select('*');
-		$this->db->where('type',$data['type']);
+		$this->db->where($where);
 		$t_query=$this->db->get('news');
 		$data['inbox_num']=	$t_query->num_rows();
 
-		$this->db->where('type',$data['type']);
+
+
+		$this->db->where($where);
 		$this->db->order_by('createTime','desc');
 		$this->db->limit($range['end']-$range['start']+1,$range['start']);
 		$query = $this->db->get('news');
@@ -54,6 +63,12 @@
 		$data['news'] = $news;
 		$data['pre_msg_num'] = $this->pre_msg_num;
 		$data['inbox_page_num'] = ($data['inbox_num'] == 0) ? 1 : ceil($data['inbox_num']/$data['pre_msg_num']);
+
+
+		//jinghuatuijian
+	   $best_list = array();
+	   $best_list = $this->News_data->get_newslist(array('isbest'=>1,'type'=>$data['type']), 2);
+	   $data['best_list'] = $best_list;
 
 	   $this->load->view('q2a/news',$data);
 
@@ -138,6 +153,13 @@
 	   foreach($result as $val){
 		   $data['news']=$val;
 	   }
+
+	   //jinghuatuijian
+	   $best_list = array();
+	   $best_list = $this->News_data->get_newslist(array('isbest'=>1), 2);
+	   $data['best_list'] = $best_list;
+
+
 		$this->load->view('q2a/news_detail',$data);
 	}
 

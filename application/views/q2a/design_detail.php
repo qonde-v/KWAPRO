@@ -18,8 +18,8 @@ $(function() {
 $( "#slider" ).slider({
 value:<?php if(!empty($demand)) echo $demand['strength']; else echo 0;?>,
 min: 1,
-max: 10,
-step: 1,
+max: 1.5,
+step: 0.1,
 slide: function( event, ui ) {
 $( "#strength" ).val(ui.value );
 }
@@ -30,8 +30,8 @@ $( "#strength" ).val($( "#slider" ).slider( "value" ) );
 $( "#slider1" ).slider({
 value:<?php if(!empty($demand)) echo $demand['sporttime']; else echo 0;?>,
 min: 0,
-max: 24,
-step: 0.5,
+max: 2,
+step: 0.1,
 slide: function( event, ui ) {
 $( "#sporttime" ).val(ui.value );
 }
@@ -63,14 +63,36 @@ $( "#humidity" ).val($( "#slider3" ).slider( "value" ) );
 
 $( "#slider4" ).slider({
 value:<?php if(!empty($demand)) echo $demand['proficiency']; else echo 0;?>,
-min: 1,
-max: 10,
+min: 0,
+max: 100,
 step: 1,
 slide: function( event, ui ) {
 $( "#proficiency" ).val(ui.value );
 }
 });
 $( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
+
+$( "#slider5" ).slider({
+value:<?php if(!empty($demand)) echo $demand['age']; else echo 0;?>,
+min: 10,
+max: 70,
+step: 1,
+slide: function( event, ui ) {
+$( "#age" ).val(ui.value );
+}
+});
+$( "#age" ).val($( "#slider5" ).slider( "value" ) );
+
+$( "#slider6" ).slider({
+value:<?php if(!empty($demand)) echo $demand['weight']; else echo 0;?>,
+min: 20,
+max: 150,
+step: 1,
+slide: function( event, ui ) {
+$( "#weight" ).val(ui.value );
+}
+});
+$( "#weight" ).val($( "#slider6" ).slider( "value" ) );
 
 });
 </script>
@@ -135,15 +157,15 @@ $( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
 			<td valign="middle" align="left">
 			<div  style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
 			强度： 
-			<font size="2" color="f6931f">轻&nbsp;&nbsp;松</font>
+			<font size="2" color="f6931f">1(轻松)</font>
 			<div id="slider" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">激&nbsp;&nbsp;烈</font>
+			<font size="2" color="f6931f">1.5(激烈)</font>
 			</div>
 			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
 			时间： 
 			<font size="2" color="f6931f">0Hour</font>
 			<div id="slider1" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">24Hour</font>
+			<font size="2" color="f6931f">2Hour</font>
 			</div>
 			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
 			温度： 
@@ -157,21 +179,47 @@ $( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
 			<div id="slider3" style="width:200px;display:inline-block"></div>
 			<font size="2" color="f6931f">100</font>
 			</div>
-			<div style="padding:5px;border:1px solid #D9D9D9;">
+			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
 			熟练度：
-			<font size="2" color="f6931f">初学者</font>
+			<font size="2" color="f6931f">0(初学者)</font>
 			<div id="slider4" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">运动达人</font>
+			<font size="2" color="f6931f">100(运动达人)</font>
 			<input type="hidden" id="proficiency" name="proficiency" >
+			</div>
+			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
+			年龄：
+			<font size="2" color="f6931f">10</font>
+			<div id="slider5" style="width:200px;display:inline-block"></div>
+			<font size="2" color="f6931f">70</font>
+			<input type="hidden" id="age" name="age" >
+			</div>
+			<div style="padding:5px;border:1px solid #D9D9D9;">
+			体重：
+			<font size="2" color="f6931f">20kg</font>
+			<div id="slider6" style="width:200px;display:inline-block"></div>
+			<font size="2" color="f6931f">150kg</font>
+			<input type="hidden" id="weight" name="weight" >
 			</div>
 
 			</td>
           </tr>
 
 	</table>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
+			<tr>
+				<td width="100%" height="30" align="center" valign="middle">
+					<div class="anniu_g" style="width:180px; text-align:center;">
+					<?php if($design['status']==0){?><a href="#" class="White14">提交仿真</a><?}?>
+					<?php if($design['status']==1){?><a href="#" class="White14">等待仿真</a><?}?>
+					<?php if($design['status']==2){?><a href="#" class="White14">查看仿真</a><?}?>
+					</div>
+				</td>
+            </tr>
+			</table>
+	</div>
+	</div>
 
-	</div>
-	</div>
+
 	
 
 </div>
@@ -188,27 +236,27 @@ $( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
 <div class="text_k_black text_sjxq" style="margin-top:10px;">
 <table width="97%" border="0" cellpadding="0" cellspacing="0" align="center">
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_01.png';?>" align="absmiddle" border="0"/></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_01.png';?>" align="absmiddle" border="0"/></td>
 			  <td width="85%" align="left" valign="middle">创建一个需求</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_02.png';?>" align="absmiddle" border="0"/></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_02.png';?>" align="absmiddle" border="0"/></td>
 			  <td width="85%" align="left" valign="middle">选择你的需求参数</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_03.png';?>" align="absmiddle" border="0"/></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_03.png';?>" align="absmiddle" border="0"/></td>
 			  <td width="85%" align="left" valign="middle">描述你的需求</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_04.png';?>" align="absmiddle" border="0"/></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_04.png';?>" align="absmiddle" border="0"/></td>
 			  <td width="85%" align="left" valign="middle">发布需求</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"></td>
 			  <td width="85%" align="left" valign="middle">-> 对外发布，让别人为你服务</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"></td>
 			  <td width="85%" align="left" valign="middle">-> 自己动手设计</td>
             </tr>
 </table>

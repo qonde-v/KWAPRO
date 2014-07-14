@@ -55,6 +55,7 @@
 						<th width="13%">显示</th>
 						<td  colspan="3">
 							<input type="checkbox"  id="isfirst" name="isfirst" value="1" <?php if($info['isfirst']==1)echo 'checked'; else echo '';?>>首页
+							<input type="checkbox"  id="isbest" name="isbest" value="1" <?php if($info['isbest']==1)echo 'checked'; else echo '';?>>精华推荐
 						</td>
 					</tr>
 					<tr>

@@ -43,7 +43,7 @@
 <div id="index_l">
 <div id="index_l_main_l">
   <div class="red_bt16" style="width:150px; margin-bottom:10px;">服 &nbsp;&nbsp; 装</div>
-  <div class="xwtp_k"><a href="#"><img src="<?php echo $base.'upload/uploadimages/'.$clothing_f['pricefilename'];?>" align="absmiddle" border="0" width="345" height="260"/></a></div>
+  <div class="xwtp_k"><a href="<?php echo $base.'news/news_detail?id='.$clothing_f['ID'];?>"><img src="<?php echo $base.'upload/uploadimages/'.$clothing_f['pricefilename'];?>" align="absmiddle" border="0" width="345" height="260"/></a></div>
   <div class="gray_bt14" style="margin-top:10px;"><?=$clothing_f['title']?></div>
 </div>
 <div id="index_l_main_r">
@@ -53,7 +53,7 @@
 	<a href="#"><img src="<?php echo $base.'upload/uploadimages/'.$item['pricefilename'];?>" align="absmiddle" border="0" width="111" height="99"/></a>
 	</div>
 	<div class="index_l_xwnr_wz">
-	<a href="#"><font class="fDOrange16"><?=$item['title']?></font></a><br>
+	<a href="<?php echo $base.'news/news_detail?id='.$item['ID'];?>"><font class="fDOrange16"><?=$item['title']?></font></a><br>
 	<?=$item['content']?>
 	</div>
 	</div>
@@ -133,11 +133,11 @@
 <div class="index_l_xwnrx">
 	<div class="index_l_xwnr_tpx"><a href="#"><img src="<?php echo $base.'upload/uploadimages/'.$item['pricefilename'];?>" align="absmiddle" border="0" width="231" height="160"/></a></div>
 	<div class="index_l_xwnr_wzx">
-	<a href="#" class="Black16"><b><?=$item['title']?></b></a><br>
+	<a href="<?php echo $base.'news/news_detail?id='.$item['ID'];?>" class="Black16"><b><?=$item['title']?></b></a><br>
 	<div class="index_l_xwnr_zw">
 	<?=$item['content']?>
 	</div>
-	<div class="index_l_xwnr_xq"><?=$item['createTime']?>  &nbsp;&nbsp;  <a href="#" class="Red">详情&lt;&lt;</a></div>
+	<div class="index_l_xwnr_xq"><?=$item['createTime']?>  &nbsp;&nbsp;  <a href="<?php echo $base.'news/news_detail?id='.$item['ID'];?>" class="Red">详情&lt;&lt;</a></div>
 	</div>
 </div>
 <?php endforeach;?>
@@ -146,18 +146,14 @@
 </div>
 
 <div id="index_rx">
-<div class="black_bt22" style="text-align:center; margin-bottom:15px;"> 最 新 动 态 </div>
+<div class="black_bt22" style="text-align:center; margin-bottom:15px;"> 最 新 动 态</div>
+<?php foreach($best_list as $item): ?>
 <div class="index_r_xwnr_tpx" style="margin-bottom:15px;">
-<img src="<?php echo $base.'img/index_r001.png';?>" align="absmiddle" border="0" width="294" height="201"/><br>
-<div class="index_r_xwnr_bt"><a href="#" class="Black16">运动服装潮流趋势如何看？</a></div>
+<img src="<?php echo $base.'upload/uploadimages/'.$item['pricefilename'];?>" align="absmiddle" border="0" width="294" height="201"/><br>
+<div class="index_r_xwnr_bt"><a href="<?php echo $base.'news/news_detail?id='.$item['ID'];?>" class="Black16"><?=$item['title']?><a></div>
 </div>
 <br><br>
-
-<div class="index_r_xwnr_tpx">
-<img src="<?php echo $base.'img/index_r002.png';?>" align="absmiddle" border="0" width="294" height="201"/><br>
-<div class="index_r_xwnr_bt"><a href="#" class="Black16">以“力行”姿态促强国建设</a></div>
-</div>
-
+<?php endforeach;?>
 </div>
 </div>
 </div>

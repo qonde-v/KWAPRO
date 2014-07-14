@@ -74,11 +74,13 @@
 	 //table--'demand'
 	 function get_similar_data($map)
 	 {
-		$condition =  'strength between '.($map['strength']-1).' and '.($map['strength']+1);
-		$condition .=  ' and sporttime between '.($map['sporttime']-1).' and '.($map['sporttime']+1);
+		$condition =  'strength between '.($map['strength']-0.1).' and '.($map['strength']+0.1);
+		$condition .=  ' and sporttime between '.($map['sporttime']-0.1).' and '.($map['sporttime']+0.1);
 		$condition .=  ' and temperature between '.($map['temperature']-1).' and '.($map['temperature']+1);
 		$condition .=  ' and humidity between '.($map['humidity']-1).' and '.($map['humidity']+1);
 		$condition .=  ' and proficiency between '.($map['proficiency']-1).' and '.($map['proficiency']+1);
+		$condition .=  ' and age between '.($map['age']-1).' and '.($map['age']+1);
+		$condition .=  ' and weight between '.($map['weight']-1).' and '.($map['weight']+1);
 		$condition .=  ' and id <> '.$map['id'];
 	 	$this->db->select('*');
 		$this->db->where($condition);

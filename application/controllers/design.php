@@ -101,7 +101,7 @@
 	   $condition='';
 	   $arr_de=$data['demand'];
 	   if(!empty($arr_de)){
-			$condition=array('id'=>$arr_de['id'],'strength'=>$arr_de['strength'],'sporttime'=>$arr_de['sporttime'],'temperature'=>$arr_de['temperature'],'humidity'=>$arr_de['humidity'],'proficiency'=>$arr_de['proficiency']);
+			$condition=array('id'=>$arr_de['id'],'strength'=>$arr_de['strength'],'sporttime'=>$arr_de['sporttime'],'temperature'=>$arr_de['temperature'],'humidity'=>$arr_de['humidity'],'proficiency'=>$arr_de['proficiency'],'age'=>$arr_de['age'],'weight'=>$arr_de['weight']);
 		   $result_s=array();
 		   $result_s=$this->Demand_management->get_similar_data($condition);
 		   foreach($result_s as $val){

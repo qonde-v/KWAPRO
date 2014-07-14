@@ -19,8 +19,8 @@ $(function() {
 $( "#slider" ).slider({
 value:<?php echo $demand['strength'];?>,
 min: 1,
-max: 10,
-step: 1,
+max: 1.5,
+step: 0.1,
 slide: function( event, ui ) {
 $( "#strength" ).val(ui.value );
 }
@@ -31,8 +31,8 @@ $( "#strength" ).val($( "#slider" ).slider( "value" ) );
 $( "#slider1" ).slider({
 value:<?php echo $demand['sporttime'];?>,
 min: 0,
-max: 24,
-step: 0.5,
+max: 2,
+step: 0.1,
 slide: function( event, ui ) {
 $( "#sporttime" ).val(ui.value );
 }
@@ -64,8 +64,8 @@ $( "#humidity" ).val($( "#slider3" ).slider( "value" ) );
 
 $( "#slider4" ).slider({
 value:<?php echo $demand['proficiency'];?>,
-min: 1,
-max: 10,
+min: 0,
+max: 100,
 step: 1,
 slide: function( event, ui ) {
 $( "#proficiency" ).val(ui.value );
@@ -73,7 +73,54 @@ $( "#proficiency" ).val(ui.value );
 });
 $( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
 
+$( "#slider5" ).slider({
+value:<?php echo $demand['age'];?>,
+min: 10,
+max: 70,
+step: 1,
+slide: function( event, ui ) {
+$( "#age" ).val(ui.value );
+}
 });
+$( "#age" ).val($( "#slider5" ).slider( "value" ) );
+
+$( "#slider6" ).slider({
+value:<?php echo $demand['weight'];?>,
+min: 20,
+max: 150,
+step: 1,
+slide: function( event, ui ) {
+$( "#weight" ).val(ui.value );
+}
+});
+$( "#weight" ).val($( "#slider6" ).slider( "value" ) );
+
+});
+</script>
+<script>
+function login_process()
+{
+	$('#login_msg_modal .modal-body').html($('#login_wait').val());
+	$('#login_msg_modal').css('display','block');
+	var username = $('#login_username').val();
+	var password = $('#login_pswd').val();
+	var url = $('#header_base').val() + 'login/';
+	var post_str = 'username=' + username + '&password=' + password;
+	var ajax = { url: url, data: post_str, type: 'POST', dataType: 'html', cache: false, success: function (html)
+	{
+		if(html == 'login_success')
+		{
+			//window.location.href = $('#header_base').val() + "home/";
+			$('#login_msg_modal').css('display','none');
+			$('#login_modal').css('display','none');
+		}
+		else
+		{
+			$('#login_msg_modal .modal-body').html(html);	
+		}
+	}};
+	jQuery.ajax(ajax);
+}
 </script>
 </head>
 <?php include("header_n.php"); ?>
@@ -114,16 +161,16 @@ $( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
 		</div>
 		<div class="index_l_xqnr">
 		<b>强度：</b> 
-		<font size="2" color="f6931f">轻&nbsp;&nbsp;松</font>
+		<font size="2" color="f6931f">1(轻松)</font>
 		<div id="slider" style="width:300px;display:inline-block"></div>
-		<font size="2" color="f6931f">激&nbsp;&nbsp;烈</font>
+		<font size="2" color="f6931f">1.5(激烈)</font>
 		<input type="hidden" id="strength"  name="sporttime" >
 		</div>
 		<div class="index_l_xqnr">
 		<b>时间： </b>  
 		<font size="2" color="f6931f">0Hour</font>
 		<div id="slider1" style="width:300px;display:inline-block"></div>
-		<font size="2" color="f6931f">24Hour</font>
+		<font size="2" color="f6931f">2Hour</font>
 		<input type="hidden" id="sporttime"  name="sporttime">
 		</div>
 
@@ -151,12 +198,26 @@ $( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
 		</div>
 		<div class="index_l_xqnr">
 		<b>熟练度：</b> 
-		<font size="2" color="f6931f">初学者</font>
+		<font size="2" color="f6931f">0(初学者)</font>
 		<div id="slider4" style="width:300px;display:inline-block"></div>
-		<font size="2" color="f6931f">运动达人</font>
+		<font size="2" color="f6931f">100(运动达人)</font>
 		<input type="hidden" id="proficiency" name="proficiency" >
 		</div>
-	</div>
+		<div class="index_l_xqnr">
+		<b>年龄：</b> 
+		<font size="2" color="f6931f">10</font>
+		<div id="slider5" style="width:300px;display:inline-block"></div>
+		<font size="2" color="f6931f">70</font>
+		<input type="hidden" id="age" name="age" >
+		</div>
+		<div class="index_l_xqnr">
+		<b>体重：</b> 
+		<font size="2" color="f6931f">20kg</font>
+		<div id="slider6" style="width:300px;display:inline-block"></div>
+		<font size="2" color="f6931f">150kg</font>
+		<input type="hidden" id="weight" name="weight" >
+		</div>
+		</div>
 
 	</div>
 	<input type="hidden" id="title_empty" value="标题不能为空"/>
@@ -169,7 +230,7 @@ $( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
 			<tr>
               <td width="100%" height="30" align="left" valign="middle">
 			  <div class="anniu_g" style="width:180px; text-align:center;">
-<a href="#" class="White14" onclick="javascript:document.getElementById('new_msg_modal').className='modal';">留&nbsp;&nbsp;&nbsp;言</a></div></td>
+<a href="#" class="White14" <?php if(isset($login)){?> onclick="javascript:document.getElementById('new_msg_modal').className='modal';"<?php }else{?>onclick="javascript:document.getElementById('login_modal').className='modal';"<?php }?>>留&nbsp;&nbsp;&nbsp;言</a></div></td>
 <td width="100%" height="30" align="left" valign="middle">
 			  <div class="anniu_g" style="width:180px; text-align:center;">
 <a href="<?php echo $base.'design/practice?id='.$demand['id'];?>" class="White14">发布设计</a></div></td>
@@ -190,27 +251,27 @@ $( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
 <div class="text_k_black text_sjxq" style="margin-top:10px;">
 <table width="97%" border="0" cellpadding="0" cellspacing="0" align="center">
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_01.png';?>" align="absmiddle" border="0"/></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_01.png';?>" align="absmiddle" border="0"/></td>
 			  <td width="85%" align="left" valign="middle">创建一个需求</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_02.png';?>" align="absmiddle" border="0"/></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_02.png';?>" align="absmiddle" border="0"/></td>
 			  <td width="85%" align="left" valign="middle">选择你的需求参数</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_03.png';?>" align="absmiddle" border="0"/></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_03.png';?>" align="absmiddle" border="0"/></td>
 			  <td width="85%" align="left" valign="middle">描述你的需求</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_04.png';?>" align="absmiddle" border="0"/></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_04.png';?>" align="absmiddle" border="0"/></td>
 			  <td width="85%" align="left" valign="middle">发布需求</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"></td>
 			  <td width="85%" align="left" valign="middle">-> 对外发布，让别人为你服务</td>
             </tr>
 			<tr>
-              <td width="15%" height="30" align="center" valign="middle"></td>
+              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"></td>
 			  <td width="85%" align="left" valign="middle">-> 自己动手设计</td>
             </tr>
 </table>
@@ -274,6 +335,32 @@ $( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
 			发送
 		</button>
 	</div>
+</div>
+
+<div id="login_modal" class="modal hide" style="width:auto;">
+	<div class="modal-header"><a href="#" class="close" onclick="javascript:document.getElementById('login_modal').className='modal hide';">&times;</a><h3>用户登录</h3></div>
+	<div class="modal-body">
+		<div class="clearfix">
+			<label style="width:70px">用户名：</label>
+			<input class="span7" type="text" id="login_username" name="username"></input>
+		</div>
+		<div class="clearfix">
+			<label style="width:70px">密&nbsp;&nbsp;&nbsp;码：</label>
+			<input class="span7"  id="login_pswd" name="password" type="password"></input>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn primary" id="head_login" onclick="login_process();">
+			登录
+		</button>
+	</div>
+</div>
+<input type="hidden" value="<?php echo $base; ?>" id="header_base" />
+<input type="hidden" value="请稍候" id="login_wait"/>
+<div id="login_msg_modal" class="modal hide">
+	<div class="modal-header"><a href="#" class="close">&times;</a><h3>&nbsp;</h3></div>
+	<div class="modal-body"></div>
+	<div class="modal-footer"><button class="btn primary" onclick="$('#login_msg_modal').hide();">确定</button></div>
 </div>
 
 <!------------ 底部开始 ------------->

@@ -16,7 +16,7 @@
 	 function get_newslist($data,$limit=0,$offset=0)
 	 {
 		$this->db->select('*');
-        $this->db->where($data);
+        if($data!='')$this->db->where($data);
 		$this->db->order_by('createTime','desc');
 		if($limit!=0) $this->db->limit($limit,$offset);
         $query = $this->db->get('news');
@@ -102,7 +102,8 @@
 			'content' => '',
 			'pricefilename' => '',
 			'createid' =>'',
-			'isfirst' =>0
+			'isfirst' =>0,
+			'isbest' => 0
 		);
 		if ($query->num_rows() > 0){
 			foreach ($query->result() as $row){
@@ -116,7 +117,8 @@
 					'content' => $row->content,
 					'pricefilename' => $row->pricefilename,
 					'createid' => $row->createid,
-					'isfirst' => $row->isfirst
+					'isfirst' => $row->isfirst,
+					'isbest' => $row->isbest
 				);
 			}
 		} 

@@ -121,8 +121,7 @@ class Core_user extends CI_Model {
 	private function __assembeSQL($sql, $createid, $condition, $pid){
 		if($condition !='' && $condition['cdt_name'] != ''){
 			$sql .=" ( nickname like '%".$condition['cdt_name']."%'"
-				." or userCode like '%".$condition['cdt_name']."%'"
-				." or tel like '%".$condition['cdt_name']."%') and ";
+				." or userCode like '%".$condition['cdt_name']."%') and ";
 		}
 //		if($createid!= "")
 //			$sql .=" createid=".$createid;
@@ -151,52 +150,7 @@ class Core_user extends CI_Model {
 		$result = $this->db->query($sql);
 		return $result->result();
 	}
-	/**
-	 * 第一层会员
-	 */
-	function tree_one($createid,$condition){
-		$sql = "select * from ".self::$TABLE." where ";
-		if($condition !='' && $condition['cdt_name'] != ''){
-			$sql .=" userCode = '".$condition['cdt_name']."'";
-		}elseif($createid!= ""){
-			$sql .=" oid=".$createid;
-		}else{
-			$sql .=" pid=0";
-		}
-		$sql .= " order by createTime desc ";
-		
-		$result = $this->db->query($sql);
-		return $result->result();
-	}
-	/*
-	function tree_test(){
-		$sql = "select * from ".self::$TABLE."";
 
-		$sql .= " order by createTime desc ";
-		
-		$result = $this->db->query($sql);
-
-		foreach ($result->result() as $record) {
-			$sql_2 = "select * from ".self::$TABLE." where oid=".$record->pid." order by createTime desc ";
-			$result_2 = $this->db->query($sql_2)->result();
-			$upuserid='';
-			while($result_2[0]->oid){
-				if($upuserid!=''){
-					$upuserid.=',';
-				}
-				$upuserid.=$result_2[0]->oid;
-				$sql_2 = "select * from ".self::$TABLE." where oid=".$result_2[0]->pid." order by createTime desc ";
-				$result_2 = $this->db->query($sql_2)->result();
-			}
-			if($upuserid!=''){
-				$data["upuserid"] = $upuserid;
-				$this->db->where('oid', $record->oid);
-				$this->db->update(self::$TABLE, $data);
-			}
-		}
-
-	}
-	*/
 	/**
 	 * 根据条件获取查询结果总数量
 	 * @param $condition 查询条件

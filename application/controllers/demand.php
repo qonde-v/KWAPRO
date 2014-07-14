@@ -116,7 +116,8 @@
 	   $base = $this->config->item('base_url');
 
 	   $data = array('base'=>$base);
-	   //$data['login'] = "login";
+	   $userid=$this->session->userdata('uId');
+	   if($userid!='')$data['login'] = "login";
 
 	    $demands=array();;
 		$pre_msg_num = $this->pre_msg_num;
@@ -159,7 +160,8 @@
 	   $language = $this->Ip_location->get_language();
 
 	   $data = array('base'=>$base);
-	   //$data['login'] = "login";
+
+	   if($user_id!='')$data['login'] = "login";
 	   $result=array();
 	   $result=$this->Demand_management->get_user_demand($_GET['id']);
 	   foreach($result as $val){
