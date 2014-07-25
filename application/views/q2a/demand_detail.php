@@ -164,7 +164,7 @@ function login_process()
 		<font size="2" color="f6931f">1(轻松)</font>
 		<div id="slider" style="width:300px;display:inline-block"></div>
 		<font size="2" color="f6931f">1.5(激烈)</font>
-		<input type="hidden" id="strength"  name="sporttime" >
+		<input type="hidden" id="strength"  name="strength" >
 		</div>
 		<div class="index_l_xqnr">
 		<b>时间： </b>  

@@ -108,9 +108,9 @@
             <td width="100%" height="40" valign="middle" align="left" colspan="2"><a href="<?php echo $base.'design/design_detail?id='.$item['id'];?>" class="Red14"><?php echo $i.'、'.$item['title']?></a></td>
 			<td width="15%" height="40" valign="middle" align="right">
 			<div class="anniu_g" style="width:60px; text-align:center;float:left">
-				<?php if($item['status']==0){?><a href="<?php echo $base.'design/publish';?>" class="White14">提交仿真</a><?}?>
-				<?php if($item['status']==1){?><a href="<?php echo $base.'design/publish';?>" class="White14">等待仿真</a><?}?>
-				<?php if($item['status']==2){?><a href="<?php echo $base.'design/publish';?>" class="White14">查看仿真</a><?}?>
+				<?php if($item['status']==0){?><a href="#" onclick="javascript:subsim(<?php echo $item['id'].','.$item['demand_id'];?>);" class="White14">提交仿真</a><?}?>
+				<?php if($item['status']==1){?><a href="#" class="White14">等待仿真</a><?}?>
+				<?php if($item['status']==2){?><a href="<?php echo $base.'design/similar_detail';?>" class="White14">查看仿真</a><?}?>
 			</div>
 			</td>
           </tr>
@@ -199,6 +199,29 @@ function switch_page()
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
 		$('#content').html(html);
 		pagenation_controller_update(ul_obj,{'index':index,'total':total_page_num,'pagena_num':pagena_num,'lang':lang});
+	}};
+	jQuery.ajax(ajax);
+}
+
+function subsim(design_id,demand_id)
+{
+	var url = $('#base').val() + 'design/subsim/';
+	var post_str = 'design_id='+design_id+'&demand_id=' + demand_id;
+	
+	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
+		subsim_n(html);
+		//window.location.reload();
+	}};
+	jQuery.ajax(ajax);
+}
+
+function subsim_n(fname)
+{
+	var url = 'http://localhost/cgi-bin/GSim.cgi';
+	var post_str = 'Simplans='+fname+'&name=Henry';
+
+	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
+		alert('提交成功');
 	}};
 	jQuery.ajax(ajax);
 }

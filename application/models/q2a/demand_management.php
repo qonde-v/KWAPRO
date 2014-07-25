@@ -164,6 +164,13 @@
            $this->db->update('demand');
      }
 
+	 function update_designstatus($design_id,$status)
+     {
+           $this->db->where('id',$design_id);
+           $this->db->set('status', $status);
+           $this->db->update('design');
+     }
+
   }
   
   
