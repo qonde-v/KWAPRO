@@ -519,6 +519,7 @@
 		   }
 		   if($newcontent!=''){
 			   $newcontent = "date\tCoreTem\tSkinTem".$newcontent;
+			   chmod("C:\wamp\www\TIT\SimResult",0777);
 			   file_put_contents("C:\wamp\www\TIT\SimResult\Temperature.DAT",$newcontent);
 		   }
 	   }
