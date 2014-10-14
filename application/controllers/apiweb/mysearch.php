@@ -9,6 +9,8 @@
 		 $this->load->database();
          $this->load->driver('cache');
 		$this->load->model('q2a/Mashup_search');
+		 $this->load->model('q2a/Question_data');
+
 	 }
 	 
 	 
@@ -42,7 +44,9 @@
 				{
 					foreach($data['data'] as $item)
 					{
-						$ret_data[] = array('type_string'=>$key,'desc'=>$item['text'],'url'=>$base.$data['url_term'].$item['id']);
+						$answerdata = $this->Question_data->get_question_related_data($item['id']);
+
+						$ret_data[] = array('type_string'=>$key,'desc'=>$item['text'],'url'=>$base.$data['url_term'].$item['id'],'answer'=>$answerdata);
 					}
                 }
             }
