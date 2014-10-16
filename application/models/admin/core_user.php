@@ -173,6 +173,18 @@ class Core_user extends CI_Model {
 		$this->db->update(self::$TABLE, $data);
 		return $data;
 	}
+	function insert($data){
+		$id = $data["id"];
+		if($id<=1){//新增
+			$data['createTime']= date('Y-m-d H:i:s', time()+8*60*60);
+			$this->db->insert(self::$TABLE, $data);
+			$id = mysql_insert_id();
+			$data["id"] = $id;
+			return $data;
+		} else {
+			return $data;
+		}
+	}
 	
 	
 	function __updateNewUserCode($oid){
@@ -210,130 +222,14 @@ class Core_user extends CI_Model {
 		
 		return $this->db->insert_id();
 	}
+
 	
 	function updateSubscribeTime($oid){
 		$data["lastSubscribe"] = date('Y-m-d H:i:s', time()+8*60*60);
 		$this->db->where('oid', $oid);
 		$this->db->update(self::$TABLE, $data);
 	}
-	
-	function joinIn($parUserCode, $openid){
-//		$this->db->select('pid');
-//		$this->db->where('wxopenid',$openid);
-//		$query=$this->db->get(self::$TABLE);
-//		$oldPid = 0;
-//		if($query->num_rows()>0){
-//			foreach($query->result() as $row){
-//				$oldPid = $row->pid;
-//			}
-//		}
-		$pid = self::getIdByUserCode($parUserCode);
-		//return "pid=".$pid."   opid=".$oldPid;
-		$oldId = self::hasUser($pid);
-		$oldPid = self::__getValueByKey("wxopenid", $openid, "pid");
-		$uoid = self::getIDbyOpenid($openid);
-		if(0 == $oldId){
-			return $parUserCode."团队尚未成立。您可以在《英雄榜》中选择优秀团队加盟。";
-		} else if($oldPid != 0){
-			return "您已是【".self::getNicknameById($oldPid)."（".self::getUserCodeById($oldPid,44)."）】团队成员，不能再加盟到其他团队。";
-		} else if(self::isChild($uoid)){
-			return "您已成功组团，不能进行加盟操作！";
-		} else if($oldId == $uoid){
-			self::joinInOne($pid, $uoid);
-			return "您已成功独立组团。您的好运来团队号是：".self::getTeamnameById($uoid)."\n"
-				."您的好运来工号：".self::getUserCodeById($uoid, 44)."\n登录密码是：".self::getPwdById($uoid);
-		} else if(0 == $oldPid){
-//			$data["pid"] = $pid;
-//			$this->db->where('wxopenid', $openid);
-//			$this->db->update(self::$TABLE, $data);
-//			$this->Core_score->addScore($pid, 2);
-//			$this->Core_score->addScore($uoid, 3);
-			self::joinInOne($pid, $uoid);
-			return "您已成功加盟【".self::getNicknameById($pid)."（".self::getUserCodeById($pid, 44)."）】团队。\n"
-				."您的好运来工号是：".self::getUserCodeById($uoid, 44)."\n登录密码是：".self::getPwdById($uoid)
-				."请您尽快登陆好运来网站补充完善您的个人资料和修改密码，好运来网址：www.h1111.cn";
-//				."退出团队请编辑信息TM@+团队推荐人工号，如"."\n\n"
-//					."TM@4400001";
-		} else if ($oldPid == $pid){
-			return "您已是【".self::getNicknameById($pid)."（".self::getUserCodeById($pid,44)."）】团队成员。";
-		} else {
-			return "您已是【".self::getNicknameById($oldPid)."（".self::getUserCodeById($oldPid,44)."）】团队成员，不能再加盟到其他团队。";
-//				."退出团队请编辑信息TM@+团队推荐人工号，如"."\n\n"
-//				."TM@4400001";
-		} 
-	}
-	
-	function joinInOne($pid,$oid){
-		$data["pid"] = $pid;
-		
-		$userpath = self::getUserpathById($pid);		
-		$data["userpath"] = $userpath.",".$oid;
-		$this->db->where('oid', $oid);
-		$this->db->update(self::$TABLE, $data);
-		if($pid != $oid)
-			$this->Core_score->addScore($pid, 2);
-		$this->Core_score->addScore($oid, 3);
-	}
-	
-	function quitJoin($pid, $openid){
-		$uid = self::getIDbyOpenid($openid);
-		if(self::isInTeam($pid, $uid)){
-			$data["pid"] = 0;
-			$this->db->where('wxopenid', $openid);
-			$this->db->update(self::$TABLE, $data);
-			$this->Core_score->addScore($pid, 5);
-			$this->Core_score->addScore($uid, 6);
-			return "您已成功退出【".self::getNicknameById($pid)."（".self::getUserCodeById($pid,44)."）】团队。加盟团队请编辑信息@+团队推荐人工号，如"."\n\n"
-					."@131303001";
-		}else {
-			return "您不在".self::getUserCodeById($pid,44)."团队中。请确认您的团队后再试。";
-		}
-	}
-	
-	function isInTeam($pid, $uid){
-		$this->db->select('oid');
-		$this->db->where('oid', $uid);
-		$this->db->where('pid', $pid);
-		$query=$this->db->get(self::$TABLE);
 
-		if($query->num_rows()>0){
-			foreach($query->result() as $row){
-				return true;
-			}
-		}else {
-			return false;
-		}
-	}
-	
-	private function hasUser($oid){
-		$this->db->select('oid');
-		$this->db->where('oid',$oid);
-		$query=$this->db->get(self::$TABLE);
-
-		if($query->num_rows()>0){
-			foreach($query->result() as $row){
-				return $row->oid;
-			}
-		}else {
-			return 0;
-		}
-	}
-	
-	
-	function getIDbyOpenid($openid){
-		$this->db->select('oid');
-		$this->db->where('wxopenid',$openid);
-		$query=$this->db->get(self::$TABLE);
-		if($query->num_rows()>0){
-			foreach($query->result() as $row){
-				return $row->oid;
-			}
-		}
-		else{
-			return '';
-		}
-	}
-	
 	
 	function getUserpathById($id){
 		return self::__getValueById($id, "userpath");
@@ -385,89 +281,7 @@ class Core_user extends CI_Model {
 		return self::__getValueByKey("userCode", $userCode, "oid");
 	}
 	
-	function getTeamnameById($uid){
-		return "好运来第".$uid."团";
-	}
-	
-	/**
-	 * 团队人数排名
-	 */
-	function getTeamNumTop(){
-		$sql = "select `pid`, count(*) cs from ".self::$TABLE." where pid!=0 and pid is not null ";
-		$sql .= " and roleId = 0 ";
-		$sql.="group by `pid` ".self::$NO_MANAGER_SQL_HAVING." order by cs desc limit 0,10;";
-		
-		$query = $this->db->query($sql);
-		if ($query->num_rows() > 0){
-			return $query->result();
-		}else 
-			return "";
-	}
-	
-	
-	function isChild($oid){
-		$result = self::findMyMembers($oid);
-		if(count($result) == 0){
-			return false;
-		} else {
-			return true;
-		}
-	}
-	/**
-	 * 获取我的团队信息
-	 * @param unknown_type $oid
-	 */
-	function getMyTeam($oid){
-		$sql = "select * from ".self::$TABLE." where pid=".$oid;
-		$query = $this->db->query($sql);
-		if($query->num_rows()>0){
-			return $query->result();
-		}else {
-			return '';
-		}
-	}
-	
-	/**
-	 * 获取我的军团信息
-	 * @var unknown_type
-	 */
-	static $ms = array();
-	function findMyMembers($oid){
-//		self::__findMembers($oid);
-//		return self::$ms;
-//		$sql = "select * from ".self::$TABLE." where find_in_set(".$oid.",userpath)" ;
-		$sql = "select * from ".self::$TABLE." where userpath like '".$oid.",%' or userpath like '%,".$oid.",%'" ;
-		$query = $this->db->query($sql);
-		if($query->num_rows()>0){
-			return $query->result();
-		} else 
-			return array();
-	}
-	function findMyMembers_me($oid){
-//		self::__findMembers($oid);
-//		return self::$ms;
-		$sql = "select * from ".self::$TABLE." where find_in_set(".$oid.",userpath)" ;
-	//	$sql = "select * from ".self::$TABLE." where userpath like '".$oid.",%' or userpath like '%,".$oid.",%'" ;
-		$query = $this->db->query($sql);
-		if($query->num_rows()>0){
-			return $query->result();
-		} else 
-			return array();
-	}
-	private function __findMembers($oid){
-		
-		$sql = "select * from ".self::$TABLE." where pid=".$oid;
-		$query = $this->db->query($sql);
-		
-		if($query->num_rows()>0){
-			foreach($query->result() as $row){
-				array_push(self::$ms, $row);
-				//echo $row->oid."; ";
-				self::__findMembers($row->oid);
-			}
-		}
-	}
-	
+
 	private function __getValueByKey($key, $value, $resultKey){
 		$this->db->select($resultKey);
 		$this->db->where($key,$value);
@@ -506,29 +320,6 @@ class Core_user extends CI_Model {
 		}
 	}
 	
-	function refreshUserTeamInof(){
-		
-		
-//		$this->db->trans_start();
-		$team = $this->db->get(self::$TABLE);
-		$this->db->truncate(self::$TABLE_ST_USER_TEAM_INFO);
-		$sql = "insert into ".self::$TABLE_ST_USER_TEAM_INFO." (userid, nickname, userCode, num) values ";
-		foreach ($team->result() as $row){
-			$num = count(self::findMyMembers($row->oid));
-//			$data = array();
-//			$data["userid"] = $row->oid;
-//			$data["nickname"] = $row->nickname;
-//			$data["userCode"] = $row->userCode;
-//			$data["num"] = $num;
-			echo $i++.". ".$data["userid"]."; ".$data["nickname"].":".$num."</br>";
-//			$this->db->insert(self::$TABLE_ST_USER_TEAM_INFO, $data);
-			$sql.= " ('".$row->oid."', '".$row->nickname."', '".$row->userCode."',".$num."), ";
-		}
-//		$sql = substr($sql, 0, strlen($sql)-2);
-//		$this->db->query($sql);
-		echo $sql;
-//		$this->db->trans_complete(); 
-	}
 	
 	function get_all(){
 //		$this->db->order_by("userpath", "asc"); 
@@ -539,6 +330,10 @@ class Core_user extends CI_Model {
 		
 
 		return $query->result();
+	}
+	function delete($id){
+		$this->db->where('id', $id);
+		$this->db->delete(self::$TABLE);
 	}
 }
 ?>

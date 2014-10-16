@@ -1,5 +1,5 @@
 <?php
-class User extends CI_Controller{
+class Factory extends CI_Controller{
 	function __construct(){
 		parent::__construct();
 		$this->load->helper('form','url');
@@ -10,6 +10,7 @@ class User extends CI_Controller{
 		
 		$this->load->model('q2a/Auth');
 		$this->load->model('admin/Core_user');
+		$this->load->model('admin/Core_factory');
 	}
 	
 	protected function initBaseinfo($data){
@@ -20,7 +21,7 @@ class User extends CI_Controller{
 		$data['roleId'] = $roleId;
 		$data['user_id'] = $this->session->userdata('user_id');
 		$data['nickname']=$this->Core_user->getNicknameById($data['user_id']);
-		return $data;
+		return $data;  
 	}
 	
 	public function index($offset = ''){
@@ -45,9 +46,9 @@ class User extends CI_Controller{
 		$roleId = $this->session->userdata('roleId');
 		$createid = $roleId == 1 ? "" :$this->session->userdata('user_id');
 		
-		$data['total_num'] = $this->Core_user->get_count($createid, $condition, $pid);
+		$data['total_num'] = $this->Core_factory->get_count($createid, $condition, $pid);
 		
-		$list = $this->Core_user->show_all($createid, $condition, $pid, $limit, $per_page);
+		$list = $this->Core_factory->show_all($createid, $condition, $pid, $limit, $per_page);
 		
 		
 		$data['list'] = $list;
@@ -78,7 +79,7 @@ class User extends CI_Controller{
 		$data['limit'] = $limit;
 		$data['offset'] = $offset;
 		$data['pagination'] = $this->pagination->create_links();
-		$this->load->view('admin/user_list', $data);
+		$this->load->view('admin/factory_list', $data);
 	}
 		
 	public function edit(){
@@ -94,26 +95,27 @@ class User extends CI_Controller{
 			$uri.="/".$this->uri->segment(4);
 		$data['uri'] = $uri."?createid=".$id;
 
-		$data['info'] = $this->Core_user->show_one($id);
+		$data['info'] = $this->Core_factory->show_one($id);
 				
 		if(!$this->check_info()){
-			$this->load->view('admin/user_edit', $data);
+			$this->load->view('admin/factory_edit', $data);
 		}else{
 			$data = array(
 				'id'=>$_POST['id'],
-				'userCode' => $_POST['userCode'],
-				'nickname' => $_POST['nickname'],
-				'roleId' => $_POST['roleId']
+				'name' => $_POST['name'],
+				'address' => $_POST['address'],
+				'tel' => $_POST['tel'],
+				'contacts' => $_POST['contacts'],
+				'business' => $_POST['business']
 			);
 			
 
 			if ($data['id']>=1){
-				$data['info'] = $this->Core_user->update($data, $_POST['id']);
+				$data['info'] = $this->Core_factory->update($data, $_POST['id']);
 				$data['saveinfo'] = "信息保存成功！";
 				
 			}else {
-				$data['pwd']='111';
-				$data['info'] = $this->Core_user->insert($data);
+				$data['info'] = $this->Core_factory->insert($data);
 				$data['saveinfo'] = "信息新增成功！";
 				
 			}
@@ -124,77 +126,19 @@ class User extends CI_Controller{
 				if($this->uri->segment(4) != '')
 					$uri.="/".$this->uri->segment(4);
 				$data['uri'] = $uri;
-				$this->load->view('admin/user_edit', $data);
+				$this->load->view('admin/factory_edit', $data);
 		}
-	}
-
-
-	public function fixPwd(){
-		$data = array();
-		$data = self::initBaseinfo($data);
-		
-		$oid = isset($_GET["createid"])?$_GET["createid"]:"";
-		//echo $id;
-		$uri = $this->uri->segment(1)
-			."/".$this->uri->segment(2)
-			."/".$this->uri->segment(3);
-		if($this->uri->segment(4) != '')
-			$uri.="/".$this->uri->segment(4);
-		$data['uri'] = $uri."?createid=".$oid;
-
-		$data['info'] = $this->Core_user->show_one($oid);
-				
-		if(!$this->check_info2()){
-			$this->load->view('admin/user_fixpwd', $data);
-		}else{
-			$data = array(
-				'id'=>$_POST['id'],
-				'userCode' => $_POST['userCode'],
-				'pwd' => $_POST['pwd2'],
-				'nickname' => $_POST['nickname']
-			);
-			
-			if ('' != $data['id']){
-				$data['info'] = $this->Core_user->update($data, $_POST['id']);
-				$data['saveinfo'] = "密码修改成功！";
-				
-			}
-			$data = self::initBaseinfo($data);
-				$uri = $this->uri->segment(1)
-				."/".$this->uri->segment(2)
-				."/".$this->uri->segment(3);
-				if($this->uri->segment(4) != '')
-					$uri.="/".$this->uri->segment(4);
-				$data['uri'] = $uri;
-				$this->load->view('admin/user_fixpwd', $data);
-		}
-	}
-	
-	function check_info2(){
-            $this->load->helper(array('form','url'));
-	     	$this->load->library('form_validation');
-	     	$this->form_validation->set_rules('pwd2', '密码','required|callback_check_info_process');
-		//$this->form_validation->set_rules('organization','Organization','required');	
-		    return $this->form_validation->run();
 	}
 	
 	function check_info(){
             $this->load->helper(array('form','url'));
 	     	$this->load->library('form_validation');
-	     	$this->form_validation->set_rules('nickname', '昵称','required');
-//	     	$this->form_validation->set_rules('tel', '联系电话','required|callback_login_account_check');
-		//$this->form_validation->set_rules('organization','Organization','required');	
+	     	$this->form_validation->set_rules('name', '厂家名称','required');
+	     	$this->form_validation->set_rules('tel', '联系电话','required');
+			$this->form_validation->set_rules('contacts','联系人','required');	
 		    return $this->form_validation->run();
 	}
 	
-	function check_info_process2(){
-		if($_POST['pwd1']!=$_POST['pwd2']){
-			$this->form_validation->set_message('check_info_process', '两次密码输入不一致');
-		    return false;
-		}else {
-			return true;
-		}
-	}
 		
 	function search($offset = ''){
 		$condition["cdt_name"] = $_GET['cdt_name'];
@@ -203,11 +147,9 @@ class User extends CI_Controller{
 	}
 	function delete(){
 		$id = $_GET['id'];
-		$this->Core_user->delete($id);
+		$this->Core_factory->delete($id);
 		self::index();
 	}
-	
-		
 }
 
 ?>

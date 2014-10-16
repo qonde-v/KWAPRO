@@ -528,6 +528,51 @@
 	   $this->load->view('q2a/similar_detail',$data);
 	}
 
+	function order()
+	{
+	   //$this->output->cache(1);
+	   $base = $this->config->item('base_url');
+	   $base_photoupload_path = $this->config->item('base_photoupload_path');
+
+	   //login permission check
+	   $this->Auth->permission_check("login/");
+
+	   //get current login user id
+	   $user_id = $this->session->userdata('uId');
+
+	   $language = $this->Ip_location->get_language();
+
+	   $data = array('base'=>$base,'base_photoupload_path'=>$base_photoupload_path);
+	   $data['login'] = "login";
+
+	   $data['design_id']=$_GET['id'];
+		
+	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
+	   $data = array_merge($right_data,$data);
+
+
+	   $this->load->view('q2a/order',$data);
+
+	}
+
+	function submit_order()
+	{
+		$post_arr = array();
+		foreach($_POST as $key=>$value)
+		{
+			$post_value = $this->input->post($key,TRUE);
+			$post_arr[$key] = $post_value ? $post_value : 0;
+		}
+		$post_arr['createtime'] = date("Y-m-d H:i:s", time());
+		$userid=$this->session->userdata('uId');
+		$post_arr['uId'] = $userid;
+		$post_arr['username'] = $this->User_data->get_username(array('uId'=>$userid));
+
+		$this->Demand_management->order_record_insert($post_arr);
+
+		echo 'submit order OK';
+	}
+
 
 
 }

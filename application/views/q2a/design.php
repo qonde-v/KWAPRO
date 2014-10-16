@@ -91,6 +91,12 @@
 		  <tr>
             <td width="100%" height="40" valign="middle" align="center" class="anniu_hui"><a href="<?php echo $base.'messages/';?>" class="Red16">留&nbsp;&nbsp;言</a></td>
 		  </tr>
+		  <tr>
+            <td width="100%" height="5" valign="middle" align="center" bgcolor="#FFFFFF"><font style="font-size:4px;">&nbsp;</font></td>
+		  </tr>
+		  <tr>
+            <td width="100%" height="40" valign="middle" align="center" class="anniu_hui"><a href="<?php echo $base.'order/';?>" class="Red16">订&nbsp;&nbsp;单</a></td>
+		  </tr>
 </table>
 
 </div>
@@ -112,6 +118,7 @@
 				<?php if($item['status']==1){?><a href="#" class="White14">等待仿真</a><?}?>
 				<?php if($item['status']==2){?><a href="<?php echo $base.'design/similar_detail';?>" class="White14">查看仿真</a><?}?>
 			</div>
+			<div class="anniu_g" style="width:60px; text-align:center;float:right"><a href="<?php echo $base.'design/order?id='.$item['id'];?>" class="White14">提交订单</a></div>
 			</td>
           </tr>
 		  <tr>

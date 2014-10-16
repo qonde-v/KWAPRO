@@ -3,14 +3,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>新闻信息维护</title>
-<!-- <link href="<?php echo $base."css/style_1.css";?>" rel="stylesheet" type="text/css" id="cssfile"/> -->
-<link href="<?php echo $base."css/bootstrap.css";?>" rel="stylesheet" type="text/css" id="cssfile"/>
-
-
+<!-- <link href="<?php echo $base."css/style_1.css";?>" rel="stylesheet" type="text/css" id="cssfile"/> 
+<link href="<?php echo $base."css/bootstrap.css";?>" rel="stylesheet" type="text/css" id="cssfile"/>-->
 
 <style type="text/css">
 .txtInput{
 	width:160px;
+}
+table tbody th {
+    border-top: 1px solid #ddd;
+    vertical-align: top;
+}
+table th {
+    font-weight: bold;
+    padding-top: 9px;
 }
 </style>
 </head>

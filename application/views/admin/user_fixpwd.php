@@ -3,9 +3,18 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>用户信息管理</title>
-<link href="<?php echo $base."css/bootstrap.css";?>" rel="stylesheet" type="text/css" id="cssfile"/>
+<!-- <link href="<?php echo $base."css/bootstrap.css";?>" rel="stylesheet" type="text/css" id="cssfile"/> -->
 
-
+<style type="text/css">
+table tbody th {
+    border-top: 1px solid #ddd;
+    vertical-align: top;
+}
+table th {
+    font-weight: bold;
+    padding-top: 9px;
+}
+</style>
 
 </head>
 <body>

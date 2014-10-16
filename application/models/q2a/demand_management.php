@@ -39,6 +39,13 @@
 		$this->db->insert('design');
 		return $this->db->insert_id();
      }
+	 //insert order reocrd to db
+     //input: array('uId','username',....)
+     function order_record_insert($data)
+     {
+     	$this->db->set($data);
+		$this->db->insert('orders');
+     }
 	 
 	 function designpic_record_insert($data)
      {

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>用户信息管理</title>
+<title>厂家信息管理</title>
 <!-- <link href="<?php echo $base."css/style_1.css";?>" rel="stylesheet" type="text/css" id="cssfile"/> -->
 <link href="<?php echo $base."css/tag.css";?>" rel="stylesheet"	type="text/css" />
 <link href="<?php echo $base."css/jquery/jquery.validate.cmxform.css";?>"	rel="stylesheet" type="text/css" />
@@ -28,40 +28,48 @@ table th {
 		<div id="content" style="padding-left:230px;">
 			<div class="box" style="margin-top:0px;">
 				<div class="box-header well" data-original-title>
-							<h4><i class="icon-edit"></i>用户信息管理</h4>
+							<h4><i class="icon-edit"></i>厂家信息管理</h4>
 							
 				</div>
 				<span style="color:red;"><?php echo (isset($saveinfo)?$saveinfo:"");?></span>
 				<form action="<?php echo $base.$uri?>" name="frm_table" method="post" id="frm_table">
 				<table id="companyInfo" width="100%" >
 					<tr>
-						<th width="13%"><label class="control-label" >用户名</label></th>
+						<th width="13%"><label class="control-label" >厂家名称</label></th>
 						<td>
 						    <?php if(empty($info['id'])){?>
-							<input class="txtInput" type="text" name="userCode" value="<?=$info['userCode']?>"/>
+							<input class="txtInput" type="text" name="name" value="<?=$info['name']?>"/>
 							<?php }else{?>
-							<input class="txtInput" type="hidden" name="userCode" value="<?=$info['userCode']?>"/>
-							<?=$info['userCode']?>
+							<input class="txtInput" type="hidden" name="name" value="<?=$info['name']?>"/>
+							<?=$info['name']?>
 							<?php }?>
 						</td>
 					</tr>
 					<tr>
-						<th width="13%"><label class="control-label" >昵称</label></th>
+						<th width="13%"><label class="control-label" >联系人</label></th>
 						<td width="37%">
-							<input class="txtInput" type="text" name="nickname" value="<?=$info['nickname']?>"/>
+							<input class="txtInput" type="text" name="contacts" value="<?=$info['contacts']?>"/>
 						</td>
 					</tr>
 					<tr>
-						<th width="13%"><label class="control-label" >用户权限</label></th>
-						<td>
-							<input type="radio" id="roleId" name="roleId" value="1" checked="checked" style="margin-left:10px" /> 管理员
-							<input type="radio" id="roleId" name="roleId" value="0" style="margin-left:20px" /> 普通人员
+						<th width="13%"><label class="control-label" >地址</label></th>
+						<td width="37%">
+							<input class="txtInput" type="text" name="address" value="<?=$info['address']?>"/>
+						</td>
+					</tr>
+					<tr>
+						<th width="13%"><label class="control-label" >电话</label></th>
+						<td width="37%">
+							<input class="txtInput" type="text" name="tel" value="<?=$info['tel']?>"/>
+						</td>
+					</tr>
+					<tr>
+						<th width="13%"><label class="control-label" >主要业务</label></th>
+						<td width="37%">
+							<textarea name="business" rows="10" check-type="required" required-message="请填写内容！"> <?=$info['business']?></textarea>
 						</td>
 					</tr>
 				</table>
-				<?php if(empty($info['id'])){?>
-				<span style="float:right;color:red; font-size: 11px;">新增用户密码默认111，请自行修改</span>
-				<?php }?>
 				<span style="color:red;"><?php echo validation_errors(); ?></span>
 				<div class="form-actions" align="center">
 					<button type="submit"   id="submit1" class="btn btn-primary" >保存</button>
