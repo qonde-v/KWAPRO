@@ -39,9 +39,9 @@ table th {
 						<th width="13%">新闻类型</th>
 						<td width="37%" colspan='3'>
 							<select name="type" id="type" >
-								<option value="1" <?php if($info['type']==1) echo 'selected'; ?>>运动</option>
-								<option value="2" <?php if($info['type']==2) echo 'selected'; ?>>服装</option>
-								<option value="3" <?php if($info['type']==3) echo 'selected'; ?>>明星</option>
+								<?php foreach($status as $key=>$val){?>
+								<option value="<?=$key?>" <?php if($info['type']==$key) echo 'selected';if(strlen($key)==1) echo 'disabled';?>><?php if(strlen($key)==2)echo '----';echo $val?></option>
+								<?php }?>
 							</select>
 						</td>
 					</tr>

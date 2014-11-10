@@ -2,6 +2,7 @@
 function pagenation_controller_update(ul_obj, options)
 {
 	//var index = parseInt(object.attr('id').split('_')[1]);
+	var base = options['base'];
 	var index = options['index'];
 	if((index < 1) || (index > total))
 	{
@@ -21,15 +22,14 @@ function pagenation_controller_update(ul_obj, options)
 		end = total+1;
 	}
 
-	
 	//add li:'previous'
-	ul_obj.append("<li class='first'><a id='pagination_1' href='#'>"+options['lang']['lang_first']+"</a></li>");
+	//ul_obj.append("<li class='first'><a id='pagination_1' href='#'>"+options['lang']['lang_first']+"</a></li>");
 	
-	var previous_li = "<li class='prev'><a id=pagination_"+(index-1)+" href='#'>"+options['lang']['lang_previous']+"</a></li>";
+	var previous_li = "<li class='unactive'><a id=pagination_"+(index-1)+" href='#'><img src='"+base+"/img/dot_dj.png' align='absmiddle' border='0'/></a></li>";
 	if(index == 1)
 	{
-	    previous_li = "<li class='prev disabled'><a id=pagination_"+(index-1)+" href='#'>"+options['lang']['lang_previous']+"</a></li>";
-	}
+	    previous_li = "<li class='unactive disabled'><a id=pagination_"+(index-1)+" href='#'><img src='"+base+"/img/dot_dj.png' align='absmiddle' border='0'/></a></li>";
+	} 
 	ul_obj.append(previous_li);
 	
 	//add middle li	
@@ -37,7 +37,7 @@ function pagenation_controller_update(ul_obj, options)
 	{
 		if(index != i)
 		{
-			ul_obj.append("<li><a id=pagination_"+i+" href='#'>"+i+"</a></li>");
+			ul_obj.append("<li class='unactive'><a id=pagination_"+i+" href='#'>"+i+"</a></li>");
 		}
 		else
 		{
@@ -45,13 +45,13 @@ function pagenation_controller_update(ul_obj, options)
 		}
 	}	
 		
-	var next_li = "<li class='next'><a id=pagination_"+(index+1)+" href='#'>"+options['lang']['lang_next']+"</a></li>";		
+	var next_li = "<li class='unactive'><a id=pagination_"+(index+1)+" href='#'><img src='"+base+"/img/dot_dz.png' align='absmiddle' border='0'/></a></li>";		
 	if(index == total)
 	{
-		 next_li = "<li class='next disabled'><a id=pagination_"+(index)+" href='#'>"+options['lang']['lang_next']+"</a></li>";		
+		 next_li = "<li class='unactive disabled'><a id=pagination_"+(index)+" href='#'><img src='"+base+"/img/dot_dz.png' align='absmiddle' border='0'/></a></li>";		
 	}
 	ul_obj.append(next_li);
-	ul_obj.append("<li class='last'><a id=pagination_"+total+" href='#'>"+options['lang']['lang_last']+"</a></li>");
+	//ul_obj.append("<li class='last'><a id=pagination_"+total+" href='#'>"+options['lang']['lang_last']+"</a></li>");
 };
 
 //options:{'url','post_data','sort_type','click_id','effect_id','ul_obj','page_update'}

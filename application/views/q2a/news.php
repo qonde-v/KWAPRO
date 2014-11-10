@@ -4,126 +4,111 @@
 <head>
 <title>TIT系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
-<link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" />
+<!-- <link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" /> -->
 <link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
+<link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"></script>
 <script src="<?php echo $base.'js/kwapro_event.jquery.js';?>"></script>
 
 
 </head>
-<?php include("header_n.php"); ?>
+<div class="container">
+
+<?php include("header.php"); ?>
 <!------------ 头部结束 ------------->
 
 
 
 
 <!------------ 内容开始 -------------> 
-
-
-<div id="main">
-<div id="main_nr">
-<div id="index_lx">
-<br>
-<br>
-
 <input type="hidden" id="base" value="<?php echo $base;?>"></input>
 <input type="hidden" id="type" value="<?php echo $type;?>"></input>
-<div class="index_news">
-	<div class="index_liebiao_zw">
-	<span id="content">
-	<?php foreach($news as $item):?>
-	<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-		  <tr>
-            <td width="20%" height="120" valign="top" align="center"><img src="<?php echo $base.'upload/uploadimages/'.$item['pricefilename'];?>" align="absmiddle" border="0" width="93" height="126" class="img_k"/></td>
-			<td width="80%" valign="top" align="left" style="line-height:22px;"><a href="<?php echo $base.'news/news_detail?id='.$item['ID'];?>" class="Red14"><font class="fDOrange14"><?=$item['title']?></font></a><br><br>
-			<?=$item['content']?>...<br>
-          </tr>
-		  <tr>
-            <td width="100%" height="50" valign="top" align="right" colspan="2"><?=$item['viewnum']?> 浏览   &nbsp;&nbsp; 分享到： <a href="#"><img src="<?php echo $base.'img/fenx_001.png';?>" align="absmiddle" border="0" /> </a>   <a href="#"><img src="<?php echo $base.'img/fenx_002.png';?>" align="absmiddle" border="0" /> </a>   <a href="#"><img src="<?php echo $base.'img/fenx_003.png';?>" align="absmiddle" border="0" /> </a>   <a href="#"><img src="<?php echo $base.'img/fenx_004.png';?>" align="absmiddle" border="0" /> </a>   <a href="#"><img src="<?php echo $base.'img/fenx_005.png';?>" align="absmiddle" border="0" /> </a></td>
-			
-			
-          </tr>
-	</table>
-	<?php endforeach;?>
-	</span>
+<div class="main">
+	<img src="<?php if(substr($type,0,1)==1) echo $base.'img/dt_top.png';else echo $base.'img/zs_top.png';?>" />
+	<ul class="nav1 nav-tabs" role="tablist">
+	  <?php if(substr($type,0,1)==1){?>
+	  <li class="tab-item <?php if($type==11)echo 'active'; else echo '';?>"><a href="<?php echo $base.'news?type=11';?>" >行业动态</a></li>
+	  <li class="tab-item <?php if($type==12)echo 'active'; else echo '';?>"><a href="<?php echo $base.'news?type=12';?>">潮流资讯</a></li>
+	  <li class="tab-item <?php if($type==13)echo 'active'; else echo '';?>"><a href="<?php echo $base.'news?type=13';?>">明星动态</a></li>
+	  <?php }else{?>
+	  <li class="tab-item <?php if($type==21)echo 'active'; else echo '';?>"><a href="<?php echo $base.'news?type=21';?>" >运动</a></li>
+	  <li class="tab-item <?php if($type==22)echo 'active'; else echo '';?>"><a href="<?php echo $base.'news?type=22';?>">面料</a></li>
+	  <li class="tab-item <?php if($type==23)echo 'active'; else echo '';?>"><a href="<?php echo $base.'news?type=23';?>">制衣</a></li>
+	  <?php }?>
+	  <li class="search-box">
+		<input type="text" value="搜索你感兴趣的" />
+		<a class="search-btn" href="javascript:void(0);" onclick="alert('search');"></a>
+	  </li>
+    </ul>
 
-		<?php if($inbox_page_num > 1):?>	
+
+	<div class="tab-content">
+	  <div class="tab-pane active" id="home">
+		<span id="content">
+		<?php foreach($news as $item):?>
+		<div class="media">
+		  <a class="media-pic" href="#">
+			<img src="<?php echo $base.'upload/uploadimages/'.$item['pricefilename'];?>" alt="..." width="250" height="185">
+		  </a>
+		  <div class="media-body">
+			<a href="<?php echo $base.'news/news_detail?id='.$item['ID'];?>" class="media-heading"><?=$item['title']?></a>
+			<span><?=utf8Substr($item['content'],0,100)?>...........</span>
+			<div class="media-footer">阅览（<?=$item['viewnum']?>）</div>
+		  </div>
+		</div>
+		<?php endforeach;?>
+		</span>
+			
+	    <div class="dt_fy">
+		  <?php if($inbox_page_num > 1):?>	
 		  <div class="pagination">
 				<ul id="<?php echo $inbox_page_num;?>">
-					<li class="first"><a href="#" id="pagination_1">首页</a></li>
-					<li class="prev disabled"><a href="#" id="pagination_0">&larr; 上一页</a></li>
+					<li class="unactive disabled"><a href="#" id="pagination_0"><img src="<?php echo $base.'img/dot_dj.png';?>" align="absmiddle" border="0"/></a></li>
 					<li class="active"><a href="#" id="pagination_1">1</a></li>
 					<?php if($inbox_page_num > 10):?>
 					<?php for($i=2;$i<=10;$i++):?>
 						<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
 					<?php endfor;?>
-					<?php else:?>
+					<?php else:?> 
 					<?php for($i=2;$i<=$inbox_page_num;$i++):?>
-						<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
+						<li class="unactive"><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
 					<?php endfor;?>
 					<?php endif;?>
-					<li class="next"><a href="#" id="pagination_2">下一页&rarr;</a></li>
-					<li class="last"><a href="#" id="<?php echo 'pagination_'.$inbox_page_num;?>">尾页</a></li>
+					<li class="unactive"><a href="#" id="pagination_2"><img src="<?php echo $base.'img/dot_dz.png';?>" align="absmiddle" border="0"/></a></li>
 				</ul>
 		  </div>
 		  <?php endif;?>
-        
+		</div>
 
-
+	  </div>
 	</div>
+
 	
+	<?php   
+   //截取utf8字符串   
+   function utf8Substr($str, $from, $len)   
+   {   
+      return preg_replace('#^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,'.$from.'}'.   
+                         '((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,'.$len.'}).*#s',   
+                         '$1',$str);   
+   }   
+   ?>
+
 	
 </div>
 
-
-
-
-
-</div>
-
-<div id="index_rx">
-<div class="black_bt22" style="text-align:center; margin-bottom:15px;"> 发布需求，定制你的专属 </div>
-
-<form action="<?php echo $base."news/"?>" name="frm_search" method="get">
-<div class="text_k_black text_sousuo" style="margin-top:10px;">
-<table width="97%" border="0" cellpadding="0" cellspacing="0" align="center">
-			<tr>
-              <td width="16%" height="30" align="center" valign="middle">搜索：</td>
-			  <td width="84%" align="left" valign="middle"><INPUT id="cdt_name" name="cdt_name" type="text" value="" class="u_text">
-			  <INPUT id="type" name="type" type="hidden" value="<?=$type?>" class="u_text"></td>
-            </tr>
-			
-</table>
-</div>
-</form>
-
-
-<div class="black_bt22" style="text-align:center; margin-top:10px; margin-bottom:15px;">  精 华 推 荐 </div>
-
-
-<?php foreach($best_list as $item):?>
-<div class="index_r_xwnr_tpx" style="margin-bottom:15px;">
-<img src="<?php echo $base.'upload/uploadimages/'.$item['pricefilename'];?>" align="absmiddle" border="0" width="294" height="201"/><br>
-<div class="index_r_sjxq_bt"><?=$item['title']?></div>
-</div>
-<br><br>
-<?php endforeach;?>
-
-</div>
-</div>
-</div>
+        
 
 
 <!------------ 底部开始 ------------->
 <?php include("footer.php");?>
 
-
+</div>
 </body>
 <script>
 $(function(){
-	$('.pagination ul li').live('click',switch_page);
+	$('.dt_fy ul li').live('click',switch_page);
 });
 
 function switch_page()
@@ -144,7 +129,7 @@ function switch_page()
 	
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
 		$('#content').html(html);
-		pagenation_controller_update(ul_obj,{'index':index,'total':total_page_num,'pagena_num':pagena_num,'lang':lang});
+		pagenation_controller_update(ul_obj,{'index':index,'total':total_page_num,'pagena_num':pagena_num,'lang':lang,'base':$('#base').val()});
 	}};
 	jQuery.ajax(ajax);
 }

@@ -18,6 +18,7 @@
 	    foreach($data as $item)
 	    {
 	    	$this->db->delete('message_manage', $item);
+			$this->db->delete('message_data', $item);
 	    }
 	 }
 	 
@@ -166,6 +167,34 @@
 			$this->db->limit($range['end']-$range['start']+1,$range['start']);
 		}
 		$query = $this->db->get('message_manage');
+		$result = array();
+		if($query->num_rows() > 0)
+		{
+			foreach($query->result_array() as $row)
+			{
+				array_push($result,$row);
+			}
+		}
+		return $result;
+	 }
+
+	  function get_related_messages($data)
+	 {
+	 	$sort_type = ($data['sort_type'] == 0) ? 'desc' : 'asc';
+	 	$this->db->select('md_Id,message_id,from_uId,time,content,user.username');
+		$this->db->where('to_uId',$data['uId']);
+		$this->db->where('related_id',$data['related_id']);
+		$this->db->where('p_md_Id',$data['p_md_Id']);
+		$this->db->join('user','user.uId = message_data.from_uId');
+		if($data['sort_attr'] == 'time')
+		{
+			$this->db->order_by('time',$sort_type);
+		}
+		else
+		{			
+			$this->db->order_by('user.username',$sort_type);
+		}
+		$query = $this->db->get('message_data');
 		$result = array();
 		if($query->num_rows() > 0)
 		{

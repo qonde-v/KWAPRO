@@ -95,7 +95,7 @@
 								<td ><?=++$i?></td>
 								<td ><?=$record->title?></td>
 								<td ><?=$record->author?></td>
-								<td ><?php if($record->type==1)echo '运动';elseif($record->type==2)echo '服装'; else echo '明星'; ?></td>
+								<td ><?php echo $status[$record->type]; ?></td>
 								<td ><?= date('Y-m-d H:i', strtotime($record->createTime))?></td>
 								<td >
 									<a class="btn btn-info"  href="<?php echo $base."admin/news/edit/".$record->ID."?createid=".$createid?>"><i class="icon-edit icon-white"></i> 编辑</a>

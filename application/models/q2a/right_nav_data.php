@@ -41,13 +41,15 @@
 		 $username = $this->User_data->get_username(array('uId'=>$user_id));
 		 $user_photo_path = $this->User_data->get_user_headphotopath($user_id);
 		 $user_gender = $this->User_data->get_user_gender($user_id);
+		 $user_subpic = $this->User_data->get_user_subpic($user_id);
 		 $kpc_score = $this->User_data->get_user_kpc($user_id);
 			
 		 $answer_num = isset($activity_content_data[ANSWER]) ? $activity_content_data[ANSWER] :0;
 		 $question_num = isset($activity_content_data[QUESTION]) ? $activity_content_data[QUESTION] : 0;
          $follow_num = isset($activity_content_data[FOLLOW]) ? $activity_content_data[FOLLOW] : 0;
-	     $location_data = $this->session->userdata('location_city');
-		 $data = array('location'=>$location_data,'kpc_score'=>$kpc_score,'username'=>$username,'headphoto_path'=>$user_photo_path,'answer_num'=>$answer_num,'question_num'=>$question_num,'follow_num'=>$follow_num,'gender'=>$user_gender);
+	     //$location_data = $this->session->userdata('location_city');
+		 $location_data = $this->User_data->get_user_location($user_id);
+		 $data = array('location'=>$location_data,'kpc_score'=>$kpc_score,'username'=>$username,'headphoto_path'=>$user_photo_path,'answer_num'=>$answer_num,'question_num'=>$question_num,'follow_num'=>$follow_num,'gender'=>$user_gender,'subpic'=>$user_subpic);
 		 //print_r($data);
 		 return array_merge($data,$activity_content_data);
 	 }

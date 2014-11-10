@@ -63,18 +63,18 @@ thead,
 tr,
 th,
 td {
-  margin: 0;
+ /* margin: 0;
   padding: 0;
   border: 0;
   font-weight: normal;
   font-style: normal;
   font-size: 100%;
   line-height: 1;
-  font-family: inherit;
+  font-family: inherit;*/
 }
 table {
-  border-collapse: collapse;
-  border-spacing: 0;
+  /*border-collapse: collapse;
+  border-spacing: 0;*/
 }
 ol, ul {
   list-style: none;
@@ -1110,31 +1110,7 @@ textarea[readonly] {
  * Tables.less
  * Tables for, you guessed it, tabular data
  * ---------------------------------------- */
-table {
-  width: 100%;
-  margin-bottom: 1px;
-  padding: 0;
-  font-size: 13px;
-  border-collapse: collapse;
-}
-table th, table td {
-  padding: 5px 4px 9px;
-  /*line-height: 18px;
-  text-align: left;*/
-}
-table th {
-  padding-top: 9px;
-  font-weight: bold;
-  vertical-align: middle;
-}
-table td {
-  /*vertical-align: top;
-  border-top: 1px solid #ddd;*/
-}
-table tbody th {
-  border-top: 1px solid #ddd;
-  vertical-align: top;
-}
+
 .condensed-table th, .condensed-table td {
   padding: 5px 5px 4px;
 }
@@ -1541,7 +1517,7 @@ table .headerSortUp.purple, table .headerSortDown.purple {
 li.menu, .dropdown {
   position: relative;
 }
-a.menu:after, .dropdown-toggle:after {
+/*a.menu:after, .dropdown-toggle:after {
   width: 0;
   height: 0;
   display: inline-block;
@@ -1557,7 +1533,7 @@ a.menu:after, .dropdown-toggle:after {
   -khtml-opacity: 0.5;
   -moz-opacity: 0.5;
   opacity: 0.5;
-}
+}*/
 .menu-dropdown, .dropdown-menu {
   background-color: #ffffff;
   float: left;
@@ -2107,25 +2083,16 @@ button.btn::-moz-focus-inner, input[type=submit].btn::-moz-focus-inner {
 }
 .pagination {
   height: 36px;
-  margin: 18px 0;
+  margin: 0;
+  overflow:auto;
 }
 .pagination ul {
-  float: left;
   margin: 0;
-  border: 1px solid #ddd;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 .pagination li {
   display: inline;
 }
 .pagination a {
-  float: left;
   padding: 0 14px;
   line-height: 24px;
   border-right: 1px solid;
@@ -2137,7 +2104,10 @@ button.btn::-moz-focus-inner, input[type=submit].btn::-moz-focus-inner {
   text-decoration: none;
 }
 .pagination a:hover, .pagination .active a {
-  background-color: #FF2F2F;
+  border:1px solid #e6eaed; padding:6px 10px 6px 10px; background-color:#313131; font-size:14px; font-weight:bold; color:#ffffff;
+}
+.pagination .unactive a {
+  border:1px solid #e6eaed; padding:6px 10px 6px 10px; background-color:#ffffff; font-size:14px; color:#333333;
 }
 .pagination .disabled a, .pagination .disabled a:hover {
   background-color: transparent;

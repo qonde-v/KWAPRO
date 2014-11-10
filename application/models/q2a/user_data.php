@@ -483,6 +483,23 @@
         }
 	 }
 
+	 function get_user_subpic($uId)
+	 {
+	    //
+        $this->db->select('subpic');
+        $this->db->where('uId',$uId);
+        $query = $this->db->get('user');
+        if($query->num_rows() > 0)
+        {
+            $row = $query->row();
+            return $row->subpic;
+        }
+        else
+        {
+            return NULL;
+        }
+	 }
+
   }
 
 

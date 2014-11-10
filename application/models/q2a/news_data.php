@@ -144,6 +144,35 @@
 		return $data;
 	}
 
+	function get_lastid($id,$type)
+	 {
+	   $sql = "SELECT ID from news WHERE id<".$id." and type=".$type." limit 1";
+	   $query = $this->db->query($sql);
+
+	   	if($query->num_rows() > 0)
+		{
+		     foreach($query->result() as $row)
+            {
+                return $row->ID;
+            }
+		}
+		return 0;
+	 }
+	 function get_nextid($id,$type)
+	 {
+	   $sql = "SELECT ID from news WHERE id>".$id." and type=".$type." limit 1";
+	   $query = $this->db->query($sql);
+
+	   	if($query->num_rows() > 0)
+		{
+		     foreach($query->result() as $row)
+            {
+                return $row->ID;
+            }
+		}
+		return 0;
+	 }
+
 
   }
 

@@ -30,6 +30,13 @@
      	$this->db->set($data);
 		$this->db->insert('demand');
      }
+
+	 //insert information reocrd to db
+     function information_record_insert($data)
+     {
+     	$this->db->set($data);
+		$this->db->insert('information');
+     }
      
      //insert design reocrd to db
      //input: array('uId','title',....)
@@ -160,6 +167,16 @@
 		//{
            $this->db->where('id',$demand_id);
            $this->db->set('designnum', 'designnum+1', FALSE);
+           $this->db->update('demand');
+		//}
+     }
+
+	 function update_messnum($demand_id)
+     {
+     	//if(!empty($demand_id))
+		//{
+           $this->db->where('id',$demand_id);
+           $this->db->set('messnum', 'messnum+1', FALSE);
            $this->db->update('demand');
 		//}
      }

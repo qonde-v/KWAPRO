@@ -54,6 +54,7 @@
 		$t_query=$this->db->get('orders');
 		$data['inbox_num']=	$t_query->num_rows();
 
+		$this->db->where('uId',$user_id);
 		$this->db->order_by('createtime','desc');
 		$this->db->limit($range['end']-$range['start']+1,$range['start']);
 		$query = $this->db->get('orders');
@@ -94,19 +95,18 @@
 		if(!empty($orders))
 		{
 			$i=0;
+			$html .= '<ul class="main-list">';
 			foreach($orders as $item){
 				$i++;
-				$html .= '<tr>';
-				$html .= '<td width="100%" height="" valign="middle" align="right">';
-				$html .= '<table width="100%" border="0" cellpadding="0" cellspacing="10" align="center" style="border:1px #f4f4f7 solid;">';
-				$html .= '<tr>';
-				$html .= '<td width="100%" height="40" valign="middle" align="left" colspan="2"><a href="'.$base.'order/order_detail?id='.$item['id'].'" class="Red14">'.$i.'、'.$item['realname'].'、'.$item['address'].'、'.$item['tel'].'</a><div class="anniu_g" style="width:60px; text-align:center;float:right"><a href="'.$base.'order/order_detail?id='.$item['id'].'" class="White14">查看详情</a></div></td>';
-				$html .= '</tr>';
-				$html .= '</table>';
-				$html .= '</td>';
-			    $html .= '</tr>';
-
+				$html .= '	<li>';
+				$html .= '		<a href="'.$base.'order/order_detail?id='.$item['id'].'" class="title">'. $i.'、'.$item['realname'].'、'.$item['address'].'、'.$item['tel'].'</a>';
+				$html .= '		<div class="btns">';
+				$html .= '		<a href="'.$base.'order/order_detail?id='.$item['id'].'">查看详情</a>';
+				$html .= '		</div>';
+				$html .= '		<p><span class="pull-right">提交于'.$item['createtime'].'</span></p>';
+				$html .= '	</li>';
 			}
+			$html .= '</ul>';
 		}
 		echo $html;
 

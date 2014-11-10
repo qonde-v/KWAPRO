@@ -164,34 +164,25 @@
 		if(!empty($designs))
 		{
 			$i=0;
+			$html .= '<ul class="main-list">';
 			foreach($designs as $item){
 				$i++;
-				$html .= '<tr>';
-				$html .= '<td width="100%" height="" valign="middle" align="right">';
-				$html .= '<table width="100%" border="0" cellpadding="0" cellspacing="10" align="center" style="border:1px #f4f4f7 solid;">';
-				$html .= '<tr>';
-				$html .= '<td width="100%" height="40" valign="middle" align="left" colspan="2"><a href="'.$base.'design/design_detail?id='.$item['id'].'" class="Red14">'.$i.'、'.$item['title'].'</a></td>';
-				$html .= '<td width="15%" height="40" valign="middle" align="right">';
-				$html .= '<div class="anniu_g" style="width:60px; text-align:center;float:left">';
+				$html .= '	<li>';
+				$html .= '		<a href="'.$base.'design/design_detail?id='.$item['id'].'" class="title">'. $i.'、'.$item['title'].'</a>';
+				$html .= '		<div class="btns">';
 				if($item['status']==0){
-					$html .= '<a href="#" onclick="javascript:subsim('.$item['id'].','.$item['demand_id'].')" class="White14">提交仿真</a><?}?>';
+					$html .= '<a href="#" onclick="javascript:subsim('.$item['id'].','.$item['demand_id'].')" >提交仿真</a>';
 				}elseif($item['status']==1){
-					$html .= '<a href="#" class="White14">等待仿真</a><?}?>';
+					$html .= '<a href="#" class="black" >等待仿真</a>';
 				}elseif($item['status']==2){
-					$html .= '<a href="'.$base.'design/similar_detail" class="White14">查看仿真</a><?}?>';
+					$html .= '<a href="'.$base.'design/similar_detail" class="black">查看仿真</a>';
 				}
-				$html .= '</div>';
-				$html .= '</td>';
-				$html .= '</tr>';
-				$html .= '<tr>';
-				$html .= '<td width="50%" height="40" valign="middle" align="left"><a href="#" class="DBlue">'.$item['viewnum'].'</a> 浏览 &nbsp;&nbsp;&nbsp;&nbsp;<a href="#" class="DBlue">'.$item['messnum'].'</a> 留言 &nbsp;&nbsp;&nbsp;&nbsp;</td>';
-				$html .= '<td width="50%" height="40" valign="middle" align="right" class="fGray">'.$item['createdate'].'</td>';
-				$html .= '</tr>';
-				$html .= '</table>';
-				$html .= '</td>';
-			    $html .= '</tr>';
-
+				$html .= '		<a href="'.$base.'design/order?id='.$item['id'].'">提交订单</a>';
+				$html .= '		</div>';
+				$html .= '		<p><span class="link link-liulan">浏览（<a href="#">'.$item['viewnum'].'</a>）</span><span class="link link-liuyan">留言（<a href="#">'.$item['messnum'].'</a>）</span><span class="pull-right">发布于'.$item['createdate'].'</span></p>';
+				$html .= '	</li>';
 			}
+			$html .= '</ul>';
 		}
 		echo $html;
 
@@ -329,8 +320,9 @@
 		$post_arr['title'] = str_replace("\n","<BR/>",$post_arr['title']);
 		$post_arr['createdate'] = date("Y-m-d H:i:s", time());
 		$userid=$this->session->userdata('uId');
+		$username = $this->User_data->get_username(array('uId'=>$userid));
 		$post_arr['uId'] = $userid;
-		$post_arr['username'] = $this->User_data->get_username(array('uId'=>$userid));
+		$post_arr['username'] = $username;
 
 		$design_id=$this->Demand_management->design_record_insert($post_arr);
 		$picdata['design_id']=$design_id;
@@ -342,6 +334,22 @@
 		}
 		//update designnum
 		$this->Demand_management->update_designnum($post_arr['demand_id']);
+
+		//给需求发布者发送提醒
+		$result_d=array();
+		$result_d=$this->Demand_management->get_user_demand($post_arr['demand_id']);
+		foreach($result_d as $val){
+			  $demand=$val;
+		}
+		$data = array();
+		$data['uId'] = $userid;
+		$data['username'] = $username;
+		$data['type'] = 1;
+		$data['createdate'] = date("Y-m-d H:i:s", time());
+		$data['to_uId'] = $demand['uId'];
+		$data['title'] = $demand['title'];
+		$data['relateid'] = $design_id;
+		$this->Demand_management->information_record_insert($data);
 
 		echo '保存设计成功';
 	}

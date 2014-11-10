@@ -31,10 +31,11 @@
 	      $data= array('username'=> $_POST['username'],'email'=> $_POST['email'],'passwd'=> $_POST['password']);
 	      $user_id = $this->register_process($data);
 		  //login data store in session
-		  $newdata = array('status' => 'LOGIN','uId'=> $user_id);
+		  $newdata = array('status' => 'LOGIN','uId'=> $user_id,'site'=>'WebSite');
 		  $this->session->set_userdata($newdata);
 
-		  redirect('profile');
+		  $base = $this->config->item('base_url');
+		  redirect($base);
 	   }
 		else
 		{

@@ -33,9 +33,20 @@
 
 	   $language = $this->Ip_location->get_language();
 
+
 	   $data = array('base'=>$base);
+
+	   $user_id = $this->session->userdata('uId');
+	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
+	   $data = array_merge($right_data,$data);
+
 		$data['type'] = empty($_GET['type'])?1:$_GET['type'];
 		$data['cdt_name'] = empty($_GET['cdt_name'])?'':$_GET['cdt_name'];
+
+		if($this->session->userdata('site')=='WebSite'){
+			$user_id = $this->session->userdata('uId');
+			$data['login'] = "login";
+		 }
 
 	   //get news 
 		$where="type = ".$data['type'];
@@ -70,6 +81,9 @@
 	   $best_list = $this->News_data->get_newslist(array('isbest'=>1,'type'=>$data['type']), 2);
 	   $data['best_list'] = $best_list;
 
+	   $status = array('1'=>'动态','11'=>'行业动态','12'=>'潮流资讯','13'=>'明星动态','2'=>'知识','21'=>'运动','22'=>'面料','23'=>'制衣',);
+	   $data['status'] = $status;
+
 	   $this->load->view('q2a/news',$data);
 
 	}
@@ -98,44 +112,53 @@
 		if(!empty($news))
 		{
 			foreach($news as $item){
-				$html .= '<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">';
-				$html .= '<tr>';
-				$html .= '<td width="20%" height="120" valign="top" align="center">';
-				$html .= '<img src="'.$base.'upload/uploadimages/'.$item['pricefilename'].'" align="absmiddle" border="0" width="93" height="126" class="img_k"/>';
-				$html .= '</td>';
-				$html .= '<td width="80%" valign="top" align="left" style="line-height:22px;">
-					<a href="'.$base.'news/news_detail?id='.$item['ID'].'" class="Red14"><font class="fDOrange14">'.$item['title'].'</font></a><br><br>'.$item['content'].'...<br>';
-				$html .= '</td>';			
-				$html .= '</tr>';
-				$html .= '<tr>';
-				$html .= '<td width="100%" height="50" valign="top" align="right" colspan="2">';
-				$html .= $item['viewnum'].'浏览   &nbsp;&nbsp; 分享到： <a href="#"><img src="'. $base.'img/fenx_001.png" align="absmiddle" border="0" /> </a>   <a href="#"><img src="'. $base.'img/fenx_002.png" align="absmiddle" border="0" /> </a>   <a href="#"><img src="'. $base.'img/fenx_003.png" align="absmiddle" border="0" /> </a>   <a href="#"><img src="'. $base.'img/fenx_004.png" align="absmiddle" border="0" /> </a>   <a href="#"><img src="'. $base.'img/fenx_005.png" align="absmiddle" border="0" /> </a>';
-				$html .= '</td>';
-			    $html .= '</tr>';
-				$html .= '</table>';
-
+				$html .= '<div class="media">';
+				$html .= '  <a class="media-pic" href="#">';
+				$html .= '	<img src="'.$base.'upload/uploadimages/'.$item['pricefilename'].'" alt="..." width="250" height="185">';
+				$html .= '  </a>';
+				$html .= '  <div class="media-body">';
+				$html .= '	<a href="'.$base.'news/news_detail?id='.$item['ID'].'" class="media-heading">'.$item['title'].'</a>';
+				$html .= '	<span>'.self::utf8Substr($item['content'],0,100).'...........</span>';
+				$html .= '	<div class="media-footer">阅览（'.$item['viewnum'].'）</div>';
+				$html .= '  </div>';
+				$html .= '</div>';
 			}
 		}
 		echo $html;
 
 	}
 
+    function utf8Substr($str, $from, $len)   
+    {   
+      return preg_replace('#^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,'.$from.'}'.   
+                         '((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,'.$len.'}).*#s',   
+                         '$1',$str);   
+    }  
 
 	function news_detail()
 	{
 	   //$this->output->cache(1);
 	   $base = $this->config->item('base_url');
+	   $data = array('base'=>$base);
 
 	   //login permission check
 	   //$this->Auth->permission_check("login/");
 
 	   //get current login user id
 	   $user_id = $this->session->userdata('uId');
+	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
+	   $data = array_merge($right_data,$data);
 
 	   $language = $this->Ip_location->get_language();
 
-	   $data = array('base'=>$base);
-	   $data['login'] = "login";
+	   if($this->session->userdata('site')=='WebSite'){
+			$user_id = $this->session->userdata('uId');
+			$data['login'] = "login";
+		 }
+
+	   $status = array('1'=>'动态','11'=>'行业动态','12'=>'潮流资讯','13'=>'明星动态','2'=>'知识','21'=>'运动','22'=>'面料','23'=>'制衣',);
+	   $data['status'] = $status;
+
 	   $result=array();
 	   
 		$this->db->select('*');
@@ -159,6 +182,11 @@
 	   $best_list = $this->News_data->get_newslist(array('isbest'=>1), 2);
 	   $data['best_list'] = $best_list;
 
+	   $lastid = $this->News_data->get_lastid($data['news']['ID'],$data['news']['type']);
+	   $nextid = $this->News_data->get_nextid($data['news']['ID'],$data['news']['type']);
+		
+		$data['lastid'] = $lastid;
+		$data['nextid'] = $nextid;
 
 		$this->load->view('q2a/news_detail',$data);
 	}

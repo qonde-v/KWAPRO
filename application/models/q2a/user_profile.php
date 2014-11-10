@@ -67,9 +67,9 @@
 
 	   $advance_data['langCode'] = $this->User_data->get_user_langcode($uId);
 
-	   $advance_data['language_data'] = $this->get_all_language_data();
+	   //$advance_data['language_data'] = $this->get_all_language_data();
 
-	   $advance_data['tag'] = $this->User_data->get_user_private_tag_data($uId);
+	   //$advance_data['tag'] = $this->User_data->get_user_private_tag_data($uId);
 	   $advance_data['location'] = $this->User_data->get_user_location($uId);
 	   
 	   $advance_data['rcv_rss'] = $this->get_rcv_rss($uId);
@@ -943,6 +943,15 @@
 	 {
 	    return 'upload/user_photo/default/userphoto.jpg';
 	 }
+
+	 function user_subpic_update($item)
+     {
+		//$sql = "UPDATE useraccount SET account= '{$item['account']}' WHERE uId = {$item['uId']} AND stId = {$item['stId']}";
+		//$this->db->query($sql);
+        $this->db->where('uId',$item['uId']);
+        $this->db->set('subpic',$item['subpic']);
+        $this->db->update('user');
+     }
   }
   /*End of file*/
   /*Location: ./system/appllication/model/q2a/user_profile.php*/
