@@ -1,122 +1,173 @@
-<!DOCTYPE html>
-
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <title>TIT系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
-<link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" />
 <link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
 <script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"></script>
+<script src="<?php echo $base.'js/kwapro_event.jquery.js';?>"></script>
+<script>
+	function set_status(id,status){
+		var url = $('#base').val() + 'order/set_status/';
+		var post_str = 'id='+id+'&status=' + status;
+
+		var result = window.confirm("是否进行此操作");
+		if (result) {
+			var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
+				//alert(html);
+				window.location.reload();
+			}};
+			jQuery.ajax(ajax);
+		}
+
+	
 
 
+	}
+</script>
 </head>
-<?php include("header_n.php"); ?>
+<div class="container">
+<?php include("header.php"); ?>
 <!------------ 头部结束 ------------->
 
 
+<!------------ 内容开始 ------------->
+<input type="hidden" id="base" value="<?php echo $base;?>"/>
+
+  <div class="main">
+	<ul class="breadcrumb">
+      <li><a href="<?php echo $base;?>">首页</a></li>
+      <li>/</li>
+      <li><a href="<?php echo $base.'order/';?>">我的订单</a></li>
+      <li>/</li>
+      <li><a href="#">订单详情</a></li>
+    </ul>
+    <ul class="steps">
+    	<li class="start">
+        	<label>提交</label>
+            <div class="inline"><?=$order['createtime']?></div>
+        </li>
+        <li>
+        	<label>已确认</label>
+            <div class="inline <?php if($order['status']>=1) echo 'show';?>"><?=$order['confirmtime']?></div>
+        </li>
+        <li>
+        	<label>制作中</label>
+            <div class="inline <?php if($order['status']>=2) echo 'show';?>">2014-10-21 09:10:12</div>
+        </li>
+        <li>
+        	<label>制作完成</label>
+            <div class="inline <?php if($order['status']>=3) echo 'show';?>"><?=$order['completetime']?></div>
+        </li>
+        <li style="width:196px;">
+        	<label>已寄出</label>
+            <div class="inline <?php if($order['status']>=4) echo 'show';?>"><?=$order['posttime']?></div>
+        </li>
+        <li class="end">
+        	<label>完成</label>
+            <div class="inline <?php if($order['status']==5) echo 'show';?>"><?=$order['committime']?></div>
+        </li>
+    </ul>
+    <div class="order-detail">
+    	<div class="left">
+       	  <div class="title">订单详情</div>
+          <div class="detail">
+          	<div class="detail-form">
+            	<label style="width:21%;">订单编号：</label>
+                <div class="info" style="width:79%;"><?php echo $order['id'];?>
+                </div>
+            </div>
+            <div class="detail-form">
+            	<label style="width:25%;">订单收件人：</label>
+                <div class="info" style="width:75%;"><?php echo $order['realname'];?>
+                </div>
+            </div>
+            <div class="detail-form">
+            	<label style="width:21%;">收货地址：</label>
+                <div class="info" style="width:79%;"><?php echo $order['address'];?>，<?php echo $order['tel'];?>
+                </div>
+            </div>
+            <div class="detail-form bottomline">
+            	<label style="width:21%;">订单留言：</label>
+                <div class="info" style="width:79%;"><?php echo $order['remark'];?>
+                </div>
+            </div>
+            <div class="detail-form">
+                <label style="width:14%;">厂家：</label>
+                <div class="info" style="width:86%;"><?php echo $order['factory']['name'];?></div>
+              </div>
+              <div class="detail-form">
+                <label style="width:14%;">厂址：</label>
+                <div class="info" style="width:86%;"><?php echo $order['factory']['address'];?></div>
+              </div>
+          </div>
+        </div>
+        <div class="right">
+        	<img class="status-img" src="<?php echo $base.'img/wc_xtb.png';?>" />
+            <strong class="status">订单状态：<?php echo $arr_status[$order['status']]->name;?></strong>
+            <div class="wuliu">
+            	<label>物流信息：</label>
+                <div class="wuliu-info">
+                <p>圆通速递   单号：200016076840 </p>
+                <br />
+                <p>寄件单位：广州XXXX公司（工厂）</p>
+				<p>发出地点：XX省XX市XX区XX路XXXX号</p>
+                </div>
+            </div>
+            <div>快递状态：<strong>未签收</strong></div>
+            <div>订单提交者确认：<?php if($order['status']==5) { echo '<strong>订单已确认</strong>'; }else{?><a class="queren"  href="javascript:set_status(<?=$order['id']?>,5)">确认签收</a><?php }?></div>
+        </div>
+    </div>
+    <div class="products-detail">
+    	<label>
+        	<span>订单者： <?php echo $order['realname'];?></span>
+            <span>订单ID：<?php echo $order['id'];?></span>
+            <span>设计：《设计XXX》</span>
+            <span>设计者：test</span>
+        </label>
+    	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+          <tr>
+            <th class="borderleft0" width="25%">设计产品</th>
+            <th width="15%">单价</th>
+            <th width="15%">件数</th>
+            <th width="14%">价格</th>
+            <th width="15%">邮寄费用</th>
+            <th class="borderright0" width="16%">共计</th>
+          </tr>
+          <tr>
+            <td class="borderleft0"><img class="pull-left" src="<?php echo $base.'img/gly_dd_p.png';?>" /><span style="line-height: 83px;">《设计XXX》的订单</span></td>
+            <td class="text-red">369元</td>
+            <td>1</td>
+            <td class="text-red">369元</td>
+            <td class="text-red">20元</td>
+            <td class="borderright0 text-red">389元</td>
+          </tr>
+        </table>
+		<label>
+        	<p>
+        		<span>制作厂家：<?php echo $order['factory']['name'];?></span>
+            	<span>厂址：<?php echo $order['factory']['address'];?></span>
+            </p>
+            <p>
+        		<span>电话：<?php echo $order['factory']['tel'];?></span>
+            	<span>联系人：<?php echo $order['factory']['contacts'];?></span>
+            </p>
+            <p class="yewu">
+            	<span style="width:7%;">主要业务：</span>
+        		<span style="width:91%;"><?php echo $order['factory']['business'];?></span>
+            </p>
+        </label>
+    </div>
+  </div>
 
 
 
-<!------------ 内容开始 -------------> 
-
-
-<div id="main">
-<div id="main_nr">
-<div id="index_lx">
-<div class="red_bt16" style="width:150px; margin-bottom:10px;">需 &nbsp;&nbsp; 求</div>
-<div class="gray_q_bt14" style="width:825px; height:40px; margin-bottom:10px;">当前设计：<b>555   </b>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   需求：<b>5665   </b>        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        设计：<b>9889</b>
-
-</div>
-
-<div class="index_news">
-	
-	<div class="index_news_zw">
-	<div class="index_l_xqnr">
-	<b>订单标识：</b><?php echo $order['id'];?>
-	<br>
-	<b>提交人：</b><?php echo $order['realname'];?>
-	<br>
-	<b>提交时间：</b><?php echo $order['createtime'];?>
-	<br>
-	<b>当前进度：</b><?php echo $order['status'];?>
-	</div>
-	</div>
-	
-
-</div>
-
-
-
-
-
-</div>
-
-<div id="index_rx">
-<div class="black_bt22" style="text-align:center; margin-bottom:15px;"> 发布需求，定制你的专属 </div>
-
-<div class="text_k_black text_sjxq" style="margin-top:10px;">
-<table width="97%" border="0" cellpadding="0" cellspacing="0" align="center">
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_01.png';?>" align="absmiddle" border="0"/></td>
-			  <td width="85%" align="left" valign="middle">创建一个需求</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_02.png';?>" align="absmiddle" border="0"/></td>
-			  <td width="85%" align="left" valign="middle">选择你的需求参数</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_03.png';?>" align="absmiddle" border="0"/></td>
-			  <td width="85%" align="left" valign="middle">描述你的需求</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_04.png';?>" align="absmiddle" border="0"/></td>
-			  <td width="85%" align="left" valign="middle">发布需求</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle"></td>
-			  <td width="85%" align="left" valign="middle">-> 对外发布，让别人为你服务</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle"></td>
-			  <td width="85%" align="left" valign="middle">-> 自己动手设计</td>
-            </tr>
-</table>
-</div>
-
-<div  style="text-align:center; margin-bottom:15px; margin-top:15px;"> 
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-			<tr>
-              <td width="100%" height="30" align="center" valign="middle">
-			  <div class="anniu_h" style="width:220px; text-align:center;">
-<a href="<?php echo $base.'demand/publish';?>" class="White14">发布需求</a></div></td>
-            </tr>
-			</table>
-
- </div>
-
-<div class="black_bt22" style="text-align:center; margin-bottom:15px;"> 最新动态 </div>
-
-
-<div class="index_r_xwnr_tpx" style="margin-bottom:15px;">
-<img src="<?php echo $base.'img/index_r001.png';?>" align="absmiddle" border="0" width="294" height="201"/><br>
-<div class="index_r_sjxq_bt">参与人：<a href="#" class="Red14">李小小</a>  参与时间：2014-03-25</div>
-</div>
-<br><br>
-
-<div class="index_r_xwnr_tpx">
-<img src="<?php echo $base.'img/index_r002.png';?>" align="absmiddle" border="0" width="294" height="201"/><br>
-<div class="index_r_sjxq_bt">参与人：<a href="#" class="Red14">李小小</a>  参与时间：2014-03-25</div>
-</div>
-
-</div>
-</div>
-</div>
 
 
 <!------------ 底部开始 ------------->
 <?php include("footer.php");?>
-
+</div>
 </body>
 </html>

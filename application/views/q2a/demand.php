@@ -121,7 +121,7 @@ function updatestatus(demand_id,status)
 	var post_str = 'demand_id='+demand_id+'&status=' + status;
 	
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
-		alert(html);
+		//alert(html);
 		window.location.reload();
 	}};
 	jQuery.ajax(ajax);
