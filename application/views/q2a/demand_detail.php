@@ -5,8 +5,6 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
-<!-- <link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" /> -->
 <link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
 <script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"></script>
 
@@ -101,7 +99,8 @@ function send_sec_msg(tt)
 <!------------ 内容开始 -------------> 
 <input type="hidden" id="base" value="<?php echo $base;?>"></input>
 
-  <div class="main"> <img src="<?php echo $base.'img/sub_top_p.png';?>" />
+  <div class="main"> 
+	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_p.png';?>" /></a>
     <ul class="breadcrumb">
       <li><a href="<?php echo $base;?>">首页</a></li>
       <li>/</li>
@@ -181,9 +180,9 @@ function send_sec_msg(tt)
 		  <input type="hidden" id="msg_title_area" value=""></input>
           <textarea class="message-input" id="msg_content_area"></textarea>
           <div class="message-btns"> <a href="#"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> 
-		  <?php if(isset($login)){?><a class="btns" href="javascript:void(0);" id="msg_send_btn" data-loading-text="请稍后">留　言</a>
+		  <?php if(isset($login)){?><a class="btn" href="javascript:void(0);" id="msg_send_btn" data-loading-text="请稍后">留　言</a>
 		  <?php }else{?>
-		  <a class="btns" href="javascript:void(0);" onclick="javascript:document.getElementById('login_modal').className='modal';" data-loading-text="请稍后">留　言</a>
+		  <a class="btn" href="javascript:void(0);" onclick="javascript:document.getElementById('login_modal').className='modal';" data-loading-text="请稍后">留　言</a>
 		  <?php }?> 
 		  </div>
         </div>
@@ -206,7 +205,7 @@ function send_sec_msg(tt)
 				<input type="hidden" id="msg_title_area_<?=$i?>" value=""></input>
 				<input type="hidden" id="p_md_Id_<?=$i?>" value="<?php echo $item['md_Id'];?>"></input>
               	<textarea class="message-input"  id="msg_content_area_<?=$i?>"></textarea>
-          		<div class="message-btns"> <a href="#"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> <a class="btn" onclick="send_sec_msg(<?=$i?>)">回　复</a> </div>
+          		<div class="message-btns"> <a href="#"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> <a class="btn" href="#" onclick="send_sec_msg(<?=$i?>)">回　复</a> </div>
               </div>
 			</div>
           </div>

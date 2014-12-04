@@ -1,183 +1,279 @@
-<!DOCTYPE html>
-
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>TIT系统</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
-<link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" />
-<link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
-<script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"></script>
-
-
-<link rel="stylesheet" href="<?php echo $base.'css/jquery-ui.css';?>">
-<script src="<?php echo $base.'js/jquery-1.10.2.js';?>"></script>
-<script src="<?php echo $base.'js/jquery-ui.js';?>"></script>
-<script>
-$(function() {
-$( "#slider" ).slider({
-value:<?php if(!empty($similar)) echo $similar['strength']; else echo 0;?>,
-min: 1,
-max: 1.5,
-step: 0.1,
-slide: function( event, ui ) {
-$( "#strength" ).val(ui.value );
-}
-});
-$( "#strength" ).val($( "#slider" ).slider( "value" ) );
-
-
-$( "#slider1" ).slider({
-value:<?php if(!empty($similar)) echo $similar['sporttime']; else echo 0;?>,
-min: 0,
-max: 2,
-step: 0.1,
-slide: function( event, ui ) {
-$( "#sporttime" ).val(ui.value );
-}
-});
-$( "#sporttime" ).val($( "#slider1" ).slider( "value" ) );
-
-$( "#slider2" ).slider({
-value:<?php if(!empty($similar)) echo $similar['temperature']; else echo 0;?>,
-min: 0,
-max: 50,
-step: 1,
-slide: function( event, ui ) {
-$( "#temperature" ).val(ui.value );
-}
-});
-$( "#temperature" ).val($( "#slider2" ).slider( "value" ) );
-
-
-$( "#slider3" ).slider({
-value:<?php if(!empty($similar)) echo $similar['humidity']; else echo 0;?>,
-min: 0,
-max: 100,
-step: 1,
-slide: function( event, ui ) {
-$( "#humidity" ).val(ui.value );
-}
-});
-$( "#humidity" ).val($( "#slider3" ).slider( "value" ) );
-
-$( "#slider4" ).slider({
-value:<?php if(!empty($similar)) echo $similar['proficiency']; else echo 0;?>,
-min: 0,
-max: 100,
-step: 1,
-slide: function( event, ui ) {
-$( "#proficiency" ).val(ui.value );
-}
-});
-$( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
-
-$( "#slider5" ).slider({
-value:<?php if(!empty($similar)) echo $similar['age']; else echo 0;?>,
-min: 10,
-max: 70,
-step: 1,
-slide: function( event, ui ) {
-$( "#age" ).val(ui.value );
-}
-});
-$( "#age" ).val($( "#slider5" ).slider( "value" ) );
-
-$( "#slider6" ).slider({
-value:<?php if(!empty($similar)) echo $similar['weight']; else echo 0;?>,
-min: 20,
-max: 150,
-step: 1,
-slide: function( event, ui ) {
-$( "#weight" ).val(ui.value );
-}
-});
-$( "#weight" ).val($( "#slider6" ).slider( "value" ) );
-});
-</script>
-<script>
-function gonext(bz){
-	var ob;
-	if(bz==3){
-		if($('input:radio[name="selecttemp"]:checked').val()==-1){
-			//alert('无类似设计请选择空白模板');
-			$('.modal-body').html('无类似设计请选择空白模板');
-			$('#msg_modal').css('display','block');
-			return;
+<script src="<?php echo $base.'js/jquery.min.js';?>" type="text/javascript"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".nav-flow li a").click(function(){
+		var li = $(this).parent();
+		if(!li.hasClass("active")){
+			$(".nav-flow li.active").removeClass("active");
+			li.addClass("active");
+			$(".tab-content.active").removeClass("active");
+			$("#"+$(this).attr("class")).addClass("active");
 		}
-	}
-	for(i=1;i<=4;i++){
-		ob=document.getElementById('buzhou'+i);
-		ob1=document.getElementById('sheji'+i);
-		if(i==bz){
-			ob.style.display='';
-			ob1.className='sheji_bz1';
+		if(li.index()==2){
+			$('.thumbs').find("li").remove(); 
+			var inputlist=document.getElementById("detailpics").getElementsByTagName("input"); 
+			var list=document.getElementById("detailpics").getElementsByTagName("img"); 
+			for (var i = 0; i < list.length; i++) {
+				var img=list[i];
+				var input=inputlist[i];
+				var num = i+1;
+				var html = '<li><img id="crop_photo'+num+'" width="100px" height="96px" src="'+img.src+'" onclick="showthumb(this)"/><input id="crop_name'+num+'" type="hidden" value="'+input.value+'"></li>';
+				$('.thumbs').append(html);
+				
+				if(!($('#crop_fabric'+num).length>0)){
+					var html1 = '<input id="crop_fabric'+num+'" type="hidden" value="">';
+					$('#flow3').append(html1);
+				}
+			}
+			
+		}
+	});
+	
+	$(".ml_list li").click(function(){
+		$(".ml_list li.active").removeClass("active");
+		$(this).addClass("active");
+		var ff = $(this).find('input').val();
+		array = ff.split("||");
+		
+	    $("#fab_name").html('名称：' + array[1]);
+		$("#fab_pic").attr('src',$('#base').val() + 'img/' + array[2]);
+		$("#fab_description").html(array[3]);
+		$("#fab_feature").html(array[4]);
+
+		if($('#path').attr('class')=='black'){
+			var id=$('#cropid').val();
+			$("#crop_fabric"+id).val(array[0]);
+		}else{
+			$("#fabric").val(array[0]);
+		}
+
+	});
+	
+	$(".tab-btns a").click(function(){
+		$(".tab-btns a.black").removeClass("black");
+		$(this).addClass("black");
+		if($(this).attr("id") == "path"){
+			$(".thumbs").show();
 		}
 		else{
-			ob.style.display='none';
-			ob1.className='sheji_bz2';
+			$(".thumbs").hide();
+			$('#detailname').html('整体');
 		}
+	});
+	$(".selecter ul li").click(function(){
+		$(".tab-btns a.black").removeClass("black");
+		$(".selecter ul").hide();
+		$(".selecter span").html($(this).text());
+		$("#type").val($(this).text());
+	});
+	$(".selecter i").click(function(){
+		$(".selecter ul").show();
+	});
+
+	jQuery($('#f_design')).css("left",jQuery($('#a_design')).offset().left);
+	jQuery($('#f_design')).css("top",jQuery($('#a_design')).offset().top);
+	jQuery($('#f_effect')).css("left",jQuery($('#a_effect')).offset().left);
+	jQuery($('#f_effect')).css("top",jQuery($('#a_effect')).offset().top);
+	jQuery($('#f_detail')).css("left",jQuery($('#a_detail')).offset().left);
+	jQuery($('#f_detail')).css("top",jQuery($('#a_detail')).offset().top);
+	$("#a_design").click(function(){
+		$("#f_design").click();
+	});
+	$("#a_effect").click(function(){
+		$("#f_effect").click();
+	});
+	$("#a_detail").click(function(){
+		$("#f_detail").click();
+	});
+
+
+});
+function gonext(bu){
+	$(".nav-flow li.active").removeClass("active");
+	$("#bu"+bu).addClass("active");
+	$(".tab-content.active").removeClass("active");
+	$("#flow"+bu).addClass("active");
+	if(bu==3){
+		$('.thumbs').find("li").remove(); 
+		var inputlist=document.getElementById("detailpics").getElementsByTagName("input"); 
+		var list=document.getElementById("detailpics").getElementsByTagName("img"); 
+		for (var i = 0; i < list.length; i++) {
+			var img=list[i];
+			var input=inputlist[i];
+			var num = i+1;
+			var html = '<li><img id="crop_photo'+num+'" width="100px" height="96px" src="'+img.src+'" onclick="showthumb(this)"/><input id="crop_name'+num+'" type="hidden" value="'+input.value+'"></li>';
+			$('.thumbs').append(html);
+			
+			if(!($('#crop_fabric'+num).length>0)){
+				var html1 = '<input id="crop_fabric'+num+'" type="hidden" value="">';
+				$('#flow3').append(html1);
+			}
+		}
+		
+	}
+}
+function showthumb(obj){
+	$(".thumbs li.active").removeClass("active");
+	$(obj).parent().addClass("active");
+	$('#effectimg1').attr('src',$(obj).attr('src'));
+	$('#detailname').html($(obj).parent().find('input').val());
+
+	var i = $(obj).parent().index() + 1;
+	$('#cropid').val(i);
+
+	if($('#crop_fabric'+i).length>0){
+		var fab = $('#crop_fabric'+i).val();
+		if(fab!=''){
+			var post_str = 'id='+fab;
+			var url = $('#base').val() + 'design/getfabric/';
+			var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
+				array = html.split("||");
+				$("#fab_name").html('名称：' + array[1]);
+				$("#fab_pic").attr('src',$('#base').val() + 'img/' + array[2]);
+				$("#fab_description").html(array[3]);
+				$("#fab_feature").html(array[4]);
+			}};
+			jQuery.ajax(ajax);
+		}
+
 	}
 
 }
+function showModal(){
+	$(".modal").show();
+	$(".modal-bg").css("height",$("body").height());
+	$(".modal-bg").show();
+}
+function hidermodal(){
+	$(".modal").hide();
+	$(".modal-bg").hide();
+}
+</script>
 
+<script>
 
-function save_pic()
+function save_pic(type)
 {
-	$('#save_thumb').text('loading...');
-	ajaxUpload('form_pic',$('#base').val()+'design/save_pic/', 'original_photo','',upload_succ);
-	$('#save_thumb').text('上传');
+	if(type==1){
+		ajaxUpload('form_designpic',$('#base').val()+'design/save_pic/?type=1', 'design_photo','',upload_succ);//shejiwenjian
+	}else if(type==2){
+		ajaxUpload('form_effectpic',$('#base').val()+'design/save_pic/?type=2', 'effect_photo','',upload_succ);//shejiwenjian
+	}else if(type==3){
+		ajaxUpload('form_detailpic',$('#base').val()+'design/save_pic/?type=3', 'detail_photo','',upload_succ);//shejiwenjian
+	}
 }
 
 function upload_succ()
 {
-	var src = document.getElementById("original_img").src;
+
+	if($("#effect_img").length>0){
+		$('#effectimg').attr('src',$('#effect_img').attr('src'));
+		$('#effectimg1').attr('src',$('#effect_img').attr('src'));
+	}
+	if($("#detail_img").length>0){
+		$('#a_detail').attr('src',$('#detail_img').attr('src'));
+	}
+}
+
+function save_detailpic()
+{
+	var src = $('#detail_img').attr('src');
+	var text = $('#detail_name').val();
+	if(text==''){
+		$('.modal-body').html('请输入细节名称');
+		$('#msg_modal').removeClass("hide");;
+		return;
+	}
+	if($('#picNumber').val()>=5){
+		$('.modal-body').html('最多上传五张设计图');
+		$('#msg_modal').removeClass("hide");;
+		return;
+	}
 	if(src.indexOf('.')>=0)
 	{
-		//$('#crop_photo').attr('src',src);
-		var num = document.getElementById('picNumber').value;
-		num++;
-		if(num>5){
-			$('.modal-body').html('最多上传五张设计图');
-			$('#msg_modal').css('display','block');
-			return;
-		}
-		var img = document.createElement("img");
-		img.id = "crop_photo"+num;
-		img.src = src;
-		img.width=140;
-		img.height=126;
-		img.border=0;
-		img.className="img_k";
-		document.getElementById('div_pic').appendChild(img);
-		document.getElementById('picNumber').value = num;
+		//$('#crop_photo').attr('src',src);		
+		var html = '<span><dt><img width="100px" height="100px" src="'+src+'" /><dt><dd><div class="form-items"><label>细节：</label><input type="text" value="'+text+'" /><a href="#" onclick="del_pic(this)">删除</a></div></dd></span>';
 
-		$('.modal-body').html('上传成功');
-		$('#msg_modal').css('display','block');
+		$('#detailpics').append(html);
+
+		var num=document.getElementById("detailpics").getElementsByTagName("img").length; 		
+		$('#picNumber').val(num);
+
+		$('#detail_name').val('');
+		$('#a_detail').attr('src',$('#base').val()+'img/sjlc_yifu_tj.png');
 	}
+}
+function del_pic(obj)
+{
+	var tb = obj.parentNode.parentNode.parentNode.parentNode;
+	tb.removeChild(obj.parentNode.parentNode.parentNode);
+	var num=document.getElementById("detailpics").getElementsByTagName("img").length; 
+	$('#picNumber').val(num);
 }
 
 
 function designok()
 {
 	var data = new Array();
+	var hint = '';
 	data['title'] = $('#title').val();
+	data['design_pic'] = $('#design_pic').val();
+	data['effect_pic'] = $('#effect_pic').val();
 	data['demand_id'] = $('#demand_id').val();
-	data['selecttemp'] = $('input:radio[name="selecttemp"]:checked').val();
-	data['fabric'] = $('input:radio[name="fabric"]:checked').val();
-	if($('#crop_photo1').length>0)data['design_pic1'] = get_picname(document.getElementById('crop_photo1').src);
-	if($('#crop_photo2').length>0)data['design_pic2'] = get_picname(document.getElementById('crop_photo2').src);
-	if($('#crop_photo3').length>0)data['design_pic3'] = get_picname(document.getElementById('crop_photo3').src);
-	if($('#crop_photo4').length>0)data['design_pic4'] = get_picname(document.getElementById('crop_photo4').src);
-	if($('#crop_photo5').length>0)data['design_pic5'] = get_picname(document.getElementById('crop_photo5').src);
+	data['description'] = $('#description').val();
+	data['fabric'] = $('#fabric').val();
+	data['type'] = $('#type').val();
+	if(data['title']=='') hint=hint+'请输入作品名称\n';
+	if(data['design_pic']=='') hint=hint+'请上次设计文件\n';
+	if(data['effect_pic']=='') hint=hint+'请上传产品效果图\n';
+	if(data['description']=='') hint=hint+'请输入对设计的描述\n';
+	if($('#path').attr('class')=='' && data['fabric']=='') hint=hint+'请选择整体面料\n';
+	
+	if($('#crop_photo1').length>0){
+		data['crop_photo1'] = $('#crop_photo1').attr('src');
+		data['crop_name1'] = $('#crop_name1').val();
+		data['crop_fabric1'] = $('#crop_fabric1').val();
+		if($('#path').attr('class')=='black' && data['crop_fabric1']=='') hint=hint+'请选择细节面料\n';
+	}
+	if($('#crop_photo2').length>0){
+		data['crop_photo2'] = $('#crop_photo2').attr('src');
+		data['crop_name2'] = $('#crop_name2').val();
+		data['crop_fabric2'] = $('#crop_fabric2').val();
+		if($('#path').attr('class')=='black' && data['crop_fabric2']=='') hint=hint+'请选择细节面料\n';
+	}
+	if($('#crop_photo3').length>0){
+		data['crop_photo3'] = $('#crop_photo3').attr('src');
+		data['crop_name3'] = $('#crop_name3').val();
+		data['crop_fabric3'] = $('#crop_fabric3').val();
+		if($('#path').attr('class')=='black' && data['crop_fabric3']=='') hint=hint+'请选择细节面料\n';
+	}
+	if($('#crop_photo4').length>0){
+		data['crop_photo4'] = $('#crop_photo4').attr('src');
+		data['crop_name4'] = $('#crop_name4').val();
+		data['crop_fabric4'] = $('#crop_fabric4').val();
+		if($('#path').attr('class')=='black' && data['crop_fabric4']=='') hint=hint+'请选择细节面料\n';
+	}
+	if($('#crop_photo5').length>0){
+		data['crop_photo5'] = $('#crop_photo5').attr('src');
+		data['crop_name5'] = $('#crop_name5').val();
+		data['crop_fabric5'] = $('#crop_fabric5').val();
+		if($('#path').attr('class')=='black' && data['crop_fabric5']=='') hint=hint+'请选择细节面料\n';
+	}
+
 
 
 	var post_str = generate_query_str(data);
 	var url = $('#base').val() + 'design/designok/';
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
 		$('.modal-body').html(html);
-		$('#msg_modal').css('display','block');
+		$('#msg_modal').removeClass("hide");;
 	}};
 	jQuery.ajax(ajax);
 	setTimeout("window.location.href=$('#base').val() + 'design/'",200);
@@ -200,7 +296,8 @@ function generate_query_str(data)
 </script>
 
 </head>
-<?php include("header_n.php"); ?>
+<div class="container">
+<?php include("header.php"); ?>
 <!------------ 头部结束 ------------->
 
 
@@ -209,272 +306,280 @@ function generate_query_str(data)
 
 <!------------ 内容开始 -------------> 
 <input type="hidden" id="base" value="<?php echo $base;?>"></input>
-
-<div id="main">
-<div id="main_nr">
-<div id="index_qp">
-<div class="red_bt16" style="width:150px; margin-bottom:10px;">设 &nbsp;&nbsp; 计</div><br>
-<br>
-
-<div id="sheji1" class="sheji_bz1"><a href="#" onclick="javascript:gonext(1)" class="White14">开始设计</a></div>
-<div class="xuqiu_bz_jt"></div>
-<div id="sheji2" class="sheji_bz2"><a href="#" onclick="javascript:gonext(2)" class="White14">选择设计模版</a></div>
-<div class="xuqiu_bz_jt"></div>
-<div id="sheji3" class="sheji_bz2"><a href="#" onclick="javascript:gonext(3)" class="White14">设计实践</a></div>
-<div class="xuqiu_bz_jt"></div>
-<div id="sheji4" class="sheji_bz2"><a href="#" onclick="javascript:gonext(4)" class="White14">完成设计</a></div>
-
-<div class="sheji_nr">
-<!-- 第一步 -->
-<div id="buzhou1" >
-<div class="sheji_nr_l">
 <input type="hidden" id="demand_id" value="<?php echo $demand['id'];?>"></input>
-<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-          <tr>
-            <td width="100%" height="40" valign="middle" align="left"><font class="fDBlack16">需求</font></td>
-          </tr>
-		  <tr>
-            <td width="100%" height="200" valign="top" align="left" style="background-color:#f4f4f7; padding:10px 20px 10px 20px;">
-<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-		  <tr>
-            <td width="20%" height="50" valign="middle" align="right"><font class="fDGray14">描    述：</font></td>
-			<td width="80%" valign="middle" align="left"><font class="fBlack14"><?php echo $demand['title'];?></font></td>
-          </tr>
-		  <tr>
-            <td height="50" valign="middle" align="right"><font class="fDGray14">运动类型：</font></td>
-			<td valign="middle" align="left"><font class="fBlack14"><?php echo $demand['type'];?></font></td>
-          </tr>
-		  <tr>
-            <td height="50" valign="middle" align="right"><font class="fDGray14">运动场景：</font></td>
-			<td valign="middle" align="left"><font class="fBlack14"><?php echo $demand['weather'];?></font></td>
-          </tr>
-		  <tr>
-            <td height="50" valign="middle" align="right"><font class="fDGray14">着装对象：</font></td>
-			<td valign="middle" align="left"><font class="fBlack14"><?php echo $demand['target'];?></font></td>
-          </tr>
-</table>
-			</td>
-          </tr>
-</table>
 
-</div>
+  <div id="sjlc" class="main flows"> 
+	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_p.png';?>" /></a>
+  	<div class="modal">
+        <div class="modal-header">
+            选择面料
+            <a href="javascript:;" onclick="hidermodal()">保存</a>
+        </div>
+        <div class="modal-content">
+            <ul class="ml_list">
+				<?php foreach($fabric as $item):?>
+                <li>
+                    <img src="<?php echo $base.'img/'.$item['pic'];?>"/>
+                    <label><?php echo $item['name'];?></label>
+					<input type="hidden" value="<?php echo $item['id'].'||'.$item['name'].'||'.$item['pic'].'||'.$item['description'].'||'.$item['feature'];?>">
+                </li>
+				<?php endforeach;?>
+            </ul>
+        </div>
+        <div class="modal-footer">
+        	<a class="more" href="#">展开更多面料▶</a>
+        </div>
+    </div>
+    <div class="modal-bg"></div>
+    <ul class="breadcrumb" style="background-color:#f1f2f6; margin-top:15px;">
+      <li><a href="<?php echo $base;?>">首页</a></li>
+      <li>/</li>
+      <li><a href="<?php echo $base.'demand/demandlist';?>">需求广场</a></li>
+      <li>/</li>
+      <li><a href="#">发布设计</a></li>
+    </ul>
+    <div class="content" style="background-color:#f1f2f6;">
+    	<ul class="nav-flow">
+        	<li id="bu1" class="active"><a href="javascript:;" class="flow1"></a></li>
+            <li id="bu2"><a href="javascript:;" class="flow2"></a></li>
+            <li id="bu3"><a href="javascript:;" class="flow3"></a></li>
+            <li id="bu4"><a href="javascript:;" class="flow4"></a></li>
+        </ul>
+        <div id="flow1" class="tab-content active">
+        	<div class="panel-top">
+                	<p class="pull-left">
+                    	需求：<?php echo $demand['title'];?><br />
+                        需求发布者：<?php echo $demand['username'];?>
+                    </p>
+                    <a href="<?php echo $base.'demand/demand_detail?id='.$demand['id'];?>" class="pull-right">查看详情》</a>
+            </div>
+       	  <div class="panel panel-default"> 
+            <div class="panel-body" style="*overflow:visible;">
+                  <div class="panel-item"> <img src="<?php if($demand['type']=='跑步')echo $base.'img/s_paobu.png';
+													if($demand['type']=='步行')echo $base.'img/s_buxing.png';
+													if($demand['type']=='钓鱼')echo $base.'img/s_diaoyu.png';
+													if($demand['type']=='高尔夫')echo $base.'img/s_gaoerfu.png';
+													if($demand['type']=='滑轮')echo $base.'img/s_hualun.png';
+													if($demand['type']=='滑雪')echo $base.'img/s_huaxue.png';
+													if($demand['type']=='健身运动')echo $base.'img/s_jianshen.png';
+													if($demand['type']=='篮球')echo $base.'img/s_lanqiu.png';
+													if($demand['type']=='马术')echo $base.'img/s_mashu.png';
+													if($demand['type']=='目标运动')echo $base.'img/s_mubiao.png';
+													if($demand['type']=='排球')echo $base.'img/s_paiqiu.png';
+													if($demand['type']=='乒乓球')echo $base.'img/s_pingpang.png';
+													if($demand['type']=='户外山地运动')echo $base.'img/s_shandi.png';
+													if($demand['type']=='狩猎运动')echo $base.'img/s_shoulie.png';
+													if($demand['type']=='水上运动')echo $base.'img/s_shuishang.png';
+													if($demand['type']=='网球')echo $base.'img/s_wangqiu.png';
+													if($demand['type']=='游泳')echo $base.'img/s_youyong.png';
+													if($demand['type']=='自行车运动')echo $base.'img/s_zixingche.png';
+													if($demand['type']=='足球')echo $base.'img/s_zuqiu.png';
+													if($demand['type']=='羽毛球')echo $base.'img/s_yumaoqiu.png';
+													?>" />
+                    <div class="pull-right">
+                      <p>强度：<span><?php echo $demand['strength'];?>轻松</span></p>
+                      <p>时间：<span><?php echo $demand['sporttime'];?>小时</span></p>
+                    </div>
+                  </div>
+                  <div class="panel-item"> <img src="<?php if($demand['weather']=='晴天')echo $base.'img/w_qing.png';
+													if($demand['weather']=='小雪')echo $base.'img/w_xiaoxue.png';
+													if($demand['weather']=='小雨')echo $base.'img/w_xiaoyu.png';
+													if($demand['weather']=='下雪')echo $base.'img/w_xiaxue.png';
+													if($demand['weather']=='下雨')echo $base.'img/w_xiayu.png';
+													if($demand['weather']=='阴天')echo $base.'img/w_yintian.png';
+													if($demand['weather']=='雨雪')echo $base.'img/w_yuxue.png';
+													?>" />
+                    <div class="pull-right">
+                      <p>温度：<span><?php echo $demand['temperature'];?>°C</span></p>
+                      <p>湿度：<span><?php echo $demand['humidity'];?></span></p>
+                    </div>
+                  </div>
+                  <div class="panel-item"> <img src="<?php if($demand['target']=='男')echo $base.'img/sex1.png';
+													if($demand['target']=='女')echo $base.'img/sex2.png';
+													?>" />
+                    <div class="pull-right">
+                      <p>熟练度：<span><?php echo $demand['proficiency'];?>初学者</span></p>
+                      <p>年龄：<span><?php echo $demand['age'];?></span>&nbsp;&nbsp;&nbsp;&nbsp;体重：<span><?php echo $demand['weight'];?>KG</span></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+        	<table width="100%" style="margin-bottom:30px;">
+              <tr>
+                <td width="12%" height="52" >设计作品名称：
+                </td>
+                <td width="39%">
+                	<input id="title" name="title" type="text"/>
+                </td>
+                <td width="15%">设计的产品类型：</td>
+                <td width="34%">
+                  <div class="selecter"> 
+				  <span>上衣</span><i></i>
+				    <input id="type" name="type" type="hidden"  value='上衣' />
+                    <ul style="display:none">
+                      <li>上衣</li>
+                      <li>裤子</li>
+                    </ul>
+                  </div>
+                  </td>
+              </tr>
+              <tr>
+                <td height="52">上传设计：</td>
+				<form id="form_designpic" name="form_pic" action="" method="POST" onsubmit="return false;">
+                <td><input name="design_pic" id="design_pic" type="text"  /></td>
+                <td colspan="2" class="btns">
+                    <a id="a_design" href="#" class="black" >浏览</a>
+					<input type="file" id="f_design" name="f_design" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:50px;cursor:pointer;" onchange="document.getElementById('design_pic').value=this.value" />
+                    <a href="#" onclick="save_pic(1);">上传设计文件</a>
+					<div id="design_photo" style="text-align:center;display:inline-block"></div>
+                </td>
+				</form>
+              </tr>
+              <tr>
+                <td height="52">产品效果图：</td>
+				<form id="form_effectpic" name="form_pic" action="" method="POST" onsubmit="return false;">
+                <td><input name="effect_pic" id="effect_pic" type="text" /></td>
+                <td colspan="2" class="btns">
+                    <a id="a_effect" href="#" class="black">浏览</a>
+					<input type="file" id="f_effect" name="f_effect" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:50px;cursor:pointer;" onchange="document.getElementById('effect_pic').value=this.value" />
+                    <a href="#" onclick="save_pic(2);">上传效果图</a>
+					<div id="effect_photo" style="text-align:center;display:inline-block"></div>
+                </td>
+				</form>
+              </tr>
+            </table>
+            <div class="btns">
+                <a href="javascript:gonext(2)">下一步</a>
+            </div>
+        </div>
+        <div id="flow2" class="tab-content">
+        	<div class="impression">
+            	<div class="left">
+                	<div class="title">产品效果图</div>
+                    <img id="effectimg" src="" width="498" height="498"/>
+                </div>
+                <div class="right">
+                	<div class="title">添加产品特色样式：<small>（添加细节图片100*100px）</small></div>
+					<input type="hidden" id="picNumber" name="picNumber">
+                    <dl>
+					    <span id="detailpics">
+                    	<!-- <dt><img src="<?php echo $base.'img/sjlc_yifu_01.png';?>" /><dt>
+                        <dd>
+                        	<div class="form-items">
+                        	<label>细节：</label><input type="text" value="衣领" /><a href="#">删除</a>
+                            </div>
+                        </dd> -->
+						</span>
+						<form id="form_detailpic" name="form_pic" action="" method="POST" onsubmit="return false;">
+                        <dt><img id="a_detail" width="100px" height="100px" src="<?php echo $base.'img/sjlc_yifu_tj.png';?>" />
+							<input type="file" id="f_detail" name="f_detail" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:100px;height:100px;cursor:pointer;" />
+						<dt>
+                        <dd>
+                        	<div class="form-items">
+                        	<label>细节：</label><input type="text" id="detail_name" />
+                            </div>
+                            <div class="btns">
+                            	<a  href="#" onclick="save_pic(3);" class="black">上传细节</a>
+                    			<a href="#" onclick="save_detailpic()">保存</a>
+								<div id="detail_photo" style="text-align:center;display:inline-block"></div>
+                            </div>
+                        </dd>
+						</form>
+                    </dl>
+                </div>
+            </div>
+            <div class="btns">
+            	<a href="javascript:gonext(1)">上一步</a>
+                <a href="javascript:gonext(3)" class="black">下一步</a>
+            </div>
+        </div>
+        <div id="flow3" class="tab-content">
+        	<div class="impression">
+            	<div class="left">
+                	<div class="btns tab-btns">
+                        <a id="path" href="javascript:;" class="black">各部位多面料设计</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <a href="javascript:;">整体单一面料设计</a>
+                    </div>
+                    <img id="effectimg1" src="" width="498" height="498"/>
+					<input type="hidden" id="cropid" value="">
+                    <ul class="thumbs">
+                    	<!-- <li class="active"><img src="<?php echo $base.'img/sjlc_yifu_01.png';?>" /></li>
+                        <li><img src="<?php echo $base.'img/sjlc_yifu_02.png';?>" /></li>
+                        <li><img src="<?php echo $base.'img/sjlc_yifu_03.png';?>" /></li>
+                        <li><img src="<?php echo $base.'img/sjlc_yifu_04.png';?>" /></li>
+                        <li><img src="<?php echo $base.'img/sjlc_yifu_01.png';?>" /></li> -->
+                    </ul>
+                </div>
+                <div class="right">
+                	<h3 id="detailname">整体</h3><input type="hidden" id="fabric" >
+                    <a class="btn-fabric" href="javascript:;" onClick="showModal()">点击选择面料&nbsp;▶&nbsp;</a>
+                    <div class="fabric"><img id="fab_pic" width="230" height="120"></div>
+                    <h4 id="fab_name"></h4>
+                    <h4>介绍：</h4>
+                    <p id="fab_description"></p>
+                    <h4>特点：</h4>
+                    <p id="fab_feature"></p>
+                </div>
+            </div>
+            <div class="btns">
+            	<a href="javascript:gonext(2)">上一步</a>
+                <a href="javascript:gonext(4)">下一步</a>
+            </div>
+        </div>
+        <div id="flow4" class="tab-content">
+        	<table width="95%">
+              <tr>
+                <td height="67" class="font16">一句话描述您的设计：
+                </td>
+                <td width="39%" rowspan="2">
+                    <div class="info">
+                    <label>不同运动对不同服装</label>
+                    不同运动对不同服装不同运动对不同服装不同运动对不同服装不同运动对不同服装不同运动对不同服装</div>
+                </td>
+              </tr>
+              <tr>
+                <td height="185" valign="top">
+                	<textarea id="description"></textarea>
+                </td>
+              </tr>
+            </table>
+            <div class="btns">
+            	<a href="javascript:gonext(3)">上一步</a>
+            	<a class="black" href="#" onclick="javascript:designok()">提交</a>
+            </div>
+      </div>
+      <div id="flow5" class="tab-content">
+        	<div class="submin-info">
+            	<img src="images/wc_xtb.png" />
+                <strong>成功</strong>
+                <span>提交者：小宅</span><span>提交时间：2014-05-15</span>
+                <p>详细情况请点击<a href="#" >查看详情</a></p>
+            </div>
+            <div class="other_title">
+            	相关设计产品
+            </div>
+            <ul class="others">
+            	<li class="start"><a href="#"><img src="images/xqlc_yifu.png" /></a></li>
+                <li><a href="#"><img src="images/xqlc_yifu.png" /></a></li>
+                <li><a href="#"><img src="images/xqlc_yifu.png" /></a></li>
+                <li><a href="#"><img src="images/xqlc_yifu.png" /></a></li>
+                <li><a href="#"><img src="images/xqlc_yifu.png" /></a></li>
+                <li class="end"><a href="#"><img src="images/xqlc_yifu.png" /></a></li>
+            </ul>
+      </div>
+    </div>
+  </div>
 
-<div class="sheji_nr_r">
-
-<div class="sheji_r_tupian"><img src="<?php echo $base.'img/sheji_r_tp.jpg';?>" align="absmiddle" border="0" /></div>
-</div>
-<div style="width:450px">
-	<div class="anniu_g" style="width:45px;text-align:center;background-color:#FF2F2F;float:right"><a href="#" onclick="javascript:gonext(2)" class="White14">下一步</a></div>
-</div>
-</div>
-<!-- 第二步 -->
-<div id="buzhou2"  style="display:none">
-<div class="sheji_nr_l">
-<input type="radio" id="selecttemp" name="selecttemp" value="0" checked="checked" /> 
-<div class="anniu_g" style="width:200px;text-align:center;display:inline"><a href="#" class="White14">使用空白模版</a></div>	
-<br><br>
- <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-          <tr>
-            <td width="100%" height="40" valign="middle" align="left" colspan="2"><input type="radio" id="selecttemp" name="selecttemp" value="<?php if (!empty($similar)) echo $similar['id']; else echo -1;?>"  /><div class="anniu_g" style="width:150px;text-align:center;display:inline"><a href="#" class="White14">选择类似设计作为模板</a></div></td>
-          </tr>
-			<?php if (!empty($similar)){?>
-		  <tr>
-            <td width="30%" height="200" valign="top" align="left" style="background-color:#f4f4f7; padding:10px 20px 10px 20px;">
-			<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-			  <tr>
-				<td width="100%" height="50" valign="middle" align="left"><img src="<?php echo $base.'img/sheji_b_tp.jpg';?>" align="absmiddle" border="0" /></td>
-			  </tr>
-			</table>
-			</td>
-			<td width="70%" height="200" valign="top" align="left" style="background-color:#f4f4f7; padding:10px 20px 10px 20px;">
-<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-		  <tr>
-            <td width="20%" height="50" valign="middle" align="right"><font class="fDGray14">需    求：</font></td>
-			<td width="80%" valign="middle" align="left"><font class="fBlack14"><?php echo $similar['title'];?></font></td>
-          </tr>
-		  <tr>
-            <td height="50" valign="middle" align="right"><font class="fDGray14">功能参数：</font></td>
-			<td valign="middle" align="left">
-			<div  style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
-			强度： 
-			<font size="2" color="f6931f">1(轻松)</font>
-			<div id="slider" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">1.5(激烈)</font>
-			</div>
-			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
-			时间： 
-			<font size="2" color="f6931f">0Hour</font>
-			<div id="slider1" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">2Hour</font>
-			</div>
-			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
-			温度： 
-			<font size="2" color="f6931f">0</font>
-			<div id="slider2" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">50</font>
-			</div>
-			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
-			湿度： 
-			<font size="2" color="f6931f">0</font>
-			<div id="slider3" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">100</font>
-			</div>
-			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
-			熟练度：
-			<font size="2" color="f6931f">0(初学者)</font>
-			<div id="slider4" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">100(运动达人)</font>
-			<input type="hidden" id="proficiency" name="proficiency" >
-			</div>
-			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
-			年龄：
-			<font size="2" color="f6931f">10</font>
-			<div id="slider5" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">70</font>
-			<input type="hidden" id="age" name="age" >
-			</div>
-			<div style="padding:5px;border:1px solid #D9D9D9;">
-			体重：
-			<font size="2" color="f6931f">20kg</font>
-			<div id="slider6" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">150kg</font>
-			<input type="hidden" id="weight" name="weight" >
-			</div>
-
-
-			</td>
-          </tr>
-		  <tr>
-            <td height="50" valign="middle" align="right"><font class="fDGray14">仿    真：</font></td>
-			<td valign="middle" align="left"><font class="fBlack14">桑拿天</font></td>
-          </tr>
-
-</table>
-			</td>
-          </tr>
-		  <?php }else {?>
-		  <tr>
-		    <td height="50" valign="middle" align="center" style="background-color:#f4f4f7; padding:10px 20px 10px 20px;"><font class="fDOrange16">无类似设计</font></td>
-			<td height="50" valign="middle" align="left">
-			</td>
-          </tr>
-		  <?php }?>
-</table>
-</div>
-
-<div class="sheji_nr_r">
-<div class="sheji_r_tupian"><img src="<?php echo $base.'img/sheji_r_tp.jpg';?>" align="absmiddle" border="0" /></div>
-</div>
-<div style="width:250px;padding-left:200px">
-	<div class="anniu_g" style="width:45px;text-align:center;background-color:#FF2F2F;float:left"><a href="#" onclick="javascript:gonext(1)" class="White14">上一步</a></div>
-	<div class="anniu_g" style="width:45px;text-align:center;background-color:#FF2F2F;float:right"><a href="#" onclick="javascript:gonext(3)" class="White14">下一步</a></div>
-</div>
-</div>
-<!-- 第三步 -->
-<div id="buzhou3"  style="display:none">
-<div class="sheji_nr_l" >
-<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-		  <tr>
-            <td width="100%" height="40" valign="middle" align="left" colspan="5"><font class="fDBlack16">上传样式设计图</font> </td>
-          </tr>
-          <tr>
-            <td width="100%" height="40" valign="middle" align="left" colspan="5">
-			<form id="form_pic" name="form_pic" action="" method="POST" onsubmit="return false;">
-				<input name="design_pic" id="design_pic" type="file" />
-					<div class="anniu_g" style="width:100px; text-align:center;display:inline"><a id="save_thumb" href="#" onclick="save_pic();" class="White14">上 传</a></div>
-					<div id="original_photo" style="text-align:center;display:inline-block"></div>
-			</form>
-			</td>
-          </tr>
-
-		  <tr> 
-		    <?php if(!empty($design_pic)){foreach($design_pic as $item): ?>
-            <td width="20%" height="180" valign="top" align="center"><img src="<?php echo $base.$base_photoupload_path.'temp/'.$item['pic_url'];?>" align="absmiddle" border="0" width="140" height="126" class="img_k"/><br><br>
-			<!-- <a href="#" class="Red"><?php echo $design_pic['pic_title'];?></a> --></td>
-			<?php endforeach; }?>
-			<input type="hidden" id="picNumber" name="picNumber" value=<?php echo count($design_pic);?>>
-			<td width="20%" height="180" valign="top" align="center">
-				<div id="div_pic" name="div_pic">
-					 <img style="position:relative;" id="crop_photo"  border=0 width="140" height="126" class="img_k"/> 
-				</div>
-			</td>
-          </tr>
-</table>
-
-<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-          <tr>
-            <td width="100%" height="40" valign="middle" align="left" colspan="2"><font class="fDBlack16">选择面料</font></td>
-          </tr>
-		  
-		  <tr>
-            <td width="100%" height="200" valign="top" align="left" style="padding:10px 20px 10px 20px;" colspan="2">
-<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-		  <tr>
-		  <?php foreach($fabric as $item): ?>
-            <td width="12%" height="180" valign="top" align="center"><img src="<?php echo $base.'img/'.$item['pic'];?>" align="absmiddle" border="0" width="106" height="106" class="img_k"/><br><br>
-			<input type="radio" id="fabric" name="fabric" value="<?php echo $item['id'];?>" <?php if($item['id']==1) echo 'checked';?>/><font color="Red"><?php echo $item['name'];?> </font></td>
-			<?php endforeach; ?>
-          </tr>
-</table>
-			</td>
-			
-          </tr>
-</table>
-</div>
-
-<div class="sheji_nr_r">
-<div class="sheji_r_tupian"><img src="<?php echo $base.'img/sheji_r_tp.jpg';?>" align="absmiddle" border="0" /></div>
-</div>
-	<div style="width:250px;padding-left:200px">
-	<div class="anniu_g" style="width:45px;text-align:center;background-color:#FF2F2F;float:left"><a href="#" onclick="javascript:gonext(2)" class="White14">上一步</a></div>
-	<div class="anniu_g" style="width:45px;text-align:center;background-color:#FF2F2F;float:right"><a href="#" onclick="javascript:gonext(4)" class="White14">下一步</a></div>
-</div>
-	 
-</div>
-
-<!-- 第四步 -->
-<div id="buzhou4"  style="display:none">
-	<div class="sheji_nr_l" >
-	<b>请一句话描述您的设计： </b> 
-	<input id="title" style="background:transparent;border:1px solid #000000; height:30px; width:350px; padding-top:5px;"> 
-	<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-
-			  <tr>
-				<td width="50%" height="40" valign="middle" align="right" style="padding-right:10px;"><div class="anniu_g" style="width:100px; text-align:center;">
-	<a href="#" class="White14">提交仿真</a></div> </td>
-				<td width="50%" height="40" valign="middle" align="left" style="padding-left:10px;"><div class="anniu_g" style="width:100px; text-align:center;">
-	<a href="#" onclick="javascript:designok()" class="White14">保存设计</a></div></td>
-			  </tr>
-	</table>
-	</div>
-
-<div class="sheji_nr_r">
-<div class="sheji_r_tupian"><img src="<?php echo $base.'img/sheji_r_tp.jpg';?>" align="absmiddle" border="0" /></div>
-</div>
-		 
-</div>
 
 <div id="msg_modal" class="modal hide">
-	<div class="modal-header"><a href="#" onclick="$('#msg_modal').css('display','none');" class="close">&times;</a><h3>&nbsp;</h3></div>
+	<div class="modal-header"><a href="#" onclick="$('#msg_modal').addClass('hide');" class="close">&times;</a><h3>&nbsp;</h3></div>
 	<div class="modal-body"></div>
-	<div class="modal-footer"><button class="btn primary" onclick="$('#msg_modal').css('display','none');">确定</button></div>
+	<div class="modal-footer"><button class="btn primary" onclick="$('#msg_modal').addClass('hide');">确定</button></div>
 </div>
-	
-</div>
-
-
-
-
-</div>
-
-
-</div>
-</div>
-
 
 <!------------ 底部开始 ------------->
 <?php include("footer.php");?>
-
+</div>
 </body>
 	<script src="<?php echo $base.'js/ajaxupload.js';?>"></script>
 

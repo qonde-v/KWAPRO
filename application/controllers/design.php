@@ -85,8 +85,6 @@
 	   //get current login user id
 	   $user_id = $this->session->userdata('uId');
 
-	   $language = $this->Ip_location->get_language();
-
 	   $data = array('base'=>$base,'base_photoupload_path'=>$base_photoupload_path);
 	   $data['login'] = "login";
 		
@@ -138,7 +136,7 @@
 	   $this->load->view('q2a/practice',$data);
 
 	}
-
+	
 	function sort_design()
 	{
 
@@ -201,14 +199,17 @@
 	   //get current login user id
 	   $user_id = $this->session->userdata('uId');
 
-	   $language = $this->Ip_location->get_language();
-
 	   $data = array('base'=>$base,'base_photoupload_path'=>$base_photoupload_path);
 	   $data['login'] = "login";
+
+	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
+	   $data = array_merge($right_data,$data);
+		
+		$design_id = $_GET['id'];
 	   $result=array();
 	   
 		$this->db->select('*');
-		$this->db->where('id',$_GET['id']);
+		$this->db->where('id',$design_id);
 		$query = $this->db->get('design');
 		$result = array();
 		if($query->num_rows() > 0)
@@ -223,30 +224,56 @@
 	   }
 
 
-	    $this->db->select('*');
-		$this->db->where('design_id',$_GET['id']);
-		$query = $this->db->get('design_pic');
-		$result = array();
-		if($query->num_rows() > 0)
-		{
-			foreach($query->result_array() as $row)
-			{
-				array_push($result,$row);
+	    
+		$result_s=array();		
+		if($data['design']['fabric']>0){
+			$result_s=$this->Demand_management->get_fabric($data['design']['fabric']);
+			foreach($result_s as $val){
+			   $data['fabric']=$val;
 			}
-		}		
-		$data['design_pic']=$result;
-
-		$result_s=array();
-		$result_s=$this->Demand_management->get_fabric($data['design']['fabric']);
-		foreach($result_s as $val){
-		   $data['fabric']=$val;
+		}else{
+			$this->db->select('*');
+			$this->db->where('design_id',$design_id);
+			$query = $this->db->get('design_pic');
+			$res = array();
+			if($query->num_rows() > 0)
+			{
+				foreach($query->result_array() as $row)
+				{
+					$result_s=$this->Demand_management->get_fabric($row['fabric']);
+					foreach($result_s as $val){
+					   $row['fabric']=$val;
+					}
+					array_push($res,$row);
+				}
+			}		
+			$data['design_pic']=$res;
 		}
-
+		
 		$result_d=array();
 		$result_d=$this->Demand_management->get_user_demand($data['design']['demand_id']);
 		foreach($result_d as $val){
 			  $data['demand']=$val;
 		}
+
+
+		//get messagelist
+	    $condition = array('uId'=>$data['demand']['uId'],'related_id'=>$design_id,'p_md_Id'=>0,'sort_attr'=>'time','sort_type'=>0,'type'=>2);
+	    $message_data = $this->Message_management->get_related_messages($condition);
+
+		$message = array();
+		//get second messagelist
+		foreach($message_data as $val){
+			$con = array('uId'=>$val['from_uId'],'related_id'=>$design_id,'p_md_Id'=>$val['md_Id'],'sort_attr'=>'time','sort_type'=>0,'type'=>2);
+			$sec_data = $this->Message_management->get_related_messages($con);
+			if(!empty($sec_data)){
+				$val['sec_data'] = $sec_data;
+			}else{
+				$val['sec_data'] =array();
+			}
+			array_push($message,$val);
+		}
+	    $data['message_data'] = $message;
 
 
 		$this->load->view('q2a/design_detail',$data);
@@ -269,11 +296,24 @@
 			$base = $this->config->item('base_url');
 			$base_photoupload_path = $this->config->item('base_photoupload_path');
 			$user_id = $this->session->userdata('uId');
-
-			$msg = $this->Photo_upload->user_photo_upload(array('user_id'=>$user_id, 'file_id'=>'design_pic'));
+			
+			if($_GET['type']==1){
+				$msg = $this->Photo_upload->user_photo_upload(array('user_id'=>$user_id, 'file_id'=>'f_design'));
+			}elseif($_GET['type']==2){
+				$msg = $this->Photo_upload->user_photo_upload(array('user_id'=>$user_id, 'file_id'=>'f_effect'));
+			}elseif($_GET['type']==3){
+				$msg = $this->Photo_upload->user_photo_upload(array('user_id'=>$user_id, 'file_id'=>'f_detail'));
+			}
 			if(UPDATE_SUCCESS == $msg)
 			{
-				$file_name = $this->security->sanitize_filename($_FILES['design_pic']['name']);
+				if($_GET['type']==1){
+					$file_name = $this->security->sanitize_filename($_FILES['f_design']['name']);
+				}elseif($_GET['type']==2){
+					$file_name = $this->security->sanitize_filename($_FILES['f_effect']['name']);
+				}elseif($_GET['type']==3){
+					$file_name = $this->security->sanitize_filename($_FILES['f_detail']['name']);
+				}
+				
 
 				 $img_src = $base.$base_photoupload_path.'temp/'.$file_name;
 
@@ -296,7 +336,14 @@
 				$msg = $this->Check_process->get_prompt_msg(array('pre'=>'profile','code'=> UPDATE_SUCCESS));
 				$user_photo_path = $base.$base_photoupload_path.$user_id."/".$post_arr['filename'];
 				echo $user_photo_path."##".$msg;*/
-				echo "<img id=\"original_img\" border=\"1\" style=\"display:none\" src=\"".$img_src."\"/>";
+				if($_GET['type']==1){
+					echo "<img id=\"design_img\" width=50 height=50 border=\"1\" style=\"display:\" src=\"".$img_src."\"/>";
+				}elseif($_GET['type']==2){
+					echo "<img id=\"effect_img\" width=50 height=50 border=\"1\" style=\"display:\" src=\"".$img_src."\"/>";
+				}elseif($_GET['type']==3){
+					echo "<img id=\"detail_img\" width=100 height=100 border=\"1\" style=\"display:none\" src=\"".$img_src."\"/>";
+				}
+				
 			}
 			else
 			  {
@@ -310,12 +357,15 @@
 	{
 		$post_arr = array();
 		$pic_arr = array();
-		$picdata = array();
+		
 		foreach($_POST as $key=>$value)
 		{
 			$post_value = $this->input->post($key,TRUE);
-			if(substr($key,0,10)=='design_pic') $pic_arr[$key] = $post_value ? $post_value : 0;
-			else $post_arr[$key] = $post_value ? $post_value : 0;
+			if(substr($key,0,4)=='crop'){
+				$pic_arr[substr($key,strlen($key)-1,1)][substr($key,0,strlen($key)-1)] = $post_value ? $post_value : 0;
+			}else{
+				$post_arr[$key] = $post_value ? $post_value : 0;
+			}
 		}
 		$post_arr['title'] = str_replace("\n","<BR/>",$post_arr['title']);
 		$post_arr['createdate'] = date("Y-m-d H:i:s", time());
@@ -325,11 +375,15 @@
 		$post_arr['username'] = $username;
 
 		$design_id=$this->Demand_management->design_record_insert($post_arr);
-		$picdata['design_id']=$design_id;
-		$picdata['createdate'] = date("Y-m-d H:i:s", time());
+		
 		foreach($pic_arr as $val)
 		{ 
-			$picdata['pic_url']=$val;
+			$picdata = array();
+			$picdata['design_id']=$design_id;
+			$picdata['createdate'] = date("Y-m-d H:i:s", time());
+			$picdata['pic_url']=$val['crop_photo'];
+			$picdata['name']=$val['crop_name'];
+			$picdata['fabric']=$val['crop_fabric'];
 			$this->Demand_management->designpic_record_insert($picdata);
 		}
 		//update designnum
@@ -580,7 +634,22 @@
 
 		echo 'submit order OK';
 	}
+	
 
+	function getfabric(){
+		//get fabrics
+		$fabric = array();
+		$this->db->select('*');
+		$this->db->where('id',$_POST['id']);
+		$query = $this->db->get('fabrics');
+		foreach($query->result_array() as $val)
+		{
+			$fabric = $val;
+		}print_r($fabric);
+		echo $fabric['id'].'||'.$fabric['name'].'||'.$fabric['pic'].'||'.$fabric['description'].'||'.$fabric['feature'];
+		
+
+	}
 
 
 }

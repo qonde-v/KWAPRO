@@ -84,10 +84,12 @@
 	   //get current login user id
 	   $user_id = $this->session->userdata('uId');
 
-	   $language = $this->Ip_location->get_language();
-
 	   $data = array('base'=>$base);
 	   $data['login'] = "login";
+
+	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
+	   $data = array_merge($right_data,$data);
+
 		$this->load->view('q2a/publish',$data);
 	}
 
@@ -105,9 +107,33 @@
 		$post_arr['uId'] = $userid;
 		$post_arr['username'] = $this->User_data->get_username(array('uId'=>$userid));
 
-		$this->Demand_management->demand_record_insert($post_arr);
+		$demand_id = $this->Demand_management->demand_record_insert($post_arr);
+		
+		$base = $this->config->item('base_url');
+		$base_photoupload_path = $this->config->item('base_photoupload_path');
 
-		echo 'publish OK';
+		// get similar templet
+	   $condition='';
+	   $condition=array('strength'=>$post_arr['strength'],'sporttime'=>$post_arr['sporttime'],'temperature'=>$post_arr['temperature'],'humidity'=>$post_arr['humidity'],'proficiency'=>$post_arr['proficiency'],'age'=>$post_arr['age'],'weight'=>$post_arr['weight']);
+	   $result_s=array();
+	   $result_s=$this->Demand_management->get_similar_design($condition);
+	   
+
+		$html="";
+		$html .= '<div class="submin-info">';
+        $html .= '    	<img src="'.$base.'img/wc_xtb.png" />';
+        $html .= '        <strong>成功</strong>';
+        $html .= '        <span> </span><span>提交时间：2014-05-15</span>';
+        $html .= '        <p>详细情况请点击：<a href="'.$base.'demand/demand_detail?id='.$demand_id.'" >查看详情</a></p>';
+        $html .= '    </div>';
+        $html .= '    <div class="other_title">相关设计产品</div>';
+        $html .= '    <ul class="others">';
+		foreach($result_s as $item){
+            	 $html .= '<li><a href="'.$base.'design/design_detail?id='.$item['id'].'"><img width="130" height="107" src="'.$base.$base_photoupload_path.'temp/'.$item['pic_url'].'" /></a></li>';
+	   }
+        $html .= '    </ul>';
+
+		echo $html;
 	}
 
 	function demandlist()
@@ -213,13 +239,13 @@
 		$data['designs'] = $designs;
 		
 		//get messagelist
-	    $condition = array('uId'=>$data['demand']['uId'],'related_id'=>$demand_id,'p_md_Id'=>0,'sort_attr'=>'time','sort_type'=>0);
+	    $condition = array('uId'=>$data['demand']['uId'],'related_id'=>$demand_id,'p_md_Id'=>0,'sort_attr'=>'time','sort_type'=>0,'type'=>1);
 	    $message_data = $this->Message_management->get_related_messages($condition);
 
 		$message = array();
 		//get second messagelist
 		foreach($message_data as $val){
-			$con = array('uId'=>$val['from_uId'],'related_id'=>$demand_id,'p_md_Id'=>$val['md_Id'],'sort_attr'=>'time','sort_type'=>0);
+			$con = array('uId'=>$val['from_uId'],'related_id'=>$demand_id,'p_md_Id'=>$val['md_Id'],'sort_attr'=>'time','sort_type'=>0,'type'=>2);
 			$sec_data = $this->Message_management->get_related_messages($con);
 			if(!empty($sec_data)){
 				$val['sec_data'] = $sec_data;

@@ -6,7 +6,7 @@
 <script src="<?php echo $base.'js/home.js';?>"></script>
  <script src="<?php echo $base.'js/login.js';?>" ></script>
 <script type="text/javascript"> 
-$(function(){ 
+/*$(function(){ 
 $("img").mouseover(function(e){ 
 $("#tooltip").remove(); 
 var info = "收集素材";
@@ -19,7 +19,7 @@ $("#tooltip").css({
 "left" :e.pageX + "px" 
 }); 
 }); 
-}); 
+}); */
 </script>
 <script type="text/javascript"> 
 function showmenu(){
