@@ -6,8 +6,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 	<link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
-    <link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" />
+    <!-- <link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" /> -->
 	<link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
 	
     <style type="text/css">
@@ -21,16 +21,12 @@
   </head>
 
   <body>
+ <div id="" class="container">
 
  <?php include("header.php"); ?>
   
-
- <div id="" class="container">
-         <div class="row">
-    		<div class="span14 offset1">
-    			<div class="row">
-    				<div class="span8">
-    					<h4 style="text-align:center"><?php echo $register_title;?></h4>
+    				<div style="text-align:center">
+    					<h4 ><?php echo $register_title;?></h4>
     					 		<div class="">
 							      <form action="<?php echo $base.'register';?>" method="post">
 							        <div class="clearfix">
@@ -55,7 +51,7 @@
 										<input class="span5" id="email" value="<?php echo $email;?>" name="email" type="text" placeholder="<?php echo $register_email_holder;?>" />
 							        </div>
 									<div class="error_msg" style="text-align:center"><?php echo form_error('email'); ?></div>
-							        <div class="clearfix">
+							        <div class="clearfix" style="display:none;"> 
 							            <label><?php echo $register_invite_code;?></label>
 										<input class="span5" id="invite_code" value="<?php echo $invite_code;?>" name="invite_code" type="text" placeholder="<?php echo $register_code_holder;?>" />
 							        </div>
@@ -69,15 +65,11 @@
 							    
     				</div>
     				 
-    				
-    			</div>
-    		</div>
-    	</div>
-    	<hr/>
+
+
+<?php include("footer.php");?>
+
   </div>  
-   <div class="foot">
-	    <?php include("footer.php");?>
-    </div><!--footer-->
   </body>
   <script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"; ?>" ></script>
     <script src="<?php echo $base.'js/bootstrap-twipsy.js';?>"></script>

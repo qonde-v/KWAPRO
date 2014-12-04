@@ -59,16 +59,16 @@ function sort_message()
 function send_new_msg()
 {
 	var uId = $('#new_msg_uid').val();
-	var username = $('#msg_username_area').val();
+	//var username = $('#msg_username_area').val();
 	var title = encodeURIComponent($('#msg_title_area').val());
 	var content = encodeURIComponent($('#msg_content_area').val());
 	var type = $('#type').val();
 	var related_id = $('#related_id').val();
-	if(msg_data_check(username,title,content))
+	if(msg_data_check(uId,title,content))//	if(msg_data_check(username,title,content))
 	{
 		$('#msg_send_btn').button('loading');
 		var url = $('#base').val() + 'messages_request/send_message/';
-		var post_str = 'uId='+uId+'&title='+title+'&content='+content+'&type='+type+'&related_id='+related_id;
+		var post_str = 'uId='+uId+'&title='+title+'&content='+content+'&type='+type+'&related_id='+related_id+'&p_md_Id=0';
 		var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
 			$('#msg_modal .modal-body').html(html);
 			$('#msg_modal').css('display','block');
@@ -77,6 +77,7 @@ function send_new_msg()
 			setTimeout("$('#msg_modal').css('display','none')",2000);
 		}};
 		jQuery.ajax(ajax);
+		setTimeout("window.location.reload()",2000);
 	}
 }
 
@@ -88,12 +89,12 @@ function msg_data_check(username,title,content)
 		$('#msg_modal').css('display','block');
 		return false;
 	}
-	if(title.trim() == '')
+	/*if(title.trim() == '')
 	{
 		$('#msg_modal .modal-body').html($('#title_empty').val());
 		$('#msg_modal').css('display','block');
 		return false;
-	}
+	}*/
 	if(content.trim() == '')
 	{
 		$('#msg_modal .modal-body').html($('#content_empty').val());

@@ -1,24 +1,22 @@
-<div id="main">
-<div id="main_bottom">
-<div id="main_bottom_top">
-&nbsp;
-</div><br>
-<br>
+ <div class="footer">
+    <div class="pull-left">
+      <p>地址：广州市海珠区新港中路397号</p>
+      <p>备案/许可证编号为：粤ICP备11086295号-1</p>
+      <p>Copyright © 2014 cntit.com.cn All Right Reserved</p>
+    </div>
+    <div class="pull-right">
+        <ul class="share-list">
+            <li>关注分享：</li>
+            <li class="share share-xinlang active"></li>
+            <li class="share share-facebook"></li>
+            <li class="share share-weixin"></li>
+            <li class="share share-qqweibo"></li>
+            <li class="share share-twitter"></li>
+        </ul>
+        <p class="text-right">联系我们电话：86-20-84221810</p>
+    </div>
+  </div>
 
-<div id="main_bottom_l">
-<img src="<?php echo $base.'img/lxwm_dot.png';?>" align="absmiddle" border="0"/> 联系我们电话：86-20-84221810
-</div>
-<div id="main_bottom_r">
-地址：广州市海珠区新港中路397号<br>
-
-备案/许可证编号为：粤ICP备11086295号-1<br>
-
-Copyright &copy; 2014 cntit.com.cn All Right Reserved
-</div>
-</div>
-
-
-</div>
 <input type="hidden" value="<?php echo $base;?>" id="header_base" />
 
 <script type="text/javascript">

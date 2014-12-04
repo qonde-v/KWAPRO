@@ -26,7 +26,7 @@ function switch_page()
 		var sort_type = 0;
 	}
 	var lang = {'lang_first':$('.first a').html(),'lang_previous':$('.prev a').html(),'lang_next':$('.next a').html(),'lang_last':$('.last a').html()};
-	var pagena_num = 10;
+	var pagena_num = (total_page_num > 10) ? 10 : total_page_num;
 	
 	var url = $('#base').val() + 'question_pool_request/sorted_question_request/';
 	var post_str = 'index=' + index + '&sort_attr=' + sort_attr + '&sort_type=' + sort_type;
@@ -51,8 +51,9 @@ function sort_question()
 	var post_data = {'index':1,'sort_attr':sort_attr,'sort_type':sort_type};
 	var effect_id = $('#content');
 	var ul_obj = $('.pagination ul');
+	var total_page_num = parseInt(ul_obj.attr('id'));
 	var lang = {'lang_first':$('.first a').html(),'lang_previous':$('.prev a').html(),'lang_next':$('.next a').html(),'lang_last':$('.last a').html()};
-	var page_update = {'total_page_num':parseInt(ul_obj.attr('id')),'pagena_num':10,'lang':lang};
+	var page_update = {'total_page_num':total_page_num,'pagena_num':(total_page_num > 10) ? 10 : total_page_num,'lang':lang};
 	table_sort({'url':url,'post_data':post_data,'sort_type':sort_type,'click_id':$(this),'effect_id':effect_id,'ul_obj':ul_obj,'page_update':page_update});
 }
 

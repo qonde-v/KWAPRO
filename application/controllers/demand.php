@@ -115,27 +115,64 @@
 	   //$this->output->cache(1);
 	   $base = $this->config->item('base_url');
 
-	   //login permission check
-	   $this->Auth->permission_check("login/");
-
-	   //get current login user id
-	   $user_id = $this->session->userdata('uId');
-
-	   $language = $this->Ip_location->get_language();
-
 	   $data = array('base'=>$base);
-	   $data['login'] = "login";
+	   $userid=$this->session->userdata('uId');
+
+	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($userid);
+	   $data = array_merge($right_data,$data);
+
+	   if($userid!='')$data['login'] = "login";
+
+	    $demands=array();;
+		$pre_msg_num = $this->pre_msg_num;
+	    $range = array('start'=>0,'end'=>$pre_msg_num-1);
+		$this->db->select('id,title,designnum,viewnum,messnum,createdate');
+		$this->db->where('status',1);
+		if(!empty($_GET['type']) && $_GET['type']==3){//最新一个月
+			$this->db->where('createdate >',date("Y-m-d H:i:s", time()-86400*30));
+		}
+		if(!empty($_GET['type']) && $_GET['type']==4){//一个月前
+			$this->db->where('createdate <',date("Y-m-d H:i:s", time()-86400*30));
+		}
+ 		$t_query=$this->db->get('demand');
+		$data['inbox_num']=	$t_query->num_rows();
+
+		$this->db->where('status',1);
+		if(empty($_GET['type'])){
+			$this->db->order_by('createdate','desc');
+		}elseif($_GET['type']==1){//由旧到新
+			$this->db->order_by('createdate','asc');
+		}elseif($_GET['type']==5){//按设计量多到少
+			$this->db->order_by('designnum','desc');
+		}else{//由新到旧
+			$this->db->order_by('createdate','desc');
+		}
+		
+		$this->db->limit($range['end']-$range['start']+1,$range['start']);
+		$query = $this->db->get('demand'); 
+		foreach($query->result_array() as $row)
+		{
+			array_push($demands,$row);
+		}
+		$data['demands'] = $demands;
+		$data['pre_msg_num'] = $this->pre_msg_num;
+		$data['inbox_page_num'] = ($data['inbox_num'] == 0) ? 1 : ceil($data['inbox_num']/$data['pre_msg_num']);
+
+		$this->db->select('id');
+ 		$d_query=$this->db->get('design');
+		$data['t_designnum']=	$d_query->num_rows();
+
 		$this->load->view('q2a/demandlist',$data);
 	}
-
 	
 	function demand_detail()
 	{
 	   //$this->output->cache(1);
 	   $base = $this->config->item('base_url');
+	   $demand_id = $_GET['id'];
 
 	   //login permission check
-	   $this->Auth->permission_check("login/");
+	   //$this->Auth->permission_check("login/");
 
 	   //get current login user id
 	   $user_id = $this->session->userdata('uId');
@@ -143,12 +180,57 @@
 	   $language = $this->Ip_location->get_language();
 
 	   $data = array('base'=>$base);
-	   $data['login'] = "login";
+	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
+	   $data = array_merge($right_data,$data);
+
+	   if($user_id!='')$data['login'] = "login";
 	   $result=array();
-	   $result=$this->Demand_management->get_user_demand($_GET['id']);
+	   $result=$this->Demand_management->get_user_demand($demand_id);
 	   foreach($result as $val){
 		   $data['demand']=$val;
 	   }
+		
+		$this->db->select('id');
+ 		$t_query=$this->db->get('demand');
+		$data['t_demandnum']=	$t_query->num_rows();
+
+
+	    $this->db->select('id');
+ 		$d_query=$this->db->get('design');
+		$data['t_designnum']=	$d_query->num_rows();
+
+
+		//get designlist
+		$designs=array();;
+		$this->db->select('*');
+		$this->db->where('demand_id',$demand_id);
+		$this->db->order_by('createdate','desc');
+		$query = $this->db->get('design');
+		foreach($query->result_array() as $row)
+		{
+			array_push($designs,$row);
+		}
+		$data['designs'] = $designs;
+		
+		//get messagelist
+	    $condition = array('uId'=>$data['demand']['uId'],'related_id'=>$demand_id,'p_md_Id'=>0,'sort_attr'=>'time','sort_type'=>0);
+	    $message_data = $this->Message_management->get_related_messages($condition);
+
+		$message = array();
+		//get second messagelist
+		foreach($message_data as $val){
+			$con = array('uId'=>$val['from_uId'],'related_id'=>$demand_id,'p_md_Id'=>$val['md_Id'],'sort_attr'=>'time','sort_type'=>0);
+			$sec_data = $this->Message_management->get_related_messages($con);
+			if(!empty($sec_data)){
+				$val['sec_data'] = $sec_data;
+			}else{
+				$val['sec_data'] =array();
+			}
+			array_push($message,$val);
+		}
+	    $data['message_data'] = $message;
+
+
 		$this->load->view('q2a/demand_detail',$data);
 	}
 
@@ -186,7 +268,7 @@
 		$data = array('uId'=>$user_id,'range'=>$range);
 
 		$demands=array();
-		$this->db->select('id,title,designnum,viewnum,messnum,createdate');
+		$this->db->select('*');
 		$this->db->where('uId',$user_id);
 		$this->db->order_by('createdate','desc');
 		$this->db->limit($range['end']-$range['start']+1,$range['start']);
@@ -200,28 +282,90 @@
 		if(!empty($demands))
 		{
 			$i=0;
+			$html .= '<ul class="main-list">';
 			foreach($demands as $item){
 				$i++;
-				$html .= '<tr>';
-				$html .= '<td width="85%" height="40" valign="middle" align="left" ><a href="#" class="Red14">'. $i.'、'.$item['title'].'</a></td>';
-				$html .= '<td width="15%" height="40" valign="middle" align="right">';
-				$html .= '<div class="red_bt15" style="width:35px; text-align:center;float:left"><a href="'.$base.'demand/publish" class="White14">发布</a></div> &nbsp;&nbsp;&nbsp;&nbsp;';
-				$html .= '<div class="red_bt15" style="width:45px; text-align:center;float:right"><a href="'.$base.'design/practice" class="White14">去设计</a></div>';
-				$html .= '</td>';
-				$html .= '</tr>';
-				$html .= '<tr>';
-				$html .= '<td width="50%" height="40" valign="middle" align="left">';
-				$html .= '<a href="#" class="DBlue">'.$item['designnum'].'</a> 设计 &nbsp;&nbsp;&nbsp;&nbsp;';
-				$html .= '<a href="#" class="DBlue">'.$item['viewnum'].'</a> 浏览 &nbsp;&nbsp;&nbsp;&nbsp;';
-				$html .= '<a href="#" class="DBlue">'.$item['messnum'].'</a> 留言 &nbsp;&nbsp;&nbsp;&nbsp;</td>';
-				$html .= '<td width="50%" height="40" valign="middle" align="right" class="fGray">'.$item['createdate'].'</td>';
-			    $html .= '</tr>';
 
+				$html .= '	<li>';
+				$html .= '		<a href="'.$base.'demand/demand_detail?id='.$item['id'].'" class="title">'. $i.'、'.$item['title'].'</a>';
+				$html .= '		<div class="btns">';
+				if($item['status']==0){
+					$html .= '<a href="#" onclick="javascript:updatestatus('.$item['id'].',1);" >发布</a>';
+				}else{
+					$html .= '<a href="#" onclick="javascript:updatestatus('.$item['id'].',0);" class="black">不发布</a>';
+				}
+				$html .= '		<a href=""'.$base.'design/practice?id='.$item['id'].'"">去设计</a>';
+				$html .= '		</div>';
+				$html .= '		<p><span class="link link-sheji">设计（<a href="#">'.$item['designnum'].'</a>）</span><span class="link link-liulan">浏览（<a href="#">'.$item['viewnum'].'</a>）</span><span class="link link-liuyan">留言（<a href="#">'.$item['messnum'].'</a>）</span><span class="pull-right">发布于'.$item['createdate'].'</span></p>';
+				$html .= '	</li>';
+				
 			}
+			$html .= '</ul>';
 		}
 		echo $html;
 
 	}
+
+
+
+	function sort_demandlist()
+	{
+
+		$base = $this->config->item('base_url');
+		$user_id = $this->session->userdata('uId');
+		$index = $this->input->post('index',TRUE);
+		$pre_num = $this->pre_msg_num;
+		$range = array('start'=>($index-1)*$pre_num, 'end'=>$index*$pre_num-1);
+		$data = array('uId'=>$user_id,'range'=>$range);
+
+		$demands=array();
+		$this->db->select('*');
+		$this->db->where('status',1);
+		$this->db->order_by('createdate','desc');
+		$this->db->limit($range['end']-$range['start']+1,$range['start']);
+		$query = $this->db->get('demand');
+		foreach($query->result_array() as $row)
+		{
+			array_push($demands,$row);
+		}
+
+
+		$html = '';
+		if(!empty($demands))
+		{
+			$i=0;
+			$html .= '<ul id="xuqiu-list">';
+			foreach($demands as $item){
+				$i++;
+				$html .= '	<li>';
+				$html .= '		<a class="title" href="'.$base.'demand/demand_detail?id='.$item['id'].'">'.$item['title'].'</a>';
+				$html .= '		<ul class="views">';
+				$html .= '			<li class="view">浏览（'.$item['viewnum'].'）</li>';
+				$html .= '			<li class="design">设计（'.$item['designnum'].'）</li>';
+				$html .= '		  </ul>';
+				$html .= '		  <p></p>';
+				$html .= '		  <span class="bottom"><font class="icon-tag">发布人：'.$item['username'].'</font> <font class="icon-clock">发布于'.$item['createdate'].'</font><font class="pull-right">三天后截止</font></span>';
+				$html .= '	</li>';
+			}
+			$html .= '</ul>';
+		}
+		echo $html;
+
+	}
+	
+	function update_status()
+	{
+
+		$demand_id = $this->input->post('demand_id',TRUE);
+		$status = $this->input->post('status',TRUE);
+		$this->Demand_management->update_status($demand_id,$status);
+
+		echo '状态更新成功';
+
+	   
+	}
+
+
  }
 
  /*End of file*/

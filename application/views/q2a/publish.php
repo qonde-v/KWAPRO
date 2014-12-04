@@ -13,10 +13,10 @@
 <script>
 $(function() {
 $( "#slider" ).slider({
-value:5,
+value:1.2,
 min: 1,
-max: 10,
-step: 1,
+max: 1.5,
+step: 0.1,
 slide: function( event, ui ) {
 $( "#strength" ).val(ui.value );
 }
@@ -25,10 +25,10 @@ $( "#strength" ).val($( "#slider" ).slider( "value" ) );
 
 
 $( "#slider1" ).slider({
-value:2,
+value:1,
 min: 0,
-max: 24,
-step: 0.5,
+max: 2,
+step: 0.1,
 slide: function( event, ui ) {
 $( "#sporttime" ).val(ui.value );
 }
@@ -59,15 +59,37 @@ $( "#humidity" ).val(ui.value );
 $( "#humidity" ).val($( "#slider3" ).slider( "value" ) );
 
 $( "#slider4" ).slider({
-value:5,
-min: 1,
-max: 10,
+value:35,
+min: 0,
+max: 100,
 step: 1,
 slide: function( event, ui ) {
 $( "#proficiency" ).val(ui.value );
 }
 });
 $( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
+
+$( "#slider5" ).slider({
+value:30,
+min: 10,
+max: 70,
+step: 1,
+slide: function( event, ui ) {
+$( "#age" ).val(ui.value );
+}
+});
+$( "#age" ).val($( "#slider5" ).slider( "value" ) );
+
+$( "#slider6" ).slider({
+value:60,
+min: 20,
+max: 150,
+step: 1,
+slide: function( event, ui ) {
+$( "#weight" ).val(ui.value );
+}
+});
+$( "#weight" ).val($( "#slider6" ).slider( "value" ) );
 
 });
 </script>
@@ -174,16 +196,16 @@ function gonext(bz){
 	</div>
 	<div class="index_l_xqnr">
 	<b>强度：</b> 
-	<font size="2" color="f6931f">轻&nbsp;&nbsp;松</font>
+	<font size="2" color="f6931f">1(轻松)</font>
 	<div id="slider" style="width:300px;display:inline-block"></div>
-	<font size="2" color="f6931f">激&nbsp;&nbsp;烈</font>
+	<font size="2" color="f6931f">1.5(激烈)</font>
 	<input type="hidden" id="strength"  name="sporttime" >
 	</div>
 	<div class="index_l_xqnr">
 	<b>时间： </b>  
 	<font size="2" color="f6931f">0Hour</font>
 	<div id="slider1" style="width:300px;display:inline-block"></div>
-	<font size="2" color="f6931f">24Hour</font>
+	<font size="2" color="f6931f">2Hour</font>
 	<input type="hidden" id="sporttime"  name="sporttime">
 	</div>
 	<div class="index_l_xqnr" style="width:150px">
@@ -225,17 +247,30 @@ function gonext(bz){
 
 <div id="buzhou3" style="float:left; width:550px;display:none">
 	<div class="index_l_xqnr">
-	<b>对象： </b> 
-	<input type="radio" id="target" name="target" value="男人" checked="checked" style="margin-left:10px" /> 男人
-	<input type="radio" id="target" name="target" value="女人" style="margin-left:20px" /> 女人
-	<input type="radio" id="target" name="target" value="小孩" style="margin-left:20px" /> 小孩
+	<b>性别： </b> 
+	<input type="radio" id="target" name="target" value="男" checked="checked" style="margin-left:10px" /> 男
+	<input type="radio" id="target" name="target" value="女" style="margin-left:20px" /> 女
 	</div>
 	<div class="index_l_xqnr">
 	<b>熟练度：</b> 
-	<font size="2" color="f6931f">初学者</font>
+	<font size="2" color="f6931f">0(初学者)</font>
 	<div id="slider4" style="width:300px;display:inline-block"></div>
-	<font size="2" color="f6931f">运动达人</font>
+	<font size="2" color="f6931f">100(运动达人)</font>
 	<input type="hidden" id="proficiency" name="proficiency" >
+	</div>
+	<div class="index_l_xqnr">
+	<b>年龄：</b> 
+	<font size="2" color="f6931f">10</font>
+	<div id="slider5" style="width:300px;display:inline-block"></div>
+	<font size="2" color="f6931f">70</font>
+	<input type="hidden" id="age" name="age" >
+	</div>
+	<div class="index_l_xqnr">
+	<b>体重：</b> 
+	<font size="2" color="f6931f">20kg</font>
+	<div id="slider6" style="width:300px;display:inline-block"></div>
+	<font size="2" color="f6931f">150kg</font>
+	<input type="hidden" id="weight" name="weight" >
 	</div>
 	<div class="index_l_xqnr" style="width:150px">
 	<div class="red_bt15" style="width:45px;text-align:center;float:left"><a href="#" onclick="javascript:gonext(2)" class="White14">上一步</a></div>
@@ -316,6 +351,8 @@ function publishok()
 	data['humidity'] = $('#humidity').val();
 	data['target'] = $('#target').val();
 	data['proficiency'] = $('#proficiency').val();
+	data['age'] = $('#age').val();
+	data['weight'] = $('#weight').val();
 	data['title'] = $('#title').val();
 
 	var post_str = generate_query_str(data);

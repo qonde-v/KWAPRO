@@ -1,0 +1,94 @@
+
+****************************************************************
+*                            Calculation Control Info
+****************************************************************
+     Layer  1  DiscreteCount :	5
+     DiscreteLimit:	0.0186(mm)
+           SimTime:	20(min)
+           deltat:	0.001(ms)
+           SaveRelay	1000
+
+****************************************************************
+*                            Fluid Info
+****************************************************************
+Fluid Type= ---0                 1
+---------------------------------------------------------------------------
+             Density:	0.0011614			1
+  ThermoConductivity:	6.214e-005			0.001434
+        SpecificHeat:	1.197			1
+    DiffusivityInAir:	0.25			0
+      SurfaceTension:	0			0.07
+---------------------------------------------------------------------------
+
+****************************************************************
+*                   Testile Material Info
+****************************************************************
+
+ Total Fabric Layer Number:	-----1-----
+
+                        innercontact:	0
+                        outercontact:	1
+
+*************************************************************************
+Fabric Layer = ---1---	  Fiber Types: 2
+---------------------------------------------------------------------------
+                        Thickness:	0.098
+                         Porosity:	0.82
+                       TortuosGas:	1.2
+                       TortuosLqd:	1.2
+                   CapillaryAngle:	0.349066
+  MaxDistributedCapillaryDiameter:	0.002
+                        GridThick:	5
+
+   Fiber Type  = -1-
+--------------------------------
+            MassRatio:	0.2
+               Radius:	0.00108
+              Density:	1.52
+  ThermalConductivity:	0.00017208
+           Emissivity:	0.9
+   SurfaceVolumeRatio:	1851.85
+          FiberRegain:	
+0 0.0175 0.0275 0.0325 0.0375 0.045 0.0488 0.0552 0.0602 0.0705 0.08 0.092 0.106 0.1275 0.172 0.24 
+   Fiber Type  = -2-
+--------------------------------
+            MassRatio:	0.8
+               Radius:	0.00102
+              Density:	0.935
+  ThermalConductivity:	0.00065725
+           Emissivity:	0.9
+   SurfaceVolumeRatio:	1960.78
+          FiberRegain:	
+0 0.0106 0.0123 0.0142 0.0165 0.019 0.022 0.0255 0.0295 0.0341 0.0395 0.0457 0.0529 0.0612 0.0708 0.0819 
+   Membrane Type = -0-
+----------------------------------
+         Thickness:	0
+  ThermoResistance:	
+        DynamicWVP:	
+	1e+008 1e+008 1e+008 1e+008 1e+008 1e+008 
+   Membrane Type = -1-
+----------------------------------
+         Thickness:	0
+  ThermoResistance:	
+        DynamicWVP:	
+	1e+008 1e+008 1e+008 1e+008 1e+008 1e+008 
+****************************************************************
+*                   Environmenta Condition Info
+****************************************************************
+
+*************************************************************************
+---------------------------------------------------------------------------
+           AirTemperature:	33.1	10
+    RadiationTeamperature:	33.1	10
+         RelativeHumidity:	0.5	0.65
+    ThermoRediationSource:	0	0
+              AirVelocity:	0.5	0.5
+  PartialMoisturePressure:	25.0933	7.95889
+    MoistureConcentration:	1.77388e-005	6.08525e-006
+
+*************************************************************************
+
+Calculation Started at:Mon Jul 07 10:27:05 2014
+
+Calculation Ended at:Mon Jul 07 10:27:20 2014
+

@@ -33,12 +33,12 @@
 			 $error = array('error' => $this->upload->display_errors());
 			 echo $error['error'];
 
-			 return FAIL_PHOTO;
-			 //return $error['error'];
+			 //return FAIL_PHOTO;
+			 return $error['error'];
 		  }
 		  else
 		  {
-		     return UPDATE_SUCCESS;
+		     return 'UPDATE_SUCCESS';
 		  }
 
 	 }

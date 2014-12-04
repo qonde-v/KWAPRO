@@ -23,6 +23,7 @@
 		 $this->load->model('q2a/User_activity');
 		 $this->load->model('q2a/Check_process');
          $this->load->model('q2a/Ip_location');
+		 $this->load->model('q2a/Demand_management');
 	 }
 
      //get the message number that display in a page from configure file
@@ -52,7 +53,7 @@
 		  if($to_user_id != '')
 		  {
 		  	$data = array('from_uId'=>$from_user_id,'title'=>$post_arr['title'], 'content'=>str_replace("\n","<BR/>",$post_arr['content']),'to_uId'=>$to_user_id,
-			'type'=>$post_arr['type'],'related_id'=>$post_arr['related_id']);
+			'type'=>$post_arr['type'],'related_id'=>$post_arr['related_id'],'p_md_Id'=>$post_arr['p_md_Id']);
 			$time = time();
 			$data['message_id'] = $time.'_'.$data['from_uId'].'_'.$data['to_uId'];
 			$data['time'] = date("Y-m-d H:i:s", $time);
@@ -61,7 +62,28 @@
 			  //print_r($data);
 			 $message_id = $this->Message_management->message_reply($data);
 			 //$event_id = $this->Db_event_operate->event_insert(array('nId'=>$node_id,'event_type'=>EVENT_TYPE_CONTENT));
-	
+			
+			//update designnum
+			$this->Demand_management->update_messnum($post_arr['related_id']);
+
+			//给需求发布者发送提醒
+			$result_d=array();
+			$result_d=$this->Demand_management->get_user_demand($post_arr['related_id']);
+			foreach($result_d as $val){
+				  $demand=$val;
+			}
+			$info = array();
+			$info['uId'] = $from_user_id;
+			$username = $this->User_data->get_username(array('uId'=>$from_user_id));
+			$info['username'] = $username;
+			$info['type'] = 2;//message
+			$info['createdate'] = date("Y-m-d H:i:s", time());
+			$info['to_uId'] = $to_user_id;
+			$info['title'] = $demand['title'];
+			$info['relateid'] = $post_arr['related_id'];
+			$this->Demand_management->information_record_insert($info);
+
+
 			  //echo "Message send successed!";
 			 echo $this->Check_process->get_prompt_msg(array('pre'=>'message','code'=> MESSAGE_SEND_SUCCESS));
 		  }

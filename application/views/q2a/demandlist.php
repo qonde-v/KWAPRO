@@ -1,153 +1,143 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>TIT系统</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
-<link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" />
+<!-- <link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
+ --><link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" />
 <link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
 <script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"></script>
-
+<script src="<?php echo $base.'js/kwapro_event.jquery.js';?>"></script>
 </head>
-<?php include("header_n.php"); ?>
+<div class="container">
+<?php include("header.php"); ?>
 <!------------ 头部结束 ------------->
 
 
 
 
 <!------------ 内容开始 -------------> 
+<input type="hidden" id="base" value="<?php echo $base;?>"></input>
 
+<div class="main">
+	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_p.png';?>" /></a>
+	<div class="navbar">
+    	<ul class="navbar-nav pull-left">
+        	<li class="drop">
+            	<a href="#" class="dropdown-toggle">按发布时间排列</a>
+                <ul class="nav-menu">
+                    <li><a class="icon icon-down" href="<?php echo $base.'demand/demandlist?type=1';?>">由旧到新发布的排列<span></span></a></li>
+                    <li><a class="icon icon-up" href="<?php echo $base.'demand/demandlist?type=2';?>">由新到旧发布的排列<span></span></a></li>
+                    <li><a class="icon icon-left" href="<?php echo $base.'demand/demandlist?type=3';?>">最新一个月内的排列<span></span></a></li>
+                    <li><a class="icon icon-right" href="<?php echo $base.'demand/demandlist?type=4';?>">一个月前发布的排列<span></span></a></li>
+                  </ul>
+            </li>
+            <li class="drop">
+            	<a href="<?php echo $base.'demand/demandlist?type=5';?>" class="dropdown-toggle">按设计量排列</a>
+            </li>
+        </ul>
+        <a class="pull-right" style="margin-right:10px; margin-top:10px;" href="#" alt="全部"><img src="<?php echo $base.'img/xtb_006.png';?>" /></a>
+    </div>
 
-<div id="main">
-<div id="main_nr">
-<div id="index_lx">
-<div class="red_bt16" style="width:150px; margin-bottom:10px;">需 &nbsp;&nbsp; 求</div>
-<div class="gray_q_bt14" style="width:825px; height:40px; margin-bottom:10px;">当前设计 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  需求：<b>5665   </b>        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        设计：<b>9889</b>
+	<div class="content">
+		<span id="content">
+    	<ul id="xuqiu-list">
+		    <?php foreach($demands as $item):?>
+        	<li>
+            	<a class="title" href="<?php echo $base.'demand/demand_detail?id='.$item['id'];?>"><?=$item['title']?></a>
+                <ul class="views">
+                    <li class="view">浏览（<?=$item['viewnum']?>）</li>
+                    <li class="design">设计（<?=$item['designnum']?>）</li>
+                  </ul>
+                  <p></p>
+                  <span class="bottom"><font class="icon-tag">发布人：<?=$item['username']?></font> <font class="icon-clock">发布于<?=$item['createdate']?></font><font class="pull-right">三天后截止</font></span>
+            </li>
+			<?php endforeach;?>
+        </ul>
+		</span>
+        <div class="xuqiu-list-bottom">
+        	<div class="search-box">
+          		<input type="text" value="搜索关键字" />
+            	<a class="search-btn" href="javascript:void(0);" onclick="alert('search');"></a>
+          	</div>
+            <div class="dt_fy">
+			  <?php if($inbox_page_num > 1):?>	
+			  <div class="pagination">
+					<ul id="<?php echo $inbox_page_num;?>">
+						<li class="unactive disabled"><a href="#" id="pagination_0"><img src="<?php echo $base.'img/dot_dj.png';?>" align="absmiddle" border="0"/></a></li>
+						<li class="active"><a href="#" id="pagination_1">1</a></li>
+						<?php if($inbox_page_num > 5):?>
+						<?php for($i=2;$i<=5;$i++):?>
+							<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
+						<?php endfor;?>
+						<?php else:?> 
+						<?php for($i=2;$i<=$inbox_page_num;$i++):?>
+							<li class="unactive"><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
+						<?php endfor;?>
+						<?php endif;?>
+						<li class="unactive"><a href="#" id="pagination_2"><img src="<?php echo $base.'img/dot_dz.png';?>" align="absmiddle" border="0"/></a></li>
+					</ul>
+			  </div>
+			  <?php endif;?>
+			</div>
+        </div>
+    </div>
 
+	
 </div>
 
-<div class="index_l_xwnrx">
-	<div class="index_l_xwnr_tpx"><a href="#"><img src="<?php echo $base.'img/index_l001.png';?>" align="absmiddle" border="0" width="231" height="160"/></a></div>
-	<div class="index_l_xqnr">
-	<a href="#" class="Red16"><b>在桑拿天跑步的大人</b></a><br>
-	<div class="index_l_xqnr_w">
-参与设计： 8<br>
-发 布 人： 张三丰<br>
-发布时间：2014-03-25
-	</div>
-	<div class="index_l_xqnr_an"><div class="anniu_g" style="text-align:center;"><a href="#" class="White20"> 查看详情 </a></div></div>
-	</div>
-</div>
-
-<div class="index_l_xwnrx">
-	<div class="index_l_xwnr_tpx"><a href="#"><img src="<?php echo $base.'img/index_l002.png';?>" align="absmiddle" border="0" width="231" height="160"/></a></div>
-	<div class="index_l_xqnr">
-	<a href="#" class="Red16"><b>在桑拿天跑步的大人</b></a><br>
-	<div class="index_l_xqnr_w">
-参与设计： 8<br>
-发 布 人： 张三丰<br>
-发布时间：2014-03-25
-	</div>
-	<div class="index_l_xqnr_an"><div class="anniu_g" style="text-align:center;"><a href="#" class="White20"> 查看详情 </a></div></div>
-	</div>
-</div>
-
-<div class="index_l_xwnrx">
-	<div class="index_l_xwnr_tpx"><a href="#"><img src="<?php echo $base.'img/index_l003.png';?>" align="absmiddle" border="0" width="231" height="160"/></a></div>
-	<div class="index_l_xqnr">
-	<a href="#" class="Red16"><b>在桑拿天跑步的大人</b></a><br>
-	<div class="index_l_xqnr_w">
-参与设计： 8<br>
-发 布 人： 张三丰<br>
-发布时间：2014-03-25
-	</div>
-	<div class="index_l_xqnr_an"><div class="anniu_g" style="text-align:center;"><a href="#" class="White20"> 查看详情 </a></div></div>
-	</div>
-</div>
-
-
-<div class="index_l_xwnrx">
-	<div class="index_l_xwnr_tpx"><a href="#"><img src="<?php echo $base.'img/index_l001.png';?>" align="absmiddle" border="0" width="231" height="160"/></a></div>
-	<div class="index_l_xqnr">
-	<a href="#" class="Red16"><b>在桑拿天跑步的大人</b></a><br>
-	<div class="index_l_xqnr_w">
-参与设计： 8<br>
-发 布 人： 张三丰<br>
-发布时间：2014-03-25
-	</div>
-	<div class="index_l_xqnr_an"><div class="anniu_g" style="text-align:center;"><a href="#" class="White20"> 查看详情 </a></div></div>
-	</div>
-</div>
+        
 
 
 
-</div>
-
-<div id="index_rx">
-<div class="black_bt22" style="text-align:center; margin-bottom:15px;"> 发布需求，定制你的专属 </div>
-
-<div class="text_k_black text_sjxq" style="margin-top:10px;">
-<table width="97%" border="0" cellpadding="0" cellspacing="0" align="center">
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_01.png';?>" align="absmiddle" border="0"/></td>
-			  <td width="85%" align="left" valign="middle">创建一个需求</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_02.png';?>" align="absmiddle" border="0"/></td>
-			  <td width="85%" align="left" valign="middle">选择你的需求参数</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_03.png';?>" align="absmiddle" border="0"/></td>
-			  <td width="85%" align="left" valign="middle">描述你的需求</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle"><img src="<?php echo $base.'img/dot_04.png'?>" align="absmiddle" border="0"/></td>
-			  <td width="85%" align="left" valign="middle">发布需求</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle"></td>
-			  <td width="85%" align="left" valign="middle">-> 对外发布，让别人为你服务</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle"></td>
-			  <td width="85%" align="left" valign="middle">-> 自己动手设计</td>
-            </tr>
-</table>
-</div>
-
-<div  style="text-align:center; margin-bottom:15px; margin-top:15px;"> 
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-			<tr>
-              <td width="100%" height="30" align="center" valign="middle">
-			  <div class="anniu_h" style="width:220px; text-align:center;">
-<a href="<?php echo $base.'demand/publish';?>" class="White14">创建需求</a></div></td>
-            </tr>
-			</table>
-
- </div>
-
-<div class="black_bt22" style="text-align:center; margin-bottom:15px;"> 最新动态 </div>
 
 
-<div class="index_r_xwnr_tpx" style="margin-bottom:15px;">
-<img src="<?php echo $base.'img/index_r001.png';?>" align="absmiddle" border="0" width="294" height="201"/><br>
-<div class="index_r_sjxq_bt">参与人：<a href="#" class="Red14">李小小</a>  参与时间：2014-03-25</div>
-</div>
-<br><br>
 
-<div class="index_r_xwnr_tpx">
-<img src="<?php echo $base.'img/index_r002.png';?>" align="absmiddle" border="0" width="294" height="201"/><br>
-<div class="index_r_sjxq_bt">参与人：<a href="#" class="Red14">李小小</a>  参与时间：2014-03-25</div>
-</div>
 
-</div>
-</div>
-</div>
+
+
+
+
+
+
 
 
 
 <!------------ 底部开始 ------------->
 <?php include("footer.php"); ?>
-
+</div>
 </body>
+
+<script>
+$(function(){
+	$('.pagination ul li').live('click',switch_page);
+});
+
+function switch_page()
+{
+	var index = parseInt($(this).children().attr('id').split('_')[1]);
+	var ul_obj = $(this).parent();
+	if(index == $('.active',ul_obj).children().attr('id').split('_')[1])
+	{
+		return;
+	}
+	var total_page_num = parseInt(ul_obj.attr('id'));
+
+	var lang = {'lang_first':$('.first a').html(),'lang_previous':$('.prev a').html(),'lang_next':$('.next a').html(),'lang_last':$('.last a').html()};
+	var pagena_num = (total_page_num > 5) ? 5 : total_page_num;
+	
+	var url = $('#base').val() + 'demand/sort_demandlist/';
+	var post_str = 'index=' + index;
+	
+	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
+		$('#content').html(html);
+		pagenation_controller_update(ul_obj,{'base':$('#base').val(),'index':index,'total':total_page_num,'pagena_num':pagena_num,'lang':lang});
+	}};
+	jQuery.ajax(ajax);
+}
+
+</script>
+
 </html>

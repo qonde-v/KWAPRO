@@ -29,8 +29,8 @@
 	   $data['login'] = "login";
 	   $data['base'] = $base;
 
-	   $data['language_options'] = form_dropdown('Language', $data['language_data'], $data['langCode'],'id="Language"');           
-           $data['category_data'] = $this->Load_common_label->load_category_data($language);
+	   //$data['language_options'] = form_dropdown('Language', $data['language_data'], $data['langCode'],'id="Language"');           
+          // $data['category_data'] = $this->Load_common_label->load_category_data($language);
 	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($this->uId);
        $label = $this->load_label($language);
 	   $data = array_merge($right_data,$data,$label);
@@ -48,19 +48,19 @@
 	   $advance_data = $this->User_profile->get_user_advancedata($uId);
 	   
 	   //get according rss data
-	   $rss_data = $this->User_profile->get_user_rssdata(array('uId'=> $uId, 'langCode'=> $advance_data['langCode']));
+	   //$rss_data = $this->User_profile->get_user_rssdata(array('uId'=> $uId, 'langCode'=> $advance_data['langCode']));
 
 	   $photo_data['userphoto_path'] = $this->User_data->get_user_headphotopath($uId);
 
-	   $data = array_merge($basic_data,$advance_data,$photo_data);
-	   $data['rss_data'] = $rss_data;
-	   $data['user_rss_save'] = $this->User_profile->get_user_rss_feed($uId);
+	   $data = array_merge($basic_data,$advance_data,$photo_data);//
+	   //$data['rss_data'] = $rss_data;
+	   //$data['user_rss_save'] = $this->User_profile->get_user_rss_feed($uId);
 
 	   //get user's interact data
-	   $data['sendtype_info'] = $this->User_profile->get_all_sendtype();
-	   $data['interact_data'] = $this->User_profile->get_user_methoddata($uId);
+	   //$data['sendtype_info'] = $this->User_profile->get_all_sendtype();
+	   //$data['interact_data'] = $this->User_profile->get_user_methoddata($uId);
 
-       $data['privacy_data'] = $this->User_privacy->get_user_privacy($uId);
+       //$data['privacy_data'] = $this->User_privacy->get_user_privacy($uId);
 
 	   return $data;
 	}
@@ -207,6 +207,13 @@
         }
 		return $data;
     }
+
+	function savepic(){
+		$subpic=$_POST['subpic'];
+		$uId = $this->session->userdata('uId');
+		$this->User_profile->user_subpic_update(array('uId'=>$uId,'subpic'=>$subpic));
+		echo 'OK';
+	}
  }
 
  /*End of file*/

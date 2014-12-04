@@ -1,3 +1,10 @@
+<script src="<?php echo $base.'js/bootstrap-twipsy.js';?>"></script>
+        <script src="<?php echo $base.'js/bootstrap-dropdown.js';?>"></script>
+        <script src="<?php echo $base.'js/bootstrap-buttons.js';?>"></script>
+        <script src="<?php echo $base.'js/bootstrap-popover.js';?>"></script>
+	<script src="<?php echo $base.'js/bootstrap-modal.js';?>"></script>
+<script src="<?php echo $base.'js/home.js';?>"></script>
+ <script src="<?php echo $base.'js/login.js';?>" ></script>
 <script type="text/javascript"> 
 $(function(){ 
 $("img").mouseover(function(e){ 
@@ -14,28 +21,68 @@ $("#tooltip").css({
 }); 
 }); 
 </script>
+<script type="text/javascript"> 
+function showmenu(){
+	if(document.getElementById('dropmenu').style.display=='none'){
+		document.getElementById('dropmenu').style.display="block";
+	}else{
+		document.getElementById('dropmenu').style.display="none";
+	}
+}
+</script>
+
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" >
-<div id="top">
-<div id="top_main">
-<div id="top_l"><img src="<?php echo $base.'img/logo.png';?>" align="absmiddle" border="0" /></div>
-<div id="top_r">
-        <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-          <tr>
-            <!-- <td width="5%" height="50" valign="bottom" align="left"></td> -->
-			<td width="45%" valign="middle" align="left" class=" fWhite topr topt"><a href="<?php echo $base;?>" class="White14">首页</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'news/?type=1';?>" class="White14">运动</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'news/?type=2';?>" class="White14">服装</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'news/?type=3';?>" class="White14">明星</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'question_pool/';?>" class="White14">问答</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'design/practice';?>" class="White14">设计实现</a> &nbsp;&nbsp; &nbsp;<a href="<?php echo $base.'demand/';?>" class="White14">个人空间</a></td>
-			<td width="55%" valign="middle" align="left" >
-			<?php if(!isset($login)):?>
-			 <form method="post" action="" style="float:right;margin:10px 30px 10px 0px" name="login" onsubmit="return false;">
-            <!-- <input class="input-small" name="username" id="login_username" type="text" placeholder="<?php echo $header_username;?>" >
-            <input class="input-small" name="password" id="login_pswd" type="password" placeholder="<?php echo $header_password;?>"> -->
-			<a id="head_login" href="#denglu" class="White">登录</a> &nbsp;&nbsp;<a id="head_register" href="<?php echo $base.'register/';?>" class="White">注册</a> &nbsp;&nbsp;<a href="#" class="White">网站导航</a>
-			</form>
-			<?php else:?>
-			<p class="pull-right" style="margin-top:10px;margin-bottom:10px"><a style="color:white;padding-right:30px;" href="<?php echo $base."login/logout";?>">退出</a></p>
-			<?php endif; ?>
-			</td>
-          </tr>
-         </table>
+
+  <div class="head">
+    <div class="logo pull-left"> <a href="<?php echo $base;?>"><img src="<?php echo $base.'img/logo.png';?>" /></a> </div>
+    <ul class="dropdown-menus">
+	  <?php if(!isset($login)):?>
+      <li><a href="#" onclick="javascript:document.getElementById('login_modal').className='modal';">登录</a></li>
+      <li><a href="<?php echo $base.'register/';?>">注册</a></li>
+      <?php else:?>
+	  <li class="drop"><a href="#" onclick="javasrcipt:showmenu();" ><?php echo $user_info['username']; ?></a>
+      	<ul id="dropmenu" style="display:none;">
+        	<li><a href="<?php echo $base.'demand/';?>">个人空间</a></li>
+            <li><a href="#">我的关注</a></li>
+            <li><a href="#">我的评论</a></li>
+            <li><a href="#">我的粉丝</a></li>
+            <li><a href="<?php echo $base.'design/';?>">我的设计</a></li>
+            <li><a href="<?php echo $base.'demand/demandlist/';?>">需求广场</a></li>
+            <li><a href="<?php echo $base.'news?type=21';?>">知识广场</a></li>
+			<?php if($user_info['permission']){?>
+			<li><a href="<?php echo $base.'order/orderlist';?>">订单管理</a></li>
+			<?}?>
+            <li><a href="<?php echo $base."login/logout";?>">退　　出</a></li>
+        </ul>
+      </li>
+	  <?php endif; ?>
+    </ul>
+
+  </div>
+
+
+<div id="login_modal" class="modal hide" style="width:auto;">
+	<div class="modal-header"><a href="#" class="close" onclick="$('#login_modal').hide();">&times;</a><h3>用户登录</h3></div>
+	<div class="modal-body">
+		<div class="clearfix">
+			<label style="width:70px">用户名：</label>
+			<input class="span7" type="text" id="login_username" name="username"></input>
+		</div>
+		<div class="clearfix">
+			<label style="width:70px">密&nbsp;&nbsp;&nbsp;码：</label>
+			<input class="span7"  id="login_pswd" name="password" type="password"></input>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<button class="btn primary" id="head_login" onclick="login_process();">
+			登录
+		</button>
+	</div>
 </div>
-</div>
+<input type="hidden" value="<?php echo $base; ?>" id="header_base" />
+<input type="hidden" value="请稍候" id="login_wait"/>
+<div id="login_msg_modal" class="modal hide">
+	<div class="modal-header"><a href="#" class="close" onclick="$('#login_msg_modal').hide();">&times;</a><h3>&nbsp;</h3></div>
+	<div class="modal-body"></div>
+	<div class="modal-footer"><button class="btn primary" onclick="$('#login_msg_modal').hide();">确定</button></div>
 </div>
