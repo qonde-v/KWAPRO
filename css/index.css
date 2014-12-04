@@ -288,7 +288,7 @@ li.share{ width:40px; height:40px; cursor:pointer; }
 .icon-tag{ background:url(../img/icon-tag.png) no-repeat; line-height:22px; padding:2px 30px 2px 28px; }
 .icon-clock{ background:url(../img/icon-clock.png) no-repeat; padding:2px 0 2px 22px; line-height:22px; }
 
-#personalSpace .info{ overflow:auto; }
+#personalSpace .info{ overflow:auto; width:1000px;}
 #personalSpace .left,#personalSpace .right{ float:left; }
 #personalSpace .left{ width:286px; background-color:#f1f2f6; }
 #personalSpace .info .left{ height:338px; }
