@@ -29,6 +29,7 @@
      {
      	$this->db->set($data);
 		$this->db->insert('demand');
+		return $this->db->insert_id();
      }
 
 	 //insert information reocrd to db
@@ -56,15 +57,8 @@
 	 
 	 function designpic_record_insert($data)
      {
-		$info_arr = array('design_id'=>$data['design_id'],'pic_url'=>$data['pic_url']);
-        $this->db->select('id');
-     	$this->db->where($info_arr);
-		$query = $this->db->get('design_pic');
-		if($query->num_rows() <= 0)
-		{
-			$this->db->set($data);
-			$this->db->insert('design_pic');
-		}
+		$this->db->set($data);
+		$this->db->insert('design_pic');
      }
 
 
@@ -83,8 +77,6 @@
 		return $query->num_rows();
 	 }
 	 
-	 //load message data
-	 //input: message_id
 	 //table--'demand'
 	 function get_similar_data($map)
 	 {
@@ -100,6 +92,35 @@
 		$this->db->where($condition);
 		$this->db->limit(1,0);
 		$query = $this->db->get('demand');
+		$result = array();
+		if($query->num_rows() > 0)
+		{
+			foreach($query->result_array() as $row)
+			{
+				array_push($result,$row);
+			}
+		}
+		return $result;
+	 }
+
+
+	  //table--'design_pic'
+	 function get_similar_design($map)
+	 {
+		$condition =  'strength between '.($map['strength']-0.1).' and '.($map['strength']+0.1);
+		$condition .=  ' and sporttime between '.($map['sporttime']-0.1).' and '.($map['sporttime']+0.1);
+		$condition .=  ' and temperature between '.($map['temperature']-1).' and '.($map['temperature']+1);
+		$condition .=  ' and humidity between '.($map['humidity']-1).' and '.($map['humidity']+1);
+		$condition .=  ' and proficiency between '.($map['proficiency']-1).' and '.($map['proficiency']+1);
+		$condition .=  ' and age between '.($map['age']-1).' and '.($map['age']+1);
+		$condition .=  ' and weight between '.($map['weight']-1).' and '.($map['weight']+1);
+	 	$this->db->select('design.id,design_pic.pic_url');
+		$this->db->from('demand');
+		$this->db->join('design','design.demand_id=demand.id');
+		$this->db->join('design_pic','design_pic.design_id=design.id');
+		$this->db->where($condition);
+		$this->db->limit(6);
+		$query = $this->db->get();
 		$result = array();
 		if($query->num_rows() > 0)
 		{
@@ -147,7 +168,7 @@
 	 //input: $id
 	 function get_fabric($id)
 	 {
-	 	$this->db->select('name,pic');
+	 	$this->db->select('*');
 		$this->db->where('id',$id);
 		$query = $this->db->get('fabrics');
 		$result = array();

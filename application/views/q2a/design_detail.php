@@ -1,103 +1,89 @@
-<!DOCTYPE html>
-
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>TIT系统</title>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
-<link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" />
 <link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
 <script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"></script>
+<script type="text/javascript">
+	$("#effectpic").live("click", function(){
+		$("#designpic").removeClass("black");
+		$("#effectpic").addClass("black");
+		$("#effect_pic").removeClass("hide");
+		$("#design_pic").addClass("hide");
+	});
+	$("#designpic").live("click", function(){
+		$("#effectpic").removeClass("black");
+		$("#designpic").addClass("black");
+		$("#design_pic").removeClass("hide");
+		$("#effect_pic").addClass("hide");
+	});
 
-<link rel="stylesheet" href="<?php echo $base.'css/jquery-ui.css';?>">
-<script src="<?php echo $base.'js/jquery-1.10.2.js';?>"></script>
-<script src="<?php echo $base.'js/jquery-ui.js';?>"></script>
-<script>
-$(function() {
-$( "#slider" ).slider({
-value:<?php if(!empty($demand)) echo $demand['strength']; else echo 0;?>,
-min: 1,
-max: 1.5,
-step: 0.1,
-slide: function( event, ui ) {
-$( "#strength" ).val(ui.value );
-}
-});
-$( "#strength" ).val($( "#slider" ).slider( "value" ) );
+	function subsim(design_id,demand_id)
+	{
+		var url = $('#base').val() + 'design/subsim/';
+		var post_str = 'design_id='+design_id+'&demand_id=' + demand_id;
+		
+		var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
+			subsim_n(html);
+			//window.location.reload();
+		}};
+		jQuery.ajax(ajax);
+	}
+
+	function subsim_n(fname)
+	{
+		var url = 'http://localhost/cgi-bin/GSim.cgi';
+		var post_str = 'Simplans='+fname+'&name=Henry';
+
+		var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
+			alert('提交成功');
+		}};
+		jQuery.ajax(ajax);
+	}
+
+	
+	function control(tt){
+		if(document.getElementById('control_'+tt).innerHTML=="展开详情<br>▼"){
+			document.getElementById('control_'+tt).innerHTML="收    起<br>▼";
+			document.getElementById('reply_'+tt).style.display="block";
+		}else{
+			document.getElementById('control_'+tt).innerHTML="展开详情<br>▼";
+			document.getElementById('reply_'+tt).style.display="none";
+		}
+	}
 
 
-$( "#slider1" ).slider({
-value:<?php if(!empty($demand)) echo $demand['sporttime']; else echo 0;?>,
-min: 0,
-max: 2,
-step: 0.1,
-slide: function( event, ui ) {
-$( "#sporttime" ).val(ui.value );
-}
-});
-$( "#sporttime" ).val($( "#slider1" ).slider( "value" ) );
+	function send_sec_msg(tt)
+	{
+		var uId = $('#new_msg_uid_'+tt).val();
+		//var username = $('#msg_username_area').val();
+		var title = encodeURIComponent($('#msg_title_area_'+tt).val());
+		var content = encodeURIComponent($('#msg_content_area_'+tt).val());
+		var type = $('#type').val();
+		var related_id = $('#related_id').val();
+		var p_md_Id = $('#p_md_Id_'+tt).val();
+		if(msg_data_check(uId,title,content))//	if(msg_data_check(username,title,content))
+		{
+			var url = $('#base').val() + 'messages_request/send_message/';
+			var post_str = 'uId='+uId+'&title='+title+'&content='+content+'&type='+type+'&related_id='+related_id+'&p_md_Id='+p_md_Id;
+			var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
+				$('#msg_modal .modal-body').html(html);
+				$('#msg_modal').css('display','block');
+				setTimeout("$('#msg_modal').css('display','none')",2000);
+			}};
+			jQuery.ajax(ajax);
+			setTimeout("window.location.reload()",2000);
+		}
+	}
 
-$( "#slider2" ).slider({
-value:<?php if(!empty($demand)) echo $demand['temperature']; else echo 0;?>,
-min: 0,
-max: 50,
-step: 1,
-slide: function( event, ui ) {
-$( "#temperature" ).val(ui.value );
-}
-});
-$( "#temperature" ).val($( "#slider2" ).slider( "value" ) );
 
-
-$( "#slider3" ).slider({
-value:<?php if(!empty($demand)) echo $demand['humidity']; else echo 0;?>,
-min: 0,
-max: 100,
-step: 1,
-slide: function( event, ui ) {
-$( "#humidity" ).val(ui.value );
-}
-});
-$( "#humidity" ).val($( "#slider3" ).slider( "value" ) );
-
-$( "#slider4" ).slider({
-value:<?php if(!empty($demand)) echo $demand['proficiency']; else echo 0;?>,
-min: 0,
-max: 100,
-step: 1,
-slide: function( event, ui ) {
-$( "#proficiency" ).val(ui.value );
-}
-});
-$( "#proficiency" ).val($( "#slider4" ).slider( "value" ) );
-
-$( "#slider5" ).slider({
-value:<?php if(!empty($demand)) echo $demand['age']; else echo 0;?>,
-min: 10,
-max: 70,
-step: 1,
-slide: function( event, ui ) {
-$( "#age" ).val(ui.value );
-}
-});
-$( "#age" ).val($( "#slider5" ).slider( "value" ) );
-
-$( "#slider6" ).slider({
-value:<?php if(!empty($demand)) echo $demand['weight']; else echo 0;?>,
-min: 20,
-max: 150,
-step: 1,
-slide: function( event, ui ) {
-$( "#weight" ).val(ui.value );
-}
-});
-$( "#weight" ).val($( "#slider6" ).slider( "value" ) );
-
-});
 </script>
 </head>
-<?php include("header_n.php"); ?>
+<div class="container">
+<?php include("header.php"); ?>
 <!------------ 头部结束 ------------->
 
 
@@ -105,195 +91,222 @@ $( "#weight" ).val($( "#slider6" ).slider( "value" ) );
 
 
 <!------------ 内容开始 -------------> 
+<input type="hidden" id="base" value="<?php echo $base;?>"></input>
+<input type="hidden" id="type" value="2"/>
+<input type="hidden" id="related_id" value="<?php echo $design['id'];?>"/>
+<input type="hidden" id="username_empty" value="用户名不能为空"/>
+<input type="hidden" id="content_empty" value="内容不能为空"/>
+
+  <div class="main"> 
+	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_p.png';?>" /></a>
+    <ul class="breadcrumb">
+      <li><a href="#">首页</a></li>
+      <li>/</li>
+      <li><a href="#">设计详情</a></li>
+      <li class="fl-right">浏览（<?php echo $design['viewnum'];?>）</li>
+      <li class="fl-right">订单（<?php echo $design['ordernum'];?>）</li>
+    </ul>
+    <div class="content">
+      <div class="panel panel-default">
+        <div class="panel-heading2">
+        	<div class="panel-header">
+                <label class="title"><strong>设计需求：</strong>关于XX的需求</label>
+                <p>发布人：<strong>xx</strong>时间：<strong>2014-03-01</strong></p>
+                <a class="black ab-right" href="<?php echo $base.'demand/demand_detail?id='.$design['demand_id'];?>">点击查看详情</a>
+            </div>
+        </div>
+        <div class="panel-body" style="overflow:auto; padding-top:0; padding-bottom:10px; margin-bottom:2px;">
+          <div class="panel-item"> <img src="<?php if($demand['type']=='跑步')echo $base.'img/s_paobu.png';
+													if($demand['type']=='步行')echo $base.'img/s_buxing.png';
+													if($demand['type']=='钓鱼')echo $base.'img/s_diaoyu.png';
+													if($demand['type']=='高尔夫')echo $base.'img/s_gaoerfu.png';
+													if($demand['type']=='滑轮')echo $base.'img/s_hualun.png';
+													if($demand['type']=='滑雪')echo $base.'img/s_huaxue.png';
+													if($demand['type']=='健身运动')echo $base.'img/s_jianshen.png';
+													if($demand['type']=='篮球')echo $base.'img/s_lanqiu.png';
+													if($demand['type']=='马术')echo $base.'img/s_mashu.png';
+													if($demand['type']=='目标运动')echo $base.'img/s_mubiao.png';
+													if($demand['type']=='排球')echo $base.'img/s_paiqiu.png';
+													if($demand['type']=='乒乓球')echo $base.'img/s_pingpang.png';
+													if($demand['type']=='户外山地运动')echo $base.'img/s_shandi.png';
+													if($demand['type']=='狩猎运动')echo $base.'img/s_shoulie.png';
+													if($demand['type']=='水上运动')echo $base.'img/s_shuishang.png';
+													if($demand['type']=='网球')echo $base.'img/s_wangqiu.png';
+													if($demand['type']=='游泳')echo $base.'img/s_youyong.png';
+													if($demand['type']=='自行车运动')echo $base.'img/s_zixingche.png';
+													if($demand['type']=='足球')echo $base.'img/s_zuqiu.png';
+													if($demand['type']=='羽毛球')echo $base.'img/s_yumaoqiu.png';
+													?>" />
+            <div class="pull-right">
+              <p>强度：<span><?php echo $demand['strength'];?>轻松</span></p>
+              <p>时间：<span><?php echo $demand['sporttime'];?>小时</span></p>
+            </div>
+          </div>
+          <div class="panel-item">  <img src="<?php if($demand['weather']=='晴天')echo $base.'img/w_qing.png';
+													if($demand['weather']=='小雪')echo $base.'img/w_xiaoxue.png';
+													if($demand['weather']=='小雨')echo $base.'img/w_xiaoyu.png';
+													if($demand['weather']=='下雪')echo $base.'img/w_xiaxue.png';
+													if($demand['weather']=='下雨')echo $base.'img/w_xiayu.png';
+													if($demand['weather']=='阴天')echo $base.'img/w_yintian.png';
+													if($demand['weather']=='雨雪')echo $base.'img/w_yuxue.png';
+													?>" />
+			<div class="pull-right">
+			  <p>温度：<span><?php echo $demand['temperature'];?>°C</span></p>
+			  <p>湿度：<span><?php echo $demand['humidity'];?></span></p>
+			</div>
+          </div>
+          <div class="panel-item"> <img src="<?php if($demand['target']=='男')echo $base.'img/sex1.png';
+													if($demand['target']=='女')echo $base.'img/sex2.png';
+													?>" />
+            <div class="pull-right">
+              <p>熟练度：<span><?php echo $demand['proficiency'];?>初学者</span></p>
+              <p>年龄：<span><?php echo $demand['age'];?></span>&nbsp;&nbsp;&nbsp;&nbsp;体重：<span><?php echo $demand['weight'];?>KG</span></p>
+            </div>
+          </div>
+        </div>
+        <div class="panel-body" style="padding:0 30px 50px;">
+            <ul class="breadcrumb breadcrumb-gray">
+              <li id="effectpic" class="black" style="cursor:pointer">产品效果图</li>
+              <li>/</li>
+              <li id="designpic" class="" style="cursor:pointer">产品设计图</li>
+            </ul>
+			
+			<div class="thumb">
+				<div class="left">
+                	<img id="effect_pic" class="" width="498px" height="498px" src="<?php echo $base.$base_photoupload_path.'temp/'.$design['effect_pic'];?>" />
+					<img id="design_pic" class="hide" width="498px" height="498px" src="<?php echo $base.$base_photoupload_path.'temp/'.$design['design_pic'];?>" />
+                </div>
+                <div class="right">
+                	<div class="thumb-text">
+                    	<p class="title">《<?php echo $design['title'];?>》</p>
+                        <p>发布人：<?php echo $design['username'];?></p>
+                        <p>时间：<?php echo $design['createdate'];?></p>
+                        <p>产品单价：test</p>
+                        <p class="ms">设计描述</p>
+                        <p class="content"><?php echo $design['description'];?></p>
+                        <p class="buy">购买产品</p>
+                        <a href="<?php echo $base.'design/order?id='.$design['id'];?>" class="white">提交订单</a>
+                    </div>
+                </div>
+			</div>
+            <div class="ysmlxz">样式的面料选择：
+			<a class="btn <?php if($design['status']==0) echo 'active';else echo '';?>" href="#" onclick="javascript:subsim(<?php echo $design['id'].','.$design['demand_id'];?>);">提交仿真</a>
+			<a class="btn <?php if($design['status']==1) echo 'active';else echo '';?>">等待仿真</a>
+			<a class="btn <?php if($design['status']==2) echo 'active';else echo '';?>" href="<?php echo $base.'design/similar_detail';?>">查看仿真</a></div>
+            <div class="ysmlxz-content">
+            	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+				  <?php if($design['fabric']!=0){?>
+                  <tr>
+                    <td width="13%" align="center">
+                    	<img src="images/sjxq_xt.png" />
+                        <label>整套服装</label>
+                    </td>
+                    <td width="26%" align="center">
+                    	<img class="ml" src="images/sjxq_bl.png" />
+                        <label>Dir-Tif</label>
+                    </td>
+                    <td width="61%" valign="top">
+                   	  <label style="line-height:40px; margin-top:10px;">特点：</label>
+                        超细纤维制成  快速排汗
+                    </td>
+                  </tr>
+				  <?php }else{?>
+				  <?php if(!empty($design_pic)){foreach($design_pic as $item): ?>
+				  <tr>
+                    <td width="13%" align="center">
+                    	<img src="<?php echo $item['pic_url'];?>" />
+                        <label><?php echo $item['name'];?></label>
+                    </td>
+                    <td width="26%" align="center">
+                    	<img class="ml" src="<?php echo $base.'img/'.$item['fabric']['pic'];?>" />
+                        <label><?php echo $item['fabric']['name'];?></label>
+                    </td>
+                    <td width="61%" valign="top">
+                   	  <label style="line-height:40px; margin-top:10px;">特点：</label>
+                        <?php echo $item['fabric']['feature'];?>
+                    </td>
+                  </tr>
+				  <?php endforeach; }?>
+				  <?php }?>
+                </table>
+
+            </div>
+        </div>
+      </div>
+      <div class="panel panel-default" style="margin-top:2px;">
+        <div class="panel-body mini-body">
+		  <input type="hidden" id="new_msg_uid" value="<?php echo $demand['uId'];?>"/>
+		  <input type="hidden" id="msg_title_area" value=""></input>
+          <textarea class="message-input"></textarea>
+          <div class="message-btns"> <a href="#"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> <span style="margin:0 5px;">已有留言（<font class="text-orange">7</font>）</span> 
+		  <?php if(isset($login)){?><a class="btn" href="javascript:void(0);" id="msg_send_btn" data-loading-text="请稍后">留　言</a>
+		  <?php }else{?>
+		  <a class="btn" href="javascript:void(0);" onclick="javascript:document.getElementById('login_modal').className='modal';" data-loading-text="请稍后">留　言</a>
+		  <?php }?>
+		  </div>
+        </div>
+        <div class="list-group">
+          <?php $i=0; foreach($message_data as $item): $i++;?>
+          <div class="list-group-item">
+            <div class="item-body"> <img class="pull-left" src="<?php echo $base.'img/geren_tp.png';?>" /> <span class="username"><?=$item['username']?>:</span><?=$item['content']?>
+              <p class="time"><?=$item['time']?>&nbsp;<span class="message">（<?php if(!empty($item['sec_data']))echo count($item['sec_data']);else echo 0;?>）</span></p>
+			  <a class="detail" href="javascript:void(0)" onclick="javasrcipt:control(<?=$i?>);" id="control_<?=$i?>">展开详情<br>▼</a>
+              <div class="reply" id="reply_<?=$i?>" style="display:none;">
+              	<div class="reply-list">
+					<?php if(!empty($item['sec_data'])){foreach($item['sec_data'] as $secval){?>
+                	<div class="reply-item">
+                    	<img class="reply-img" src="<?php echo $base.'img/geren_tx.png';?>" />
+                        <span class="reply-name"><?=$secval['username']?>：</span><?=$secval['content']?>
+                    </div>
+					<?php }} ?>
+                </div>
+				<input type="hidden" id="new_msg_uid_<?=$i?>" value="<?php echo $item['from_uId'];?>"/>
+				<input type="hidden" id="msg_title_area_<?=$i?>" value=""></input>
+				<input type="hidden" id="p_md_Id_<?=$i?>" value="<?php echo $item['md_Id'];?>"></input>
+              	<textarea class="message-input"  id="msg_content_area_<?=$i?>"></textarea>
+          		<div class="message-btns"> <a href="#"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> <a class="btn" href="#" onclick="send_sec_msg(<?=$i?>)">回　复</a> </div>
+              </div>
+			</div>
+          </div>
+		  <?php  endforeach;?>
+
+        </div>
+      </div>
+    </div>
+  </div>
 
 
-<div id="main">
-<div id="main_nr">
-<div id="index_lx">
-<div class="red_bt16" style="width:150px; margin-bottom:10px;">需 &nbsp;&nbsp; 求</div>
-<div class="gray_q_bt14" style="width:825px; height:40px; margin-bottom:10px;">当前设计：<b>555   </b>   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   需求：<b>5665   </b>        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        设计：<b>9889</b>
-
-</div>
-
-<div class="index_news">
-	<div class="index_news_bt">
-	<b><?php echo $design['title'];?> </b>
+<div id="login_modal" class="modal hide" style="width:auto;">
+	<div class="modal-header"><a href="#" class="close" onclick="javascript:document.getElementById('login_modal').className='modal hide';">&times;</a><h3>用户登录</h3></div>
+	<div class="modal-body">
+		<div class="clearfix">
+			<label style="width:70px">用户名：</label>
+			<input class="span7" type="text" id="login_username" name="username"></input>
+		</div>
+		<div class="clearfix">
+			<label style="width:70px">密&nbsp;&nbsp;&nbsp;码：</label>
+			<input class="span7"  id="login_pswd" name="password" type="password"></input>
+		</div>
 	</div>
-	
-	<div class="index_news_fbt">
-	时间：<?php echo $design['createdate'];?>&nbsp;&nbsp;&nbsp;&nbsp;设计人：<?php echo $design['username'];?>
+	<div class="modal-footer">
+		<button class="btn primary" id="head_login" onclick="login_process();">
+			登录
+		</button>
 	</div>
-	
-	<div class="index_news_zw">
-	<div class="index_l_xqnr">
-	<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-		  <tr>
-            <td width="100%" height="40" valign="middle" align="left" colspan="5"><font class="fDBlack16">样式设计图：</font> </td>
-          </tr>
-		  <tr> 
-		    <?php if(!empty($design_pic)){foreach($design_pic as $item): ?>
-            <td width="20%" height="180" valign="top" align="center"><img src="<?php echo $base.$base_photoupload_path.'temp/'.$item['pic_url'];?>" align="absmiddle" border="0" width="140" height="126" class="img_k"/><br><br>
-			<!-- <a href="#" class="Red"><?php echo $design_pic['pic_title'];?></a> --></td>
-			<?php endforeach; }?>
-          </tr>
-	</table>
-
-	<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-          <tr>
-            <td width="100%" height="40" valign="middle" align="left" colspan="2"><font class="fDBlack16">选择面料：</font></td>
-          </tr>
-		  
-		  <tr>
-            <td width="100%" height="200" valign="top" align="left" style="padding:10px 20px 10px 20px;" colspan="2">
-			<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-		  <tr>
-            <td width="12%" height="180" valign="top" align="center"><img src="<?php echo $base.'img/'.$fabric['pic'];?>" align="absmiddle" border="0" width="106" height="106" class="img_k"/><br><br><font color="Red"><?php echo $fabric['name'];?> </font></td>
-          </tr>
-			</table>
-			</td>
-          </tr>
-		  <tr>
-            <td height="50" valign="middle" align="right"><font class="fDBlack16">功能参数：</font></td>
-			<td valign="middle" align="left">
-			<div  style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
-			强度： 
-			<font size="2" color="f6931f">1(轻松)</font>
-			<div id="slider" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">1.5(激烈)</font>
-			</div>
-			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
-			时间： 
-			<font size="2" color="f6931f">0Hour</font>
-			<div id="slider1" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">2Hour</font>
-			</div>
-			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
-			温度： 
-			<font size="2" color="f6931f">0</font>
-			<div id="slider2" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">50</font>
-			</div>
-			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
-			湿度： 
-			<font size="2" color="f6931f">0</font>
-			<div id="slider3" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">100</font>
-			</div>
-			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
-			熟练度：
-			<font size="2" color="f6931f">0(初学者)</font>
-			<div id="slider4" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">100(运动达人)</font>
-			<input type="hidden" id="proficiency" name="proficiency" >
-			</div>
-			<div style="padding:5px;border-top:1px solid #D9D9D9;border-left:1px solid #D9D9D9;border-right:1px solid #D9D9D9;">
-			年龄：
-			<font size="2" color="f6931f">10</font>
-			<div id="slider5" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">70</font>
-			<input type="hidden" id="age" name="age" >
-			</div>
-			<div style="padding:5px;border:1px solid #D9D9D9;">
-			体重：
-			<font size="2" color="f6931f">20kg</font>
-			<div id="slider6" style="width:200px;display:inline-block"></div>
-			<font size="2" color="f6931f">150kg</font>
-			<input type="hidden" id="weight" name="weight" >
-			</div>
-
-			</td>
-          </tr>
-
-	</table>
-	<table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-			<tr>
-				<td width="100%" height="30" align="center" valign="middle">
-					<div class="anniu_g" style="width:180px; text-align:center;">
-					<?php if($design['status']==0){?><a href="#" class="White14">提交仿真</a><?}?>
-					<?php if($design['status']==1){?><a href="#" class="White14">等待仿真</a><?}?>
-					<?php if($design['status']==2){?><a href="#" class="White14">查看仿真</a><?}?>
-					</div>
-				</td>
-            </tr>
-			</table>
-	</div>
-	</div>
-
-
-	
-
 </div>
-
-
-
-
-
+<input type="hidden" value="<?php echo $base; ?>" id="header_base" />
+<input type="hidden" value="请稍候" id="login_wait"/>
+<div id="login_msg_modal" class="modal hide">
+	<div class="modal-header"><a href="#" class="close">&times;</a><h3>&nbsp;</h3></div>
+	<div class="modal-body"></div>
+	<div class="modal-footer"><button class="btn primary" onclick="$('#login_msg_modal').hide();">确定</button></div>
 </div>
-
-<div id="index_rx">
-<div class="black_bt22" style="text-align:center; margin-bottom:15px;"> 发布需求，定制你的专属 </div>
-
-<div class="text_k_black text_sjxq" style="margin-top:10px;">
-<table width="97%" border="0" cellpadding="0" cellspacing="0" align="center">
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_01.png';?>" align="absmiddle" border="0"/></td>
-			  <td width="85%" align="left" valign="middle">创建一个需求</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_02.png';?>" align="absmiddle" border="0"/></td>
-			  <td width="85%" align="left" valign="middle">选择你的需求参数</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_03.png';?>" align="absmiddle" border="0"/></td>
-			  <td width="85%" align="left" valign="middle">描述你的需求</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"><img src="<?php echo $base.'img/dot_04.png';?>" align="absmiddle" border="0"/></td>
-			  <td width="85%" align="left" valign="middle">发布需求</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"></td>
-			  <td width="85%" align="left" valign="middle">-> 对外发布，让别人为你服务</td>
-            </tr>
-			<tr>
-              <td width="15%" height="30" align="center" valign="middle" style="padding:0px"></td>
-			  <td width="85%" align="left" valign="middle">-> 自己动手设计</td>
-            </tr>
-</table>
-</div>
-
-<div  style="text-align:center; margin-bottom:15px; margin-top:15px;"> 
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" align="center">
-			<tr>
-              <td width="100%" height="30" align="center" valign="middle">
-			  <div class="anniu_h" style="width:220px; text-align:center;">
-<a href="<?php echo $base.'demand/publish';?>" class="White14">发布需求</a></div></td>
-            </tr>
-			</table>
-
- </div>
-
-<div class="black_bt22" style="text-align:center; margin-bottom:15px;"> 最新动态 </div>
-
-
-<div class="index_r_xwnr_tpx" style="margin-bottom:15px;">
-<img src="<?php echo $base.'img/index_r001.png';?>" align="absmiddle" border="0" width="294" height="201"/><br>
-<div class="index_r_sjxq_bt">参与人：<a href="#" class="Red14">李小小</a>  参与时间：2014-03-25</div>
-</div>
-<br><br>
-
-<div class="index_r_xwnr_tpx">
-<img src="<?php echo $base.'img/index_r002.png';?>" align="absmiddle" border="0" width="294" height="201"/><br>
-<div class="index_r_sjxq_bt">参与人：<a href="#" class="Red14">李小小</a>  参与时间：2014-03-25</div>
-</div>
-
-</div>
-</div>
-</div>
-
-
 <!------------ 底部开始 ------------->
 <?php include("footer.php");?>
+<script src="<?php echo $base.'js/bootstrap-buttons.js';?>"></script>
+<script src="<?php echo $base.'js/kwapro_event.jquery.js';?>"></script>
+<script src="<?php echo $base.'js/message_other.js';?>"></script>
 
+</div>
 </body>
 </html>

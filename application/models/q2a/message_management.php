@@ -185,6 +185,7 @@
 		$this->db->where('to_uId',$data['uId']);
 		$this->db->where('related_id',$data['related_id']);
 		$this->db->where('p_md_Id',$data['p_md_Id']);
+		$this->db->where('type',$data['type']);
 		$this->db->join('user','user.uId = message_data.from_uId');
 		if($data['sort_attr'] == 'time')
 		{
