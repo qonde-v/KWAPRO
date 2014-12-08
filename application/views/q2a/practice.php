@@ -193,7 +193,7 @@ function save_detailpic()
 	}
 	if($('#picNumber').val()>=5){
 		$('.modal-body').html('最多上传五张设计图');
-		$('#msg_modal').removeClass("hide");;
+		$('#msg_modal').removeClass("hide");
 		return;
 	}
 	if(src.indexOf('.')>=0)
@@ -294,7 +294,51 @@ function generate_query_str(data)
    return str.substring(0,str.length-1);  
 }
 </script>
-
+<script type="text/javascript">
+var rDrag = {
+	
+	o:null,
+	
+	init:function(o){
+		o.onmousedown = this.start;
+	},
+	start:function(e){
+		var o;
+		e = rDrag.fixEvent(e);
+               e.preventDefault && e.preventDefault();
+               rDrag.o = o = this;
+		o.x = e.clientX - rDrag.o.offsetLeft;
+                o.y = e.clientY - rDrag.o.offsetTop;
+		document.onmousemove = rDrag.move;
+		document.onmouseup = rDrag.end;
+	},
+	move:function(e){
+		e = rDrag.fixEvent(e);
+		var oLeft,oTop;
+		oLeft = e.clientX - rDrag.o.x;
+		oTop = e.clientY - rDrag.o.y;
+		rDrag.o.style.left = oLeft + 'px';
+		rDrag.o.style.top = oTop + 'px';
+	},
+	end:function(e){
+		e = rDrag.fixEvent(e);
+		rDrag.o = document.onmousemove = document.onmouseup = null;
+	},
+    fixEvent: function(e){
+        if (!e) {
+            e = window.event;
+            e.target = e.srcElement;
+            e.layerX = e.offsetX;
+            e.layerY = e.offsetY;
+        }
+        return e;
+    }
+}
+window.onload = function(){
+        var obj = document.getElementById('draggable');
+	rDrag.init(obj);
+}
+</script>
 </head>
 <div class="container">
 <?php include("header.php"); ?>
@@ -310,7 +354,7 @@ function generate_query_str(data)
 
   <div id="sjlc" class="main flows"> 
 	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_p.png';?>" /></a>
-  	<div class="modal">
+  	<div class="modal" id="draggable" style="position:absolute;">
         <div class="modal-header">
             选择面料
             <a href="javascript:;" onclick="hidermodal()">保存</a>
@@ -533,8 +577,8 @@ function generate_query_str(data)
                 </td>
                 <td width="39%" rowspan="2">
                     <div class="info">
-                    <label>不同运动对不同服装</label>
-                    不同运动对不同服装不同运动对不同服装不同运动对不同服装不同运动对不同服装不同运动对不同服装</div>
+                    <label> </label>
+                     </div>
                 </td>
               </tr>
               <tr>

@@ -192,6 +192,18 @@
 	   //$this->output->cache(1);
 	   $base = $this->config->item('base_url');
 	   $base_photoupload_path = $this->config->item('base_photoupload_path');
+		$design_id = $_GET['id'];
+
+		$tmp=$this->session->userdata('ds'.$design_id);
+		if($tmp==''){
+			//session
+			$tmpsess=array();
+			$tmpsess=$this->session->userdata;
+			$tmpsess['ds'.$design_id]=1;
+			$this->session->set_userdata($tmpsess,'');
+			//浏览量+1
+			$this->Demand_management->update_viewnum($design_id,2);
+		}
 
 	   //login permission check
 	   $this->Auth->permission_check("login/");
@@ -205,7 +217,6 @@
 	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
 	   $data = array_merge($right_data,$data);
 		
-		$design_id = $_GET['id'];
 	   $result=array();
 	   
 		$this->db->select('*');
@@ -528,6 +539,9 @@
 
 	   $data = array('base'=>$base,'base_photoupload_path'=>$base_photoupload_path);
 	   $data['login'] = "login";
+
+	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
+	   $data = array_merge($right_data,$data);
 		
 
 		//处理舒适度DAT文件 取后三列

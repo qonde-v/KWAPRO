@@ -32,9 +32,9 @@
 	  <li class="tab-item <?php if($type==12)echo 'active'; else echo '';?>"><a href="<?php echo $base.'news?type=12';?>">潮流资讯</a></li>
 	  <li class="tab-item <?php if($type==13)echo 'active'; else echo '';?>"><a href="<?php echo $base.'news?type=13';?>">明星动态</a></li>
 	  <?php }else{?>
-	  <li class="tab-item <?php if($type==21)echo 'active'; else echo '';?>"><a href="<?php echo $base.'news?type=21';?>" >运动</a></li>
-	  <li class="tab-item <?php if($type==22)echo 'active'; else echo '';?>"><a href="<?php echo $base.'news?type=22';?>">面料</a></li>
-	  <li class="tab-item <?php if($type==23)echo 'active'; else echo '';?>"><a href="<?php echo $base.'news?type=23';?>">制衣</a></li>
+	  <li class="tab-item <?php if($type==21)echo 'active'; else echo '';?>"><a href="<?php echo $base.'news?type=21';?>" >运动与服装</a></li>
+	  <li class="tab-item <?php if($type==22)echo 'active'; else echo '';?>"><a href="<?php echo $base.'news?type=22';?>">纤维与面料</a></li>
+	  <li class="tab-item <?php if($type==23)echo 'active'; else echo '';?>"><a href="<?php echo $base.'news?type=23';?>">服装设计与打理</a></li>
 	  <?php }?>
 	  <li class="search-box">
 		<input type="text" value="搜索你感兴趣的" />

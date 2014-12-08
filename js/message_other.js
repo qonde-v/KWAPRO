@@ -74,16 +74,16 @@ function send_new_msg()
 			$('#msg_modal').css('display','block');
 			$('#msg_send_btn').button('reset');
 			$('#new_msg_modal').css('display','none');
-			setTimeout("$('#msg_modal').css('display','none')",2000);
+			setTimeout("$('#msg_modal').css('display','none')",200);
 		}};
 		jQuery.ajax(ajax);
-		setTimeout("window.location.reload()",2000);
+		setTimeout("window.location.reload()",200);
 	}
 }
 
 function msg_data_check(username,title,content)
 {
-	if(username.trim() == '')
+	if(username == '')
 	{
 		$('#msg_modal .modal-body').html($('#username_empty').val());
 		$('#msg_modal').css('display','block');
@@ -95,7 +95,7 @@ function msg_data_check(username,title,content)
 		$('#msg_modal').css('display','block');
 		return false;
 	}*/
-	if(content.trim() == '')
+	if(content == '')
 	{
 		$('#msg_modal .modal-body').html($('#content_empty').val());
 		$('#msg_modal').css('display','block');

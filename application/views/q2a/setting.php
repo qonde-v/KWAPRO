@@ -81,7 +81,7 @@
 	                        	<th><?php echo $profile_current_local;?></th>
 								<td>
 									<input type="hidden" id="location_code" value="<?php echo $location['country_code'].'|'.$location['province_code'].'|'.$location['city_code'].'|'.$location['town_code']; ?>"/>
-									<input type="text" id="place_setting" data-controls-modal='place_setting_modal' data-backdrop='true' data-keyboard='true' value="<?php echo $location['town_name']; ?>">
+									<input type="text" id="place_setting"  value="<?php echo $location['town_name']; ?>">
 									<a href="#" id="place_setting_img"  data-controls-modal='place_setting_modal' data-backdrop='true' data-keyboard='true'><img alt="" src="<?php echo $base.'img/btn_search.png';?>"></a>
 	                           </td>
                         	</tr>
@@ -170,7 +170,7 @@
 		</div>
 	</div>
     <div id="place_setting_modal" class="modal hide">
-		<div class="modal-header"><a href="#" class="close">&times;</a><h3><?php echo $profile_local_check;?></h3></div>
+		<div class="modal-header"><a href="#" onclick="$('#place_setting_modal').addClass('hide');" class="close">&times;</a><h3><?php echo $profile_local_check;?></h3></div>
 		<div class="modal-body">
 			<table>
 				<tr>
@@ -207,7 +207,6 @@
 	</div>
   </div>
   </body>
-  <script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"></script>
     <script src="<?php echo $base.'js/bootstrap-modal.js';?>"></script>
 	<script src="<?php echo $base.'js/bootstrap-twipsy.js';?>"></script>
     <script src="<?php echo $base.'js/bootstrap-dropdown.js';?>"></script>
