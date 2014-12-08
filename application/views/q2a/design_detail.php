@@ -100,7 +100,7 @@
   <div class="main"> 
 	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_p.png';?>" /></a>
     <ul class="breadcrumb">
-      <li><a href="#">首页</a></li>
+      <li><a href="<?php echo $base;?>">首页</a></li>
       <li>/</li>
       <li><a href="#">设计详情</a></li>
       <li class="fl-right">浏览（<?php echo $design['viewnum'];?>）</li>
@@ -110,8 +110,8 @@
       <div class="panel panel-default">
         <div class="panel-heading2">
         	<div class="panel-header">
-                <label class="title"><strong>设计需求：</strong>关于XX的需求</label>
-                <p>发布人：<strong>xx</strong>时间：<strong>2014-03-01</strong></p>
+                <label class="title"><strong>设计需求：</strong><?php echo $demand['title'];?></label>
+                <p>发布人：<strong><?php echo $demand['username'];?></strong>时间：<strong><?php echo $demand['createdate'];?></strong></p>
                 <a class="black ab-right" href="<?php echo $base.'demand/demand_detail?id='.$design['demand_id'];?>">点击查看详情</a>
             </div>
         </div>
@@ -237,8 +237,8 @@
         <div class="panel-body mini-body">
 		  <input type="hidden" id="new_msg_uid" value="<?php echo $demand['uId'];?>"/>
 		  <input type="hidden" id="msg_title_area" value=""></input>
-          <textarea class="message-input"></textarea>
-          <div class="message-btns"> <a href="#"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> <span style="margin:0 5px;">已有留言（<font class="text-orange">7</font>）</span> 
+          <textarea class="message-input" id="msg_content_area"></textarea>
+          <div class="message-btns"> <a href="#"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> <span style="margin:0 5px;">已有留言（<font class="text-orange"><?php echo $design['messnum'];?></font>）</span> 
 		  <?php if(isset($login)){?><a class="btn" href="javascript:void(0);" id="msg_send_btn" data-loading-text="请稍后">留　言</a>
 		  <?php }else{?>
 		  <a class="btn" href="javascript:void(0);" onclick="javascript:document.getElementById('login_modal').className='modal';" data-loading-text="请稍后">留　言</a>

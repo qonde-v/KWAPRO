@@ -40,8 +40,11 @@
 						    <?php if($item['type']==1){?>
                         	<a href="<?php echo $base.'design/design_detail?id='.$item['relateid'];?>" style="color: #fd9300;font-size:16px;"><?php echo $i.'、'.'用户【'.$item['username'].'】对我的需求【'.$item['title'].'】提交了设计';?></a>
 							<div class="btns"><a href="<?php echo $base.'design/design_detail?id='.$item['relateid'];?>">去查看</a></div>
-							<?php }else{?>
+							<?php }elseif($item['type']==2){?>
                         	<a href="<?php echo $base.'demand/demand_detail?id='.$item['relateid'];?>" style="color: #fd9300;font-size:16px;"><?php echo $i.'、'.'用户【'.$item['username'].'】对我的需求【'.$item['title'].'】留言';?></a>
+                            <div class="btns"><a href="<?php echo $base.'demand/demand_detail?id='.$item['relateid'];?>">去查看</a></div>
+							<?php }elseif($item['type']==3){?>
+                        	<a href="<?php echo $base.'design/design_detail?id='.$item['relateid'];?>" style="color: #fd9300;font-size:16px;"><?php echo $i.'、'.'用户【'.$item['username'].'】对我的设计【'.$item['title'].'】留言';?></a>
                             <div class="btns"><a href="<?php echo $base.'demand/demand_detail?id='.$item['relateid'];?>">去查看</a></div>
 							<?php }?>
                         </li>
