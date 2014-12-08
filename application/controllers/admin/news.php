@@ -30,6 +30,12 @@ class News extends CI_Controller{
 			$createid = $this->session->userdata('user_id');
 		}
 		$data['createid'] = $createid;
+
+
+		$status = array('1'=>'动态','11'=>'行业动态','12'=>'潮流资讯','13'=>'明星动态','2'=>'知识','21'=>'运动与服装','22'=>'纤维与面料','23'=>'服装设计与打理',);
+	    $data['status'] = $status;
+
+
 		return $data;
 	}
 	
@@ -62,7 +68,8 @@ class News extends CI_Controller{
 			$data["cdt_name"] = $condition['cdt_name'];
 		else 
 			$data["cdt_name"] = "";
-		
+	
+ 
 		$uri = $this->uri->segment(1);
 		if($this->uri->segment(2) != ""){
 			$uri = $uri."/".$this->uri->segment(2);
@@ -124,7 +131,8 @@ class News extends CI_Controller{
 				'content' => $_POST['content'],
 				'createTime' => $_POST['createTime'],
 				'createid' => $_POST['createid'],
-				'isfirst' => empty($_POST['isfirst'])?0:$_POST['isfirst']
+				'isfirst' => empty($_POST['isfirst'])?0:$_POST['isfirst'],
+				'isbest' => empty($_POST['isbest'])?0:$_POST['isbest']
 			);
 
 			if(!($this->session->userdata('picture_array')===FALSE)){

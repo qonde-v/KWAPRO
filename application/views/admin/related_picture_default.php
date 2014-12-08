@@ -5,7 +5,7 @@
 								<?php foreach($picture_array as $key=>$picture):?>
 								
 								<div class="pictureshow">
-									<img  src="<?php echo $base.'upload/uploadimages/'.$picture;?>"><br />
+									<img width="100px" height="100px" src="<?php echo $base.'upload/uploadimages/'.$picture;?>">
 									<a class="home_top_del" href="#" onclick="return delete_picture(<?php echo $key;?>,<?php echo $id;?>);">删除</a><br />
 								</div>
 								<?php endforeach;?>							
