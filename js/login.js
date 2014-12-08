@@ -16,7 +16,7 @@ $(function(){
 function login_process()
 {
 	$('#login_msg_modal .modal-body').html($('#login_wait').val());
-	$('#login_msg_modal').modal('show');
+	$('#login_msg_modal').removeClass("hide");;
 	var username = $('#login_username').val();
 	var password = $('#login_pswd').val();
 	var url = $('#header_base').val() + 'login/';
