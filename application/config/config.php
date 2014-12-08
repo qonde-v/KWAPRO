@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= "http://localhost/TIT/";
+$config['base_url']	= "http://58.42.228.230:9001/TIT/";
 $config['base_photoupload_path']	= "upload/user_photo/";
 
 
