@@ -198,27 +198,27 @@
 				  <?php if($design['fabric']!=0){?>
                   <tr>
                     <td width="13%" align="center">
-                    	<img src="images/sjxq_xt.png" />
+                    	<img width="96" height="96" src="<?php echo $base.'img/'.$design['effect_pic'];?>" />
                         <label>整套服装</label>
                     </td>
                     <td width="26%" align="center">
-                    	<img class="ml" src="images/sjxq_bl.png" />
-                        <label>Dir-Tif</label>
+                    	<img width="136" height="86" class="ml" src="<?php echo $base.'img/'.$fabric['pic'];?>" />
+                        <label><?php echo $fabric['name'];?></label>
                     </td>
                     <td width="61%" valign="top">
                    	  <label style="line-height:40px; margin-top:10px;">特点：</label>
-                        超细纤维制成  快速排汗
+                        <?php echo $fabric['feature'];?>
                     </td>
                   </tr>
 				  <?php }else{?>
 				  <?php if(!empty($design_pic)){foreach($design_pic as $item): ?>
 				  <tr>
                     <td width="13%" align="center">
-                    	<img src="<?php echo $item['pic_url'];?>" />
+                    	<img width="96" height="96" src="<?php echo $item['pic_url'];?>" />
                         <label><?php echo $item['name'];?></label>
                     </td>
                     <td width="26%" align="center">
-                    	<img class="ml" src="<?php echo $base.'img/'.$item['fabric']['pic'];?>" />
+                    	<img width="136" height="86" class="ml" src="<?php echo $base.'img/'.$item['fabric']['pic'];?>" />
                         <label><?php echo $item['fabric']['name'];?></label>
                     </td>
                     <td width="61%" valign="top">
