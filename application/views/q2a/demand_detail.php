@@ -119,7 +119,7 @@ function send_sec_msg(tt)
         <li class="design">设计（<?php echo $demand['designnum'];?>）</li>
       </ul>
       <div class="panel panel-default">
-        <div class="panel-heading">时间：<font><?php echo $demand['createdate'];?></font>&nbsp;&nbsp;&nbsp;&nbsp;发布人<font class="text-orange"><?php echo $demand['username'];?></font> <span class="pull-right clock"><font class="text-orange">10天后</font>&nbsp;&nbsp;截止</span> </div>
+        <div class="panel-heading">时间：<font><?php echo $demand['createdate'];?></font>&nbsp;&nbsp;&nbsp;&nbsp;发布人<font class="text-orange"><?php echo $demand['username'];?></font> <span class="pull-right clock"><font class="text-orange"><?php $days=round((time()-strtotime($demand['createdate']))/3600/24); if($days<15)echo (15-$days).'天后';else echo '已';?></font>&nbsp;&nbsp;截止</span> </div>
         <div class="panel-body" style="*overflow:visible;">
           <div class="panel-item"> <img src="<?php if($demand['type']=='跑步')echo $base.'img/s_paobu.png';
 													if($demand['type']=='步行')echo $base.'img/s_buxing.png';
@@ -168,7 +168,7 @@ function send_sec_msg(tt)
               <p>年龄：<span><?php echo $demand['age'];?></span>&nbsp;&nbsp;&nbsp;&nbsp;体重：<span><?php echo $demand['weight'];?>KG</span></p>
             </div>
           </div>
-          <div class="text-center"> <a href="<?php echo $base.'design/practice?id='.$demand['id'];?>" class="">发布设计</a> </div>
+          <div class="text-center"> <?php $days=round((time()-strtotime($demand['createdate']))/3600/24); if($days<15){;?><a href="<?php echo $base.'design/practice?id='.$demand['id'];?>" class="">发布设计</a><?php }else{?><a class="" style="background-color:#f1f2f6"></a> <?php }?></div>
         </div>
       </div>
       <div class="panel panel-default">

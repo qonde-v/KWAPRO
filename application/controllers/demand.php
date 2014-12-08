@@ -197,9 +197,19 @@
 	   $base = $this->config->item('base_url');
 	   $demand_id = $_GET['id'];
 
+		$tmp=$this->session->userdata('dm'.$demand_id);
+		if($tmp==''){
+			//session
+			$tmpsess=array();
+			$tmpsess=$this->session->userdata;
+			$tmpsess['dm'.$demand_id]=1;
+			$this->session->set_userdata($tmpsess,'');
+			//浏览量+1
+			$this->Demand_management->update_viewnum($demand_id,1);
+		}
+
 	   //login permission check
 	   //$this->Auth->permission_check("login/");
-
 	   //get current login user id
 	   $user_id = $this->session->userdata('uId');
 
@@ -245,7 +255,7 @@
 		$message = array();
 		//get second messagelist
 		foreach($message_data as $val){
-			$con = array('uId'=>$val['from_uId'],'related_id'=>$demand_id,'p_md_Id'=>$val['md_Id'],'sort_attr'=>'time','sort_type'=>0,'type'=>2);
+			$con = array('uId'=>$val['from_uId'],'related_id'=>$demand_id,'p_md_Id'=>$val['md_Id'],'sort_attr'=>'time','sort_type'=>0,'type'=>1);
 			$sec_data = $this->Message_management->get_related_messages($con);
 			if(!empty($sec_data)){
 				$val['sec_data'] = $sec_data;

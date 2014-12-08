@@ -19,6 +19,14 @@ $(document).ready(function() {
 			i -= 20;
 			a -= 20;
 		}
+		if($(this).attr("id") == "nianling"){
+			i -= 8;
+			a -= 8;
+		}
+		if($(this).attr("id") == "wendu"){
+			i = parseInt(i) + 20;
+			a = parseInt(a) + 20;
+		}
 		$(this).slider({
 			orientation: "horizontal",
 			range: "min",
@@ -41,8 +49,8 @@ $(document).ready(function() {
 					$(this).find(".slider-value").html(ui.value);
 					$('#sporttime').val(ui.value);
 				}else if($(this).attr("id") == "wendu"){
-					$(this).find(".slider-value").html(ui.value);
-					$('#temperature').val(ui.value);
+					$(this).find(".slider-value").html(ui.value - 20);
+					$('#temperature').val(ui.value - 20);
 				}else if($(this).attr("id") == "shidu"){
 					$(this).find(".slider-value").html(ui.value);
 					$('#humidity').val(ui.value);
@@ -50,8 +58,8 @@ $(document).ready(function() {
 					$(this).find(".slider-value").html(ui.value);
 					$('#proficiency').val(ui.value);
 				}else if($(this).attr("id") == "nianling"){
-					$(this).find(".slider-value").html(ui.value);
-					$('#age').val(ui.value);
+					$(this).find(".slider-value").html(ui.value + 8);
+					$('#age').val(ui.value + 8);
 				}
 			}
 		});
@@ -190,8 +198,8 @@ function hidermodal(){
                 </td>
                 <td width="39%" rowspan="3">
                     <div class="info">
-                    <label>不同运动对不同服装</label>
-                    不同运动对不同服装不同运动对不同服装不同运动对不同服装不同运动对不同服装不同运动对不同服装</div>
+                    <label>选择运动类型</label>
+                    根据运动类型的特点，对面料的功能性要求也会不同，运动强度越大，时间越长，则要求面料的透气，舒适，能更好地调节体温。</div>
                 </td>
               </tr>
               <tr>
@@ -231,17 +239,17 @@ function hidermodal(){
                 </td>
                 <td width="39%" rowspan="3">
                     <div class="info">
-                    <label>不同运动对不同服装</label>
-                    不同运动对不同服装不同运动对不同服装不同运动对不同服装不同运动对不同服装不同运动对不同服装</div>
+                    <label>选择运动场景</label>
+                    当环境湿度高时，功能性面料能迅速将汗水和湿气导离皮肤表面，保持皮肤干爽舒适，当环境温度低时，在保证透气排汗的同时，能保持体温。</div>
                 </td>
               </tr>
               <tr>
                 <td height="80" align="right" class="font16">温度：</td>
                 <td>
                 	<div role="slider" id="wendu">
-                    	<div class="min"><font>0</font>（摄氏度）</div>
+                    	<div class="min"><font>-20</font>（摄氏度）</div>
                         <div class="max"><font>50</font>（摄氏度）</div>
-						<input type="hidden" id="temperature" name="temperature" value="0" >
+						<input type="hidden" id="temperature" name="temperature" value="-20" >
                     </div>
                 </td>
               </tr>
@@ -274,8 +282,8 @@ function hidermodal(){
                 </td>
                 <td width="39%" rowspan="4">
                     <div class="info">
-                    <label>不同运动对不同服装</label>
-                    不同运动对不同服装不同运动对不同服装不同运动对不同服装不同运动对不同服装不同运动对不同服装</div>
+                    <label>选择着装对象</label>
+                    不同的运动个体排汗，发热，身体代谢率有着明显的差异，合适的功能性服装能使人体保持干爽，调节体温，防止运动损伤。</div>
                 </td>
               </tr>
               <tr>
@@ -292,9 +300,9 @@ function hidermodal(){
                 <td height="80" align="right" class="font16">年龄：</td>
                 <td>
                 	<div role="slider" id="nianling">
-                    	<div class="min"><font>0</font>（轻松）</div>
-                        <div class="max"><font>70</font>（剧烈）</div>
-						<input type="hidden" id="age" name="age"  value="0">
+                    	<div class="min"><font>8</font></div>
+                        <div class="max"><font>70</font></div>
+						<input type="hidden" id="age" name="age"  value="8">
                     </div>
                 </td>
               </tr>
@@ -321,8 +329,8 @@ function hidermodal(){
                 </td>
                 <td width="39%" rowspan="2">
                     <div class="info">
-                    <label>不同运动对不同服装</label>
-                    不同运动对不同服装不同运动对不同服装不同运动对不同服装不同运动对不同服装不同运动对不同服装</div>
+                    <label></label>
+                    </div>
                 </td>
               </tr>
               <tr>

@@ -163,6 +163,24 @@
 		return $result;
 	 }
 
+	 //get user's design
+	 //input: $id
+	 function get_user_design($id)
+	 {
+	 	$this->db->select('*');
+		$this->db->where('id',$id);
+		$query = $this->db->get('design');
+		$result = array();
+		if($query->num_rows() > 0)
+		{
+			foreach($query->result_array() as $row)
+			{
+				array_push($result,$row);
+			}
+		}
+		return $result;
+	 }
+
 
 	 //get user's fabric
 	 //input: $id
@@ -192,13 +210,32 @@
 		//}
      }
 
-	 function update_messnum($demand_id)
+	 function update_messnum($id,$type)
      {
      	//if(!empty($demand_id))
 		//{
-           $this->db->where('id',$demand_id);
+           $this->db->where('id',$id);
            $this->db->set('messnum', 'messnum+1', FALSE);
-           $this->db->update('demand');
+		   if($type==1){
+			   $this->db->update('demand');
+		   }else{
+			   $this->db->update('design');
+		   }
+		//}
+     }
+		
+	 //update viewnum
+	 function update_viewnum($id,$type)
+     {
+     	//if(!empty($demand_id))
+		//{
+           $this->db->where('id',$id);
+           $this->db->set('viewnum', 'viewnum+1', FALSE);
+		   if($type==1){
+			   $this->db->update('demand');
+		   }else{
+			   $this->db->update('design');
+		   }
 		//}
      }
 

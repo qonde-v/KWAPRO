@@ -18,6 +18,10 @@ $(function(){
 	$('#province').click(show_city);
 	$('#city').click(show_town);
 	
+	$("#place_setting").click(function() {
+		$('#place_setting_modal').removeClass('hide');
+	});
+
 	$('#province').dblclick(function(){
 		$('#place_setting').val($('#province option:selected').html());
 		$('#place_setting_modal').modal('hide');
@@ -36,7 +40,7 @@ $(function(){
 	
 	$("#user_photo").change(function(){
          ajaxUpload(this.form,$('#base').val()+'settings_request/photo_upload/', 'original_photo',$('#upload_wait').val(),upload_succ);
-		 $('#upload_avatar_modal').modal('show');		 
+		 $('#upload_avatar_modal').removeClass('hide');		 
      });
 	 
 	 $("#crop_photo").click(function() {  

@@ -62,26 +62,48 @@
 			  //print_r($data);
 			 $message_id = $this->Message_management->message_reply($data);
 			 //$event_id = $this->Db_event_operate->event_insert(array('nId'=>$node_id,'event_type'=>EVENT_TYPE_CONTENT));
-			
-			//update designnum
-			$this->Demand_management->update_messnum($post_arr['related_id']);
 
-			//给需求发布者发送提醒
-			$result_d=array();
-			$result_d=$this->Demand_management->get_user_demand($post_arr['related_id']);
-			foreach($result_d as $val){
-				  $demand=$val;
+			$type=$post_arr['type'];
+			if($type==1){
+				//update designnum
+				$this->Demand_management->update_messnum($post_arr['related_id'],$type);
+
+				//给需求发布者发送提醒
+				$result_d=array();
+				$result_d=$this->Demand_management->get_user_demand($post_arr['related_id']);
+				foreach($result_d as $val){
+					  $demand=$val;
+				}
+				$info = array();
+				$info['uId'] = $from_user_id;
+				$username = $this->User_data->get_username(array('uId'=>$from_user_id));
+				$info['username'] = $username;
+				$info['type'] = 2;//message
+				$info['createdate'] = date("Y-m-d H:i:s", time());
+				$info['to_uId'] = $to_user_id;
+				$info['title'] = $demand['title'];
+				$info['relateid'] = $post_arr['related_id'];
+				$this->Demand_management->information_record_insert($info);
+			}else{
+				//update designnum
+				$this->Demand_management->update_messnum($post_arr['related_id'],$type);
+
+				//给需求发布者发送提醒
+				$result_d=array();
+				$result_d=$this->Demand_management->get_user_design($post_arr['related_id']);
+				foreach($result_d as $val){
+					  $design=$val;
+				}
+				$info = array();
+				$info['uId'] = $from_user_id;
+				$username = $this->User_data->get_username(array('uId'=>$from_user_id));
+				$info['username'] = $username;
+				$info['type'] = 3;//message
+				$info['createdate'] = date("Y-m-d H:i:s", time());
+				$info['to_uId'] = $to_user_id;
+				$info['title'] = $design['title'];
+				$info['relateid'] = $post_arr['related_id'];
 			}
-			$info = array();
-			$info['uId'] = $from_user_id;
-			$username = $this->User_data->get_username(array('uId'=>$from_user_id));
-			$info['username'] = $username;
-			$info['type'] = 2;//message
-			$info['createdate'] = date("Y-m-d H:i:s", time());
-			$info['to_uId'] = $to_user_id;
-			$info['title'] = $demand['title'];
-			$info['relateid'] = $post_arr['related_id'];
-			$this->Demand_management->information_record_insert($info);
 
 
 			  //echo "Message send successed!";
