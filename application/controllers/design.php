@@ -1,4 +1,5 @@
 <?php
+ini_set("memory_limit","100M");
   class Design extends CI_Controller
   {
 	   var $pre_msg_num=5;
@@ -546,7 +547,7 @@
 
 		//处理舒适度DAT文件 取后三列
 	   $data['ComfortEvaluationRes']=$base."SimResult/ComfortEvaluationRes.DAT";
-	   $content = trim(file_get_contents($data['ComfortEvaluationRes']));
+	   /*$content = trim(file_get_contents($data['ComfortEvaluationRes']));
 	   $arr = explode("\n", $content);
 	   $newcontent = "";
 	   foreach ($arr as $v) {
@@ -557,13 +558,13 @@
 	   if($newcontent!=''){
 		   $newcontent = "date	R_th	R_dp	R_tc".$newcontent;
 		   file_put_contents("C:\wamp\www\TIT\SimResult\ComfortEvaluationRes.DAT",$newcontent);
-	   }
+	   }*/
 	   
 
 
 	   //处理皮肤湿度DAT文件
 	   $data['SkinWetness']=$base."SimResult/SkinWetness.DAT";
-	   $content = trim(file_get_contents($data['SkinWetness']));
+	   /*$content = trim(file_get_contents($data['SkinWetness']));
 	   $arr = explode("\n", $content);
 	   $newcontent = "";
 	   foreach ($arr as $v) {
@@ -574,12 +575,12 @@
 	   if($newcontent!=''){
 		   $newcontent = "date	SkinWetness".$newcontent;
 		   file_put_contents("C:\wamp\www\TIT\SimResult\SkinWetness.DAT",$newcontent);
-	   }
+	   }*/
 
 
 		//处理温度DAT文件
 	   $data['Temperature']=$base."SimResult/Temperature.DAT";
-	   if(!file_exists("C:\wamp\www\TIT\SimResult\Temperature.DAT")){
+	   /*if(!file_exists("C:\wamp\www\TIT\SimResult\Temperature.DAT")){
 		   $content = trim(file_get_contents($base."SimResult/CoreTem.DAT"));
 		   $content1 = trim(file_get_contents($base."SimResult/SkinTem.DAT"));
 		   $arr = explode("\n", $content);
@@ -598,7 +599,7 @@
 			   chmod("C:\wamp\www\TIT\SimResult",0777);
 			   file_put_contents("C:\wamp\www\TIT\SimResult\Temperature.DAT",$newcontent);
 		   }
-	   }
+	   }*/
 
 
 	   $this->load->view('q2a/similar_detail',$data);
