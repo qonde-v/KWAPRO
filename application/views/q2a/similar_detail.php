@@ -23,7 +23,7 @@ $(document).ready(function() {
 </script>
 
 </head>
-<div class="container">
+<div class="container" >
 <?php include("header.php"); ?>
 <!------------ 头部结束 ------------->
 
@@ -34,10 +34,16 @@ $(document).ready(function() {
 	<a href="javascript:;">皮肤湿度</a>
 	<a href="javascript:;">温度</a>
 </div>
+<div id="Comfort">
+</div>
+<div id='surfacePlotDiv'>
+<!-- SurfacePlot goes here... -->
+	
+</div>
 </div>
 
-		<?php
-		   $content = trim(file_get_contents('http://localhost/TIT/SimResult/ComfortEvaluationRes.DAT'));
+	  <?php
+		   $content = trim(file_get_contents($base.'SimResult/ComfortEvaluationRes.DAT'));
 		   $arr = explode("\n", $content);
 		   $idx = 0;
 		   foreach ($arr as $v) {
@@ -50,14 +56,14 @@ $(document).ready(function() {
 	  ?>
 
 		<script type="text/javascript" src="http://cdn.hcharts.cn/jquery/jquery-1.8.3.min.js"></script>
-		<script src="javascript/highcharts.js"></script>
-		<script src="javascript/exporting.js"></script>
+		<script src="<?php echo $base.'js/highcharts.js';?>"></script>
+		<script src="<?php echo $base.'js/exporting.js';?>"></script>
 		
 		<script type="text/javascript">
 		
 		$(function () {
 		//alert(<?php echo $arr[0][0];?>);
-			$('#container').highcharts({
+			$('#Comfort').highcharts({
 				chart: {
 					type: 'spline'
 				},
@@ -106,7 +112,7 @@ $(document).ready(function() {
 					name: 'R_th',
 					
 					data: [
-					<?php
+					<?php 
 					   for($i=0;$i<$idx;$i++)
 					   {
 							echo '[';
@@ -165,6 +171,95 @@ $(document).ready(function() {
 		</script>
 
 
+
+
+
+<!-------------皮肤湿度开始---------------------->
+    <?php
+	   $content = trim(file_get_contents($base.'SimResult/TempF.dat'));
+	   $arr = explode("\n", $content);
+	   $idx = 0;
+	   foreach ($arr as $v) {
+			$tmp = explode("	", $v);
+			$arr[$idx]=$tmp;
+			unset($tmp);
+			$idx++;
+	   }
+	//print_r($arr);
+	?>
+    <script type='text/javascript'>
+               
+      google.load("visualization", "1");
+      google.setOnLoadCallback(setUp);
+           
+        function setUp()
+        {		
+		  
+		  var rdata = new Array();
+		  
+		  rdata = <?php echo json_encode($arr);?>;
+		  
+		
+          var numRows = 6;
+          var numCols = 1171;
+                
+          var tooltipStrings = new Array();
+          var data = new google.visualization.DataTable();
+          
+		  //var bcol = parseFloat(rdata[1][0]);
+//alert(bcol);
+          for (var i = 0; i < numCols; i++)
+          {
+            data.addColumn('number', i);
+          }
+          
+		  	  
+          data.addRows(numRows);
+                         
+          for (var i = 0; i < numCols; i++) 
+          {		    
+            for (var j = 0; j < numRows; j++)
+            { 			  
+			  var row = rdata[i*numRows + j];
+			  var x = parseFloat(row[0]);
+			  var y = parseFloat(row[1]);
+			  var z = parseFloat(row[2].replace('\r',''));
+              data.setValue(j, i, (z-20)/20.0);
+        
+              tooltipStrings[j*numCols + i] = "x:" + x + ", y:" + y + " = " + z;
+            }
+          }
+
+         var surfacePlot = new greg.ross.visualisation.SurfacePlot(document.getElementById("surfacePlotDiv"));
+
+         // Don't fill polygons in IE. It's too slow.
+         var fillPly = true;
+
+         // Define a colour gradient.
+         var colour1 = {red:0, green:0, blue:255};
+         var colour2 = {red:0, green:255, blue:255};
+         var colour3 = {red:0, green:255, blue:0};
+         var colour4 = {red:255, green:255, blue:0};
+         var colour5 = {red:255, green:0, blue:0};
+         var colours = [colour1, colour2, colour3, colour4, colour5];
+
+         // Axis labels.
+         var xAxisHeader = "X";
+         var yAxisHeader = "Y";
+         var zAxisHeader = "Z";
+
+         var options = {xPos: 200, yPos: 100, width: 600, height: 500, colourGradient: colours,
+           fillPolygons: fillPly, tooltips: tooltipStrings, xTitle: xAxisHeader,
+           yTitle: yAxisHeader, zTitle: zAxisHeader, restrictXRotation: false};
+                
+        surfacePlot.draw(data, options);
+      }
+            
+      </script>
+        
+
+
+<!----------------------------------->
 <!------------ 底部开始 ------------->
 <?php include("footer.php");?>
 </div>
