@@ -98,6 +98,9 @@ class User extends CI_Controller{
 				
 		if(!$this->check_info()){
 			$this->load->view('admin/user_edit', $data);
+		}elseif($this->Core_user->getIdByUserCode($_POST['userCode'])!='' && $_POST['id']<1){
+			$data['saveinfo'] = "用户名已存在";
+			$this->load->view('admin/user_edit', $data);
 		}else{
 			$data = array(
 				'id'=>$_POST['id'],
