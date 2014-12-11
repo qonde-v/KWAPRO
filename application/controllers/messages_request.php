@@ -80,7 +80,7 @@
 				$info['username'] = $username;
 				$info['type'] = 2;//message
 				$info['createdate'] = date("Y-m-d H:i:s", time());
-				$info['to_uId'] = $to_user_id;
+				$info['to_uId'] = $demand['uId'];//$to_user_id;
 				$info['title'] = $demand['title'];
 				$info['relateid'] = $post_arr['related_id'];
 				$this->Demand_management->information_record_insert($info);
@@ -100,9 +100,10 @@
 				$info['username'] = $username;
 				$info['type'] = 3;//message
 				$info['createdate'] = date("Y-m-d H:i:s", time());
-				$info['to_uId'] = $to_user_id;
+				$info['to_uId'] = $design['uId'];//$to_user_id;
 				$info['title'] = $design['title'];
 				$info['relateid'] = $post_arr['related_id'];
+				$this->Demand_management->information_record_insert($info);
 			}
 
 
