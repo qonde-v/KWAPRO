@@ -124,8 +124,8 @@
     	<label>
         	<span>订单者： <?php echo $order['realname'];?></span>
             <span>订单ID：<?php echo $order['id'];?></span>
-            <span>设计：《设计XXX》</span>
-            <span>设计者：test</span>
+            <span>设计：《<?php echo $design['title'];?>》</span>
+            <span>设计者：<?php echo $design['username'];?></span>
         </label>
     	<table width="100%" border="0" cellspacing="0" cellpadding="0">
           <tr>
@@ -137,12 +137,12 @@
             <th class="borderright0" width="16%">共计</th>
           </tr>
           <tr>
-            <td class="borderleft0"><img class="pull-left" src="<?php echo $base.'img/gly_dd_p.png';?>" /><span style="line-height: 83px;">《设计XXX》的订单</span></td>
-            <td class="text-red">369元</td>
-            <td>1</td>
-            <td class="text-red">369元</td>
-            <td class="text-red">20元</td>
-            <td class="borderright0 text-red">389元</td>
+            <td class="borderleft0"><img width="82px" height="82px" class="pull-left" src="<?php echo $base.$base_photoupload_path.'temp/'.$design['design_pic'];?>" /><span style="line-height: 83px;">《<?php echo $design['title'];?>》的订单</span></td>
+            <td class="text-red"><?php echo $order['price'];?>元</td>
+            <td><?php echo $order['num'];?></td>
+            <td class="text-red"><?php echo $order['totalprice'];?>元</td>
+            <td class="text-red"><?php echo $order['postprice'];?>元</td>
+            <td class="borderright0 text-red"><?php echo $order['totalprice']+$order['postprice'];?>元</td>
           </tr>
         </table>
 		<label>

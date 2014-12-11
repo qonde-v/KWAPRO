@@ -70,9 +70,9 @@
     					   	<th><?php echo $profile_language_type;?></th>
     					   	<td>
 								<select id="Language">
-    					    		<option value="zh" <?php if($langCode=='zh'){echo "selected='selected'";}?>>中文</option>
-                                    <option value="en" <?php if($langCode=='en'){echo "selected='selected'";}?>>English</option>
-                                    <!--option value="de" <?php if($langCode=='de'){echo "selected='selected'";}?>>Deutsch</option>
+    					    		<option value="zh" selected="selected">中文</option>
+                                    <!--<option value="en" <?php if($langCode=='en'){echo "selected='selected'";}?>>English</option>
+                                    option value="de" <?php if($langCode=='de'){echo "selected='selected'";}?>>Deutsch</option>
                                     <option value="it" <?php if($langCode=='it'){echo "selected='selected'";}?>>Italiano</option-->
     					    	</select>
 							</td>

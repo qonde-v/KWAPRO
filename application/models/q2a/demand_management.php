@@ -114,10 +114,9 @@
 		$condition .=  ' and proficiency between '.($map['proficiency']-1).' and '.($map['proficiency']+1);
 		$condition .=  ' and age between '.($map['age']-1).' and '.($map['age']+1);
 		$condition .=  ' and weight between '.($map['weight']-1).' and '.($map['weight']+1);
-	 	$this->db->select('design.id,design_pic.pic_url');
+	 	$this->db->select('design.id,design.design_pic');
 		$this->db->from('demand');
 		$this->db->join('design','design.demand_id=demand.id');
-		$this->db->join('design_pic','design_pic.design_id=design.id');
 		$this->db->where($condition);
 		$this->db->limit(6);
 		$query = $this->db->get();
@@ -252,6 +251,41 @@
            $this->db->set('status', $status);
            $this->db->update('design');
      }
+
+
+	 
+	//check if title of demand exist or not
+	function demand_title_exist($title)
+	{
+		$this->db->select('title');
+		$this->db->where('title',$title);
+		$query = $this->db->get('demand');
+		if($query->num_rows() > 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+
+	//check if title of design exist or not
+	function design_title_exist($title)
+	{
+		$this->db->select('title');
+		$this->db->where('title',$title);
+		$query = $this->db->get('design');
+		if($query->num_rows() > 0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 
   }
   

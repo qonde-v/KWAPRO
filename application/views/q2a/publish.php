@@ -14,6 +14,11 @@ $(document).ready(function() {
 	$("[role=slider]").each(function(){
 		var i = $(this).find(".min font").html();
 		var a = $(this).find(".max font").html();
+
+		var s = 1;
+		if($(this).attr("id") == "shijian"){
+			s =0.25;
+		}
 		
 		if($(this).attr("id") == "tizhong"){
 			i -= 20;
@@ -33,6 +38,7 @@ $(document).ready(function() {
 			min: i,
 			max: a,
 			animate: true,
+			step: s,
 			create: function( event, ui ) {
 				$(this).find(".ui-slider-handle").html($("<div class='slider-value'></div>"));
 			},
@@ -341,7 +347,7 @@ function hidermodal(){
             </table>
             <div class="btns">
             	<a href="javascript:gonext(3)">上一步</a>
-            	<a class="black" href="#" onclick="javascript:publishok()">提交</a>
+            	<a class="black" href="#" onclick="javascript:if(confirm('确定要发布需求吗？')){publishok();}">提交</a>
             </div>
       </div>
       <div id="flowxq5" class="tab-content">
@@ -405,12 +411,21 @@ function hidermodal(){
      <br>   <span  class="btn primary"  style="width:30px;height:20px; text-align:center;cursor:pointer;" onclick="hidetype($('#divWeather'));">关闭</span>
 </div>
 
+
+<div id="msg_modal" class="modal hide">
+	<div class="modal-header"><a href="#" onclick="$('#msg_modal').addClass('hide');" class="close">&times;</a><h3>&nbsp;</h3></div>
+	<div class="modal-body"></div>
+	<div class="modal-footer"><button class="btn primary" onclick="$('#msg_modal').addClass('hide');">确定</button></div>
+</div>
+
+
 </div>
 </body>
 <script type="text/javascript" >
 function publishok()
 {
 	var data = new Array();
+	var hint = '';
 	data['type'] = $('#type').val();
 	data['strength'] = $('#strength').val();
 	data['sporttime'] = $('#sporttime').val();
@@ -423,13 +438,26 @@ function publishok()
 	data['weight'] = $('#weight').val();
 	data['title'] = $('#title').val();
 
+	if(data['title']=='') hint=hint+'请输入对需求的描述<br/>';
+	if(hint!=''){
+		$('.modal-body').html(hint);
+		$('#msg_modal').removeClass("hide");;
+		return;
+	}
+
 	var post_str = generate_query_str(data);
 	var url = $('#base').val() + 'demand/pubok/';
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
-		$("#flowxq5").html(html);
-
-		$(".tab-content.active").removeClass("active");
-		$("#flowxq5").addClass("active");
+		if(html=='1'){
+			//alert('需求描述已存在，请重新输入');
+			$('.modal-body').html('需求描述已存在，请重新输入');
+			$('#msg_modal').removeClass("hide");
+			$('#msg_modal').show();
+		}else{
+			$("#flowxq5").html(html);
+			$(".tab-content.active").removeClass("active");
+			$("#flowxq5").addClass("active");
+		}
 	}};
 	jQuery.ajax(ajax);
 	

@@ -45,7 +45,7 @@
                             <div class="btns"><a href="<?php echo $base.'demand/demand_detail?id='.$item['relateid'];?>">去查看</a></div>
 							<?php }elseif($item['type']==3){?>
                         	<a href="<?php echo $base.'design/design_detail?id='.$item['relateid'];?>" style="color: #fd9300;font-size:16px;"><?php echo $i.'、'.'用户【'.$item['username'].'】对我的设计【'.$item['title'].'】留言';?></a>
-                            <div class="btns"><a href="<?php echo $base.'demand/demand_detail?id='.$item['relateid'];?>">去查看</a></div>
+                            <div class="btns"><a href="<?php echo $base.'design/design_detail?id='.$item['relateid'];?>">去查看</a></div>
 							<?php }?>
                         </li>
 						<?php endforeach; ?>

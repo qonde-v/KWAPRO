@@ -143,7 +143,7 @@ function send_sec_msg(tt)
 													if($demand['type']=='羽毛球')echo $base.'img/s_yumaoqiu.png';
 													?>" />
             <div class="pull-right">
-              <p>强度：<span><?php echo $demand['strength'];?>轻松</span></p>
+              <p>强度：<span><?php echo $demand['strength'];?></span></p>
               <p>时间：<span><?php echo $demand['sporttime'];?>小时</span></p>
             </div>
           </div>
@@ -164,11 +164,11 @@ function send_sec_msg(tt)
 													if($demand['target']=='女')echo $base.'img/sex2.png';
 													?>" />
             <div class="pull-right">
-              <p>熟练度：<span><?php echo $demand['proficiency'];?>初学者</span></p>
+              <p>熟练度：<span><?php echo $demand['proficiency'];?></span></p>
               <p>年龄：<span><?php echo $demand['age'];?></span>&nbsp;&nbsp;&nbsp;&nbsp;体重：<span><?php echo $demand['weight'];?>KG</span></p>
             </div>
           </div>
-          <div class="text-center"> <?php $days=round((time()-strtotime($demand['createdate']))/3600/24); if($days<15){;?><a href="<?php echo $base.'design/practice?id='.$demand['id'];?>" class="">发布设计</a><?php }else{?><a class="" style="background-color:#f1f2f6"></a> <?php }?></div>
+          <div class="text-center"> <?php $days=round((time()-strtotime($demand['createdate']))/3600/24); if($days<15){;?><a href="<?php if(isset($login)) echo $base.'design/practice?id='.$demand['id'];else echo 'javascript:showLoginModal();';?>" class="">发布设计</a><?php }else{?><a class="" style="background-color:#f1f2f6"></a> <?php }?></div>
         </div>
       </div>
       <div class="panel panel-default">
@@ -182,7 +182,7 @@ function send_sec_msg(tt)
           <div class="message-btns"> <a href="#"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> 
 		  <?php if(isset($login)){?><a class="btn" href="javascript:void(0);" id="msg_send_btn" data-loading-text="请稍后">留　言</a>
 		  <?php }else{?>
-		  <a class="btn" href="javascript:void(0);" onclick="javascript:document.getElementById('login_modal').className='modal';" data-loading-text="请稍后">留　言</a>
+		  <a class="btn" href="javascript:void(0);" onclick="javascript:showLoginModal();" data-loading-text="请稍后">留　言</a>
 		  <?php }?> 
 		  </div>
         </div>

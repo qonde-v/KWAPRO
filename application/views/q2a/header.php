@@ -30,6 +30,15 @@ function showmenu(){
 	}
 }
 </script>
+<script type="text/javascript">
+function showLoginModal(){
+	$("[role=modal]").show();
+	$('#draggable').attr('style','display:none');
+}
+function hideLoginModal(){
+	$("[role=modal]").hide();
+}
+</script>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" >
 
@@ -37,7 +46,7 @@ function showmenu(){
     <div class="logo pull-left"> <a href="<?php echo $base;?>"><img src="<?php echo $base.'img/logo.png';?>" /></a> </div>
     <ul class="dropdown-menus">
 	  <?php if(!isset($login)):?>
-      <li><a href="#" onclick="javascript:document.getElementById('login_modal').className='modal';">登录</a></li>
+      <li><a href="#" onclick="javascript:showLoginModal();">登录</a></li>
       <li><a href="<?php echo $base.'register/';?>">注册</a></li>
       <?php else:?>
 	  <li class="drop"><a href="#" onclick="javasrcipt:showmenu();" ><?php echo $user_info['username']; ?></a>
@@ -60,7 +69,7 @@ function showmenu(){
 
   </div>
 
-
+<!-- 
 <div id="login_modal" class="modal hide" style="width:auto;">
 	<div class="modal-header"><a href="#" class="close" onclick="$('#login_modal').hide();">&times;</a><h3>用户登录</h3></div>
 	<div class="modal-body">
@@ -78,7 +87,31 @@ function showmenu(){
 			登录
 		</button>
 	</div>
+</div> -->
+
+<div class="modal login" role="modal" id="login_modal">
+    <div class="login-main">
+    	<a href="javascript:;" onclick="hideLoginModal()" class="btn-close"><img src="<?php echo $base.'img/dot_gb.png';?>" /></a>
+    	<div class="input-control">
+        	<span><img src="<?php echo $base.'img/denglu_hy.png';?>" /></span>
+            <input type="text" placeholder="登录账号" id="login_username" name="username"/>
+        </div>
+        <div class="input-control">
+        	<span><img src="<?php echo $base.'img/denglu_mm.png';?>" /></span>
+            <input  id="login_pswd" name="password" type="password" placeholder="账号密码" />
+        </div>
+        <a id="head_login" href="javascript:;" class="btn-login" onclick="login_process();">登　录</a>
+        <div class="login-footer">
+        	<a href="#">忘记密码？</a>&nbsp;|&nbsp;<a href="<?php echo $base.'register/';?>">注册</a>
+            <div class="pull-right">
+            	其他账号登录：	<a class="xl" href="#"></a><a class="qq" href="#"></a>
+            </div>
+        </div>
+    </div>
 </div>
+<div class="modalBg" role="modal"></div>
+
+
 <input type="hidden" value="<?php echo $base; ?>" id="header_base" />
 <input type="hidden" value="请稍候" id="login_wait"/>
 <div id="login_msg_modal" class="modal hide">
