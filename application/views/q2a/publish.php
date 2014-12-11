@@ -19,7 +19,7 @@ $(document).ready(function() {
 		if($(this).attr("id") == "shijian"){
 			s =0.25;
 		}
-		
+
 		if($(this).attr("id") == "tizhong"){
 			i -= 20;
 			a -= 20;
@@ -222,8 +222,8 @@ function hidermodal(){
                 <td height="80" align="right" class="font16">时间：</td>
                 <td>
                 	<div role="slider" id="shijian">
-                    	<div class="min"><font>0</font>&nbsp;Hour</div>
-                        <div class="max"><font>2</font>&nbsp;Hour</div>
+                    	<div class="min"><font>0</font>&nbsp;小时</div>
+                        <div class="max"><font>2</font>&nbsp;小时</div>
 						<input type="hidden" id="sporttime"  name="sporttime" value="0" >
                     </div>
                 </td>
@@ -263,8 +263,8 @@ function hidermodal(){
                 <td height="80" align="right" class="font16">湿度：</td>
                 <td>
                 	<div role="slider" id="shidu">
-                    	<div class="min"><font>0</font></div>
-                        <div class="max"><font>100</font></div>
+                    	<div class="min"><font>0</font>（%）</div>
+                        <div class="max"><font>100</font>（%）</div>
 						<input type="hidden" id="humidity" name="humidity" value="0" >
                     </div>
                 </td>

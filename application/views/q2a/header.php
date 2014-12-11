@@ -52,9 +52,9 @@ function hideLoginModal(){
 	  <li class="drop"><a href="#" onclick="javasrcipt:showmenu();" ><?php echo $user_info['username']; ?></a>
       	<ul id="dropmenu" style="display:none;">
         	<li><a href="<?php echo $base.'demand/';?>">个人空间</a></li>
-            <li><a href="#">我的关注</a></li>
+            <!-- <li><a href="#">我的关注</a></li>
             <li><a href="#">我的评论</a></li>
-            <li><a href="#">我的粉丝</a></li>
+            <li><a href="#">我的粉丝</a></li> -->
             <li><a href="<?php echo $base.'design/';?>">我的设计</a></li>
             <li><a href="<?php echo $base.'demand/demandlist/';?>">需求广场</a></li>
             <li><a href="<?php echo $base.'news?type=21';?>">知识广场</a></li>
