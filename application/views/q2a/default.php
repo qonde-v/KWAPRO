@@ -24,7 +24,7 @@
     	<div class="carousel-indicators">
         	<div class="carousel-info">
             	<img src="<?php echo $base.'img/text.png';?>" /><br />
-                <a href="<?php echo $base.'demand/publish';?>">前往定制</a>
+                <a href="<?php if(isset($login)) echo $base.'demand/publish';else echo 'javascript:showLoginModal()';?>">前往定制</a>
             </div>
             <a class="carousel-arrow" href="#"><img src="<?php echo $base.'img/arrow-right.png';?>" /></a>
         </div>

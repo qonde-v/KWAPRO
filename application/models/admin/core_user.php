@@ -10,7 +10,7 @@ class Core_user extends CI_Model {
 	function login_check($data){
 		$this->db->select('id');
 		$this->db->where('userCode',$data['userCode']);
-		$this->db->where('pwd',$data['pwd']); 
+		$this->db->where('pwd',MD5($data['passwd'])); 
 		$query = $this->db->get(self::$TABLE);
 		if($query->num_rows() > 0) {
 			foreach($query->result() as $row){
@@ -176,6 +176,7 @@ class Core_user extends CI_Model {
 	function insert($data){
 		$id = $data["id"];
 		if($id<=1){//新增
+			$data['pwd'] = MD5($data['pwd']);
 			$data['createTime']= date('Y-m-d H:i:s', time()+8*60*60);
 			$this->db->insert(self::$TABLE, $data);
 			$id = mysql_insert_id();
@@ -235,18 +236,6 @@ class Core_user extends CI_Model {
 		return self::__getValueById($id, "userpath");
 	}
 	function getPwdById($id){
-//		$this->db->select('pwd');
-//		$this->db->where('wxopenid',$id);
-//		$this->db->or_where('oid',$id);
-//		$query=$this->db->get(self::$TABLE);
-//		if($query->num_rows()>0){
-//			foreach($query->result() as $row){
-//				return $row->pwd;
-//			}
-//		}
-//		else{
-//			return '';
-//		}
 		return self::__getValueById($id, "pwd");
 	}
 
@@ -256,29 +245,12 @@ class Core_user extends CI_Model {
 	 * @param unknown_type $id
 	 * @param unknown_type $type
 	 */
-	function getUserCodeById($id, $type=44){
-//		switch ($type){
-//			case 44:
-//				return $id + 4400000;
-//				break;
-//			default:
-//				return $id + 4400000;
-//				break;
-//		}
-
+	function getUserCodeById($id){
 		return self::__getValueById($id, "userCode");
 	}
 	
-	function getIdByUserCode($userCode, $type=44){
-//		switch ($type){
-//			case 44:
-//				return $userCode - 4400000;
-//				break;
-//			default:
-//				return $userCode - 4400000;
-//				break;
-//		}
-		return self::__getValueByKey("userCode", $userCode, "oid");
+	function getIdByUserCode($userCode){
+		return self::__getValueByKey("userCode", $userCode, "id");
 	}
 	
 
