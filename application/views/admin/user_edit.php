@@ -60,7 +60,7 @@ table th {
 					</tr>
 				</table>
 				<?php if(empty($info['id'])){?>
-				<span style="float:right;color:red; font-size: 11px;">新增用户密码默认111，请自行修改</span>
+				<span style="float:right;color:red; font-size: 11px;">新增用户密码默认123456，请自行修改</span>
 				<?php }?>
 				<span style="color:red;"><?php echo validation_errors(); ?></span>
 				<div class="form-actions" align="center">
