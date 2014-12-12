@@ -10,7 +10,7 @@ class Core_user extends CI_Model {
 	function login_check($data){
 		$this->db->select('id');
 		$this->db->where('userCode',$data['userCode']);
-		$this->db->where('pwd',MD5($data['passwd'])); 
+		$this->db->where('pwd',MD5($data['pwd'])); 
 		$query = $this->db->get(self::$TABLE);
 		if($query->num_rows() > 0) {
 			foreach($query->result() as $row){
