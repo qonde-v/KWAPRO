@@ -115,7 +115,7 @@ class User extends CI_Controller{
 				$data['saveinfo'] = "信息保存成功！";
 				
 			}else {
-				$data['pwd']='111';
+				$data['pwd']='123456';
 				$data['info'] = $this->Core_user->insert($data);
 				$data['saveinfo'] = "信息新增成功！";
 				
