@@ -16,8 +16,17 @@ $(document).ready(function() {
 		var a = $(this).find(".max font").html();
 
 		var s = 1;
+		var v = 0;
+		if($(this).attr("id") == "qiangdu"){
+			v = 1;
+			i -= 1;
+			a -= 1;
+		}
+
 		if($(this).attr("id") == "shijian"){
-			s =0.25;
+			v = 40;
+			i -= 20;
+			a -= 20;
 		}
 
 		if($(this).attr("id") == "tizhong"){
@@ -32,6 +41,9 @@ $(document).ready(function() {
 			i = parseInt(i) + 20;
 			a = parseInt(a) + 20;
 		}
+		if($(this).attr("id") == "shidu"){
+			v = 15;
+		}
 		$(this).slider({
 			orientation: "horizontal",
 			range: "min",
@@ -39,6 +51,7 @@ $(document).ready(function() {
 			max: a,
 			animate: true,
 			step: s,
+			value: v,
 			create: function( event, ui ) {
 				$(this).find(".ui-slider-handle").html($("<div class='slider-value'></div>"));
 			},
@@ -48,12 +61,12 @@ $(document).ready(function() {
 					$('#weight').val(ui.value + 20);
 				}
 				else if($(this).attr("id") == "qiangdu"){
-					$(this).find(".slider-value").html(ui.value);
-					$('#strength').val(ui.value);
+					$(this).find(".slider-value").html(ui.value + 1);
+					$('#strength').val(ui.value + 1);
 				}
 				else if($(this).attr("id") == "shijian"){
-					$(this).find(".slider-value").html(ui.value);
-					$('#sporttime').val(ui.value);
+					$(this).find(".slider-value").html(ui.value + 20);
+					$('#sporttime').val(ui.value + 20);
 				}else if($(this).attr("id") == "wendu"){
 					$(this).find(".slider-value").html(ui.value - 20);
 					$('#temperature').val(ui.value - 20);
@@ -166,7 +179,7 @@ function hidermodal(){
 
 <input type="hidden" id="base" value="<?php echo $base;?>"></input>
   <div id="xqlc" class="main flows">
-	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_p.png';?>" /></a>
+	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_dt.png';?>" /></a>
   	<div class="modal">
         <div class="modal-header">
             <a href="javascript:;" onclick="hidermodal()">X</a>
@@ -212,9 +225,9 @@ function hidermodal(){
                 <td height="80" align="right" class="font16">强度：</td>
                 <td>
                 	<div role="slider" id="qiangdu">
-                    	<div class="min"><font>0</font>（轻松）</div>
+                    	<div class="min"><font>1</font>（轻松）</div>
                         <div class="max"><font>8</font>（剧烈）</div>
-						<input type="hidden" id="strength"  name="strength" value="0" >
+						<input type="hidden" id="strength"  name="strength" value="2" >
                     </div>
                 </td>
               </tr>
@@ -222,9 +235,9 @@ function hidermodal(){
                 <td height="80" align="right" class="font16">时间：</td>
                 <td>
                 	<div role="slider" id="shijian">
-                    	<div class="min"><font>0</font>&nbsp;小时</div>
-                        <div class="max"><font>2</font>&nbsp;小时</div>
-						<input type="hidden" id="sporttime"  name="sporttime" value="0" >
+                    	<div class="min"><font>20</font>&nbsp;分钟</div>
+                        <div class="max"><font>120</font>&nbsp;分钟</div>
+						<input type="hidden" id="sporttime"  name="sporttime" value="60" >
                     </div>
                 </td>
               </tr>
@@ -331,7 +344,7 @@ function hidermodal(){
         <div id="flowxq4" class="tab-content">
         	<table width="95%">
               <tr>
-                <td height="67" class="font16">一句话描述您的需求：
+                <td height="67" class="font16">您是否还有其他的需求补充：
                 </td>
                 <td width="39%" rowspan="2">
                     <div class="info">

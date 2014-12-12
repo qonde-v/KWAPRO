@@ -60,6 +60,7 @@ ini_set("memory_limit","100M");
 		$data['inbox_num']=	$t_query->num_rows();
 
 		$this->db->order_by('createdate','desc');
+		$this->db->where('uId',$user_id);
 		$this->db->limit($range['end']-$range['start']+1,$range['start']);
 		$query = $this->db->get('design');
 		foreach($query->result_array() as $row)
@@ -178,7 +179,7 @@ ini_set("memory_limit","100M");
 				}
 				$html .= '		<a href="'.$base.'design/order?id='.$item['id'].'">提交订单</a>';
 				$html .= '		</div>';
-				$html .= '		<p><span class="link link-liulan">浏览（<a href="#">'.$item['viewnum'].'</a>）</span><span class="link link-liuyan">留言（<a href="#">'.$item['messnum'].'</a>）</span><span class="pull-right">发布于'.$item['createdate'].'</span></p>';
+				$html .= '		<p><span class="link link-liulan">浏览（'.$item['viewnum'].'）</span><span class="link link-liuyan">留言（'.$item['messnum'].'）</span><span class="pull-right">发布于'.$item['createdate'].'</span></p>';
 				$html .= '	</li>';
 			}
 			$html .= '</ul>';

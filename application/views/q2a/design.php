@@ -45,11 +45,11 @@
                         	<a href="<?php echo $base.'design/design_detail?id='.$item['id'];?>" class="title"><?php echo $i.'、'.$item['title']?></a>
                             <div class="btns">
 							<?php if($item['status']==0){?><a href="#" onclick="javascript:subsim(<?php echo $item['id'].','.$item['demand_id'];?>);">提交仿真</a><?php }?>
-							<?php if($item['status']==1){?><a href="#" class="black">等待仿真</a><?php }?>
+							<?php if($item['status']==1){?><a href="javascript:alert('仿真进行中，结果将在第一时间发送给您，谢谢');" class="black">等待仿真</a><?php }?>
 							<?php if($item['status']==2){?><a href="<?php echo $base.'design/similar_detail';?>">查看仿真</a><?php }?>
 							<a href="<?php echo $base.'design/order?id='.$item['id'];?>">提交订单</a>
 							</div>
-                            <p><span class="link link-liulan">浏览（<a href="#"><?php echo $item['viewnum']?></a>）</span><span class="link link-liuyan">留言（<a href="#"><?php echo $item['messnum']?></a>）</span><span class="pull-right">发布于<?php echo $item['createdate']?></span></p>
+                            <p><span class="link link-liulan">浏览（<?php echo $item['viewnum']?>）</span><span class="link link-liuyan">留言（<?php echo $item['messnum']?>）</span><span class="pull-right">发布于<?php echo $item['createdate']?></span></p>
                         </li>
 						<?php endforeach; ?>
                     </ul>

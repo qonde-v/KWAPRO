@@ -366,7 +366,7 @@ function getFileName(path){
 <input type="hidden" id="demand_id" value="<?php echo $demand['id'];?>"></input>
 
   <div id="sjlc" class="main flows"> 
-	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_p.png';?>" /></a>
+	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_dt.png';?>" /></a>
   	<div class="modal" id="draggable" style="position:absolute;">
         <div class="modal-header">
             选择面料
@@ -434,6 +434,7 @@ function getFileName(path){
 													if($demand['type']=='羽毛球')echo $base.'img/s_yumaoqiu.png';
 													?>" />
                     <div class="pull-right">
+					  <p>类型：<span><?php echo $demand['type'];?></span></p>
                       <p>强度：<span><?php echo $demand['strength'];?></span></p>
                       <p>时间：<span><?php echo $demand['sporttime'];?>小时</span></p>
                     </div>
@@ -447,6 +448,7 @@ function getFileName(path){
 													if($demand['weather']=='雨雪')echo $base.'img/w_yuxue.png';
 													?>" />
                     <div class="pull-right">
+					  <p>天气：<span><?php echo $demand['weather'];?>°C</span></p>
                       <p>温度：<span><?php echo $demand['temperature'];?>°C</span></p>
                       <p>湿度：<span><?php echo $demand['humidity'];?></span></p>
                     </div>
@@ -455,6 +457,7 @@ function getFileName(path){
 													if($demand['target']=='女')echo $base.'img/sex2.png';
 													?>" />
                     <div class="pull-right">
+					  <p>对象：<span><?php echo $demand['target'];?></span></p>
                       <p>熟练度：<span><?php echo $demand['proficiency'];?></span></p>
                       <p>年龄：<span><?php echo $demand['age'];?></span>&nbsp;&nbsp;&nbsp;&nbsp;体重：<span><?php echo $demand['weight'];?>KG</span></p>
                     </div>

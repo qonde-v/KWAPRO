@@ -59,6 +59,7 @@
 		$data['inbox_num']=	$t_query->num_rows();
 
 		$this->db->order_by('createdate','desc');
+		$this->db->where('uId',$user_id);
 		$this->db->limit($range['end']-$range['start']+1,$range['start']);
 		$query = $this->db->get('demand');
 		foreach($query->result_array() as $row)
@@ -335,7 +336,7 @@
 				}
 				$html .= '		<a href=""'.$base.'design/practice?id='.$item['id'].'"">去设计</a>';
 				$html .= '		</div>';
-				$html .= '		<p><span class="link link-sheji">设计（<a href="#">'.$item['designnum'].'</a>）</span><span class="link link-liulan">浏览（<a href="#">'.$item['viewnum'].'</a>）</span><span class="link link-liuyan">留言（<a href="#">'.$item['messnum'].'</a>）</span><span class="pull-right">发布于'.$item['createdate'].'</span></p>';
+				$html .= '		<p><span class="link link-sheji">设计（'.$item['designnum'].'）</span><span class="link link-liulan">浏览（'.$item['viewnum'].'）</span><span class="link link-liuyan">留言（'.$item['messnum'].'）</span><span class="pull-right">发布者：【'.$item['username'].'】发布于'.$item['createdate'].'</span></p>';
 				$html .= '	</li>';
 				
 			}
