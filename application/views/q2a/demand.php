@@ -44,7 +44,7 @@
 							<?php if($item['status']==0){?><a href="#" onclick="javascript:updatestatus(<?=$item['id']?>,1);">发布</a><?php }else{?><a href="#" onclick="javascript:updatestatus(<?=$item['id']?>,0);" class="black">不发布</a><?php }?>
 							<a href="<?php echo $base.'design/practice?id='.$item['id'];?>">去设计</a>
 							</div>
-                            <p><span class="link link-sheji">设计（<a href="#"><?php echo $item['designnum']?></a>）</span><span class="link link-liulan">浏览（<a href="#"><?php echo $item['viewnum']?></a>）</span><span class="link link-liuyan">留言（<a href="#"><?php echo $item['messnum']?></a>）</span><span class="pull-right">发布于<?php echo $item['createdate']?></span></p>
+                            <p><span class="link link-sheji">设计（<?php echo $item['designnum']?>）</span><span class="link link-liulan">浏览（<?php echo $item['viewnum']?>）</span><span class="link link-liuyan">留言（<?php echo $item['messnum']?>）</span><span class="pull-right">发布者：【<?php echo $item['username']?>】发布于<?php echo $item['createdate']?></span></p>
                         </li>
 						<?php endforeach; ?>
                     </ul>
