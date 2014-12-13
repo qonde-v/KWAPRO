@@ -132,6 +132,18 @@ class Core_user extends CI_Model {
 			$sql .=" 1=1 ";
 		return $sql;
 	}
+
+	private function __assembeSQLf($sql, $createid, $condition, $pid){
+		if($condition !='' && $condition['cdt_name'] != ''){
+			$sql .=" ( nickname like '%".$condition['cdt_name']."%'"
+				." or username like '%".$condition['cdt_name']."%') and ";
+		}
+		if($pid != ""){
+			$sql .= " pid=".$pid." and ";
+		}
+			$sql .=" 1=1 ";
+		return $sql;
+	}
 	
 	/**
 	 * 根据条件查询所有数据，支持分页
@@ -151,6 +163,19 @@ class Core_user extends CI_Model {
 		return $result->result();
 	}
 
+	function show_f_all($createid, $condition, $pid, $limit, $offset){
+		if($offset == ''){
+			$offset = 0;
+		}
+		$sql = "select * from user where ";
+		$sql = self::__assembeSQLf($sql, $createid, $condition, $pid);
+
+		$sql .= " order by createTime desc limit ".$offset." , ".$limit;
+		
+		$result = $this->db->query($sql);
+		return $result->result();
+	}
+
 	/**
 	 * 根据条件获取查询结果总数量
 	 * @param $condition 查询条件
@@ -158,6 +183,19 @@ class Core_user extends CI_Model {
 	function get_count($createid, $condition, $pid){
 		$sql = "select count(*) sumdata from ".self::$TABLE." where ";
 		$sql = self::__assembeSQL($sql, $createid, $condition, $pid);
+		$query = $this->db->query($sql);
+		if($query->num_rows()>0){
+			foreach($query->result() as $row){
+				return $row->sumdata;
+			}
+		} else{
+			return 0;
+		}
+	}
+
+	function get_f_count($createid, $condition, $pid){
+		$sql = "select count(*) sumdata from user where ";
+		$sql = self::__assembeSQLf($sql, $createid, $condition, $pid);
 		$query = $this->db->query($sql);
 		if($query->num_rows()>0){
 			foreach($query->result() as $row){
@@ -306,6 +344,10 @@ class Core_user extends CI_Model {
 	function delete($id){
 		$this->db->where('id', $id);
 		$this->db->delete(self::$TABLE);
+	}
+	function f_delete($id){
+		$this->db->where('uId', $id);
+		$this->db->delete('user');
 	}
 }
 ?>

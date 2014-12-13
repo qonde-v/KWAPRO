@@ -64,6 +64,7 @@
 	 {
 	 	$data['permission'] = 0;
 	    $data['passwd'] = MD5($data['passwd']);
+		$data['createTime'] = date('Y-m-d H:i:s', time()+8*60*60);
 	    $this->db->insert('user',$data);
 		 return $this->db->insert_id();
 	 }
