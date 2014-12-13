@@ -80,7 +80,7 @@ function send_new_msg()
 			//setTimeout("$('#msg_modal').css('display','none')",200);
 		}};
 		jQuery.ajax(ajax);
-		setTimeout("window.location.reload();$('#msg_content_area').val('');",200);
+		setTimeout("window.location.reload();$('#msg_content_area').val('');",1000);
 	}
 }
 

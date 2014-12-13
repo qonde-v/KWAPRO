@@ -7,6 +7,28 @@
 <link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
 <link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
 <script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"></script>
+<script type="text/javascript" src="<?php echo $base.'js/jquery.qqFace.js';?>"></script>
+<script>
+function smile(obj,tt){
+	var area = 'msg_content_area';
+	if(tt>0) area = area + '_' + tt;
+
+	$(obj).qqFace({
+		id : 'facebox', 
+		assign: area, 
+		path:$('#base').val() +'img/arclist/'	//表情存放的路径
+	});
+}
+//查看结果
+function replace_em(str){
+	str = str.replace(/\</g,'&lt;');
+	str = str.replace(/\>/g,'&gt;');
+	str = str.replace(/\n/g,'<br/>');
+	str = str.replace(/\[em_([0-9]*)\]/g,'<img src="'+$('#base').val()+'img/arclist/$1.gif" border="0" />');
+	return str;
+}
+
+</script>
 <script type="text/javascript">
 	$("#effectpic").live("click", function(){
 		$("#designpic").removeClass("black");
@@ -46,7 +68,9 @@
 
 	
 	function control(tt){
-		if(document.getElementById('control_'+tt).innerHTML=="展开详情<br>▼"){
+		var html = document.getElementById('control_'+tt).innerHTML;
+		html = html.substr(0,2);
+		if(html=="展开"){
 			document.getElementById('control_'+tt).innerHTML="收    起<br>▼";
 			document.getElementById('reply_'+tt).style.display="block";
 		}else{
@@ -71,11 +95,12 @@
 			var post_str = 'uId='+uId+'&title='+title+'&content='+content+'&type='+type+'&related_id='+related_id+'&p_md_Id='+p_md_Id;
 			var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
 				$('#msg_modal .modal-body').html(html);
-				$('#msg_modal').css('display','block');
-				setTimeout("$('#msg_modal').css('display','none')",2000);
+				$('#msg_modal').removeClass("hide");
+				$('#msg_modal').show();
+				//setTimeout("$('#msg_modal').css('display','none')",2000);
 			}};
 			jQuery.ajax(ajax);
-			setTimeout("window.location.reload()",2000);
+			setTimeout("window.location.reload();$('#msg_content_area_"+tt+"').val('');",1000);
 		}
 	}
 
@@ -350,6 +375,7 @@ $(document).ready(function() {
 													if($demand['type']=='羽毛球')echo $base.'img/s_yumaoqiu.png';
 													?>" />
             <div class="pull-right">
+			  <p>类型：<span><?php echo $demand['type'];?>°C</span></p>
               <p>强度：<span><?php echo $demand['strength'];?></span></p>
               <p>时间：<span><?php echo $demand['sporttime'];?>小时</span></p>
             </div>
@@ -363,6 +389,7 @@ $(document).ready(function() {
 													if($demand['weather']=='雨雪')echo $base.'img/w_yuxue.png';
 													?>" />
 			<div class="pull-right">
+			  <p>天气：<span><?php echo $demand['weather'];?>°C</span></p>
 			  <p>温度：<span><?php echo $demand['temperature'];?>°C</span></p>
 			  <p>湿度：<span><?php echo $demand['humidity'];?></span></p>
 			</div>
@@ -371,6 +398,7 @@ $(document).ready(function() {
 													if($demand['target']=='女')echo $base.'img/sex2.png';
 													?>" />
             <div class="pull-right">
+			  <p>对象：<span><?php echo $demand['target'];?>°C</span></p>
               <p>熟练度：<span><?php echo $demand['proficiency'];?></span></p>
               <p>年龄：<span><?php echo $demand['age'];?></span>&nbsp;&nbsp;&nbsp;&nbsp;体重：<span><?php echo $demand['weight'];?>KG</span></p>
             </div>
@@ -418,7 +446,7 @@ $(document).ready(function() {
                         <label><?php echo $fabric['name'];?></label>
                     </td>
                     <td width="61%" valign="top">
-                   	  <label style="line-height:40px; margin-top:10px;">特点：</label>
+                   	  <label style="line-height:40px; margin-top:10px;">面料特点：</label>
                         <?php echo $fabric['feature'];?>
                     </td>
                   </tr>
@@ -434,7 +462,7 @@ $(document).ready(function() {
                         <label><?php echo $item['fabric']['name'];?></label>
                     </td>
                     <td width="61%" valign="top">
-                   	  <label style="line-height:40px; margin-top:10px;">特点：</label>
+                   	  <label style="line-height:40px; margin-top:10px;">面料特点：</label>
                         <?php echo $item['fabric']['feature'];?>
                     </td>
                   </tr>
@@ -450,7 +478,7 @@ $(document).ready(function() {
 		  <input type="hidden" id="new_msg_uid" value="<?php echo $demand['uId'];?>"/>
 		  <input type="hidden" id="msg_title_area" value=""></input>
           <textarea class="message-input" id="msg_content_area"></textarea>
-          <div class="message-btns"> <a href="#"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> <span style="margin:0 5px;">已有留言（<font class="text-orange"><?php echo $design['messnum'];?></font>）</span> 
+          <div class="message-btns"> <a  href="javascript:void(0);" href="#" onclick="javascript:smile(this,0);"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> <span style="margin:0 5px;">已有留言（<font class="text-orange"><?php echo $design['messnum'];?></font>）</span> 
 		  <?php if(isset($login)){?><a class="btn" href="javascript:void(0);" id="msg_send_btn" data-loading-text="请稍后">留　言</a>
 		  <?php }else{?>
 		  <a class="btn" href="javascript:void(0);" onclick="javascript:showLoginModal();" data-loading-text="请稍后">留　言</a>
@@ -460,7 +488,7 @@ $(document).ready(function() {
         <div class="list-group">
           <?php $i=0; foreach($message_data as $item): $i++;?>
           <div class="list-group-item">
-            <div class="item-body"> <img class="pull-left" src="<?php echo $base.'img/geren_tp.png';?>" /> <span class="username"><?=$item['username']?>:</span><?=$item['content']?>
+            <div class="item-body"> <img class="pull-left" src="<?php echo $base.'img/geren_tp.png';?>" /> <span class="username"><?=$item['username']?>:</span><script> document.write(replace_em('<?=$item['content']?>'));</script>
               <p class="time"><?=$item['time']?>&nbsp;<span class="message">（<?php if(!empty($item['sec_data']))echo count($item['sec_data']);else echo 0;?>）</span></p>
 			  <a class="detail" href="javascript:void(0)" onclick="javasrcipt:control(<?=$i?>);" id="control_<?=$i?>">展开详情<br>▼</a>
               <div class="reply" id="reply_<?=$i?>" style="display:none;">
@@ -468,7 +496,7 @@ $(document).ready(function() {
 					<?php if(!empty($item['sec_data'])){foreach($item['sec_data'] as $secval){?>
                 	<div class="reply-item">
                     	<img class="reply-img" src="<?php echo $base.'img/geren_tx.png';?>" />
-                        <span class="reply-name"><?=$secval['username']?>：</span><?=$secval['content']?>
+                        <span class="reply-name"><?=$secval['username']?>：</span><script> document.write(replace_em('<?=$secval['content']?>'));</script>
                     </div>
 					<?php }} ?>
                 </div>
@@ -476,7 +504,7 @@ $(document).ready(function() {
 				<input type="hidden" id="msg_title_area_<?=$i?>" value=""></input>
 				<input type="hidden" id="p_md_Id_<?=$i?>" value="<?php echo $item['md_Id'];?>"></input>
               	<textarea class="message-input"  id="msg_content_area_<?=$i?>"></textarea>
-          		<div class="message-btns"> <a href="#"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> <a class="btn" href="#" onclick="send_sec_msg(<?=$i?>)">回　复</a> </div>
+          		<div class="message-btns"> <a href="javascript:void(0)"  onclick="javascript:smile(this,<?=$i?>);"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> <a class="btn" href="javascript:void(0)" onclick="send_sec_msg(<?=$i?>)">回　复</a> </div>
               </div>
 			</div>
           </div>
