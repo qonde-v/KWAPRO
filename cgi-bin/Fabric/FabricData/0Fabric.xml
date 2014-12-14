@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<FabricProPerty>
+    <FabricID>0</FabricID>
+    <FabricName>COMP</FabricName>
+    <FabriPorosity>0.820000</FabriPorosity>
+    <FabriTorGas>1.200000</FabriTorGas>
+    <FabriTorLqd>1.200000</FabriTorLqd>
+    <FabriCapAngle>20.000000</FabriCapAngle>
+    <FabriMaxCapDiameter>0.002</FabriMaxCapDiameter>
+    <FiberCount>2</FiberCount>
+    <ContainedFiber>
+  	<Fiber FiberID="2" FiberPropotion="25"></Fiber>
+	<Fiber FiberID="0" FiberPropotion="75"></Fiber>
+    </ContainedFiber>
+</FabricProPerty>

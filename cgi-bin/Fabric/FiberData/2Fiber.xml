@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<FiberProPerty>
+    <FiberID>2</FiberID>
+    <FiberName>PolyPN</FiberName>
+    <FiberDiameter>1.92</FiberDiameter>
+    <FiberDensity>0.910</FiberDensity>
+    <FiberThermoConductivity>0.250000</FiberThermoConductivity>
+    <FiberVaporDiffusivity>1.340000</FiberVaporDiffusivity>
+    <FiberLqdContactAngle>70.000000</FiberLqdContactAngle>
+    <FiberEmissivity>0.9</FiberEmissivity>
+    <FiberThermalAbsorptivity>0.7</FiberThermalAbsorptivity>
+    <FiberRegain>
+	<Regain>0.00000</Regain>
+        <Regain>0.00023</Regain>
+	<Regain>0.00028</Regain>
+	<Regain>0.00032</Regain>
+	<Regain>0.00035</Regain>
+        <Regain>0.00037</Regain>
+	<Regain>0.00039</Regain>
+	<Regain>0.00041</Regain>
+	<Regain>0.00043</Regain>
+        <Regain>0.00044</Regain>
+	<Regain>0.00046</Regain>
+	<Regain>0.00047</Regain>
+	<Regain>0.00049</Regain>
+        <Regain>0.00050</Regain>
+	<Regain>0.00051</Regain>
+	<Regain>0.00052</Regain>
+    </FiberRegain>
+</FiberProPerty>

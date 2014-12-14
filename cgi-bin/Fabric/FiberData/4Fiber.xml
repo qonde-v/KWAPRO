@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<FiberProPerty>
+    <FiberID>4</FiberID>
+    <FiberName>Wool</FiberName>
+    <FiberDiameter>2.040000</FiberDiameter>
+    <FiberDensity>1.3100</FiberDensity>
+    <FiberThermoConductivity>0.052</FiberThermoConductivity>
+    <FiberVaporDiffusivity>5.800000</FiberVaporDiffusivity>
+    <FiberLqdContactAngle>80.000000</FiberLqdContactAngle>
+    <FiberEmissivity>0.900000</FiberEmissivity>
+    <FiberThermalAbsorptivity>0.700000</FiberThermalAbsorptivity>
+    <FiberRegain>
+	<Regain>0.0000</Regain>
+        <Regain>0.0325</Regain>
+	<Regain>0.0500</Regain>
+	<Regain>0.0650</Regain>
+	<Regain>0.0738</Regain>
+        <Regain>0.0850</Regain>
+	<Regain>0.0930</Regain>
+	<Regain>0.1050</Regain>
+	<Regain>0.1150</Regain>
+        <Regain>0.1320</Regain>
+	<Regain>0.1500</Regain>
+	<Regain>0.1660</Regain>
+	<Regain>0.1870</Regain>
+        <Regain>0.2100</Regain>
+	<Regain>0.2530</Regain>
+	<Regain>0.3800</Regain>
+    </FiberRegain>
+</FiberProPerty>

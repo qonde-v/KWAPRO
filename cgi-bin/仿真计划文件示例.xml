@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<SimPlan>
+    <SimPlanID>0</SimPlanID><!-- ID  用户编号 + 设计编号 -->
+    <BodySet>
+        <MetRate>58.200</MetRate>  <!-- 代谢率 -->
+        <Sex>0</Sex> <!-- 性别 0 男  1 女 -->
+        <Age>25</Age> <!-- 年龄 -->
+        <Weight>70.00</Weight> <!-- 体重 -->
+    </BodySet>
+    <FabricSet> <!-- 这个节点是衣服原料的参数，等数据库的表整好了再做，暂时不用改就用这些参数 -->
+        <LayerCount>1</LayerCount>
+        <Layer>
+            <FabricID>1</FabricID>
+            <M0mtype>0</M0mtype>
+            <M1mtype>0</M1mtype>
+            <InnerIsContact>0</InnerIsContact>
+            <OuterIsContact>1</OuterIsContact>
+            <Thickness>0.0980</Thickness>
+        </Layer>
+    </FabricSet>
+    <EnvSet>
+        <EnvTem>10.00</EnvTem> <!-- 温度 -->
+        <EnvRH>0.650</EnvRH><!-- 湿度 -->
+        <EnvWind>10.00</EnvWind><!-- 风速 -->
+    </EnvSet>
+    <SimSet> <!-- 仿真计算参数，不用改就用这些参数 -->
+        <SimTime>20.00</SimTime>
+        <TimeStep>1.0000</TimeStep>
+        <DiscreteLimit>0.0186</DiscreteLimit>
+        <SaveFrequence>1.00</SaveFrequence>
+    </SimSet>
+</SimPlan>

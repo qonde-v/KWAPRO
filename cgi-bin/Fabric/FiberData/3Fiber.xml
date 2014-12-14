@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<FiberProPerty>
+    <FiberID>3</FiberID>
+    <FiberName>PolyTR</FiberName>
+    <FiberDiameter>1.960000</FiberDiameter>
+    <FiberDensity>1.380000</FiberDensity>
+    <FiberThermoConductivity>0.0840000</FiberThermoConductivity>
+    <FiberVaporDiffusivity>1.34</FiberVaporDiffusivity>
+    <FiberLqdContactAngle>70.000000</FiberLqdContactAngle>
+    <FiberEmissivity>0.90000</FiberEmissivity>
+    <FiberThermalAbsorptivity>0.70000</FiberThermalAbsorptivity>
+    <FiberRegain>
+	<Regain>0.0000</Regain>
+        <Regain>0.0004</Regain>
+	<Regain>0.0008</Regain>
+	<Regain>0.0012</Regain>
+	<Regain>0.0017</Regain>
+        <Regain>0.0021</Regain>
+	<Regain>0.0025</Regain>
+	<Regain>0.0029</Regain>
+	<Regain>0.0033</Regain>
+        <Regain>0.0037</Regain>
+	<Regain>0.0042</Regain>
+	<Regain>0.0046</Regain>
+	<Regain>0.0050</Regain>
+        <Regain>0.0054</Regain>
+	<Regain>0.0058</Regain>
+	<Regain>0.0062</Regain>
+    </FiberRegain>
+</FiberProPerty>
