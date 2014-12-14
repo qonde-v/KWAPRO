@@ -28,7 +28,7 @@
 	{
        if($this->register_check())
 	   {
-	      $data= array('username'=> $_POST['username'],'email'=> $_POST['email'],'passwd'=> $_POST['password']);
+	      $data= array('username'=> $_POST['username'],'email'=> $_POST['email'],'passwd'=> $_POST['password'],'qq'=> $_POST['qq'],'weibo'=> $_POST['weibo']);
 	      $user_id = $this->register_process($data);
 		  //login data store in session
 		  $newdata = array('status' => 'LOGIN','uId'=> $user_id,'site'=>'WebSite');
@@ -46,7 +46,6 @@
             $language = $this->Ip_location->get_language();
             $label = $this->load_label($language);
 		    $data = array_merge($right_data,$data,$label);
-			$data['css_name'] = $this->Auth->ie_browser_check() ? $this->config->item('css4ie') : 'css';
 			$this->load->view('q2a/register',$data);
 		}
 	}
