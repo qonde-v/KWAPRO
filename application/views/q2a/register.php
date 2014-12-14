@@ -164,8 +164,8 @@ function generate_query_str(data)
                     <a class="btn-reset" href="javascript:;" onclick="javascript:reset();">重&nbsp;置</a>
                 </div>
                 <div class="links">
-                	<a href="#">返回之前的页面</a>
-                    <a class="pull-right" href="#">未完成注册，无法登录账号</a>
+                	<a href="javascript:history.go(-1);">返回之前的页面</a>
+                    <!-- <a class="pull-right" href="#">未完成注册，无法登录账号</a> -->
                 </div>
             </div>
         </div>
