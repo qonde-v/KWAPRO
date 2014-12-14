@@ -64,7 +64,15 @@ img{ border:none; }
 .design-footer .pull-right .btns a{ display:inline-block; background-color:#f0f0f0; width:110px; line-height:30px; font-size:14px; color:#545454; border:1px solid #545454; text-align:center; border-radius:4px; margin:0 5px; }
 .design-footer .pull-right .btns a.black{ background-color:#454545; color:#fff; }
 
+.col-10{ width:83.3333333%; float:left; }
+.col-9{ width:75%; float:left; }
+.col-8{ width:66.6666666%; float:left; }
+.col-7{ width:58.3333333%; float:left; }
 .col-6{ width:50%; float:left; }
+.col-5{ width:41.6666666%; float:left; }
+.col-3{ width:25%; float:left; }
+.col-2{ width:16.6666666%; float:left; }
+.col-1{ width:8.33333333%; float:left; }
 
 .container {
 	width:1000px;
@@ -623,6 +631,26 @@ td.borderleft0{ padding:10px 0; }
 .radio-box .img.female{ background-image:url(../img/xuqiu_hdt_2.png); }
 
 
+.register-main{ background:url(../img/zhuceye_bg.png) no-repeat; height:580px; position:relative; }
+.register-box{ position:absolute; right:140px; top:40px; width:370px; border-radius:10px; background-color:rgba(255,255,255,0.3); box-shadow:0 0 9px #333; }
+.register-box .box-title{ border-radius:10px 10px 0 0; background-color:#e9f7dd; text-align:center; padding:12px 0; box-shadow:0 3px 5px #333; }
+.register-box .box-title img{ width:80px; }
+.register-box .box-title label{ display:block; font-size:18px; color:#707070; }
+.register-box .form-horizontal{ padding:20px 0; }
+.register-box .form-group{ width:100%; height:46px; line-height:40px; }
+.register-box .control-label{ font-size:18px; text-shadow:0 3px 5px #aaa; text-align:right; color:#fff; }
+.register-box .form-group input.form-control{ width:100%; height:40px; background-color:rgba(255,255,255,0.7); border-radius:6px; border:none; font-size:18px; text-indent:15px; color:#333; box-shadow:0 3px 5px #aaa; }
+.register-box .form-group .result{ display:block; background-repeat:no-repeat; width:25px; height:25px; margin-left:18px; margin-top:8px; }
+.register-box .form-group .result-ok{ background-image:url(../img/zcy_gg.png); }
+.register-box .form-group .result-error{ background-image:url(../img/zcy_tt.png); position:relative; }
+.register-box .form-group .result-error label{ position: absolute;width:150px;left: 21px;padding: 0px 5px;color: #333;word-wrap:break-word;word-break: keep-all;background-color: #fff;line-height: 26px; border-radius:4px; }
+.register-box .form-footer .btns{ text-align:center; }
+.register-box .form-footer .btns a{ display:inline-block; background-color:#fff; width:120px; line-height:40px; font-size:18px; color:#545454; box-shadow:0 0 3px #333; text-align:center; border-radius:4px; margin:0 5px; }
+.register-box .form-footer .btns a.btn-register{ background-color:#545454; color:#fff; }
+.register-box .form-footer .btns a:hover,.register-box .form-footer .btns a:active,.register-box .form-footer .btns a:focus{ background-color:#545454; color:#fff; opacity:0.8; box-shadow:0 0 3px #333; }
+.links{ padding:18px 20px; }
+.links a{ font-size:14px; color:#fff; text-shadow:0 0 5px #333; }
+
 
 .qqFace{margin-top:4px;background:#fff;padding:2px;border:1px #dfe6f6 solid;}
 .qqFace table td{padding:0px;}
@@ -799,7 +827,7 @@ select,
   display: inline-block;
   width: 210px;
   height: 18px;
-  padding: 4px;
+  /*padding: 4px;*/
   font-size: 13px;
   line-height: 18px;
   color: #808080;
