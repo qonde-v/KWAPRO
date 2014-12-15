@@ -10,7 +10,7 @@
 var _move=false;//移动标记
 var _x,_y;//鼠标离控件左上角的相对位置
 $(document).ready(function() {
-	$(".nav-flow li a").click(function(){
+	/*$(".nav-flow li a").click(function(){
 		var li = $(this).parent();
 		if(!li.hasClass("active")){
 			if(li.index()>=1){
@@ -42,7 +42,7 @@ $(document).ready(function() {
 				}
 			}
 		}
-	});
+	});*/
 	
 	$(".ml_list li").click(function(){
 		$(".ml_list li.active").removeClass("active");
@@ -436,7 +436,7 @@ function getFileName(path){
                     <div class="pull-right">
 					  <p>类型：<span><?php echo $demand['type'];?></span></p>
                       <p>强度：<span><?php echo $demand['strength'];?></span></p>
-                      <p>时间：<span><?php echo $demand['sporttime'];?>小时</span></p>
+                      <p>时间：<span><?php echo $demand['sporttime'];?>分钟</span></p>
                     </div>
                   </div>
                   <div class="panel-item"> <img src="<?php if($demand['weather']=='晴天')echo $base.'img/w_qing.png';
@@ -448,18 +448,18 @@ function getFileName(path){
 													if($demand['weather']=='雨雪')echo $base.'img/w_yuxue.png';
 													?>" />
                     <div class="pull-right">
-					  <p>天气：<span><?php echo $demand['weather'];?>°C</span></p>
+					  <p>天气：<span><?php echo $demand['weather'];?></span></p>
                       <p>温度：<span><?php echo $demand['temperature'];?>°C</span></p>
-                      <p>湿度：<span><?php echo $demand['humidity'];?></span></p>
+                      <p>湿度：<span><?php echo $demand['humidity'];?>%</span></p>
                     </div>
                   </div>
                   <div class="panel-item"> <img src="<?php if($demand['target']=='男')echo $base.'img/sex1.png';
 													if($demand['target']=='女')echo $base.'img/sex2.png';
 													?>" />
                     <div class="pull-right">
-					  <p>对象：<span><?php echo $demand['target'];?></span></p>
-                      <p>熟练度：<span><?php echo $demand['proficiency'];?></span></p>
-                      <p>年龄：<span><?php echo $demand['age'];?></span>&nbsp;&nbsp;&nbsp;&nbsp;体重：<span><?php echo $demand['weight'];?>KG</span></p>
+					  <p>熟练度：<span><?php echo $demand['proficiency'];?></span></p>
+					  <p>年龄：<span><?php echo $demand['age'];?></span></p>
+					  <p>体重：<span><?php echo $demand['weight'];?>KG</span></p>
                     </div>
                   </div>
                 </div>

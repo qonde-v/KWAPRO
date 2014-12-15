@@ -26,7 +26,7 @@ img{ border:none; }
 .modal.login .login-main{  position:relative; padding:119px 15%; }
 .login-main .input-control{ width:100%; border-radius:6px; background-color:#fff; height:50px; margin-bottom:5px; overflow:hidden; }
 .login-main .btn-close{ position:absolute; right:-13px; top:-13px; }
-.login-main .input-control input{ border:none; height:50px; font-size:20px; text-indent:15px; width:345px;}
+.login-main .input-control input{ border:none; height:50px; font-size:20px; text-indent:15px; width:360px;}
 .login-main .input-control span{ float:left; display:block; width:60px; height:100%; background-color:#ebebeb; text-align:center; }
 .login-main .input-control span img{ margin-top:5px; }
 .login-main .login-footer{ color:#fff; font-size:14px; }
