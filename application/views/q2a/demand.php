@@ -41,7 +41,7 @@
                     	<li>
                         	<a href="<?php echo $base.'demand/demand_detail?id='.$item['id'];?>" class="title"><?php echo $i.'、'.$item['title']?></a>
                             <div class="btns">
-							<?php if($item['status']==0){?><a href="#" onclick="javascript:updatestatus(<?=$item['id']?>,1);">发布</a><?php }else{?><a href="#" onclick="javascript:updatestatus(<?=$item['id']?>,0);" class="black">不发布</a><?php }?>
+							<?php if($item['status']==0){?><a href="#" onclick="javascript:if(confirm('确定要发布需求吗？'))updatestatus(<?=$item['id']?>,1);">发布</a><?php }else{?><a href="#" onclick="javascript:if(confirm('确定要不发布需求吗？'))updatestatus(<?=$item['id']?>,0);" class="black">不发布</a><?php }?>
 							<a href="<?php echo $base.'design/practice?id='.$item['id'];?>">去设计</a>
 							</div>
                             <p><span class="link link-sheji">设计（<?php echo $item['designnum']?>）</span><span class="link link-liulan">浏览（<?php echo $item['viewnum']?>）</span><span class="link link-liuyan">留言（<?php echo $item['messnum']?>）</span><span class="pull-right">发布者：【<?php echo $item['username']?>】发布于<?php echo $item['createdate']?></span></p>

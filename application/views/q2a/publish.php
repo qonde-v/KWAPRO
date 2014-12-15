@@ -17,32 +17,46 @@ $(document).ready(function() {
 
 		var s = 1;
 		var v = 0;
+		var dv = 0;
 		if($(this).attr("id") == "qiangdu"){
 			v = 1;
+			dv = 2;
 			i -= 1;
 			a -= 1;
 		}
 
 		if($(this).attr("id") == "shijian"){
 			v = 40;
+			dv = 60;
 			i -= 20;
 			a -= 20;
 		}
 
 		if($(this).attr("id") == "tizhong"){
+			v = 45;
+			dv = 65;
 			i -= 20;
 			a -= 20;
 		}
 		if($(this).attr("id") == "nianling"){
+			v = 22;
+			dv = 30;
 			i -= 8;
 			a -= 8;
 		}
 		if($(this).attr("id") == "wendu"){
+			v = 40;
+			dv = 20;
 			i = parseInt(i) + 20;
 			a = parseInt(a) + 20;
 		}
 		if($(this).attr("id") == "shidu"){
 			v = 15;
+			dv = 15;
+		}
+		if($(this).attr("id") == "shulian"){
+			v = 3;
+			dv = 3;
 		}
 		$(this).slider({
 			orientation: "horizontal",
@@ -53,7 +67,8 @@ $(document).ready(function() {
 			step: s,
 			value: v,
 			create: function( event, ui ) {
-				$(this).find(".ui-slider-handle").html($("<div class='slider-value'></div>"));
+				html = "<div class='slider-value'>" + dv + "</div>";
+				$(this).find(".ui-slider-handle").html($(html));
 			},
 			slide: function( event, ui ) {
 				if($(this).attr("id") == "tizhong"){
@@ -84,7 +99,7 @@ $(document).ready(function() {
 		});
 	});
 	
-	$(".nav-flow li a").click(function(){
+	/*$(".nav-flow li a").click(function(){
 		var li = $(this).parent();
 		if(!li.hasClass("active")){
 			$(".nav-flow li.active").removeClass("active");
@@ -92,7 +107,7 @@ $(document).ready(function() {
 			$(".tab-content.active").removeClass("active");
 			$("#"+$(this).attr("class")).addClass("active");
 		}
-	});
+	});*/
 	
 	$(".radio-box .img").click(function(){
 		if($(this).hasClass("male")){
@@ -267,8 +282,8 @@ function hidermodal(){
                 <td>
                 	<div role="slider" id="wendu">
                     	<div class="min"><font>-20</font>（摄氏度）</div>
-                        <div class="max"><font>50</font>（摄氏度）</div>
-						<input type="hidden" id="temperature" name="temperature" value="-20" >
+                        <div class="max"><font>40</font>（摄氏度）</div>
+						<input type="hidden" id="temperature" name="temperature" value="20" >
                     </div>
                 </td>
               </tr>
@@ -278,7 +293,7 @@ function hidermodal(){
                 	<div role="slider" id="shidu">
                     	<div class="min"><font>0</font>（%）</div>
                         <div class="max"><font>100</font>（%）</div>
-						<input type="hidden" id="humidity" name="humidity" value="0" >
+						<input type="hidden" id="humidity" name="humidity" value="15" >
                     </div>
                 </td>
               </tr>
@@ -311,7 +326,7 @@ function hidermodal(){
                 	<div role="slider" id="shulian">
                     	<div class="min"><font>0</font>（初学者）</div>
                         <div class="max"><font>10</font>（运动达人）</div>
-						<input type="hidden" id="proficiency" name="proficiency" value="0">
+						<input type="hidden" id="proficiency" name="proficiency" value="3">
                     </div>
                 </td>
               </tr>
@@ -321,7 +336,7 @@ function hidermodal(){
                 	<div role="slider" id="nianling">
                     	<div class="min"><font>8</font></div>
                         <div class="max"><font>70</font></div>
-						<input type="hidden" id="age" name="age"  value="8">
+						<input type="hidden" id="age" name="age"  value="30">
                     </div>
                 </td>
               </tr>
@@ -331,7 +346,7 @@ function hidermodal(){
                 	<div role="slider" id="tizhong">
                     	<div class="min"><font>20</font>（KG）</div>
                         <div class="max"><font>150</font>（KG）</div>
-						<input type="hidden" id="weight" name="weight" value="20" >
+						<input type="hidden" id="weight" name="weight" value="65" >
                     </div>
                 </td>
               </tr>
