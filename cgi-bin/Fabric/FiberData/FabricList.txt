@@ -1,2 +1,0 @@
-0Fabric.xml
-1Fabric.xml
