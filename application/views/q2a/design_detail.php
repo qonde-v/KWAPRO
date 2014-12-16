@@ -442,12 +442,12 @@ $(document).ready(function() {
                         <label>整套服装</label>
                     </td>
                     <td width="26%" align="center">
-                    	<img width="136" height="86" class="ml" src="<?php echo $base.'img/'.$fabric['pic'];?>" />
-                        <label><?php echo $fabric['name'];?></label>
+                    	<img width="136" height="86" class="ml" src="<?php echo $base.'img/'.$fabric['fabricFigure'];?>" />
+                        <label><?php echo $fabric['fabricName'];?></label>
                     </td>
                     <td width="61%" valign="top">
                    	  <label style="line-height:40px; margin-top:10px;">面料特点：</label>
-                        <?php echo $fabric['feature'];?>
+                        <?php echo $fabric['fabricFunctionNote'];?>
                     </td>
                   </tr>
 				  <?php }else{?>
@@ -458,12 +458,12 @@ $(document).ready(function() {
                         <label><?php echo $item['name'];?></label>
                     </td>
                     <td width="26%" align="center">
-                    	<img width="136" height="86" class="ml" src="<?php echo $base.'img/'.$item['fabric']['pic'];?>" />
-                        <label><?php echo $item['fabric']['name'];?></label>
+                    	<img width="136" height="86" class="ml" src="<?php echo $base.'img/'.$item['fabric']['fabricFigure'];?>" />
+                        <label><?php echo $item['fabric']['fabricName'];?></label>
                     </td>
                     <td width="61%" valign="top">
                    	  <label style="line-height:40px; margin-top:10px;">面料特点：</label>
-                        <?php echo $item['fabric']['feature'];?>
+                        <?php echo $item['fabric']['fabricFunctionNote'];?>
                     </td>
                   </tr>
 				  <?php endforeach; }?>

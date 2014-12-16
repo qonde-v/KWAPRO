@@ -9,6 +9,26 @@
 <link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
 <script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"></script>
 
+<script language="JavaScript">
+var i,sum;
+ 
+//自动播放
+var Play = setInterval(PlayEve, 2000);
+function PlayEve(){     
+	i=parseInt($("#picdiv div[class='item active']").attr("id").substr(3,1));
+	
+    sum = 3;
+    if( i < sum - 1){
+        $("#div"+i).removeClass("active");
+        $("#div"+(parseInt(i)+1)).addClass("active");
+        i++;
+    }else if(i==sum-1){
+        $("#div2").removeClass("active");
+        $("#div0").addClass("active");
+        i=0;
+    }
+}
+</script>
 </head>
 <div class="container">
  <?php include("header.php"); ?>
@@ -28,12 +48,15 @@
             </div>
             <a class="carousel-arrow" href="#"><img src="<?php echo $base.'img/arrow-right.png';?>" /></a>
         </div>
-    	<div class="carousel-inner">
-        	<div class="item active">
+    	<div class="carousel-inner"  id="picdiv">
+        	<div class="item active" id="div0">
               <img src="<?php echo $base.'img/pictures_01.jpg';?>" alt=""/>
             </div>
-            <div class="item">
-              <img src="<?php echo $base.'img/pictures_01.jpg';?>" alt=""/>
+            <div class="item" id="div1">
+              <img src="<?php echo $base.'img/pictures_02.png';?>" alt=""/>
+            </div>
+			<div class="item" id="div2">
+              <img src="<?php echo $base.'img/pictures_03.png';?>" alt=""/>
             </div>
         </div>
     </div>

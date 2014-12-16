@@ -124,7 +124,7 @@ ini_set("memory_limit","100M");
 		$fabric = array();
 		$this->db->select('*');
 		$this->db->limit(7,0);
-		$query = $this->db->get('fabrics');
+		$query = $this->db->get('fabric');
 		foreach($query->result_array() as $val)
 		{
 			array_push($fabric,$val);
