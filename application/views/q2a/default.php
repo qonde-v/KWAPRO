@@ -11,7 +11,15 @@
 
 <script language="JavaScript">
 var i,sum;
- 
+$(function(){ 
+	$(".carousel-arrow").click(function(e){
+        PlayEve();
+    });
+    //$(".carousel-arrow").mouseout(function(e){
+       //setInterval(PlayEve, 2000);
+    //});
+});
+
 //自动播放
 var Play = setInterval(PlayEve, 2000);
 function PlayEve(){     
@@ -46,7 +54,7 @@ function PlayEve(){
             	<img src="<?php echo $base.'img/text.png';?>" /><br />
                 <a href="<?php if(isset($login)) echo $base.'demand/publish';else echo 'javascript:showLoginModal()';?>">前往定制</a>
             </div>
-            <a class="carousel-arrow" href="#"><img src="<?php echo $base.'img/arrow-right.png';?>" /></a>
+            <a class="carousel-arrow" href="###"><img src="<?php echo $base.'img/arrow-right.png';?>" /></a>
         </div>
     	<div class="carousel-inner"  id="picdiv">
         	<div class="item active" id="div0">
