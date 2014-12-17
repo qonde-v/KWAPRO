@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 ini_set("memory_limit","100M");
   class Design extends CI_Controller
   {
@@ -541,7 +541,7 @@ ini_set("memory_limit","100M");
 		//更新设计状态为等待仿真
 		$this->Demand_management->update_designstatus($design_id,1);
 		
-		$filename = "c:\wamp\Apache2\cgi-bin\SP".$user_id.$design_id.".xml";
+		$filename = "d:\\xampp\cgi-bin\SP".$user_id.$design_id.".xml";
 		$f_name="SP".$user_id.$design_id.".xml";
 
 		$of = fopen($filename,'w');//创建并打开
