@@ -186,8 +186,8 @@
 	 function get_fabric($id)
 	 {
 	 	$this->db->select('*');
-		$this->db->where('id',$id);
-		$query = $this->db->get('fabrics');
+		$this->db->where('fabricId',$id);
+		$query = $this->db->get('fabric');
 		$result = array();
 		if($query->num_rows() > 0)
 		{
