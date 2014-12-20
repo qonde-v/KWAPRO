@@ -355,7 +355,7 @@
 			{
 				return $base_photo_path.'default/head.png';
 			 }
-			 return $base_photo_path.$user_id.'/'.$photo_name;
+			 return 'img/'.$photo_name;//$base_photo_path.$user_id.'/'.$photo_name;
         }
 		else
 		{
@@ -367,13 +367,14 @@
 	 function get_user_photo_name($user_id)
 	 {
 	    //todo:
-		$sql = "SELECT photo_name FROM user_photo WHERE uId={$user_id} AND photo_type = 1";
+		//$sql = "SELECT photo_name FROM user_photo WHERE uId={$user_id} AND photo_type = 1";
+		$sql = "SELECT avatar FROM user WHERE uId={$user_id}";
 		$query = $this->db->query($sql);
 
 	   	if($query->num_rows() > 0)
 		{
 		   $row = $query->row();
-		   return $row->photo_name;
+		   return $row->avatar;//photo_name;
 		}
 		return '';
 	 }
@@ -493,6 +494,23 @@
         {
             $row = $query->row();
             return $row->subpic;
+        }
+        else
+        {
+            return NULL;
+        }
+	 }
+
+	 function get_user_tag($uId)
+	 {
+	    //
+        $this->db->select('tag');
+        $this->db->where('uId',$uId);
+        $query = $this->db->get('user');
+        if($query->num_rows() > 0)
+        {
+            $row = $query->row();
+            return $row->tag;
         }
         else
         {

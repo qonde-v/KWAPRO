@@ -5,218 +5,206 @@
 <title>TIT系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
-<!-- <link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet"> -->
-<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" />
-<link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="<?php echo $base.'css/data_picker.css';?>" />
 <script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"></script>
-<script src="<?php echo $base.'js/kwapro_event.jquery.js';?>"></script>
-<style>
- table td{ border-bottom:1px solid #ccc; }
- table th{ border-bottom:1px solid #ccc; }
-</style>
+<script src="<?php echo $base.'js/jquery-ui.min.js';?>" type="text/javascript"></script>
+<script src="<?php echo $base.'js/DatePicker.js';?>"></script>
+<script src="<?php echo $base.'js/setting.js';?>"></script>
+<script type="text/javascript">
+	$(function(){
+		$(".radio").click(function(){
+			var name = $(this).attr("name");
+			if($(".radio[name="+name+"]").size() > 1){
+				$(this).siblings(".radio-checked").removeClass("radio-checked");
+				$(this).addClass("radio-checked");
+				$('#gender').val($(this).attr('value'));
+			}
+			else{
+				$(this).toggleClass("radio-checked");
+			}
+		});
+		$("#pwbtn").click(function(){
+			if($(this).hasClass("radio-checked")){
+				document.getElementById("name").type="password"; 
+				//$(this).prev().attr("type","password");
+			}
+			else{
+				document.getElementById("name").type="text"; 
+				//$(this).prev().attr("type","text");
+			}
+		});
+		$(".tabs li").click(function(){
+			$(this).toggleClass("active");
+			var tag = $('#tag').val();
+			var i = $(this).text();
+			if($(this).hasClass("active")){
+				tag = tag + ' ' + i;
+			}else{
+				tag = tag.replace(' ' + i,'')
+			}
+			$('#tag').val(tag);
+		});
+
+	});
+
+function reset(){
+	$('#nickname').val('');
+	$('#realname').val('');
+	$('#old_password').val('');
+	$('#new_password').val('');
+	$('#new_passwordc').val('');
+	$('#email').val('');
+	$('#qq').val('');
+	$('#birthday').val('');
+	$('#address').val('');
+	$('#address_now').val('');
+	$('#tel').val('');
+	$('#age').val('');
+	$('#school').val('');
+	$('#description').val('');
+}
+
+
+</script>
 </head>
 <div class="container">
 <?php include("header.php"); ?>
 <!------------ 头部结束 ------------->
+<input type="hidden" id="base" value="<?php echo $base;?>">
+  <div id="personalSpaceImg" class="main">
+	<ul class="breadcrumb">
+    	<li><a href="<?php echo $base.'demand'?>">个人空间</a></li>
+        <li>&gt;</li>
+        <li><a href="#">修改个人资料</a></li>
+        <li class="pull-right"><a href="<?php echo $base.'demand'?>">返回</a></li>
+    </ul>
+    <div class="wrap gray">
+    	<div class="warp_title">资料卡</div>
+        <div class="warp_body">
+        	<table width="100%" border="0" class="edit_table">
+              <tbody>
+                <tr>
+                  <td width="12%">昵称：</td>
+                  <td width="38%"><input id="nickname" type="text" value="<?php echo $nickname;?>"/></td>
+                  <td width="12%">性别：</td>
+                  <td width="38%">
+                  	<div class="input-group">
+                    	<div class="radio <?php if($gender == 1){echo "radio-checked";} ?>" name="sex" value="1">男</div>
+                        <div class="radio <?php if($gender == 0){echo "radio-checked";} ?>" name="sex" value="0">女</div>
+						<input type="hidden" id="gender" value="<?php echo $gender;?>">
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>姓名：</td>
+                  <td>
+                  	<div class="input-group">
+                  		<input id="realname" type="text"  value="<?php echo $realname;?>"/><div class="radio" id="pwbtn">保密</div>
+                    </div>
+                    </td>
+                  <td>生日：</td>
+				  <input id="day_name_str" type="hidden" value="<?php for($i=0;$i<7;$i++){echo $day_name[$i];if($i<6)echo ",";}?>">
+				  <input id="month_name_str" type="hidden" value="<?php for($i=0;$i<12;$i++){echo $month_name[$i];if($i<11)echo ",";}?>">
+                  <td><input id="birthday" type="text" value="<?php echo $birthday;?>"/></td>
+                </tr>
+                <tr>
+                  <td>年龄：</td>
+                  <td><input type="text" id="age"  value="<?php echo $age;?>"/></td>
+                  <td>现居城市：</td>
+                  <td><input type="text" id="address_now"  value="<?php echo $address_now;?>"/></td>
+                </tr>
+                <tr>
+                  <td>手机：</td>
+                  <td><input type="text" id="tel" value="<?php echo $tel;?>"/></td>
+                  <td>家乡城市：</td>
+                  <td><input type="text" id="address" value="<?php echo $address;?>"/></td>
+                </tr>
+                <tr>
+                  <td>毕业院校：</td>
+                  <td colspan="3"><input type="text" id="school"  value="<?php echo $school;?>"/></td>
+                </tr>
+                <tr>
+                  <td>邮箱：</td>
+                  <td><input type="text" id="email"  value="<?php echo $email;?>"/></td>
+                  <td>QQ：</td>
+                  <td><input type="text" id="qq" value="<?php echo $qq;?>"/></td>
+                </tr>
+                <tr>
+				  <input type="hidden" id="tag" value="<?php echo $tag;?>">
+                  <td valign="top">标签：</td>
+                  <td colspan="3"> 
+                  	<ul class="tabs">
+                    	<li <?php if(strpos($tag,"户外山地运动") > 0){ echo "class='active'";}?>>户外山地运动<i></i></li>
+                        <li <?php if(strpos($tag,"自行车运动") > 0){ echo "class='active'";}?>>自行车运动<i></i></li>
+                        <li <?php if(strpos($tag,"跑步") > 0){ echo "class='active'";}?>>跑步<i></i></li>
+                        <li <?php if(strpos($tag,"水上运动") > 0){ echo "class='active'";}?>>水上运动<i></i></li>
+                        <li <?php if(strpos($tag,"游泳") > 0){ echo "class='active'";}?>>游泳<i></i></li>
+                        <li <?php if(strpos($tag,"健身运动") > 0){ echo "class='active'";}?>>健身运动<i></i></li>
+                        <li <?php if(strpos($tag,"目标运动") > 0){ echo "class='active'";}?>>目标运动<i></i></li>
+                        <li <?php if(strpos($tag,"步行") > 0){ echo "class='active'";}?>>步行<i></i></li>
+                        <li <?php if(strpos($tag,"滑轮") > 0){ echo "class='active'";}?>>滑轮<i></i></li>
+                        <li <?php if(strpos($tag,"钓鱼") > 0){ echo "class='active'";}?>>钓鱼<i></i></li>
+                        <li <?php if(strpos($tag,"羽毛球") > 0){ echo "class='active'";}?>>羽毛球<i></i></li>
+                        <li <?php if(strpos($tag,"网球") > 0){ echo "class='active'";}?>>网球<i></i></li>
+                        <li <?php if(strpos($tag,"高尔夫") > 0){ echo "class='active'";}?>>高尔夫<i></i></li>
+                        <li <?php if(strpos($tag,"狩猎运动") > 0){ echo "class='active'";}?>>狩猎运动<i></i></li>
+                        <li <?php if(strpos($tag,"排球") > 0){ echo "class='active'";}?>>排球<i></i></li>
+                        <li <?php if(strpos($tag,"马术") > 0){ echo "class='active'";}?>>马术<i></i></li>
+                        <li <?php if(strpos($tag,"滑雪") > 0){ echo "class='active'";}?>>滑雪<i></i></li>
+                        <li <?php if(strpos($tag,"足球") > 0){ echo "class='active'";}?>>足球<i></i></li>
+                        <li <?php if(strpos($tag,"乒乓球") > 0){ echo "class='active'";}?>>乒乓球<i></i></li>
+                        <li <?php if(strpos($tag,"篮球") > 0){ echo "class='active'";}?>>篮球<i></i></li>
+						<li <?php if(strpos($tag,"服装设计") > 0){ echo "class='active'";}?>>服装设计<i></i></li>
+                    </ul>
+                  </td>
+                </tr>
+                <tr>
+                  <td>简介：</td>
+                  <td colspan="3"><input type="text" id="description" value="<?php echo $description;?>"/></td>
+                </tr>
+                <tr>
+                  <td>旧密码：</td>
+                  <td>
+                  	<div class="input-group">
+                  		<input id="old_password" type="password" />
+                    </div>
+                  </td>
+				</tr>
+                <tr>
+				  <td>新密码：</td>
+                  <td>
+                  	<div class="input-group">
+                  		 <input id="new_password" type="password" />
+                    </div>
+                  </td>
 
-
-		    	<!--middle content-->
-				<input type="hidden" id="base" value="<?php echo $base;?>">
+				  <td>确认密码：</td>
+				  <td>
+                  	<div class="input-group">
+                  		<input id="new_passwordc" type="password" />
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="btns">
+                <a href="#" onclick="javascript:reset();">重&nbsp;置</a>
+                <a href="#"  onclick="javascript:basic_info_save();" id="basic_save_btn" class="black">保&nbsp;存</a>
+              </div>
+        </div>
+    </div>
      
-    				<div  style="text-align:center">
-    					<div style="background-color:#f1f2f6;" id="basic">
-    					 <table border="0">
-    					   <tr>
-    					   	<th><?php echo $profile_user_name;?></th>
-    					   	<td ><?php echo $username; ?></td>
-    					   </tr>
-    					    
-    					   <tr>
-    					   	<th>
-								<!--div class="img_avator" id="upload_area">
-									<img class="thumbnail span3" src="<?php echo $base.$userphoto_path; ?>" alt=""/>
-								</div-->
-								<div class="setting_photo">
-			  	                                	<div align="right" id="upload_area">
-                                				     		<img id="user_img" border="1" style="width:45px;height:45px;" src="<?php echo $base.$userphoto_path; ?>"/>
-                                 				 	</div>
-                                				</div>
+  </div>
 
-							</th>
-    					   	<td>
-								<!--form action="" method="post">
-									<p><input type="file" name="user_photo" id="user_photo"/></p>
-    					   		</form-->
-							<div class="setting_upload" >
-                              	<form action="" method="post" onsubmit="return false;">
-        			            		<p>
-                       						<input name="user_photo" id="user_photo" type="file"/>
-                     					</p>
-                  				</form>
-                			</div>
-
-				   			</td>
-    					   </tr>
-    					   
-    					   <tr>
-    					   	<th><?php echo $profile_gender; ?></th>
-    					   	<td>
-								<input id="gender" name="gender" type="radio" <?php if($gender == 1){echo "checked";} ?> value="1"/><?php echo $profile_gender_male; ?>
-    					    	<input id="gender" name="gender" type="radio" <?php if($gender == 0){echo "checked";} ?> value="0" style="margin-left:1em;" /><?php echo $profile_gender_female; ?>
-							</td>
-    					   </tr>
-    					    <tr>
-    					   	<th><?php echo $profile_language_type;?></th>
-    					   	<td>
-								<select id="Language">
-    					    		<option value="zh" selected="selected">中文</option>
-                                    <!--<option value="en" <?php if($langCode=='en'){echo "selected='selected'";}?>>English</option>
-                                    option value="de" <?php if($langCode=='de'){echo "selected='selected'";}?>>Deutsch</option>
-                                    <option value="it" <?php if($langCode=='it'){echo "selected='selected'";}?>>Italiano</option-->
-    					    	</select>
-							</td>
-    					   </tr>
-    					    <tr>
-	                        	<th><?php echo $profile_current_local;?></th>
-								<td>
-									<input type="hidden" id="location_code" value="<?php echo $location['country_code'].'|'.$location['province_code'].'|'.$location['city_code'].'|'.$location['town_code']; ?>"/>
-									<input type="text" id="place_setting"  value="<?php echo $location['town_name']; ?>">
-									<a href="#" id="place_setting_img"  data-controls-modal='place_setting_modal' data-backdrop='true' data-keyboard='true'><img alt="" src="<?php echo $base.'img/btn_search.png';?>"></a>
-	                           </td>
-                        	</tr>
-							
-							<tr>
-	                        	<th><?php echo $profile_birthday;?></th>
-								<input id="day_name_str" type="hidden" value="<?php for($i=0;$i<7;$i++){echo $day_name[$i];if($i<6)echo ",";}?>">
-								<input id="month_name_str" type="hidden" value="<?php for($i=0;$i<12;$i++){echo $month_name[$i];if($i<11)echo ",";}?>">
-								<td>
-									<input id="birthday" type="text" value="<?php echo $birthday;?>">
-	                           </td>
-                        	</tr>
-                        	
-                        	
-                        	<tr>
-	                        	<th style="border-top:1px solid #ccc;"><?php echo $profile_old_password;?></th>
-								<td style="border-top:1px solid #ccc;">
-									<input id="old_password" type="password" AUTOCOMPLETE=OFF>
-	                           </td>
-                        	</tr>
-                        	
-                        	<tr>
-	                        	<th><?php echo $profile_new_password;?></th>
-								<td>
-									<input id="new_password" type="password" AUTOCOMPLETE=OFF>
-	                           </td>
-                        	</tr>
-                        	
-                        	<tr>
-	                        	<th><?php echo $profile_password_confirm;?></th>
-								<td>
-									<input id="new_passwordc" type="password" AUTOCOMPLETE=OFF>
-	                           </td>
-                        	</tr>
-                        	<tr>
-                        		<td colspan="2" style="text-align:center">
-                        			<button class="btn primary" onclick="basic_info_save();" id="basic_save_btn" data-loading-text="<?php echo $profile_data_process;?>"><?php echo $profile_save;?></button>
-                        		</td>
-                        	</tr>
-    					  </table>
-    					</div>
-
-
+<div id="msg_modal" class="modal hide">
+	<div class="modal-header"><a href="#" onclick="$('#msg_modal').addClass('hide');" class="close">&times;</a><h3>&nbsp;</h3></div>
+	<div class="modal-body"></div>
+	<div class="modal-footer"><button class="btn primary" onclick="$('#msg_modal').addClass('hide');">确定</button></div>
+</div>
 
 	<?php include("footer.php");?>
 
-	<input type="hidden" id="tag_add_prompt" value="<?php echo $profile_tag_added; ?>">
-	<input type="hidden" id="select_cate" value="<?php echo $profile_select_cate; ?>">
-	<input type="hidden" id="select_subcate" value="<?php echo $profile_select_subcate; ?>">
-	<input type="hidden" id="name_unvalid" value="<?php echo $profile_name_unvalid; ?>">
-	<input type="hidden" id="select_first" value="<?php echo $profile_select_first;?>"/>
-	<input type="hidden" id="upload_wait" value="<?php echo $profile_upload_wait;?>"/>
-	<div id="msg_modal" class="modal hide">
-		<div class="modal-header"><a href="#" class="close">&times;</a><h3>&nbsp;</h3></div>
-		<div class="modal-body"></div>
-		<div class="modal-footer"><button class="btn primary" onclick="$('#msg_modal').hide();"><?php echo $modal_ok;?></button></div>
-	</div>
-	<div id="upload_avatar_modal" class="modal hide">
-		<div class="modal-header"><h3><?php echo $profile_crop_img_title;?></h3></div>
-		<div class="modal-body">
-			<table>
-			<tr>
-				<td style="width:520px;text-align:center;"><?php echo $profile_original_img;?></td>
-				<td><?php echo $profile_thumb_preview;?></td>
-			</tr>
-			<tr>
-				<td><div id="original_photo" style="margin-right:10px;text-align:center"></div></td>
-				<td>
-					<div style="float:right; position:relative; overflow:hidden; width:100px; height:100px;margin-right:10px;">
-						<img style="position: relative;" id="crop_photo"/>
-					</div>
-				</td>
-			</tr>
-			</table>
-			<br style="clear:both;"/>
-		</div>
-		<div class="modal-footer">		
-				<input type="hidden" name="x1" value="" id="x1" />
-				<input type="hidden" name="y1" value="" id="y1" />
-				<input type="hidden" name="x2" value="" id="x2" />
-				<input type="hidden" name="y2" value="" id="y2" />
-				<input type="hidden" name="w" value="" id="w" />
-				<input type="hidden" name="h" value="" id="h" />				
-				<button class="btn" onclick="crop_img_close();"><?php echo $profile_cancel_button;?></button>
-				<button class="primary btn" id="save_thumb" onclick="save_thumb();" data-loading-text="<?php echo $profile_data_process;?>"><?php echo $profile_save;?></button>
-		</div>
-	</div>
-    <div id="place_setting_modal" class="modal hide">
-		<div class="modal-header"><a href="#" onclick="$('#place_setting_modal').addClass('hide');" class="close">&times;</a><h3><?php echo $profile_local_check;?></h3></div>
-		<div class="modal-body">
-			<table>
-				<tr>
-    				<td><?php echo $profile_country;?></td>
-    				<td><?php echo $profile_region;?></td>
-    				<td><?php echo $profile_city;?></td>
-					<td><?php echo $profile_city_content;?></td>
-    			</tr>
-				<tr>
-					<td>
-						<select size="9" id="country" name="" type="text" class="place_select">
-							<option id="zh">中国</option>
-							<!-- <option id="en">Britain</option>
-							<option id="de">Germany</option>
-							<option id="it">Italy</option> -->
-						</select>
-					</td>
-					<td>
-						<select size="9" id="province" name="" type="text" class="place_select">
-						</select>
-					</td>
-					<td>
-						<select size="9" id="city" name="" type="text" class="place_select">
-						</select>
-					</td>
-					<td>
-						<select size="9" id="town" name="" type="text" class="place_select">
-						</select>
-					</td>
-				</tr>
-			</table>
-		</div>
-		<div class="modal-footer"><?php echo $profile_local_prompt;?></div>
-	</div>
   </div>
   </body>
-    <script src="<?php echo $base.'js/bootstrap-modal.js';?>"></script>
-	<script src="<?php echo $base.'js/bootstrap-twipsy.js';?>"></script>
-    <script src="<?php echo $base.'js/bootstrap-dropdown.js';?>"></script>
-    <script src="<?php echo $base.'js/bootstrap-buttons.js';?>"></script>
-    <script src="<?php echo $base.'js/bootstrap-tabs.js';?>"></script>
-	<script src="<?php echo $base.'js/bootstrap-popover.js';?>"></script>
-	<script src="<?php echo $base.'js/setting.js';?>"></script>
-	<script src="<?php echo $base.'js/DatePicker.js';?>"></script>
-	<script src="<?php echo $base.'js/ajaxupload.js';?>"></script>
-	<script src="<?php echo $base.'js/kwapro_search.js';?>" ></script>
-	<script src="<?php echo $base.'js/jquery.imgareaselect.min.js';?>" ></script>
 </html>   
     
