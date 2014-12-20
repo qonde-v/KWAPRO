@@ -442,7 +442,7 @@ $(document).ready(function() {
                         <label>整套服装</label>
                     </td>
                     <td width="26%" align="center">
-                    	<img width="136" height="86" class="ml" src="<?php echo $base.'img/'.$fabric['fabricFigure'];?>" />
+                    	<img width="136" height="86" class="ml" src="<?php echo substr($base,0,strpos($base,"TIT")).'PDB/uploads/fabric/2DImages/'.$fabric['fabricFigure'];?>" />
                         <label><?php echo $fabric['fabricName'];?></label>
                     </td>
                     <td width="61%" valign="top">
@@ -458,7 +458,7 @@ $(document).ready(function() {
                         <label><?php echo $item['name'];?></label>
                     </td>
                     <td width="26%" align="center">
-                    	<img width="136" height="86" class="ml" src="<?php echo $base.'img/'.$item['fabric']['fabricFigure'];?>" />
+                    	<img width="136" height="86" class="ml" src="<?php echo substr($base,0,strpos($base,"TIT")).'PDB/uploads/fabric/2DImages/'.$item['fabric']['fabricFigure'];?>" />
                         <label><?php echo $item['fabric']['fabricName'];?></label>
                     </td>
                     <td width="61%" valign="top">
