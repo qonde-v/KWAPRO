@@ -49,9 +49,10 @@ $(document).ready(function() {
 		$(this).addClass("active");
 		var ff = $(this).find('input').val();
 		array = ff.split("||");
+		var base = $('#base').val();
 		
 	    $("#fab_name").html('名称：' + array[1]);
-		$("#fab_pic").attr('src',$('#base').val() + 'img/' + array[2]);
+		$("#fab_pic").attr('src',base.substr(0,base.lastIndexOf('TIT')) + 'PDB/uploads/fabric/2DImages//' + array[2]);
 		$("#fab_description").html(array[3]);
 		$("#fab_feature").html(array[4]);
 
@@ -376,7 +377,7 @@ function getFileName(path){
             <ul class="ml_list">
 				<?php foreach($fabric as $item):?>
                 <li>
-                    <img src="<?php echo substr($base,0,strpos($base,"TIT")).'PDB/uploads/fabric/2DImages//'.$item['fabricFigure_thumb'];?>"/>
+                    <img width="106px" height="106px" src="<?php echo substr($base,0,strpos($base,"TIT")).'PDB/uploads/fabric/2DImages/'.$item['fabricFigure'];?>"/>
                     <label><?php echo $item['fabricName'];?></label>
 					<input type="hidden" value="<?php echo $item['fabricId'].'||'.$item['fabricName'].'||'.$item['fabricFigure'].'||'.$item['fabricStruct'].'||'.$item['fabricFunctionNote'];?>">
                 </li>
