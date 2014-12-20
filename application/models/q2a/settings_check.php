@@ -263,7 +263,18 @@
 	   $data['birthday'] = $post_data['birthday'];
 	   $data['passwd'] = trim($post_data['new_password']);
 	   $data['gender'] = $post_data['gender'];
-	   $data['location'] = $this->location_data_parse($post_data['location']);
+	   $data['nickname'] = $post_data['nickname'];
+	   $data['realname'] = $post_data['realname'];
+	   $data['age'] = $post_data['age'];
+	   $data['tel'] = $post_data['tel'];
+	   $data['address'] = $post_data['address'];
+	   $data['address_now'] = $post_data['address_now'];
+	   $data['email'] = $post_data['email'];
+	   $data['qq'] = $post_data['qq'];
+	   $data['description'] = $post_data['description'];
+	   $data['school'] = $post_data['school'];
+	   $data['tag'] = $post_data['tag'];
+	   //$data['location'] = $this->location_data_parse($post_data['location']);
 
 	   return $data;
 	}

@@ -137,50 +137,42 @@ function hidermodal(){
 }
 </script>
 <script type="text/javascript">
-	var onFocusID = "";
-	  function showtype(obj,obj_d,obj_t)
-	  {
-		jQuery(obj_d).css("left",jQuery(obj).offset().left);
-		jQuery(obj_d).css("top",jQuery(obj).offset().top+jQuery(obj).outerHeight());
-		jQuery(obj_d).css("z-index",3);
-		jQuery(obj_d).show();
-		onFocusID = obj_t;
-	   }
-	  function hidetype(obj_d)
-	  {
-			jQuery(obj_d).hide();
-	  }
-	  $(function()
-		{
-			$("#divType img").each(function()
-				{ $(this).click(function(){
-					// this.checked="checked";
-					//alert(jQuery(this).attr("alt"));
-					if(onFocusID != "")
-					{
-						$("#" + onFocusID).val($(this).attr("alt"));
-						$("#span_" + onFocusID).html($(this).attr("alt"));
-						this.checked = "";
-					}
-					$("#divType").hide();
-				});
+function showModal(ty){
+	$(".modal-content").hide();
+	$("#"+ty).show();
+	$(".modal").show();
+	$('#login_modal').attr('style','display:none');
+	$(".modal-bg").css("height",$("body").height());
+	$(".modal-bg").show();
+}
+function hidermodal(){
+	$(".modal").hide();
+	$(".modal-bg").hide();
+}
+
+
+$(function(){
+			$(".lx_list li a").click(function(){
+				$("#type").val($(this).html());
+				$("#span_type").html($(this).html());
+				var li = $(this).parent();
+				if(!li.hasClass("active")){
+					$(".lx_list li.active").removeClass("active");
+					li.addClass("active");
+				}
 			});
 
-			$("#divWeather img").each(function()
-				{ $(this).click(function(){
-					// this.checked="checked";
-					//alert(jQuery(this).attr("alt"));
-					if(onFocusID != "")
-					{
-						$("#" + onFocusID).val($(this).attr("alt"));
-						$("#span_" + onFocusID).html($(this).attr("alt"));
-						this.checked = "";
-					}
-					$("#divWeather").hide();
-				});
+			$(".tq_list li a").click(function(){
+				$("#weather").val($(this).html());
+				$("#span_weather").html($(this).html());
+				var li = $(this).parent();
+				if(!li.hasClass("active")){
+					$(".tq_list li.active").removeClass("active");
+					li.addClass("active");
+				}
 			});
+
 	   });
-
 </script>
 </head>
 <div class="container">
@@ -195,14 +187,49 @@ function hidermodal(){
 <input type="hidden" id="base" value="<?php echo $base;?>"></input>
   <div id="xqlc" class="main flows">
 	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_dt.png';?>" /></a>
-  	<div class="modal">
-        <div class="modal-header">
-            <a href="javascript:;" onclick="hidermodal()">X</a>
-        </div>
-        <div class="modal-content">
-            <ul class="ml_list">
-                <li>晴天</li>
+  	<div class="modal" style="width:650px;padding_top:30%;padding_;left:40%;">
+        <div id="tq" class="modal-content">
+            <ul class="tq_list">
+                <li class="active"><a href="#" class="tq1">晴天</a></li>
+                <li><a href="javascript:;" class="tq2">阴天</a></li>
+                <li><a href="javascript:;" class="tq3">下雨</a></li>
+                <li><a href="javascript:;" class="tq4">下雪</a></li>
+                <li><a href="javascript:;" class="tq5">小雪</a></li>
+                <li><a href="javascript:;" class="tq6">小雨</a></li>
+                <li><a href="javascript:;" class="tq7">雨雪</a></li>
             </ul>
+            <div class="btns">
+            	<!-- <a href="javascript:;" onclick="hidermodal()">取&nbsp;消</a> -->
+                <a class="black" href="javascript:;" onclick="hidermodal()">确&nbsp;认</a>
+            </div>
+        </div>
+        <div id="lx" class="modal-content">
+            <ul class="lx_list">
+                <li class="active"><a href="javascript:;" class="lx1">户外山地</a></li>
+                <li><a href="javascript:;" class="lx2">跑步</a></li>
+                <li><a href="javascript:;" class="lx3">自行车运动</a></li>
+                <li><a href="javascript:;" class="lx4">水上运动</a></li>
+                <li><a href="javascript:;" class="lx5">游泳</a></li>
+                <li><a href="javascript:;" class="lx6">目标运动</a></li>
+                <li><a href="javascript:;" class="lx7">健身运动</a></li>
+                <li><a href="javascript:;" class="lx8">步行</a></li>
+                <li><a href="javascript:;" class="lx9">滑轮</a></li>
+                <li><a href="javascript:;" class="lx10">钓鱼</a></li>
+                <li><a href="javascript:;" class="lx11">羽毛球</a></li>
+                <li><a href="javascript:;" class="lx12">网球</a></li>
+                <li><a href="javascript:;" class="lx13">高尔夫</a></li>
+                <li><a href="javascript:;" class="lx14">狩猎运动</a></li>
+                <li><a href="javascript:;" class="lx15">排球</a></li>
+                <li><a href="javascript:;" class="lx16">马术</a></li>
+                <li><a href="javascript:;" class="lx17">滑雪</a></li>
+                <li><a href="javascript:;" class="lx18">足球</a></li>
+                <li><a href="javascript:;" class="lx19">乒乓球</a></li>
+                <li><a href="javascript:;" class="lx20">篮球</a></li>
+            </ul>
+            <div class="btns">
+            	<!-- <a href="javascript:;" onclick="hidermodal()">取&nbsp;消</a> -->
+                <a class="black" href="javascript:;" onclick="hidermodal()">确&nbsp;认</a>
+            </div>
         </div>
     </div>
     <div class="modal-bg"></div>
@@ -226,7 +253,7 @@ function hidermodal(){
                 <td width="10%" height="80" align="right" class="font16">类型：
                 </td>
                 <td width="51%">
-                	<div class="select-box" onclick="showtype(this,$('#divType'),'type');" >
+					<div class="select-box" onclick="showModal('lx')">
                    	<span id="span_type">跑步</span><i>&nbsp;</i></div>
 					<input id="type" name="type" type="hidden"  value='跑步' />
                 </td>
@@ -267,7 +294,7 @@ function hidermodal(){
                 <td width="10%" height="80" align="right" class="font16">天气：
                 </td>
                 <td width="51%">
-                	<div class="select-box"  onclick="showtype(this,$('#divWeather'),'weather');">
+					<div class="select-box"  onclick="showModal('tq')">
                    	<span id="span_weather">晴天</span><i>&nbsp;</i></div>
 					<input id="weather" name="weather" type="hidden"  value='晴天' />
                 </td>

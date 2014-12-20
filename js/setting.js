@@ -1,9 +1,4 @@
 $(function(){
-        String.prototype.trim=function(){return this.replace(/(^\s*)|(\s*$)/g,"");};
-	$('#header_setting').addClass('active');
-	$('#place_setting_modal').width('auto');
-	$('.tabs').tabs();
-	$('.online_user_image').popover();
 
 	var day_name_str = $('#day_name_str').val();
 	var day_name = day_name_str.split(",");
@@ -13,71 +8,13 @@ $(function(){
 	$('#birthday').live('focus',function(){
 		$("#birthday").datepicker({changeMonth:true, changeYear:true, dateFormat:'yy-mm-dd',dayNamesMin:day_name,monthNamesShort:month_name,prevText:'',nextText:''});
 	});
-	
-	$('#country').click(show_province);
-	$('#province').click(show_city);
-	$('#city').click(show_town);
-	
-	$("#place_setting").click(function() {
-		$('#place_setting_modal').removeClass('hide');
-	});
-
-	$('#province').dblclick(function(){
-		$('#place_setting').val($('#province option:selected').html());
-		$('#place_setting_modal').modal('hide');
-		$('#location_code').val($('#country option:selected').attr('id')+'|'+$('#province option:selected').attr('id'));
-	});
-	$('#city').dblclick(function(){
-		$('#place_setting').val($('#city option:selected').html());
-		$('#place_setting_modal').modal('hide');
-		$('#location_code').val($('#country option:selected').attr('id')+'|'+$('#province option:selected').attr('id')+'|'+$('#city option:selected').attr('id'));
-	});
-	$('#town').dblclick(function(){
-		$('#place_setting').val($('#town option:selected').html());
-		$('#place_setting_modal').modal('hide');
-		$('#location_code').val($('#country option:selected').attr('id')+'|'+$('#province option:selected').attr('id')+'|'+$('#city option:selected').attr('id')+'|'+$('#town option:selected').attr('id'));
-	});
-	
-	$("#user_photo").change(function(){
-         ajaxUpload(this.form,$('#base').val()+'settings_request/photo_upload/', 'original_photo',$('#upload_wait').val(),upload_succ);
-		 $('#upload_avatar_modal').removeClass('hide');		 
-     });
 	 
-	 $("#crop_photo").click(function() {  
-        var x1 = $("#x1").val();  
-        var y1 = $("#y1").val();  
-        var x2 = $("#x2").val();  
-        var y2 = $("#y2").val();  
-        var w = $("#w").val();  
-        var h = $("#h").val();  
-        if(x1=="" || y1=="" || x2=="" || y2=="" || w=="" || h==""){  
-            alert("You must make a selection first");  
-            return false;  
-        }else{  
-            return true;  
-        }  
-    }); 
-	 
-	 //$("#original_photo").imgAreaSelect({ aspectRatio: "1:1", onSelectChange: preview });
-	 
-	$('#tag_area span').live({
-	 	mouseenter:function(){$(this).children(1).attr('src',$('#base').val()+'img/delete1.png');},
-		mouseleave:function(){$(this).children(1).attr('src',$('#base').val()+'img/delete0.png');}});
-	$('#tag_area span').live('click',function(){$(this).remove();});
-		
-	$("#tags_one").click(show_subcate);
-	$('#tags_two').click(show_tags);
-	$("#tags_three").dblclick(dbclick_add_tag);
 });
-
-$(window).load(function () {  
-    $("#original_photo").imgAreaSelect({ aspectRatio: "1:1", onSelectChange: preview });  
-}); 
 
 function basic_info_save()
 {
 	var save_btn_id = $('#basic_save_btn');
-	save_btn_id.button('loading');
+	//save_btn_id.button('loading');
 	var data = basic_info_retrieve();
 	var url = $('#base').val() + 'settings_request/basic/';
 	var send_str = generate_query_str(data);
@@ -91,13 +28,23 @@ function basic_info_save()
 function basic_info_retrieve()
 {
 	var data = new Array();
-	data['gender'] = $('#gender').attr('checked') ? 1 : 0;
-	data['birthday'] = $('#birthday').val();
-	data['language_code'] = $('#Language').val();
-	data['location'] = $('#location_code').val();
+	data['gender'] = $('#gender').val();
+	data['nickname'] = $('#nickname').val();
+	data['realname'] = $('#realname').val();
 	data['old_password'] = $('#old_password').val();
-  	data['new_password'] = $('#new_password').val();
-  	data['new_passwordc'] = $('#new_passwordc').val();
+	data['new_password'] = $('#new_password').val();
+	data['new_passwordc'] = $('#new_passwordc').val();
+	data['email'] = $('#email').val();
+	data['qq'] = $('#qq').val();
+	data['birthday'] = $('#birthday').val();
+	data['address'] = $('#address').val();
+	data['address_now'] = $('#address_now').val();
+	data['tel'] = $('#tel').val();
+	data['age'] = $('#age').val();
+	data['school'] = $('#school').val();
+	data['description'] = $('#description').val();
+	data['tag'] = $('#tag').val();
+	data['language_code'] = 'zh';
   	return data;
 }
 
@@ -254,14 +201,15 @@ function ajax_location_data(post_str,effect_id)
 function ajax_profile_save(url,post_str,btn_id,callback)
 {
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
-		btn_id.button('reset');
-                $('#msg_modal .modal-body').html(html);
-		$('#msg_modal').modal('show');
+		//btn_id.button('reset');
+        $('#msg_modal .modal-body').html(html);
+		$('#msg_modal').removeClass("hide");
+		$('#msg_modal').show();
                 
-                if(typeof(callback) == 'function')
-                {
-                    callback();
-                }
+		if(typeof(callback) == 'function')
+		{
+			callback();
+		}
 		
 	}};
 	jQuery.ajax(ajax);

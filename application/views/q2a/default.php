@@ -21,10 +21,10 @@ $(function(){
 });
 
 //自动播放
-var Play = setInterval(PlayEve, 2000);
+var Play = setInterval(PlayEve, 3000);
 function PlayEve(){     
 	i=parseInt($("#picdiv div[class='item active']").attr("id").substr(3,1));
-	
+
     sum = 3;
     if( i < sum - 1){
         $("#div"+i).removeClass("active");
@@ -35,6 +35,11 @@ function PlayEve(){
         $("#div0").addClass("active");
         i=0;
     }
+	if(i==0){
+		$(".carousel-indicators").css('width','387px');
+	}else{
+		$(".carousel-indicators").css('width','920px');
+	};
 }
 </script>
 </head>
@@ -52,7 +57,7 @@ function PlayEve(){
     	<div class="carousel-indicators">
         	<div class="carousel-info">
             	<img src="<?php echo $base.'img/text.png';?>" /><br />
-                <a href="<?php if(isset($login)) echo $base.'demand/publish';else echo 'javascript:showLoginModal()';?>">前往定制</a>
+                <a href="<?php if(isset($login)) echo $base.'demand/publish';else echo 'javascript:showLoginModal()';?>">前往定制<img src="<?php echo $base.'img/xjt_bai.png';?>" style="vertical-align:middle;margin-bottom:0px"></a>
             </div>
             <a class="carousel-arrow" href="###"><img src="<?php echo $base.'img/arrow-right.png';?>" /></a>
         </div>

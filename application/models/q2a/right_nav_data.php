@@ -43,6 +43,7 @@
 		 $user_gender = $this->User_data->get_user_gender($user_id);
 		 $user_subpic = $this->User_data->get_user_subpic($user_id);
 		 $permission = $this->User_data->get_invite_permission($user_id);
+		 $tag = $this->User_data->get_user_tag($user_id);
 		 $kpc_score = $this->User_data->get_user_kpc($user_id);
 			
 		 $answer_num = isset($activity_content_data[ANSWER]) ? $activity_content_data[ANSWER] :0;
@@ -50,7 +51,7 @@
          $follow_num = isset($activity_content_data[FOLLOW]) ? $activity_content_data[FOLLOW] : 0;
 	     //$location_data = $this->session->userdata('location_city');
 		 $location_data = $this->User_data->get_user_location($user_id);
-		 $data = array('location'=>$location_data,'kpc_score'=>$kpc_score,'username'=>$username,'headphoto_path'=>$user_photo_path,'answer_num'=>$answer_num,'question_num'=>$question_num,'follow_num'=>$follow_num,'gender'=>$user_gender,'subpic'=>$user_subpic,'permission'=>$permission);
+		 $data = array('location'=>$location_data,'kpc_score'=>$kpc_score,'username'=>$username,'headphoto_path'=>$user_photo_path,'answer_num'=>$answer_num,'question_num'=>$question_num,'follow_num'=>$follow_num,'gender'=>$user_gender,'subpic'=>$user_subpic,'permission'=>$permission,'tag'=>$tag);
 		 //print_r($data);
 		 return array_merge($data,$activity_content_data);
 	 }

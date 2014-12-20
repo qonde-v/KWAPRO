@@ -132,7 +132,7 @@ function send_sec_msg(tt)
 													if($demand['type']=='目标运动')echo $base.'img/s_mubiao.png';
 													if($demand['type']=='排球')echo $base.'img/s_paiqiu.png';
 													if($demand['type']=='乒乓球')echo $base.'img/s_pingpang.png';
-													if($demand['type']=='户外山地运动')echo $base.'img/s_shandi.png';
+													if($demand['type']=='户外山地')echo $base.'img/s_shandi.png';
 													if($demand['type']=='狩猎运动')echo $base.'img/s_shoulie.png';
 													if($demand['type']=='水上运动')echo $base.'img/s_shuishang.png';
 													if($demand['type']=='网球')echo $base.'img/s_wangqiu.png';
