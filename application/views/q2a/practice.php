@@ -376,7 +376,7 @@ function getFileName(path){
             <ul class="ml_list">
 				<?php foreach($fabric as $item):?>
                 <li>
-                    <img src="<?php echo $base.'img/'.$item['fabricFigure'];?>"/>
+                    <img src="<?php echo substr($base,0,strpos($base,"TIT")).'PDB/uploads/fabric/2DImages//'.$item['fabricFigure'];?>"/>
                     <label><?php echo $item['fabricName'];?></label>
 					<input type="hidden" value="<?php echo $item['fabricId'].'||'.$item['fabricName'].'||'.$item['fabricFigure'].'||'.$item['fabricStruct'].'||'.$item['fabricFunctionNote'];?>">
                 </li>
