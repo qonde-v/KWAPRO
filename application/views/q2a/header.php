@@ -6,20 +6,22 @@
 <script src="<?php echo $base.'js/home.js';?>"></script>
  <script src="<?php echo $base.'js/login.js';?>" ></script>
 <script type="text/javascript"> 
-/*$(function(){ 
-$("img").mouseover(function(e){ 
-$("#tooltip").remove(); 
-var info = "收集素材";
-var s=this.src;
-var mname=s.substring(s.lastIndexOf("/")+1);
-var toolTip = "<div id='tooltip' width='300px' height='30px' style='position:absolute;border:solid #aaa 1px;background-color:#F9F9F9'><a href='javascript:collection(\""+mname+"\")'>" + info + "</a></div>"; 
-$("body").append(toolTip); 
-$("#tooltip").css({ 
-"top" :e.pageY + "px", 
-"left" :e.pageX + "px" 
+$(function(){
+	if($('#ifcollect').val()==1){
+		$("img").mouseover(function(e){ 
+			$("#tooltip").remove(); 
+			var info = "收集素材";
+			var s=this.src;
+			var mname=s.substring(s.lastIndexOf("/")+1);
+			var toolTip = "<div id='tooltip' width='300px' height='30px' style='position:absolute;border:solid #aaa 1px;background-color:#F9F9F9'><a href='javascript:collection(\""+mname+"\")'>" + info + "</a></div>"; 
+			$("body").append(toolTip); 
+			$("#tooltip").css({ 
+				"top" :e.pageY + "px", 
+				"left" :e.pageX + "px" 
+			}); 
+		}); 
+	}
 }); 
-}); 
-}); */
 </script>
 <script type="text/javascript"> 
 function showmenu(){
@@ -48,6 +50,7 @@ function hideLoginModal(){
 	  <?php if(!isset($login)):?>
       <li><a href="#" onclick="javascript:showLoginModal();">登录</a></li>
       <li><a href="<?php echo $base.'register/';?>">注册</a></li>
+	  <input type="hidden" id="ifcollect" value="0">
       <?php else:?>
 	  <li class="drop"><a href="#" onclick="javasrcipt:showmenu();" ><?php echo $user_info['username']; ?></a>
       	<ul id="dropmenu" style="display:none;">
@@ -64,6 +67,7 @@ function hideLoginModal(){
             <li><a href="<?php echo $base."login/logout";?>">退　　出</a></li>
         </ul>
       </li>
+	  <input type="hidden" id="ifcollect" value="<?php echo $user_info['ifcollect'];?>">
 	  <?php endif; ?>
     </ul>
 

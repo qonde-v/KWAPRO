@@ -349,5 +349,9 @@ class Core_user extends CI_Model {
 		$this->db->where('uId', $id);
 		$this->db->delete('user');
 	}
+	function f_update($data, $id){
+		$this->db->where('uId', $id);
+		$this->db->update('user', $data);
+	}
 }
 ?>

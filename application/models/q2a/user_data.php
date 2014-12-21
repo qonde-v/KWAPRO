@@ -517,6 +517,23 @@
             return NULL;
         }
 	 }
+	 
+     function get_user_ifcollect($uId)
+	 {
+	    //
+        $this->db->select('ifcollect');
+        $this->db->where('uId',$uId);
+        $query = $this->db->get('user');
+        if($query->num_rows() > 0)
+        {
+            $row = $query->row();
+            return $row->ifcollect;
+        }
+        else
+        {
+            return NULL;
+        }
+	 }
 
   }
 
