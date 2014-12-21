@@ -61,7 +61,14 @@
 		if (result) {
 			window.location.href = url;  
 		}
-	} 
+	}
+	function set_collect(id,status){
+		var url = document.getElementById("uri").value + "set_collect/?id="+ id + "&status=" + status;
+		var result = window.confirm("是否进行此操作");
+		if (result) {
+			window.location.href = url;  
+		}
+	}
 
 	function search(){
 		var cdt = document.frm_search.submit();
@@ -115,6 +122,7 @@
 								  <th scope="col" style="width:2%;">ID</th>
 								  <th scope="col" style="width:10%;">用户名</th>
 								  <th scope="col" style="width:13%;">时间</th>
+								  <th scope="col" style="width:5%;">收集素材</th>
 								  <th scope="col" style="width:5%;">删除</th>
 							  </tr>
 						  </thead>   
@@ -125,7 +133,15 @@
 								<td ><?=++$i?></td>
 								<td ><?=$record->username?></td>
 								<td ><?= date('Y-m-d H:i:s', strtotime($record->createTime))?></td>
-								
+								<td style="width:5%;">
+									<?php if($this->session->userdata('roleId') == 1) {
+											if($record->ifcollect==0){
+								    ?>
+										<a class="btn btn-info"  href="javaScript:set_collect(<?php echo $record->uId?>,1)"><i class="icon-edit icon-white"></i>开启</a>
+									<?php }else{?>
+										<a class="btn btn-info"  href="javaScript:set_collect(<?php echo $record->uId?>,0)"><i class="icon-edit icon-white"></i>关闭</a>
+									<?php }}?>
+								</td>
 
 								<td style="width:5%;">
 									<?php if($this->session->userdata('roleId') == 1) {?>

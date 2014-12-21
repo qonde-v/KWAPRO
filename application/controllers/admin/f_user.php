@@ -209,6 +209,11 @@ class F_user extends CI_Controller{
 		$this->Core_user->f_delete($id);
 		self::index();
 	}
+	function set_collect(){
+		$id = $_GET['id'];
+		$this->Core_user->f_update(array('ifcollect'=>$_GET['status']),$id);
+		self::index();
+	}
 	
 		
 }
