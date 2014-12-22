@@ -325,6 +325,9 @@ function designok()
 			$("#flow5").html(html);
 			$(".tab-content.active").removeClass("active");
 			$("#flow5").addClass("active");
+			if(confirm('是否要分享到微博')){
+				window.open('http://v.t.sina.com.cn/share/share.php?title=嗨，我刚才发布了一个休闲服装设计'+$('#d_url').attr('href')+'，来来提提意见呗？&url=&source=bookmark');
+			}
 		}
 
 	}};
