@@ -5,7 +5,7 @@
       <p>Copyright © 2014 cntit.com.cn All Right Reserved</p>
     </div>
     <div class="pull-right">
-        <ul class="share-list">
+        <ul class="share-list" style="display:none">
             <li>关注分享：</li>
             <a href="javascript:(function(){window.open('http://v.t.sina.com.cn/share/share.php?title=需要输入的内容&url=&source=bookmark');})()"><li class="share share-xinlang"></li></a>
             <li class="share share-qqweibo"></li>
