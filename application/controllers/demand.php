@@ -128,7 +128,7 @@
         $html .= '    	<img src="'.$base.'img/wc_xtb.png" />';
         $html .= '        <strong>成功</strong>';
         $html .= '        <span> </span><span>提交时间：'.$post_arr['createdate'].'</span>';
-        $html .= '        <p>详细情况请点击：<a href="'.$base.'demand/demand_detail?id='.$demand_id.'" >查看详情</a></p>';
+        $html .= '        <p>详细情况请点击：<a id="d_url" href="'.$base.'demand/demand_detail?id='.$demand_id.'" >查看详情</a></p>';
         $html .= '    </div>';
         $html .= '    <div class="other_title">相关设计产品</div>';
         $html .= '    <ul class="others">';
