@@ -158,10 +158,10 @@ $(document).ready(function() {
                     	<li>
                         	<a href="<?php echo $base.'design/design_detail?id='.$item['id'];?>" class="title"><?php echo $i.'、'.$item['title']?></a>
                             <div class="btns">
-							<?php if($item['status']==0){?><a href="#" onclick="javascript:subsim(<?php echo $item['id'].','.$item['demand_id'];?>);">提交仿真</a><?php }?>
+							<?php if($item['status']==0){?><a href="#" onclick="javascript:if(confirm('确定要提交仿真吗？')){subsim(<?php echo $item['id'].','.$item['demand_id'];?>);}">提交仿真</a><?php }?>
 							<?php if($item['status']==1){?><a href="javascript:alert('仿真进行中，结果将在第一时间发送给您，谢谢');" class="black">等待仿真</a><?php }?>
 							<?php if($item['status']==2){?><a href="<?php echo $base.'design/similar_detail';?>">查看仿真</a><?php }?>
-							<a  href="javascript:;" onclick="<?php echo 'showModal('.$item['id'].',\''.$item['title'].'\',\''.$item['createdate'].'\',\''.$item['design_pic'].'\',\''.$item['username'].'\')';?> ">提交订单</a>
+							<a  href="javascript:;" onclick="<?php echo 'if(confirm(\'确定要提交订单吗？\'))showModal('.$item['id'].',\''.$item['title'].'\',\''.$item['createdate'].'\',\''.$item['design_pic'].'\',\''.$item['username'].'\')';?> ">提交订单</a>
 							</div>
                             <p><span class="link link-liulan">浏览（<?php echo $item['viewnum']?>）</span><span class="link link-liuyan">留言（<?php echo $item['messnum']?>）</span><span class="pull-right">发布于<?php echo $item['createdate']?></span></p>
                         </li>
