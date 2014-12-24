@@ -35,6 +35,7 @@ ini_set("memory_limit","100M");
 	{
 	   //$this->output->cache(1);
 	   $base = $this->config->item('base_url');
+	   $base_photoupload_path = $this->config->item('base_photoupload_path');
 
 	   //login permission check
 	   $this->Auth->permission_check("login/");
@@ -44,7 +45,7 @@ ini_set("memory_limit","100M");
 
 	   $language = $this->Ip_location->get_language();
 
-	   $data = array('base'=>$base);
+	   $data = array('base'=>$base,'base_photoupload_path'=>$base_photoupload_path);
 	   if($user_id!='')$data['login'] = "login";
 
 	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
