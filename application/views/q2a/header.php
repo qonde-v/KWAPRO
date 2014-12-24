@@ -10,10 +10,10 @@ $(function(){
 	if($('#ifcollect').val()==1){
 		$("img").mouseover(function(e){ 
 			$("#tooltip").remove(); 
-			var info = "收集素材";
+			var info = "采集";
 			var s=this.src;
 			var mname=s.substring(s.lastIndexOf("/")+1);
-			var toolTip = "<div id='tooltip' width='300px' height='30px' style='position:absolute;border:solid #aaa 1px;background-color:#F9F9F9'><a href='javascript:collection(\""+mname+"\")'>" + info + "</a></div>"; 
+			var toolTip = "<div id='tooltip' style='position:absolute;border:1px solid #aaa;background-color:#ff7a23;border-radius:4px;padding:10px;'><a style='color: #fff;' href='javascript:collection(\""+mname+"\")'>" + info + "</a></div>"; 
 			$("body").append(toolTip); 
 			$("#tooltip").css({ 
 				"top" :e.pageY + "px", 
