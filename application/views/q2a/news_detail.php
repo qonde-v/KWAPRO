@@ -20,7 +20,7 @@
 
 <!------------ 内容开始 -------------> 
 
-  <div class="main"> <img src="<?php echo $base.'img/sub_top_p.png';?>" />
+  <div class="main"><a href="<?php if(isset($login)) echo $base.'demand/publish';else echo 'javascript:showLoginModal()';?>"> <img src="<?php echo $base.'img/sub_top_p.png';?>" /></a>
     <ul class="breadcrumb">
       <li><a href="<?php echo $base;?>">首页</a></li>
       <li>/</li>

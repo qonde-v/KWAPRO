@@ -14,18 +14,49 @@ $(document).ready(function() {
 	$("[role=slider]").each(function(){
 		var i = $(this).find(".min font").html();
 		var a = $(this).find(".max font").html();
-		
+
+		var s = 1;
+		var v = 0;
+		var dv = 0;
+		if($(this).attr("id") == "qiangdu"){
+			v = 1;
+			dv = 2;
+			i -= 1;
+			a -= 1;
+		}
+
+		if($(this).attr("id") == "shijian"){
+			v = 40;
+			dv = 60;
+			i -= 20;
+			a -= 20;
+		}
+
 		if($(this).attr("id") == "tizhong"){
+			v = 45;
+			dv = 65;
 			i -= 20;
 			a -= 20;
 		}
 		if($(this).attr("id") == "nianling"){
+			v = 22;
+			dv = 30;
 			i -= 8;
 			a -= 8;
 		}
 		if($(this).attr("id") == "wendu"){
+			v = 40;
+			dv = 20;
 			i = parseInt(i) + 20;
 			a = parseInt(a) + 20;
+		}
+		if($(this).attr("id") == "shidu"){
+			v = 15;
+			dv = 15;
+		}
+		if($(this).attr("id") == "shulian"){
+			v = 3;
+			dv = 3;
 		}
 		$(this).slider({
 			orientation: "horizontal",
@@ -33,8 +64,11 @@ $(document).ready(function() {
 			min: i,
 			max: a,
 			animate: true,
+			step: s,
+			value: v,
 			create: function( event, ui ) {
-				$(this).find(".ui-slider-handle").html($("<div class='slider-value'></div>"));
+				html = "<div class='slider-value'>" + dv + "</div>";
+				$(this).find(".ui-slider-handle").html($(html));
 			},
 			slide: function( event, ui ) {
 				if($(this).attr("id") == "tizhong"){
@@ -42,12 +76,12 @@ $(document).ready(function() {
 					$('#weight').val(ui.value + 20);
 				}
 				else if($(this).attr("id") == "qiangdu"){
-					$(this).find(".slider-value").html(ui.value);
-					$('#strength').val(ui.value);
+					$(this).find(".slider-value").html(ui.value + 1);
+					$('#strength').val(ui.value + 1);
 				}
 				else if($(this).attr("id") == "shijian"){
-					$(this).find(".slider-value").html(ui.value);
-					$('#sporttime').val(ui.value);
+					$(this).find(".slider-value").html(ui.value + 20);
+					$('#sporttime').val(ui.value + 20);
 				}else if($(this).attr("id") == "wendu"){
 					$(this).find(".slider-value").html(ui.value - 20);
 					$('#temperature').val(ui.value - 20);
@@ -65,7 +99,7 @@ $(document).ready(function() {
 		});
 	});
 	
-	$(".nav-flow li a").click(function(){
+	/*$(".nav-flow li a").click(function(){
 		var li = $(this).parent();
 		if(!li.hasClass("active")){
 			$(".nav-flow li.active").removeClass("active");
@@ -73,7 +107,7 @@ $(document).ready(function() {
 			$(".tab-content.active").removeClass("active");
 			$("#"+$(this).attr("class")).addClass("active");
 		}
-	});
+	});*/
 	
 	$(".radio-box .img").click(function(){
 		if($(this).hasClass("male")){
@@ -103,50 +137,42 @@ function hidermodal(){
 }
 </script>
 <script type="text/javascript">
-	var onFocusID = "";
-	  function showtype(obj,obj_d,obj_t)
-	  {
-		jQuery(obj_d).css("left",jQuery(obj).offset().left);
-		jQuery(obj_d).css("top",jQuery(obj).offset().top+jQuery(obj).outerHeight());
-		jQuery(obj_d).css("z-index",3);
-		jQuery(obj_d).show();
-		onFocusID = obj_t;
-	   }
-	  function hidetype(obj_d)
-	  {
-			jQuery(obj_d).hide();
-	  }
-	  $(function()
-		{
-			$("#divType img").each(function()
-				{ $(this).click(function(){
-					// this.checked="checked";
-					//alert(jQuery(this).attr("alt"));
-					if(onFocusID != "")
-					{
-						$("#" + onFocusID).val($(this).attr("alt"));
-						$("#span_" + onFocusID).html($(this).attr("alt"));
-						this.checked = "";
-					}
-					$("#divType").hide();
-				});
+function showModal(ty){
+	$(".modal-content").hide();
+	$("#"+ty).show();
+	$(".modal").show();
+	$('#login_modal').attr('style','display:none');
+	$(".modal-bg").css("height",$("body").height());
+	$(".modal-bg").show();
+}
+function hidermodal(){
+	$(".modal").hide();
+	$(".modal-bg").hide();
+}
+
+
+$(function(){
+			$(".lx_list li a").click(function(){
+				$("#type").val($(this).html());
+				$("#span_type").html($(this).html());
+				var li = $(this).parent();
+				if(!li.hasClass("active")){
+					$(".lx_list li.active").removeClass("active");
+					li.addClass("active");
+				}
 			});
 
-			$("#divWeather img").each(function()
-				{ $(this).click(function(){
-					// this.checked="checked";
-					//alert(jQuery(this).attr("alt"));
-					if(onFocusID != "")
-					{
-						$("#" + onFocusID).val($(this).attr("alt"));
-						$("#span_" + onFocusID).html($(this).attr("alt"));
-						this.checked = "";
-					}
-					$("#divWeather").hide();
-				});
+			$(".tq_list li a").click(function(){
+				$("#weather").val($(this).html());
+				$("#span_weather").html($(this).html());
+				var li = $(this).parent();
+				if(!li.hasClass("active")){
+					$(".tq_list li.active").removeClass("active");
+					li.addClass("active");
+				}
 			});
+
 	   });
-
 </script>
 </head>
 <div class="container">
@@ -160,15 +186,50 @@ function hidermodal(){
 
 <input type="hidden" id="base" value="<?php echo $base;?>"></input>
   <div id="xqlc" class="main flows">
-	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_p.png';?>" /></a>
-  	<div class="modal">
-        <div class="modal-header">
-            <a href="javascript:;" onclick="hidermodal()">X</a>
-        </div>
-        <div class="modal-content">
-            <ul class="ml_list">
-                <li>晴天</li>
+	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_dt.png';?>" /></a>
+  	<div class="modal" style="width:650px;padding_top:30%;padding_;left:40%;">
+        <div id="tq" class="modal-content">
+            <ul class="tq_list">
+                <li class="active"><a href="#" class="tq1">晴天</a></li>
+                <li><a href="javascript:;" class="tq2">阴天</a></li>
+                <li><a href="javascript:;" class="tq3">下雨</a></li>
+                <li><a href="javascript:;" class="tq4">下雪</a></li>
+                <li><a href="javascript:;" class="tq5">小雪</a></li>
+                <li><a href="javascript:;" class="tq6">小雨</a></li>
+                <li><a href="javascript:;" class="tq7">雨雪</a></li>
             </ul>
+            <div class="btns">
+            	<!-- <a href="javascript:;" onclick="hidermodal()">取&nbsp;消</a> -->
+                <a class="black" href="javascript:;" onclick="hidermodal()">确&nbsp;认</a>
+            </div>
+        </div>
+        <div id="lx" class="modal-content">
+            <ul class="lx_list">
+                <li class="active"><a href="javascript:;" class="lx1">户外山地</a></li>
+                <li><a href="javascript:;" class="lx2">跑步</a></li>
+                <li><a href="javascript:;" class="lx3">自行车运动</a></li>
+                <li><a href="javascript:;" class="lx4">水上运动</a></li>
+                <li><a href="javascript:;" class="lx5">游泳</a></li>
+                <li><a href="javascript:;" class="lx6">目标运动</a></li>
+                <li><a href="javascript:;" class="lx7">健身运动</a></li>
+                <li><a href="javascript:;" class="lx8">步行</a></li>
+                <li><a href="javascript:;" class="lx9">滑轮</a></li>
+                <li><a href="javascript:;" class="lx10">钓鱼</a></li>
+                <li><a href="javascript:;" class="lx11">羽毛球</a></li>
+                <li><a href="javascript:;" class="lx12">网球</a></li>
+                <li><a href="javascript:;" class="lx13">高尔夫</a></li>
+                <li><a href="javascript:;" class="lx14">狩猎运动</a></li>
+                <li><a href="javascript:;" class="lx15">排球</a></li>
+                <li><a href="javascript:;" class="lx16">马术</a></li>
+                <li><a href="javascript:;" class="lx17">滑雪</a></li>
+                <li><a href="javascript:;" class="lx18">足球</a></li>
+                <li><a href="javascript:;" class="lx19">乒乓球</a></li>
+                <li><a href="javascript:;" class="lx20">篮球</a></li>
+            </ul>
+            <div class="btns">
+            	<!-- <a href="javascript:;" onclick="hidermodal()">取&nbsp;消</a> -->
+                <a class="black" href="javascript:;" onclick="hidermodal()">确&nbsp;认</a>
+            </div>
         </div>
     </div>
     <div class="modal-bg"></div>
@@ -192,7 +253,7 @@ function hidermodal(){
                 <td width="10%" height="80" align="right" class="font16">类型：
                 </td>
                 <td width="51%">
-                	<div class="select-box" onclick="showtype(this,$('#divType'),'type');" >
+					<div class="select-box" onclick="showModal('lx')">
                    	<span id="span_type">跑步</span><i>&nbsp;</i></div>
 					<input id="type" name="type" type="hidden"  value='跑步' />
                 </td>
@@ -206,9 +267,9 @@ function hidermodal(){
                 <td height="80" align="right" class="font16">强度：</td>
                 <td>
                 	<div role="slider" id="qiangdu">
-                    	<div class="min"><font>0</font>（轻松）</div>
+                    	<div class="min"><font>1</font>（轻松）</div>
                         <div class="max"><font>8</font>（剧烈）</div>
-						<input type="hidden" id="strength"  name="strength" value="0" >
+						<input type="hidden" id="strength"  name="strength" value="2" >
                     </div>
                 </td>
               </tr>
@@ -216,9 +277,9 @@ function hidermodal(){
                 <td height="80" align="right" class="font16">时间：</td>
                 <td>
                 	<div role="slider" id="shijian">
-                    	<div class="min"><font>0</font>&nbsp;Hour</div>
-                        <div class="max"><font>2</font>&nbsp;Hour</div>
-						<input type="hidden" id="sporttime"  name="sporttime" value="0" >
+                    	<div class="min"><font>20</font>&nbsp;分钟</div>
+                        <div class="max"><font>120</font>&nbsp;分钟</div>
+						<input type="hidden" id="sporttime"  name="sporttime" value="60" >
                     </div>
                 </td>
               </tr>
@@ -233,7 +294,7 @@ function hidermodal(){
                 <td width="10%" height="80" align="right" class="font16">天气：
                 </td>
                 <td width="51%">
-                	<div class="select-box"  onclick="showtype(this,$('#divWeather'),'weather');">
+					<div class="select-box"  onclick="showModal('tq')">
                    	<span id="span_weather">晴天</span><i>&nbsp;</i></div>
 					<input id="weather" name="weather" type="hidden"  value='晴天' />
                 </td>
@@ -248,8 +309,8 @@ function hidermodal(){
                 <td>
                 	<div role="slider" id="wendu">
                     	<div class="min"><font>-20</font>（摄氏度）</div>
-                        <div class="max"><font>50</font>（摄氏度）</div>
-						<input type="hidden" id="temperature" name="temperature" value="-20" >
+                        <div class="max"><font>40</font>（摄氏度）</div>
+						<input type="hidden" id="temperature" name="temperature" value="20" >
                     </div>
                 </td>
               </tr>
@@ -257,9 +318,9 @@ function hidermodal(){
                 <td height="80" align="right" class="font16">湿度：</td>
                 <td>
                 	<div role="slider" id="shidu">
-                    	<div class="min"><font>0</font></div>
-                        <div class="max"><font>100</font></div>
-						<input type="hidden" id="humidity" name="humidity" value="0" >
+                    	<div class="min"><font>0</font>（%）</div>
+                        <div class="max"><font>100</font>（%）</div>
+						<input type="hidden" id="humidity" name="humidity" value="15" >
                     </div>
                 </td>
               </tr>
@@ -292,7 +353,7 @@ function hidermodal(){
                 	<div role="slider" id="shulian">
                     	<div class="min"><font>0</font>（初学者）</div>
                         <div class="max"><font>10</font>（运动达人）</div>
-						<input type="hidden" id="proficiency" name="proficiency" value="0">
+						<input type="hidden" id="proficiency" name="proficiency" value="3">
                     </div>
                 </td>
               </tr>
@@ -302,7 +363,7 @@ function hidermodal(){
                 	<div role="slider" id="nianling">
                     	<div class="min"><font>8</font></div>
                         <div class="max"><font>70</font></div>
-						<input type="hidden" id="age" name="age"  value="8">
+						<input type="hidden" id="age" name="age"  value="30">
                     </div>
                 </td>
               </tr>
@@ -312,7 +373,7 @@ function hidermodal(){
                 	<div role="slider" id="tizhong">
                     	<div class="min"><font>20</font>（KG）</div>
                         <div class="max"><font>150</font>（KG）</div>
-						<input type="hidden" id="weight" name="weight" value="20" >
+						<input type="hidden" id="weight" name="weight" value="65" >
                     </div>
                 </td>
               </tr>
@@ -325,7 +386,7 @@ function hidermodal(){
         <div id="flowxq4" class="tab-content">
         	<table width="95%">
               <tr>
-                <td height="67" class="font16">一句话描述您的需求：
+                <td height="67" class="font16">您是否还有其他的需求补充：
                 </td>
                 <td width="39%" rowspan="2">
                     <div class="info">
@@ -341,7 +402,7 @@ function hidermodal(){
             </table>
             <div class="btns">
             	<a href="javascript:gonext(3)">上一步</a>
-            	<a class="black" href="#" onclick="javascript:publishok()">提交</a>
+            	<a class="black" href="#" onclick="javascript:if(confirm('确定要发布需求吗？')){publishok();}">提交</a>
             </div>
       </div>
       <div id="flowxq5" class="tab-content">
@@ -405,12 +466,21 @@ function hidermodal(){
      <br>   <span  class="btn primary"  style="width:30px;height:20px; text-align:center;cursor:pointer;" onclick="hidetype($('#divWeather'));">关闭</span>
 </div>
 
+
+<div id="msg_modal" class="modal hide">
+	<div class="modal-header"><a href="#" onclick="$('#msg_modal').addClass('hide');" class="close">&times;</a><h3>&nbsp;</h3></div>
+	<div class="modal-body"></div>
+	<div class="modal-footer"><button class="btn primary" onclick="$('#msg_modal').addClass('hide');">确定</button></div>
+</div>
+
+
 </div>
 </body>
 <script type="text/javascript" >
 function publishok()
 {
 	var data = new Array();
+	var hint = '';
 	data['type'] = $('#type').val();
 	data['strength'] = $('#strength').val();
 	data['sporttime'] = $('#sporttime').val();
@@ -423,13 +493,29 @@ function publishok()
 	data['weight'] = $('#weight').val();
 	data['title'] = $('#title').val();
 
+	if(data['title']=='') hint=hint+'请输入对需求的描述<br/>';
+	if(hint!=''){
+		$('.modal-body').html(hint);
+		$('#msg_modal').removeClass("hide");;
+		return;
+	}
+
 	var post_str = generate_query_str(data);
 	var url = $('#base').val() + 'demand/pubok/';
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
-		$("#flowxq5").html(html);
-
-		$(".tab-content.active").removeClass("active");
-		$("#flowxq5").addClass("active");
+		if(html=='1'){
+			//alert('需求描述已存在，请重新输入');
+			$('.modal-body').html('需求描述已存在，请重新输入');
+			$('#msg_modal').removeClass("hide");
+			$('#msg_modal').show();
+		}else{
+			$("#flowxq5").html(html);
+			$(".tab-content.active").removeClass("active");
+			$("#flowxq5").addClass("active");
+			if(confirm('是否要分享到微博')){
+				window.open('http://v.t.sina.com.cn/share/share.php?title=嗨， 我刚才发布了一个休闲服装功能需求'+$('#d_url').attr('href')+'， 帮我来设计一下吧？&url=&source=bookmark');
+			}
+		}
 	}};
 	jQuery.ajax(ajax);
 	

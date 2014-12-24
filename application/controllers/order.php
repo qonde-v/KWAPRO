@@ -25,6 +25,7 @@
          $this->load->model('q2a/User_privacy');
 		 $this->load->model('admin/Core_factory');
 		 $this->load->model('admin/Core_order');
+		 $this->load->model('q2a/Demand_management');
 	 }
 
 	function index()
@@ -119,6 +120,7 @@
 	{
 	   //$this->output->cache(1);
 	   $base = $this->config->item('base_url');
+	   $base_photoupload_path = $this->config->item('base_photoupload_path');
 
 	   //login permission check
 	   $this->Auth->permission_check("login/");
@@ -128,7 +130,7 @@
 
 	   $language = $this->Ip_location->get_language();
 
-	   $data = array('base'=>$base);
+	   $data = array('base'=>$base,'base_photoupload_path'=>$base_photoupload_path);
 	   $data['login'] = "login";
 
 	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
@@ -159,6 +161,13 @@
 	   //get status
 	   $arr_status = $this->Core_order->get_status();
 	   $data['arr_status'] = $arr_status;
+
+	   //get design
+	    $result_d=array();
+		$result_d=$this->Demand_management->get_user_design($data['order']['design_id']);
+		foreach($result_d as $val){
+			  $data['design']=$val;
+		}
 
 		$this->load->view('q2a/order_detail',$data);
 	}

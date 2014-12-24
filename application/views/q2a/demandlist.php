@@ -22,7 +22,7 @@
 <input type="hidden" id="base" value="<?php echo $base;?>"></input>
 
 <div class="main">
-	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_p.png';?>" /></a>
+	<a href="<?php if(isset($login)) echo $base.'demand/publish';else echo 'javascript:showLoginModal()';?>"><img src="<?php echo $base.'img/sub_top_p.png';?>" /></a>
 	<div class="navbar">
     	<ul class="navbar-nav pull-left">
         	<li class="drop">

@@ -71,13 +71,16 @@ function send_new_msg()
 		var post_str = 'uId='+uId+'&title='+title+'&content='+content+'&type='+type+'&related_id='+related_id+'&p_md_Id=0';
 		var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
 			$('#msg_modal .modal-body').html(html);
-			$('#msg_modal').css('display','block');
-			$('#msg_send_btn').button('reset');
-			$('#new_msg_modal').css('display','none');
-			setTimeout("$('#msg_modal').css('display','none')",200);
+			$('#msg_modal').removeClass("hide");
+			$('#msg_modal').show();
+			$('#msg_content_area').val('');
+			//$('#msg_modal').css('display','block');
+			//$('#msg_send_btn').button('reset');
+			//$('#new_msg_modal').css('display','none');
+			//setTimeout("$('#msg_modal').css('display','none')",200);
 		}};
 		jQuery.ajax(ajax);
-		setTimeout("window.location.reload()",200);
+		setTimeout("window.location.reload();$('#msg_content_area').val('');",1000);
 	}
 }
 
@@ -86,7 +89,9 @@ function msg_data_check(username,title,content)
 	if(username == '')
 	{
 		$('#msg_modal .modal-body').html($('#username_empty').val());
-		$('#msg_modal').css('display','block');
+		//$('#msg_modal').css('display','block');
+		$('#msg_modal').removeClass("hide");
+		$('#msg_modal').show();
 		return false;
 	}
 	/*if(title.trim() == '')
@@ -98,7 +103,9 @@ function msg_data_check(username,title,content)
 	if(content == '')
 	{
 		$('#msg_modal .modal-body').html($('#content_empty').val());
-		$('#msg_modal').css('display','block');
+		//$('#msg_modal').css('display','block');
+		$('#msg_modal').removeClass("hide");
+		$('#msg_modal').show();
 		return false;
 	}
 	return true;

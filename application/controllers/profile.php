@@ -38,6 +38,23 @@
 	   $this->load->view('q2a/setting',$data);
 	}
 
+	function avatar()
+	{
+	   $base = $this->config->item('base_url');
+	    //check if user has been login
+	   $this->Auth->permission_check("login/");
+
+	   $this->uId = $this->session->userdata('uId');
+	   $data = $this->get_profile_data($this->uId);
+	   $data['login'] = "login";
+	   $data['base'] = $base;
+
+	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($this->uId);
+	   $data = array_merge($right_data,$data);
+
+	   $this->load->view('q2a/setting_avatar',$data);
+	}
+
 	//
 	function get_profile_data($uId)
 	{
@@ -213,6 +230,12 @@
 		$uId = $this->session->userdata('uId');
 		$this->User_profile->user_subpic_update(array('uId'=>$uId,'subpic'=>$subpic));
 		echo 'OK';
+	}
+	function saveavatar(){
+		$avatar=$_POST['avatar'];
+		$uId = $this->session->userdata('uId');
+		$this->User_profile->user_avatar_update(array('uId'=>$uId,'avatar'=>$avatar));
+		echo '修改头像成功';
 	}
  }
 

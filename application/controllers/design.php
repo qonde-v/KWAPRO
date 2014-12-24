@@ -35,6 +35,7 @@ ini_set("memory_limit","100M");
 	{
 	   //$this->output->cache(1);
 	   $base = $this->config->item('base_url');
+	   $base_photoupload_path = $this->config->item('base_photoupload_path');
 
 	   //login permission check
 	   $this->Auth->permission_check("login/");
@@ -44,8 +45,8 @@ ini_set("memory_limit","100M");
 
 	   $language = $this->Ip_location->get_language();
 
-	   $data = array('base'=>$base);
-	   $data['login'] = "login";
+	   $data = array('base'=>$base,'base_photoupload_path'=>$base_photoupload_path);
+	   if($user_id!='')$data['login'] = "login";
 
 	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
 	   $data = array_merge($right_data,$data);
@@ -60,6 +61,7 @@ ini_set("memory_limit","100M");
 		$data['inbox_num']=	$t_query->num_rows();
 
 		$this->db->order_by('createdate','desc');
+		$this->db->where('uId',$user_id);
 		$this->db->limit($range['end']-$range['start']+1,$range['start']);
 		$query = $this->db->get('design');
 		foreach($query->result_array() as $row)
@@ -123,7 +125,7 @@ ini_set("memory_limit","100M");
 		$fabric = array();
 		$this->db->select('*');
 		$this->db->limit(7,0);
-		$query = $this->db->get('fabrics');
+		$query = $this->db->get('fabric');
 		foreach($query->result_array() as $val)
 		{
 			array_push($fabric,$val);
@@ -178,7 +180,7 @@ ini_set("memory_limit","100M");
 				}
 				$html .= '		<a href="'.$base.'design/order?id='.$item['id'].'">提交订单</a>';
 				$html .= '		</div>';
-				$html .= '		<p><span class="link link-liulan">浏览（<a href="#">'.$item['viewnum'].'</a>）</span><span class="link link-liuyan">留言（<a href="#">'.$item['messnum'].'</a>）</span><span class="pull-right">发布于'.$item['createdate'].'</span></p>';
+				$html .= '		<p><span class="link link-liulan">浏览（'.$item['viewnum'].'）</span><span class="link link-liuyan">留言（'.$item['messnum'].'）</span><span class="pull-right">发布于'.$item['createdate'].'</span></p>';
 				$html .= '	</li>';
 			}
 			$html .= '</ul>';
@@ -207,13 +209,13 @@ ini_set("memory_limit","100M");
 		}
 
 	   //login permission check
-	   $this->Auth->permission_check("login/");
+	   //$this->Auth->permission_check("login/");
 
 	   //get current login user id
 	   $user_id = $this->session->userdata('uId');
 
 	   $data = array('base'=>$base,'base_photoupload_path'=>$base_photoupload_path);
-	   $data['login'] = "login";
+	   if($user_id!='')$data['login'] = "login";
 
 	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
 	   $data = array_merge($right_data,$data);
@@ -316,16 +318,17 @@ ini_set("memory_limit","100M");
 			}elseif($_GET['type']==3){
 				$msg = $this->Photo_upload->user_photo_upload(array('user_id'=>$user_id, 'file_id'=>'f_detail'));
 			}
-			if(UPDATE_SUCCESS == $msg)
+			if(UPDATE_SUCCESS == $msg['msg'])
 			{
-				if($_GET['type']==1){
+				/*if($_GET['type']==1){
 					$file_name = $this->security->sanitize_filename($_FILES['f_design']['name']);
 				}elseif($_GET['type']==2){
 					$file_name = $this->security->sanitize_filename($_FILES['f_effect']['name']);
 				}elseif($_GET['type']==3){
 					$file_name = $this->security->sanitize_filename($_FILES['f_detail']['name']);
-				}
-				
+				}*/
+
+				$file_name = $msg['file_name'];
 
 				 $img_src = $base.$base_photoupload_path.'temp/'.$file_name;
 
@@ -380,12 +383,15 @@ ini_set("memory_limit","100M");
 			}
 		}
 		$post_arr['title'] = str_replace("\n","<BR/>",$post_arr['title']);
+		if($this->Demand_management->design_title_exist($post_arr['title'])){
+			echo '1';return;
+		}
 		$post_arr['createdate'] = date("Y-m-d H:i:s", time());
 		$userid=$this->session->userdata('uId');
 		$username = $this->User_data->get_username(array('uId'=>$userid));
 		$post_arr['uId'] = $userid;
 		$post_arr['username'] = $username;
-
+	
 		$design_id=$this->Demand_management->design_record_insert($post_arr);
 		
 		foreach($pic_arr as $val)
@@ -417,7 +423,33 @@ ini_set("memory_limit","100M");
 		$data['relateid'] = $design_id;
 		$this->Demand_management->information_record_insert($data);
 
-		echo '保存设计成功';
+		
+		$base = $this->config->item('base_url');
+		$base_photoupload_path = $this->config->item('base_photoupload_path');
+
+		// get similar templet
+	   $condition='';
+	   $condition=array('strength'=>$demand['strength'],'sporttime'=>$demand['sporttime'],'temperature'=>$demand['temperature'],'humidity'=>$demand['humidity'],'proficiency'=>$demand['proficiency'],'age'=>$demand['age'],'weight'=>$demand['weight']);
+	   $result_s=array();
+	   $result_s=$this->Demand_management->get_similar_design($condition);
+	   
+
+		$html="";
+		$html .= '<div class="submin-info">';
+        $html .= '    	<img src="'.$base.'img/wc_xtb.png" />';
+        $html .= '        <strong>成功</strong>';
+        $html .= '        <span> </span><span>提交时间：'.$data['createdate'].'</span>';
+        $html .= '        <p>详细情况请点击：<a id="d_url" href="'.$base.'design/design_detail?id='.$design_id.'" >查看详情</a></p>';
+        $html .= '    </div>';
+        $html .= '    <div class="other_title">相关设计产品</div>';
+        $html .= '    <ul class="others">';
+		foreach($result_s as $item){
+            	 $html .= '<li><a href="'.$base.'design/design_detail?id='.$item['id'].'"><img width="130" height="107" src="'.$base.$base_photoupload_path.'temp/'.$item['design_pic'].'" /></a></li>';
+	   }
+        $html .= '    </ul>';
+
+		echo $html;
+
 	}
 
 	function subsim()
@@ -539,7 +571,7 @@ ini_set("memory_limit","100M");
 	   $language = $this->Ip_location->get_language();
 
 	   $data = array('base'=>$base,'base_photoupload_path'=>$base_photoupload_path);
-	   $data['login'] = "login";
+	   if($user_id!='')$data['login'] = "login";
 
 	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
 	   $data = array_merge($right_data,$data);
@@ -620,7 +652,7 @@ ini_set("memory_limit","100M");
 	   $language = $this->Ip_location->get_language();
 
 	   $data = array('base'=>$base,'base_photoupload_path'=>$base_photoupload_path);
-	   $data['login'] = "login";
+	   if($user_id!='')$data['login'] = "login";
 
 	   $data['design_id']=$_GET['id'];
 		
@@ -634,6 +666,9 @@ ini_set("memory_limit","100M");
 
 	function submit_order()
 	{
+		//login permission check
+	    $this->Auth->permission_check("login/");
+
 		$post_arr = array();
 		foreach($_POST as $key=>$value)
 		{

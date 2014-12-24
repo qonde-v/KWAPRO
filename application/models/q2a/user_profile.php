@@ -20,7 +20,7 @@
 	//table -- 'user'
 	function get_user_basicdata($uId)
 	{
-        $this->db->select('username,email,passwd,langCode,gender,birthday');
+        $this->db->select('*');
         $this->db->where('uId',$uId);
         $query = $this->db->get('user');
         $data = array();
@@ -29,7 +29,7 @@
         {
             foreach($query->result() as $row)
             {
-                return array('username'=>$row->username,'email'=>$row->email,'passwd'=>$row->passwd,'langCode'=>$row->langCode,'gender'=>$row->gender,'birthday'=>$row->birthday);
+                return array('username'=>$row->username,'email'=>$row->email,'passwd'=>$row->passwd,'langCode'=>$row->langCode,'gender'=>$row->gender,'birthday'=>$row->birthday,'nickname'=>$row->nickname,'realname'=>$row->realname,'qq'=>$row->qq,'weibo'=>$row->weibo,'address'=>$row->address,'address_now'=>$row->address_now,'age'=>$row->age,'school'=>$row->school,'tel'=>$row->tel,'description'=>$row->description,'tag'=>$row->tag,'avatar'=>$row->avatar);
             }
         }
 		 else
@@ -189,9 +189,9 @@
 	 //input: array('uId','birthday','gender','langCode','location')
 	 function user_basicdata_save($data)
 	 {
-		$sql = "UPDATE user SET gender = {$data['gender']},birthday = '{$data['birthday']}',langCode = '{$data['langCode']}' WHERE uId = {$data['uId']}";
+		$sql = "UPDATE user SET gender = {$data['gender']},birthday = '{$data['birthday']}',langCode = '{$data['langCode']}',age = '{$data['age']}',nickname = '{$data['nickname']}',realname = '{$data['realname']}',qq = '{$data['qq']}',tel = '{$data['tel']}',email = '{$data['email']}',address = '{$data['address']}',address_now = '{$data['address_now']}',description = '{$data['description']}',school = '{$data['school']}',tag = '{$data['tag']}' WHERE uId = {$data['uId']}";
 		$this->db->query($sql);
-		$this->user_location_save($data);
+		//$this->user_location_save($data);
 	 }
 
 /*****************************Advance data process***************************/
@@ -946,10 +946,14 @@
 
 	 function user_subpic_update($item)
      {
-		//$sql = "UPDATE useraccount SET account= '{$item['account']}' WHERE uId = {$item['uId']} AND stId = {$item['stId']}";
-		//$this->db->query($sql);
         $this->db->where('uId',$item['uId']);
         $this->db->set('subpic',$item['subpic']);
+        $this->db->update('user');
+     }
+	 function user_avatar_update($item)
+     {
+        $this->db->where('uId',$item['uId']);
+        $this->db->set('avatar',$item['avatar']);
         $this->db->update('user');
      }
   }

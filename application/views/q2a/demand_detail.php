@@ -7,31 +7,27 @@
 <link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
 <link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
 <script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"></script>
-
+<script type="text/javascript" src="<?php echo $base.'js/jquery.qqFace.js';?>"></script>
 <script>
-function login_process()
-{
-	$('#login_msg_modal .modal-body').html($('#login_wait').val());
-	$('#login_msg_modal').css('display','block');
-	var username = $('#login_username').val();
-	var password = $('#login_pswd').val();
-	var url = $('#header_base').val() + 'login/';
-	var post_str = 'username=' + username + '&password=' + password;
-	var ajax = { url: url, data: post_str, type: 'POST', dataType: 'html', cache: false, success: function (html)
-	{
-		if(html == 'login_success')
-		{
-			//window.location.href = $('#header_base').val() + "home/";
-			$('#login_msg_modal').css('display','none');
-			$('#login_modal').css('display','none');
-		}
-		else
-		{
-			$('#login_msg_modal .modal-body').html(html);	
-		}
-	}};
-	jQuery.ajax(ajax);
+function smile(obj,tt){
+	var area = 'msg_content_area';
+	if(tt>0) area = area + '_' + tt;
+
+	$(obj).qqFace({
+		id : 'facebox', 
+		assign: area, 
+		path:$('#base').val() +'img/arclist/'	//表情存放的路径
+	});
 }
+//查看结果
+function replace_em(str){
+	str = str.replace(/\</g,'&lt;');
+	str = str.replace(/\>/g,'&gt;');
+	str = str.replace(/\n/g,'<br/>');
+	str = str.replace(/\[em_([0-9]*)\]/g,'<img src="'+$('#base').val()+'img/arclist/$1.gif" border="0" />');
+	return str;
+}
+
 </script>
 <script type="text/javascript"> 
 function chgpanel(tt){
@@ -52,7 +48,9 @@ function chgpanel(tt){
 }
 
 function control(tt){
-	if(document.getElementById('control_'+tt).innerHTML=="展开详情<br>▼"){
+	var html = document.getElementById('control_'+tt).innerHTML;
+	html = html.substr(0,2);
+	if(html=="展开"){
 		document.getElementById('control_'+tt).innerHTML="收    起<br>▼";
 		document.getElementById('reply_'+tt).style.display="block";
 	}else{
@@ -77,11 +75,12 @@ function send_sec_msg(tt)
 		var post_str = 'uId='+uId+'&title='+title+'&content='+content+'&type='+type+'&related_id='+related_id+'&p_md_Id='+p_md_Id;
 		var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
 			$('#msg_modal .modal-body').html(html);
-			$('#msg_modal').css('display','block');
-			setTimeout("$('#msg_modal').css('display','none')",2000);
+			$('#msg_modal').removeClass("hide");
+			$('#msg_modal').show();
+			//setTimeout("$('#msg_modal').css('display','none')",2000);
 		}};
 		jQuery.ajax(ajax);
-		setTimeout("window.location.reload()",2000);
+		setTimeout("window.location.reload();$('#msg_content_area_"+tt+"').val('');",1000);
 	}
 }
 
@@ -133,7 +132,7 @@ function send_sec_msg(tt)
 													if($demand['type']=='目标运动')echo $base.'img/s_mubiao.png';
 													if($demand['type']=='排球')echo $base.'img/s_paiqiu.png';
 													if($demand['type']=='乒乓球')echo $base.'img/s_pingpang.png';
-													if($demand['type']=='户外山地运动')echo $base.'img/s_shandi.png';
+													if($demand['type']=='户外山地')echo $base.'img/s_shandi.png';
 													if($demand['type']=='狩猎运动')echo $base.'img/s_shoulie.png';
 													if($demand['type']=='水上运动')echo $base.'img/s_shuishang.png';
 													if($demand['type']=='网球')echo $base.'img/s_wangqiu.png';
@@ -143,8 +142,9 @@ function send_sec_msg(tt)
 													if($demand['type']=='羽毛球')echo $base.'img/s_yumaoqiu.png';
 													?>" />
             <div class="pull-right">
-              <p>强度：<span><?php echo $demand['strength'];?>轻松</span></p>
-              <p>时间：<span><?php echo $demand['sporttime'];?>小时</span></p>
+			  <p>类型：<span><?php echo $demand['type'];?></span></p>
+              <p>强度：<span><?php echo $demand['strength'];?></span></p>
+              <p>时间：<span><?php echo $demand['sporttime'];?>分钟</span></p>
             </div>
           </div>
           <div class="panel-item"> <img src="<?php if($demand['weather']=='晴天')echo $base.'img/w_qing.png';
@@ -156,19 +156,23 @@ function send_sec_msg(tt)
 													if($demand['weather']=='雨雪')echo $base.'img/w_yuxue.png';
 													?>" />
             <div class="pull-right">
+			  <p>天气：<span><?php echo $demand['weather'];?></span></p>
               <p>温度：<span><?php echo $demand['temperature'];?>°C</span></p>
-              <p>湿度：<span><?php echo $demand['humidity'];?></span></p>
+              <p>湿度：<span><?php echo $demand['humidity'];?>%</span></p>
             </div>
           </div>
           <div class="panel-item"> <img src="<?php if($demand['target']=='男')echo $base.'img/sex1.png';
 													if($demand['target']=='女')echo $base.'img/sex2.png';
 													?>" />
             <div class="pull-right">
-              <p>熟练度：<span><?php echo $demand['proficiency'];?>初学者</span></p>
-              <p>年龄：<span><?php echo $demand['age'];?></span>&nbsp;&nbsp;&nbsp;&nbsp;体重：<span><?php echo $demand['weight'];?>KG</span></p>
+              <p>熟练度：<span><?php echo $demand['proficiency'];?></span></p>
+              <p>年龄：<span><?php echo $demand['age'];?></span></p>
+			  <p>体重：<span><?php echo $demand['weight'];?>KG</span></p>
             </div>
           </div>
-          <div class="text-center"> <?php $days=round((time()-strtotime($demand['createdate']))/3600/24); if($days<15){;?><a href="<?php echo $base.'design/practice?id='.$demand['id'];?>" class="">发布设计</a><?php }else{?><a class="" style="background-color:#f1f2f6"></a> <?php }?></div>
+          <div class="text-center"> <?php $days=round((time()-strtotime($demand['createdate']))/3600/24); if($days<15){;?><a href="<?php if(isset($login)) echo $base.'design/practice?id='.$demand['id'];else echo 'javascript:showLoginModal();';?>" class="">去设计</a><?php }else{?><a class="" style="background-color:#f1f2f6"></a> <?php }?>
+		  <a href="<?php if(isset($login)) echo $base.'demand';else echo 'javascript:showLoginModal();';?>" class="">去我的空间</a>
+		  </div>
         </div>
       </div>
       <div class="panel panel-default">
@@ -179,17 +183,17 @@ function send_sec_msg(tt)
 		  <input type="hidden" id="new_msg_uid" value="<?php echo $demand['uId'];?>"/>
 		  <input type="hidden" id="msg_title_area" value=""></input>
           <textarea class="message-input" id="msg_content_area"></textarea>
-          <div class="message-btns"> <a href="#"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> 
+          <div class="message-btns"> <a href="javascript:void(0);" onclick="javascript:smile(this,0);" ><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> 
 		  <?php if(isset($login)){?><a class="btn" href="javascript:void(0);" id="msg_send_btn" data-loading-text="请稍后">留　言</a>
 		  <?php }else{?>
-		  <a class="btn" href="javascript:void(0);" onclick="javascript:document.getElementById('login_modal').className='modal';" data-loading-text="请稍后">留　言</a>
+		  <a class="btn" href="javascript:void(0);" onclick="javascript:showLoginModal();" data-loading-text="请稍后">留　言</a>
 		  <?php }?> 
 		  </div>
         </div>
         <div class="list-group" id="messpanel2" >
 		  <?php $i=0; foreach($message_data as $item): $i++;?>
           <div class="list-group-item">
-            <div class="item-body"> <img class="pull-left" src="<?php echo $base.'img/geren_tp.png';?>" /> <span class="username"><?=$item['username']?>:</span><?=$item['content']?>
+            <div class="item-body"> <img class="pull-left" src="<?php echo $base.'img/geren_tp.png';?>" /> <span class="username"><?=$item['username']?>:</span> <script> document.write(replace_em('<?=$item['content']?>'));</script>
               <p class="time"><?=$item['time']?>&nbsp;<span class="message">（<?php if(!empty($item['sec_data']))echo count($item['sec_data']);else echo 0;?>）</span></p>
 			  <a class="detail" href="javascript:void(0)" onclick="javasrcipt:control(<?=$i?>);" id="control_<?=$i?>">展开详情<br>▼</a>
               <div class="reply" id="reply_<?=$i?>" style="display:none;">
@@ -197,7 +201,7 @@ function send_sec_msg(tt)
 					<?php if(!empty($item['sec_data'])){foreach($item['sec_data'] as $secval){?>
                 	<div class="reply-item">
                     	<img class="reply-img" src="<?php echo $base.'img/geren_tx.png';?>" />
-                        <span class="reply-name"><?=$secval['username']?>：</span><?=$secval['content']?>
+                        <span class="reply-name"><?=$secval['username']?>：</span><script> document.write(replace_em('<?=$secval['content']?>'));</script>
                     </div>
 					<?php }} ?>
                 </div>
@@ -205,7 +209,7 @@ function send_sec_msg(tt)
 				<input type="hidden" id="msg_title_area_<?=$i?>" value=""></input>
 				<input type="hidden" id="p_md_Id_<?=$i?>" value="<?php echo $item['md_Id'];?>"></input>
               	<textarea class="message-input"  id="msg_content_area_<?=$i?>"></textarea>
-          		<div class="message-btns"> <a href="#"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> <a class="btn" href="#" onclick="send_sec_msg(<?=$i?>)">回　复</a> </div>
+          		<div class="message-btns"> <a  href="javascript:void(0)"  onclick="javascript:smile(this,<?=$i?>);"><img src="<?php echo $base.'img/xtp_xl.png';?>" /></a> <a href="#"><img src="<?php echo $base.'img/xtp_tp.png';?>" /></a> <a class="btn" href="javascript:void(0);" onclick="send_sec_msg(<?=$i?>)">回　复</a> </div>
               </div>
 			</div>
           </div>
@@ -245,56 +249,11 @@ function send_sec_msg(tt)
 	<div class="modal-body"></div>
 	<div class="modal-footer"><button class="btn primary" onclick="$('#msg_modal').css('display','none');">确定</button></div>
 </div>
-<div id="new_msg_modal" class="modal hide" style="width:auto;">
-	<div class="modal-header"><a href="#" class="close" onclick="javascript:document.getElementById('new_msg_modal').className='modal hide';">&times;</a><h3>创建新消息</h3></div>
-	<div class="modal-body">
-		<div class="clearfix">
-			<label style="width:70px">收件人</label>
-			<input class="span7" type="text" id="msg_username_area"></input>
-			<input type="hidden" id="new_msg_uid" value=""/>
-			<div id="auto-content" class="span7" style="display:none;margin-left:70px;position:absolute"></div>
-		</div>
-		<div class="clearfix">
-			<label style="width:70px">主题</label>
-			<input class="span7" type="text" id="msg_title_area"></input>
-		</div>
-		<div class="clearfix">
-			<label style="width:70px">内容</label>
-			<textarea class="span7" rows="4" id="msg_content_area"></textarea>
-		</div>
-	</div>
-	<div class="modal-footer">
-		<button class="btn primary" id="msg_send_btn" data-loading-text="请稍后">
-			发送
-		</button>
-	</div>
-</div>
 
-<div id="login_modal" class="modal hide" style="width:auto;">
-	<div class="modal-header"><a href="#" class="close" onclick="javascript:document.getElementById('login_modal').className='modal hide';">&times;</a><h3>用户登录</h3></div>
-	<div class="modal-body">
-		<div class="clearfix">
-			<label style="width:70px">用户名：</label>
-			<input class="span7" type="text" id="login_username" name="username"></input>
-		</div>
-		<div class="clearfix">
-			<label style="width:70px">密&nbsp;&nbsp;&nbsp;码：</label>
-			<input class="span7"  id="login_pswd" name="password" type="password"></input>
-		</div>
-	</div>
-	<div class="modal-footer">
-		<button class="btn primary" id="head_login" onclick="login_process();">
-			登录
-		</button>
-	</div>
-</div>
+
 <input type="hidden" value="<?php echo $base; ?>" id="header_base" />
 <input type="hidden" value="请稍候" id="login_wait"/>
-<div id="login_msg_modal" class="modal hide">
-	<div class="modal-header"><a href="#" class="close">&times;</a><h3>&nbsp;</h3></div>
-	<div class="modal-body"></div>
-	<div class="modal-footer"><button class="btn primary" onclick="$('#login_msg_modal').hide();">确定</button></div>
-</div>
+
 
 <!------------ 底部开始 ------------->
 <?php include("footer.php");?>

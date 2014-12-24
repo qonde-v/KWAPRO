@@ -59,6 +59,7 @@
 		$data['inbox_num']=	$t_query->num_rows();
 
 		$this->db->order_by('createdate','desc');
+		$this->db->where('uId',$user_id);
 		$this->db->limit($range['end']-$range['start']+1,$range['start']);
 		$query = $this->db->get('demand');
 		foreach($query->result_array() as $row)
@@ -102,6 +103,9 @@
 			$post_arr[$key] = $post_value ? $post_value : 0;
 		}
 		$post_arr['title'] = str_replace("\n","<BR/>",$post_arr['title']);
+		if($this->Demand_management->demand_title_exist($post_arr['title'])){
+			echo '1';return;
+		}
 		$post_arr['createdate'] = date("Y-m-d H:i:s", time());
 		$userid=$this->session->userdata('uId');
 		$post_arr['uId'] = $userid;
@@ -123,13 +127,13 @@
 		$html .= '<div class="submin-info">';
         $html .= '    	<img src="'.$base.'img/wc_xtb.png" />';
         $html .= '        <strong>成功</strong>';
-        $html .= '        <span> </span><span>提交时间：2014-05-15</span>';
-        $html .= '        <p>详细情况请点击：<a href="'.$base.'demand/demand_detail?id='.$demand_id.'" >查看详情</a></p>';
+        $html .= '        <span> </span><span>提交时间：'.$post_arr['createdate'].'</span>';
+        $html .= '        <p>详细情况请点击：<a id="d_url" href="'.$base.'demand/demand_detail?id='.$demand_id.'" >查看详情</a></p>';
         $html .= '    </div>';
         $html .= '    <div class="other_title">相关设计产品</div>';
         $html .= '    <ul class="others">';
 		foreach($result_s as $item){
-            	 $html .= '<li><a href="'.$base.'design/design_detail?id='.$item['id'].'"><img width="130" height="107" src="'.$base.$base_photoupload_path.'temp/'.$item['pic_url'].'" /></a></li>';
+            	 $html .= '<li><a href="'.$base.'design/design_detail?id='.$item['id'].'"><img width="130" height="107" src="'.$base.$base_photoupload_path.'temp/'.$item['design_pic'].'" /></a></li>';
 	   }
         $html .= '    </ul>';
 
@@ -332,7 +336,7 @@
 				}
 				$html .= '		<a href=""'.$base.'design/practice?id='.$item['id'].'"">去设计</a>';
 				$html .= '		</div>';
-				$html .= '		<p><span class="link link-sheji">设计（<a href="#">'.$item['designnum'].'</a>）</span><span class="link link-liulan">浏览（<a href="#">'.$item['viewnum'].'</a>）</span><span class="link link-liuyan">留言（<a href="#">'.$item['messnum'].'</a>）</span><span class="pull-right">发布于'.$item['createdate'].'</span></p>';
+				$html .= '		<p><span class="link link-sheji">设计（'.$item['designnum'].'）</span><span class="link link-liulan">浏览（'.$item['viewnum'].'）</span><span class="link link-liuyan">留言（'.$item['messnum'].'）</span><span class="pull-right">发布者：【'.$item['username'].'】发布于'.$item['createdate'].'</span></p>';
 				$html .= '	</li>';
 				
 			}

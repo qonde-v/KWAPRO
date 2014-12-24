@@ -10,7 +10,7 @@ class Core_user extends CI_Model {
 	function login_check($data){
 		$this->db->select('id');
 		$this->db->where('userCode',$data['userCode']);
-		$this->db->where('pwd',$data['pwd']); 
+		$this->db->where('pwd',MD5($data['pwd'])); 
 		$query = $this->db->get(self::$TABLE);
 		if($query->num_rows() > 0) {
 			foreach($query->result() as $row){
@@ -132,6 +132,18 @@ class Core_user extends CI_Model {
 			$sql .=" 1=1 ";
 		return $sql;
 	}
+
+	private function __assembeSQLf($sql, $createid, $condition, $pid){
+		if($condition !='' && $condition['cdt_name'] != ''){
+			$sql .=" ( nickname like '%".$condition['cdt_name']."%'"
+				." or username like '%".$condition['cdt_name']."%') and ";
+		}
+		if($pid != ""){
+			$sql .= " pid=".$pid." and ";
+		}
+			$sql .=" 1=1 ";
+		return $sql;
+	}
 	
 	/**
 	 * 根据条件查询所有数据，支持分页
@@ -144,6 +156,19 @@ class Core_user extends CI_Model {
 		}
 		$sql = "select * from ".self::$TABLE." where ";
 		$sql = self::__assembeSQL($sql, $createid, $condition, $pid);
+
+		$sql .= " order by createTime desc limit ".$offset." , ".$limit;
+		
+		$result = $this->db->query($sql);
+		return $result->result();
+	}
+
+	function show_f_all($createid, $condition, $pid, $limit, $offset){
+		if($offset == ''){
+			$offset = 0;
+		}
+		$sql = "select * from user where ";
+		$sql = self::__assembeSQLf($sql, $createid, $condition, $pid);
 
 		$sql .= " order by createTime desc limit ".$offset." , ".$limit;
 		
@@ -167,6 +192,19 @@ class Core_user extends CI_Model {
 			return 0;
 		}
 	}
+
+	function get_f_count($createid, $condition, $pid){
+		$sql = "select count(*) sumdata from user where ";
+		$sql = self::__assembeSQLf($sql, $createid, $condition, $pid);
+		$query = $this->db->query($sql);
+		if($query->num_rows()>0){
+			foreach($query->result() as $row){
+				return $row->sumdata;
+			}
+		} else{
+			return 0;
+		}
+	}
 	
 	function update($data, $id){
 		$this->db->where('id', $id);
@@ -176,6 +214,7 @@ class Core_user extends CI_Model {
 	function insert($data){
 		$id = $data["id"];
 		if($id<=1){//新增
+			$data['pwd'] = MD5($data['pwd']);
 			$data['createTime']= date('Y-m-d H:i:s', time()+8*60*60);
 			$this->db->insert(self::$TABLE, $data);
 			$id = mysql_insert_id();
@@ -235,18 +274,6 @@ class Core_user extends CI_Model {
 		return self::__getValueById($id, "userpath");
 	}
 	function getPwdById($id){
-//		$this->db->select('pwd');
-//		$this->db->where('wxopenid',$id);
-//		$this->db->or_where('oid',$id);
-//		$query=$this->db->get(self::$TABLE);
-//		if($query->num_rows()>0){
-//			foreach($query->result() as $row){
-//				return $row->pwd;
-//			}
-//		}
-//		else{
-//			return '';
-//		}
 		return self::__getValueById($id, "pwd");
 	}
 
@@ -256,29 +283,12 @@ class Core_user extends CI_Model {
 	 * @param unknown_type $id
 	 * @param unknown_type $type
 	 */
-	function getUserCodeById($id, $type=44){
-//		switch ($type){
-//			case 44:
-//				return $id + 4400000;
-//				break;
-//			default:
-//				return $id + 4400000;
-//				break;
-//		}
-
+	function getUserCodeById($id){
 		return self::__getValueById($id, "userCode");
 	}
 	
-	function getIdByUserCode($userCode, $type=44){
-//		switch ($type){
-//			case 44:
-//				return $userCode - 4400000;
-//				break;
-//			default:
-//				return $userCode - 4400000;
-//				break;
-//		}
-		return self::__getValueByKey("userCode", $userCode, "oid");
+	function getIdByUserCode($userCode){
+		return self::__getValueByKey("userCode", $userCode, "id");
 	}
 	
 
@@ -334,6 +344,14 @@ class Core_user extends CI_Model {
 	function delete($id){
 		$this->db->where('id', $id);
 		$this->db->delete(self::$TABLE);
+	}
+	function f_delete($id){
+		$this->db->where('uId', $id);
+		$this->db->delete('user');
+	}
+	function f_update($data, $id){
+		$this->db->where('uId', $id);
+		$this->db->update('user', $data);
 	}
 }
 ?>

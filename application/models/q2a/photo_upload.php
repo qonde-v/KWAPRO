@@ -21,6 +21,9 @@
 		  $config['max_size'] = '2048';
 		  $config['max_width']  = '';
 		  $config['max_height']  = '';
+		  $config['overwrite'] = FALSE;
+  		  $config['remove_spaces'] = TRUE;
+		  $config['encrypt_name']=true;
 
 		  //
 		  $this->file_path_check($config['upload_path']);
@@ -38,7 +41,8 @@
 		  }
 		  else
 		  {
-		     return 'UPDATE_SUCCESS';
+			  $upload_data = $this->upload->data();
+		     return array('msg'=>'UPDATE_SUCCESS','file_name'=>$upload_data['file_name']);
 		  }
 
 	 }
