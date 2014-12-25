@@ -10,7 +10,7 @@ $(function(){
 	if($('#ifcollect').val()==1){
 		$("img").mouseover(function(e){ 
 			$("#tooltip").remove(); 
-			var info = "采集";
+			var info = "素材采集";
 			var s=this.src;
 			var mname=s.substring(s.lastIndexOf("/")+1);
 			var toolTip = "<div id='tooltip' style='position:absolute;border:1px solid #aaa;background-color:#ff7a23;border-radius:4px;padding:10px;'><a style='color: #fff;' href='javascript:collection(\""+mname+"\")'>" + info + "</a></div>"; 
