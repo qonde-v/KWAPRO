@@ -84,9 +84,34 @@
                 <td colspan="2"><label class="image"><a href="javascript:;" onclick="$('#picview').removeClass('hide');">修改个人主题插图</a></label></td>
               </tr>
               <tr>
-                <td style="border-bottom-width:0; padding-top:5px; padding-right:5px;" align="right" colspan="2"><img src="<?php echo $base.'img/xtb_006.png';?>" /></td>
+                <td style="border-bottom-width:0; padding-top:5px; padding-right:5px;" align="right" colspan="2"><a id="btn-detail" href="javascript:;" title="详细资料" onclick="$('#detail-panel').toggle();"><img src="<?php echo $base.'img/xtb_006.png';?>" /></a></td>
               </tr>
             </table>
         </div>
       <div class="right"><img src="<?php echo $base.'img/xiugai_d_0'.$user_info['subpic'].'.png';?>" /></div>
+	  <div id="detail-panel">
+      	<table width="100%" border="0" cellspacing="1" cellpadding="0">
+          <tr>
+            <td><font>姓名：</font><?=$user_info['realname']?></td>
+            <td><font>性别：</font><?php if($user_info['gender']==1)echo '男';else echo '女';?></td>
+            <td><font>年龄：</font><?=$user_info['age']?></td>
+            <td><font>手机：</font><?=$user_info['tel']?></td>
+          </tr>
+          <tr>
+            <td><font>生日：</font><?=$user_info['birthday']?></td>
+            <td><font>现居：</font><?=$user_info['address_now']?></td>
+            <td><font>家乡：</font><?=$user_info['address']?></td>
+            <td><font>QQ：&nbsp;&nbsp;</font><?=$user_info['qq']?></td>
+          </tr>
+          <tr>
+            <td colspan="2"><font>院校：</font><?=$user_info['school']?></td>
+            <td colspan="2"><font>邮箱：</font><?=$user_info['email']?></td>
+          </tr>
+          <tr>
+            <td colspan="2"><font>标签：</font><?=$user_info['tag']?></td>
+            <td colspan="2"><font>简介：</font><?=$user_info['description']?></td>
+          </tr>
+        </table>
+
+      </div>
     </div>

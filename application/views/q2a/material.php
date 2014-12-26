@@ -8,6 +8,20 @@
 <link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
 <script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"></script>
 <script src="<?php echo $base.'js/kwapro_event.jquery.js';?>"></script>
+<script>
+	function set_collect(id,status){
+		var url = $('#base').val() + "profile/set_collect/";
+		var result = window.confirm("是否进行此操作");
+		if (result) {
+			var post_str = 'id=' + id + '&status=' + status;
+			var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
+				//alert(html);
+				window.location.reload();
+			}};
+			jQuery.ajax(ajax);
+		}
+	}
+</script>
 </head>
 <div class="container">
 <?php include("header.php"); ?>
@@ -23,38 +37,32 @@
     	<div class="left">
         	<img style="margin-top:5px;" src="<?php echo $base.'img/grkj_p_gg.jpg';?>" />
             <ul class="left-menu">
-            	<a href="<?php echo $base.'information/';?>"><li class="dongtai active">最新动态</li></a>
+            	<a href="<?php echo $base.'information/';?>"><li class="dongtai">最新动态</li></a>
                 <a href="<?php echo $base.'design/';?>"><li class="sheji">设　计</li></a>
                 <a href="<?php echo $base.'demand/';?>"><li class="xuqiu">需　求</li></a>
                 <a href="<?php echo $base.'order/';?>"><li class="dingdan">订　单</li></a>
-				<a href="<?php echo $base.'material/';?>"><li class="dingdan">我的图库</li></a>
+				<a href="<?php echo $base.'material/';?>"><li class="tuku active">我的图库</li></a>
             </ul>
         </div>
         <div class="right">
-        	<div class="panel">
-        		<div class="panel-heading">我的图库</div>
-                  <div class="panel-body">
-				    <span id="content">
-                    <ul class="main-list">
-                    	<li>
-							<?php $tt=count($material);
-							for($i=0;$i<$tt/4;$i++){
-								if(0+4*$i<$tt) $imgurl1=$base.'img/'.$material[0+4*$i];else $imgurl1='';
-								if(1+4*$i<$tt) $imgurl2=$base.'img/'.$material[1+4*$i];else $imgurl2='';
-								if(2+4*$i<$tt) $imgurl3=$base.'img/'.$material[2+4*$i];else $imgurl3='';
-								if(3+4*$i<$tt) $imgurl4=$base.'img/'.$material[3+4*$i];else $imgurl4='';
-							?>
-							  <tr>
-								<td width="25%" valign="middle" align="center"><img src="<?=$imgurl1?>" align="absmiddle" border="0" height="125" width="154"/></td>
-								<td width="25%" valign="middle" align="center"><img src="<?=$imgurl2?>" align="absmiddle" border="0" height="125" width="154"/></td>
-								<td width="25%" valign="middle" align="center"><img src="<?=$imgurl3?>" align="absmiddle" border="0" height="125" width="154"/></td>
-								<td width="25%" valign="middle" align="center"><img src="<?=$imgurl4?>" align="absmiddle" border="0" height="125"width="154"/></td>
-							  </tr>
-							<?php }?>	
-                        </li>
+			<div class="panel active" id="tuku">
+        		<div class="panel-heading">我的图库&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<?php if($user_info['ifcollect']==0){ ?>
+				<a style="background-color: #fff;border: 1px solid #545454;border-radius: 4px;color: #535353;display: inline-block;font-size:14px;line-height:30px;" href="javaScript:set_collect(<?php echo $user_info['uId']?>,1)">采集/开启</a>
+				<?php }else{?>
+				<a style="background-color: #fff;border: 1px solid #545454;border-radius: 4px;color: #535353;display: inline-block;font-size:14px;line-height:30px;" href="javaScript:set_collect(<?php echo $user_info['uId']?>,0)">采集/关闭</a>
+				<?php }?>
+				</div>
+                <div class="panel-body">
+                    <ul class="img-list">
+						<span id="content">
+						<?php foreach($material as $item): ?>
+                    	<li><img width="215" height="135" src="<?php echo $base.'img/'.$item;?>" /></li>
+						<?php endforeach; ?>
+						<span>
                     </ul>
-					</span>
             	</div>
+            </div>
 
 					  <div class="dt_fy">
 					  <?php if($inbox_page_num > 1):?>	
@@ -108,11 +116,11 @@ function switch_page()
 	var total_page_num = parseInt(ul_obj.attr('id'));
 
 	var lang = {'lang_first':$('.first a').html(),'lang_previous':$('.prev a').html(),'lang_next':$('.next a').html(),'lang_last':$('.last a').html()};
-	var pagena_num = (total_page_num > 5) ? 5 : total_page_num;
+	var pagena_num = (total_page_num > 9) ? 9 : total_page_num;
 	
 	var url = $('#base').val() + 'material/sort_material/';
 	var post_str = 'index=' + index;
-	
+
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
 		$('#content').html(html);
 		pagenation_controller_update(ul_obj,{'base':$('#base').val(),'index':index,'total':total_page_num,'pagena_num':pagena_num,'lang':lang});

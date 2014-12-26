@@ -27,6 +27,7 @@
                 <a href="<?php echo $base.'design/';?>"><li class="sheji">设　计</li></a>
                 <a href="<?php echo $base.'demand/';?>"><li class="xuqiu">需　求</li></a>
                 <a href="<?php echo $base.'order/';?>"><li class="dingdan">订　单</li></a>
+				<a href="<?php echo $base.'material/';?>"><li class="tuku">我的图库</li></a>
             </ul>
         </div>
         <div class="right">
