@@ -340,20 +340,23 @@ li.share{ width:40px; height:40px; cursor:pointer; }
 .icon-tag{ background:url(../img/icon-tag.png) no-repeat; line-height:22px; padding:2px 30px 2px 28px; }
 .icon-clock{ background:url(../img/icon-clock.png) no-repeat; padding:2px 0 2px 22px; line-height:22px; }
 
-#personalSpace .info{ overflow:auto; width:1000px;}
-#personalSpace .left,#personalSpace .right{ float:left; }
-#personalSpace .left{ width:286px; background-color:#f1f2f6; }
-#personalSpace .info .left{ height:auto; }
-#personalSpace .lists{ margin-top:10px; height: 482px; }
+#personalSpace .info{ height: 336px; position:relative; }
+#detail-panel{ position:absolute; bottom:-239px; left:0; background-color:#f1f2f6; width:100%; padding-bottom:40px;z-index:100; display:none; }
+#detail-panel table{ background:#e3e4df; } 
+#detail-panel table td{ height:48px; padding:0 15px; background:#f1f2f6; }
+#detail-panel table td font{ color:#9f9fa1; margin-right:10px; }
+#personalSpace div.left,#personalSpace div.right{ float:left; }
+#personalSpace div.left{ width:286px; background-color:#f1f2f6; }
+#personalSpace .info .left{ height:338px; }
+#personalSpace .lists{ margin-top:10px; overflow: auto; background-color:#f1f2f6; padding-bottom:20px; }
 #personalSpace .lists .left{ text-align:center; height:100%; }
-#personalSpace .lists .right{ background-color:#f1f2f6; width:714px; }
+#personalSpace .lists .right{ width:714px; }
 #personalSpace .info .left table td{ border-bottom:1px solid #ccc; }
 .user-head{ margin-top:8px; }
 .user-name{ color:#000; }
 .user-edit a,.user-edit-head a{ color:#bdbdbd; font-size:16px; }
 .user-name,.user-edit,.user-edit-head{ display:block; height:34px; line-height:34px; font-size:16px; padding-left:36px; background-repeat:no-repeat; }
 .female{ background-image:url(../img/xtb_nv.png); }
-.male{ background-image:url(../img/xtb_nan.png); }
 .user-edit{ background-image:url(../img/xtb_001.png); }
 .user-edit-head{ background-image:url(../img/xtb_002.png); }
 #personalSpace .info .left table label{ margin:3px 6px; padding-left:34px; line-height:34px; background-repeat:no-repeat; display:block; font-size:16px; height:34px; width:230px; }
@@ -365,17 +368,23 @@ li.share{ width:40px; height:40px; cursor:pointer; }
 #personalSpace .tags-list li{ float:left; padding:0 4px 10px; }
 #personalSpace .tags-list li a{ color:#8e8e8e; font-size:14px; }
 
+
+
 #personalSpace .left-menu{ padding:22px 0 22px 15px; }
 #personalSpace .left-menu li{ cursor:pointer; text-align:center; height:55px; width:240px; line-height:55px; font-size:20px; padding-left:20px; background-repeat:no-repeat; margin-bottom:30px; }
 #personalSpace .left-menu li:hover,#personalSpace .left-menu li.active{ color:#fff; }
 #personalSpace .left-menu .dongtai{ background-image:url(../img/grkj_l_a1.png); background-position:12px 0; }
-#personalSpace .left-menu .sheji{ background-image:url(../img/grkj_l_a3.png); background-position:12px 0; }
+#personalSpace .left-menu .sheji{ background-image:url(../img/grkj_l_a3.png); background-position:-1px 0; }
 #personalSpace .left-menu .xuqiu{ background-image:url(../img/grkj_l_a4.png); }
-#personalSpace .left-menu .dingdan{ background-image:url(../img/grkj_l_a2.png); }
+#personalSpace .left-menu .dingdan{ background-image:url(../img/grkj_l_a2.png); background-position:11px 0; }
+#personalSpace .left-menu .tuku{ background-image:url(../img/grkj_l_a5.png); background-position:11px 0; }
 #personalSpace .left-menu .dongtai:hover,#personalSpace .left-menu .dongtai.active{ background-image:url(../img/grkj_l_b1.png); }
 #personalSpace .left-menu .sheji:hover,#personalSpace .left-menu .sheji.active{ background-image:url(../img/grkj_l_b3.png); }
 #personalSpace .left-menu .xuqiu:hover,#personalSpace .left-menu .xuqiu.active{ background-image:url(../img/grkj_l_b4.png); }
 #personalSpace .left-menu .dingdan:hover,#personalSpace .left-menu .dingdan.active{ background-image:url(../img/grkj_l_b2.png); }
+#personalSpace .left-menu .tuku:hover,#personalSpace .left-menu .tuku.active{ background-image:url(../img/grkj_l_b5.png); }
+
+
 
 #personalSpace .lists .right .panel{ margin-right:8px; background-color:#fbfbfb; height:100%; }
 #personalSpace .lists .right .panel-heading{ background-color:transparent; border-bottom-width:0; font-weight:bold; font-size:14px; line-height:16px; padding:3px 5px; }
@@ -392,6 +401,9 @@ li.share{ width:40px; height:40px; cursor:pointer; }
 #personalSpace .link-sheji{ background-image:url(../img/xtb_a1.png); }
 #personalSpace .link-liulan{ background-image:url(../img/xtb_a2.png); }
 #personalSpace .link-liuyan{ background-image:url(../img/xtb_a3.png); }
+#personalSpace .img-list{ overflow:auto; }
+#personalSpace .img-list li{ float:left; width:33.33333%; text-align:center; margin-bottom:15px; }
+
 
 #personalSpace .modal{ position:fixed; left:30%; width:50%; height:auto; border:1px solid #a3a4a8; border-radius:4px; background-color:#f1f2f6; z-index:1070; padding:0 5px 5px; }
 #personalSpace .modal-head{ font-size:14px; line-height:30px; }
@@ -838,6 +850,7 @@ td.borderleft0{ padding:10px 0; }
   right: 0;
   bottom: 0;
   z-index: 10000;
+  opacity:0.7;
 }
 .modal-backdrop.fade {
   opacity: 0;
@@ -853,11 +866,10 @@ td.borderleft0{ padding:10px 0; }
   top: 50%;
   left: 50%;
   z-index: 11000;
-  width: 560px;
+  width: 260px;
   margin: -250px 0 0 -280px;
   background-color: #ffffff;
   border: 1px solid #999;
-  border: 1px solid rgba(0, 0, 0, 0.3);
   *border: 1px solid #999;
   /* IE6-7 */
 
