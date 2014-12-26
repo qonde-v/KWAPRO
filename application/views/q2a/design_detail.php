@@ -237,7 +237,7 @@ $(document).ready(function() {
         </div>
         <table width="100%" class="design-table">
           <tr>
-            <td class="table-title" colspan="2" bgcolor="#454545">订单ID:123456789001&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订单原设计：《<?php echo $design['title']; ?>》<span class="pull-right">提交时间：<?php echo $design['createdate']; ?></span></td>
+            <td class="table-title" colspan="2" bgcolor="#454545">订单号:123456789001&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订单原设计：《<?php echo $design['title']; ?>》<span class="pull-right">提交时间：<?php echo $design['createdate']; ?></span></td>
           </tr>
           <tr>
             <td>
@@ -265,7 +265,7 @@ $(document).ready(function() {
         </div>
         <table class="add-table" width="100%">
           <tr>
-            <td>收件地址：</td>
+            <td width="53px">收件地址:</td>
             <td>
             	<div class="selecter province"> <span></span><i id="i_province"></i>
 					<input type="hidden" id="t_province">
@@ -293,13 +293,13 @@ $(document).ready(function() {
             </td>
           </tr>
           <tr>
-            <td>收件人：</td>
+            <td>收件人:</td>
             <td>
             	<input type="text" id="realname"/>&nbsp;&nbsp;联系电话：&nbsp;&nbsp;<input type="text" id="tel"/>&nbsp;&nbsp;邮编：&nbsp;&nbsp;<input type="text" id="zipcode" />
             </td>
           </tr>
           <tr>
-            <td>订单留言：</td>
+            <td>订单留言:</td>
             <td><input type="text" style="width:80%;" id="remark"/></td>
           </tr>
         </table>

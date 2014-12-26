@@ -370,7 +370,7 @@ function getFileName(path){
 <input type="hidden" id="demand_id" value="<?php echo $demand['id'];?>"></input>
 
   <div id="sjlc" class="main flows"> 
-	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_dt.png';?>" /></a>
+	<img src="<?php echo $base.'img/sub_top_dt.png';?>" />
   	<div class="modal" id="draggable" style="position:absolute;">
         <div class="modal-header">
             选择面料

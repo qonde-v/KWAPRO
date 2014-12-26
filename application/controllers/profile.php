@@ -237,6 +237,10 @@
 		$this->User_profile->user_avatar_update(array('uId'=>$uId,'avatar'=>$avatar));
 		echo '修改头像成功';
 	}
+	function set_collect(){
+		$id = $_POST['id'];
+		$this->User_profile->set_collect(array('uId'=>$id,'ifcollect'=>$_POST['status']));
+	}
  }
 
  /*End of file*/

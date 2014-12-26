@@ -7,6 +7,7 @@
 		$this->load->helper('define');
 		$this->load->library('session');
 		$this->load->model('q2a/User_data');
+		$this->load->model('q2a/User_profile');
 		$this->load->model('q2a/Tag_process');
 		$this->load->model('q2a/Session_process');
         $this->load->model('q2a/Ip_location');
@@ -53,8 +54,10 @@
 	     //$location_data = $this->session->userdata('location_city');
 		 $location_data = $this->User_data->get_user_location($user_id);
 		 $data = array('location'=>$location_data,'kpc_score'=>$kpc_score,'username'=>$username,'headphoto_path'=>$user_photo_path,'answer_num'=>$answer_num,'question_num'=>$question_num,'follow_num'=>$follow_num,'gender'=>$user_gender,'subpic'=>$user_subpic,'permission'=>$permission,'tag'=>$tag,'ifcollect'=>$ifcollect);
+
+		 $basic_data = $this->User_profile->get_user_basicdata($user_id);
 		 //print_r($data);
-		 return array_merge($data,$activity_content_data);
+		 return array_merge($data,$activity_content_data,$basic_data);
 	 }
 
 	 //get online friends

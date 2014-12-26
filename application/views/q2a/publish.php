@@ -186,7 +186,7 @@ $(function(){
 
 <input type="hidden" id="base" value="<?php echo $base;?>"></input>
   <div id="xqlc" class="main flows">
-	<a href="<?php echo $base.'demand/publish';?>"><img src="<?php echo $base.'img/sub_top_dt.png';?>" /></a>
+	<img src="<?php echo $base.'img/sub_top_dt.png';?>" />
   	<div class="modal" style="width:650px;padding_top:30%;padding_;left:40%;">
         <div id="tq" class="modal-content">
             <ul class="tq_list">

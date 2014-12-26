@@ -15,8 +15,12 @@ $(function(){
 
 function login_process()
 {
-	$('#login_msg_modal .modal-body').html($('#login_wait').val());
-	$('#login_msg_modal').removeClass("hide");;
+	$('#login_msg_modal .modal-body').html('<img width="40px" height="40px" style="vertical-align:middle;" src="'+$('#header_base').val()+'img/jindu.gif">'+$('#login_wait').val());
+	$('#login_msg_modal').removeClass("hide");
+	$('#login_modal_bg').removeClass("hide");
+	$('.modal-header').hide();
+	$('.modal-footer').hide();
+	hideLoginModal();
 	var username = $('#login_username').val();
 	var password = $('#login_pswd').val();
 	var url = $('#header_base').val() + 'login/';
@@ -29,7 +33,9 @@ function login_process()
 		}
 		else
 		{
-			$('#login_msg_modal .modal-body').html(html);	
+			$('#login_msg_modal .modal-body').html(html);
+			$('.modal-header').show();
+			$('.modal-footer').show();
 		}
 	}};
 	jQuery.ajax(ajax);
