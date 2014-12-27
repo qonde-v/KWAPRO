@@ -117,7 +117,7 @@ function hideLoginModal(){
 
 
 <input type="hidden" value="<?php echo $base; ?>" id="header_base" />
-<input type="hidden" value="请稍候......" id="login_wait"/>
+<input type="hidden" value="系统登录中，请稍候......" id="login_wait"/>
 <div id="login_msg_modal" class="modal hide">
 	<div class="modal-header"><a href="#" class="close" onclick="$('#login_msg_modal').addClass('hide');$('#login_modal_bg').addClass('hide');">&times;</a><h3>&nbsp;</h3></div>
 	<div class="modal-body"></div>
