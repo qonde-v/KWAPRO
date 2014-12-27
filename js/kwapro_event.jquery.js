@@ -14,8 +14,9 @@ function pagenation_controller_update(ul_obj, options)
 	//var ul_obj = jQuery("ul", parent_object);
 	ul_obj.html("");
 	
-	var start = index;
-	var end = index+pagena_num;
+	var start = index-2;
+	var end = index+pagena_num-2;
+	if(start<=0){start=1;end=start+pagena_num;}
 	if(index+pagena_num-1 > total)
 	{
 		start = total-pagena_num+1;
