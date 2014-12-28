@@ -542,7 +542,7 @@ ini_set("memory_limit","100M");
 		//更新设计状态为等待仿真
 		$this->Demand_management->update_designstatus($design_id,1);
 		
-		$filename = "d:\\xampp\cgi-bin\SP".$user_id.$design_id.".xml";
+		$filename = "d:\\xampp\htdocs\TIT\cgi\SimPlan\SP".$user_id.$design_id.".xml";
 		$f_name="SP".$user_id.$design_id.".xml";
 
 		$of = fopen($filename,'w');//创建并打开
