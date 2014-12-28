@@ -294,6 +294,13 @@ $(document).ready(function() {
 	<div class="modal-footer"><button class="btn primary" onclick="$('#msg_modal').addClass('hide');">确定</button></div>
 </div>
 
+<iframe name="testIframeName" style="display:;"></iframe> 
+<form id="submitform" style="display:none;" target="testIframeName" method="post" action="<?php echo $base.'cgi/GSim.cgi'?>">  
+<input type="text" id="name" name="name" value="Henry"/>  
+<input type="text" id="Simplans" name="Simplans" value=""/>  
+<input type="submit" value=" 提 交 " />  
+</form>  
+
 <!------------ 底部开始 ------------->
 <?php include("footer.php");?>
 </div>
@@ -301,6 +308,7 @@ $(document).ready(function() {
 <script>
 $(function(){
 	$('.pagination ul li').live('click',switch_page);
+
 });
 
 function switch_page()
@@ -332,7 +340,10 @@ function subsim(design_id,demand_id)
 	var post_str = 'design_id='+design_id+'&demand_id=' + demand_id;
 	
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
-		subsim_n(html);
+		$('#Simplans').val('1SimPlan.xml');
+		$('#submitform').submit();
+
+		//subsim_n(html);
 		//window.location.reload();
 	}};
 	jQuery.ajax(ajax);
@@ -340,11 +351,11 @@ function subsim(design_id,demand_id)
 
 function subsim_n(fname)
 {
-	var url = 'http://localhost/cgi-bin/GSim.cgi';
+	var url = $('#base').val() + '/cgi/GSim.cgi';
 	var post_str = 'Simplans='+fname+'&name=Henry';
 
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
-		alert('提交成功');
+		//alert('提交成功');
 	}};
 	jQuery.ajax(ajax);
 }
