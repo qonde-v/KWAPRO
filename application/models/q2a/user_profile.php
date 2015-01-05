@@ -29,7 +29,7 @@
         {
             foreach($query->result() as $row)
             {
-                return array('username'=>$row->username,'email'=>$row->email,'passwd'=>$row->passwd,'langCode'=>$row->langCode,'gender'=>$row->gender,'birthday'=>$row->birthday,'nickname'=>$row->nickname,'realname'=>$row->realname,'qq'=>$row->qq,'weibo'=>$row->weibo,'address'=>$row->address,'address_now'=>$row->address_now,'age'=>$row->age,'school'=>$row->school,'tel'=>$row->tel,'description'=>$row->description,'tag'=>$row->tag,'avatar'=>$row->avatar);
+                return array('uId'=>$row->uId,'username'=>$row->username,'email'=>$row->email,'passwd'=>$row->passwd,'langCode'=>$row->langCode,'gender'=>$row->gender,'birthday'=>$row->birthday,'nickname'=>$row->nickname,'realname'=>$row->realname,'qq'=>$row->qq,'weibo'=>$row->weibo,'address'=>$row->address,'address_now'=>$row->address_now,'age'=>$row->age,'school'=>$row->school,'tel'=>$row->tel,'description'=>$row->description,'tag'=>$row->tag,'avatar'=>$row->avatar);
             }
         }
 		 else
@@ -956,6 +956,11 @@
         $this->db->set('avatar',$item['avatar']);
         $this->db->update('user');
      }
+	 function set_collect($item){
+		 $this->db->where('uId',$item['uId']);
+        $this->db->set('ifcollect',$item['ifcollect']);
+        $this->db->update('user');
+	}
   }
   /*End of file*/
   /*Location: ./system/appllication/model/q2a/user_profile.php*/

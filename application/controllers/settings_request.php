@@ -506,16 +506,16 @@
 		   		$post_value = $this->input->post($key,TRUE);
 		   		$post_arr[$key] = $post_value ? trim($post_value) : 0;
 		  	}
-			if($this->cache->memcached->get($post_arr['code']))
+			/*if($this->cache->memcached->get($post_arr['code']))
 			{
 				echo $this->cache->memcached->get($post_arr['code']);
 			}
 			else
-			{
+			{*/
 				$data = $this->Search->search_location_data($post_arr);
-				$this->cache->memcached->save($post_arr['code'],$data,60);
+				//$this->cache->memcached->save($post_arr['code'],$data,60);
 				echo $data;
-			}
+			//}
 		}
 	}
 	

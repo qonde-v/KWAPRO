@@ -2,7 +2,7 @@
 	date_default_timezone_set('PRC');
   class Material extends CI_Controller
   {
-	  var $pre_msg_num=8;
+	  var $pre_msg_num=9;
     function __construct()
 	 {
 	    parent::__construct();
@@ -45,11 +45,12 @@
 		$materials=array();;
 		$pre_msg_num = $this->get_pre_msg_num();
 	    $range = array('start'=>0,'end'=>$pre_msg_num-1);
-		$this->db->select('material');
+		$this->db->select('*');
 		$this->db->where('uId',$user_id);
 		$t_query=$this->db->get('material');
 		$data['inbox_num']=	$t_query->num_rows();
 			
+		$this->db->where('uId',$user_id);
 		$this->db->limit($range['end']-$range['start']+1,$range['start']);
 		$query = $this->db->get('material');
 		foreach($query->result_array() as $row)
@@ -122,7 +123,7 @@
 		$data = array('uId'=>$user_id,'range'=>$range);
 
 		$materials=array();
-		$this->db->select('material');
+		$this->db->select('*');
 		$this->db->where('uId',$user_id);
 		$this->db->limit($range['end']-$range['start']+1,$range['start']);
 		$query = $this->db->get('material');
@@ -134,18 +135,8 @@
 		$html = '';
 		if(!empty($materials))
 		{
-			$tt=count($materials);
-			for($i=0;$i<=$tt/4;$i++){
-				if(0+4*$i<$tt) $imgurl1=$base.'img/'.$materials[0+4*$i];else $imgurl1='';
-				if(1+4*$i<$tt) $imgurl2=$base.'img/'.$materials[1+4*$i];else $imgurl2='';
-				if(2+4*$i<$tt) $imgurl3=$base.'img/'.$materials[2+4*$i];else $imgurl3='';
-				if(3+4*$i<$tt) $imgurl4=$base.'img/'.$materials[3+4*$i];else $imgurl4='';
-				$html .= '<tr>';
-				$html .= '<td><img src="'.$imgurl1.'" align="absmiddle" border="0" height="125" width="154"/></td>';
-				$html .= '<td><img src="'.$imgurl2.'" align="absmiddle" border="0" height="125" width="154"/></td>';
-				$html .= '<td><img src="'.$imgurl3.'" align="absmiddle" border="0" height="125" width="154"/></td>';
-				$html .= '<td><img src="'.$imgurl4.'" align="absmiddle" border="0" height="125" width="154"/></td>';
-			    $html .= '</tr>';
+			foreach($materials as $item){
+				$html .= '<li><img width="215" height="135" src="'.$base.'img/'.$item.'" /></li>';
 			}
 		}
 		echo $html;
