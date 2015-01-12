@@ -1,9 +1,9 @@
-<script src="<?php echo $base.'js/bootstrap-twipsy.js';?>"></script>
+<!-- <script src="<?php echo $base.'js/bootstrap-twipsy.js';?>"></script>
         <script src="<?php echo $base.'js/bootstrap-dropdown.js';?>"></script>
         <script src="<?php echo $base.'js/bootstrap-buttons.js';?>"></script>
         <script src="<?php echo $base.'js/bootstrap-popover.js';?>"></script>
 	<script src="<?php echo $base.'js/bootstrap-modal.js';?>"></script>
-<script src="<?php echo $base.'js/home.js';?>"></script>
+<script src="<?php echo $base.'js/home.js';?>"></script> -->
  <script src="<?php echo $base.'js/login.js';?>" ></script>
 <script type="text/javascript"> 
 $(function(){
@@ -43,6 +43,7 @@ function hideLoginModal(){
 </script>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" >
+<input type="hidden" value="<?php echo $base;?>" id="header_base" />
 
   <div class="head">
     <div class="logo pull-left"> <a href="<?php echo $base;?>"><img src="<?php echo $base.'img/logo.png';?>" /></a> </div>
@@ -55,9 +56,9 @@ function hideLoginModal(){
 	  <li class="drop"><a href="#" onclick="javasrcipt:showmenu();" ><?php echo $user_info['username']; ?></a>
       	<ul id="dropmenu" style="display:none;">
         	<li><a href="<?php echo $base.'demand/';?>">个人空间</a></li>
-            <!-- <li><a href="#">我的关注</a></li>
-            <li><a href="#">我的评论</a></li>
-            <li><a href="#">我的粉丝</a></li> -->
+            <li><a href="<?php echo $base.'questions/';?>">我的问题</a></li>
+            <li><a href="<?php echo $base.'questions/latest';?>">最新问题</a></li>
+            <!-- <li><a href="#">我的粉丝</a></li> -->
             <li><a href="<?php echo $base.'design/';?>">我的设计</a></li>
             <li><a href="<?php echo $base.'demand/demandlist/';?>">需求广场</a></li>
             <li><a href="<?php echo $base.'news?type=21';?>">知识广场</a></li>

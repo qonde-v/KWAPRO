@@ -1,178 +1,123 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title><?php echo $question_page_title;?></title>
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link href="<?php echo $base.'css/bootstrap.css';?>" rel="stylesheet">
-	<link rel="stylesheet" type="text/css" href="<?php echo $base.'css/style.css';?>" />
-	<link href="<?php echo $base.'css/autocomplete.css';?>" rel="stylesheet">
-	
-    <style type="text/css">
-      body {
-        padding-top: 50px;
-      }
-    </style>
-    <!-- Le fav and touch icons -->
-    <link rel="shortcut icon" href="<?php echo $base.'img/kwapro.ico';?>">
-  </head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<title>TIT系统</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
+<script src="<?php echo $base.'js/jquery.min.js';?>" type="text/javascript"></script>
 
-  <body>
+<script type="text/javascript">
+$(document).ready(function() {
 
-    <div class="topbar">
-      <div class="topbar-inner">
-        <div class="container-fluid">
-          <a class="brand" href="#">Kwapro</a>
-          <?php include("header.php"); ?>
+	$(".tab-btns li a").click(function(){
+		$(".tab-btns li a").removeClass("active");
+		$(this).addClass("active");
+		if($(this).attr("id") == "tw"){
+			$("#asked").show();
+			$("#answered").hide();
+		}
+		else{
+			$("#asked").hide();
+			$("#answered").show();
+		}
+	});
+});
+</script>
+</head>
+<div class="container">
+<?php include("header.php"); ?>
+
+  <div id="qa2" class="main">
+	<div class="info">
+    	<div class="left">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+              <tr>
+                <td rowspan="2"><img class="user-head" width="133px" height="133px" src="<?php echo $base.$user_info['headphoto_path'];?>" /></td>
+                <td width="93px"  style="padding-top:10px;"><span class="user-name <?php if($user_info['gender']==1)echo 'male';else echo 'female';?>"><?php echo $user_info['username']; ?></span></td>
+              </tr>
+              <tr>
+                <td valign="top" style="padding-left:10px;"><span class="qa">3&nbsp;问题<br />
+                5&nbsp;回答</span></td>
+              </tr>
+            </table>
         </div>
-      </div>
+      <div class="right"><img src="<?php echo $base.'img/xiugai_d_0'.$user_info['subpic'].'.png';?>" /></div>
     </div>
-
- <div id="main_area" class="container">
-     <div class="row">
-        <div class="span16">
-          <div class="row">
-            
-        	<div class="span12">
-		    	<!--middle content-->
-		    	<ul class="tabs" data-tabs="tabs">
-    			        <li><a href="#empty"></a></li>
-    			        <li><a href="#empty"></a></li>
-    					<li class="active"><a href="#asked"><?php echo $question_asked_title;?></a></li>
-    					<li><a href="#answered"><?php echo $question_answered_title;?></a></li>
-    					<li><a href="#followed"><?php echo $question_following_title;?></a></li>
-    					<li><a href="#recommend"><?php echo $question_recommendation_title;?></a></li>
-    				</ul>
-					
-					<input type="hidden" id="base" value="<?php echo $base;?>"></input>
-     
-    				<div class="tab-content">
-    					<div class="active tab-pane" id="asked">
-							<div id="asked_q_list">
-    					  		<?php echo $my_asked_question; ?>
-							</div>
-							<?php if($asked_num > 1):?>
-	  		             	<div class="pagination">
-						    <ul id="<?php echo 'asked_'.$asked_num;?>">
-							<li class="first"><a href="#" id="pagination_1"><?php echo $page_split_first;?></a></li>
-						    <li class="prev disabled"><a href="#" id="pagination_0">&larr; <?php echo $page_split_previous;?></a></li>
-							<li class="active"><a href="#" id="pagination_1">1</a></li>
-							<?php if($asked_num > 10):?>
-						    	<?php for($i=2;$i<=10;$i++):?>
-									<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
-								<?php endfor;?>
-							<?php else:?>
-								<?php for($i=2;$i<=$asked_num;$i++):?>
-									<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
-								<?php endfor;?>
-							<?php endif;?>
-						    <li class="next"><a href="#" id="pagination_2"><?php echo $page_split_next;?> &rarr;</a></li>
-							<li class="last"><a href="#" id="<?php echo 'pagination_'.$asked_num;?>"><?php echo $page_split_last;?></a></li>
-						    </ul>
-						  	</div>
-							<?php endif;?>
-    					</div>
-    					
-    					<div class="tab-pane"  id="answered">
-    					  <div id="answered_q_list">
-    					  		<?php echo $my_answered_question; ?>
-							</div>
-							<?php if($answered_num > 1):?>
-	  		             	<div class="pagination">
-						    <ul id="<?php echo 'answered_'.$answered_num;?>">
-							<li class="first"><a href="#" id="pagination_1"><?php echo $page_split_first;?></a></li>
-						    <li class="prev disabled"><a href="#" id="pagination_0">&larr; <?php echo $page_split_previous;?></a></li>
-							<li class="active"><a href="#" id="pagination_1">1</a></li>
-							<?php if($answered_num > 10):?>
-						    	<?php for($i=2;$i<=10;$i++):?>
-									<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
-								<?php endfor;?>
-							<?php else:?>
-								<?php for($i=2;$i<=$answered_num;$i++):?>
-									<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
-								<?php endfor;?>
-							<?php endif;?>
-						    <li class="next"><a href="#" id="pagination_2"><?php echo $page_split_next;?> &rarr;</a></li>
-							<li class="last"><a href="#" id="<?php echo 'pagination_'.$answered_num;?>"><?php echo $page_split_last;?></a></li>
-						    </ul>
-						  	</div>
-							<?php endif;?>
-    					</div>
-    					<div class="tab-pane" id="followed">
-    					   <div id="followed_q_list">
-    					  		<?php echo $my_followed_question; ?>
-							</div>
-							<?php if($followed_num > 1):?>
-	  		             	<div class="pagination">
-						    <ul id="<?php echo 'followed_'.$followed_num;?>">
-							<li class="first"><a href="#" id="pagination_1"><?php echo $page_split_first;?></a></li>
-						    <li class="prev disabled"><a href="#" id="pagination_0">&larr; <?php echo $page_split_previous;?></a></li>
-							<li class="active"><a href="#" id="pagination_1">1</a></li>
-							<?php if($followed_num > 10):?>
-						    	<?php for($i=2;$i<=10;$i++):?>
-									<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
-								<?php endfor;?>
-							<?php else:?>
-								<?php for($i=2;$i<=$followed_num;$i++):?>
-									<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
-								<?php endfor;?>
-							<?php endif;?>
-						    <li class="next"><a href="#" id="pagination_2"><?php echo $page_split_next;?> &rarr;</a></li>
-							<li class="last"><a href="#" id="<?php echo 'pagination_'.$followed_num;?>"><?php echo $page_split_last;?></a></li>
-						    </ul>
-						  	</div>
-							<?php endif;?>
-    					</div>
-    					<div class="tab-pane" id="recommend">
-    					   <div id="recommend_q_list">
-    					  		<?php echo $my_recommened_question; ?>
-							</div>
-							<?php if($recommend_num > 1):?>
-	  		             	<div class="pagination">
-						    <ul id="<?php echo 'recommend_'.$recommend_num;?>">
-							<li class="first"><a href="#" id="pagination_1"><?php echo $page_split_first;?></a></li>
-						    <li class="prev disabled"><a href="#" id="pagination_0">&larr; <?php echo $page_split_previous;?></a></li>
-							<li class="active"><a href="#" id="pagination_1">1</a></li>
-							<?php if($recommend_num > 10):?>
-						    	<?php for($i=2;$i<=10;$i++):?>
-									<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
-								<?php endfor;?>
-							<?php else:?>
-								<?php for($i=2;$i<=$recommend_num;$i++):?>
-									<li><a href="#" id="<?php echo 'pagination_'.$i;?>"><?php echo $i;?></a></li>
-								<?php endfor;?>
-							<?php endif;?>
-						    <li class="next"><a href="#" id="pagination_2"><?php echo $page_split_next;?> &rarr;</a></li>
-							<li class="last"><a href="#" id="<?php echo 'pagination_'.$recommend_num;?>"><?php echo $page_split_last;?></a></li>
-						    </ul>
-						  	</div>
-							<?php endif;?>
-    					</div>
-    					</div>
-					
-		    </div>
-            
-            <div class="span4">
-                <!--right content-->   
-              	<?php include("right.php"); ?>    
-            </div>
-          </div>
+    <div class="qa-lists">
+    	<div class="left">
+        	<h3 class="list_title">在线用户</h3>
+            <ul class="onlinelists">
+			<?php foreach($online_friend as $friend_item): ?>
+				<li>
+                	<img class="online_user_image"  src="<?php echo $base.$friend_item['headphoto_path'];?>" />
+                    <span><strong><?php echo $friend_item['username'];?></strong></span>
+                    <span><?php echo $friend_item['question_num'];?>&nbsp;问题</span>
+                    <span><?php echo $friend_item['answer_num'];?>&nbsp;回答</span>
+                </li>
+			<?php endforeach; ?> 
+            </ul>
         </div>
-      </div>
-  </div>  
+        <div class="right">
+        	<div class="panel">
+        		<div class="panel-heading black relative">
+                	<ul class="tab-btns">
+                		<li><a href="#" class="active" id="tw">我提问的</a></li>
+                        <li><a href="#" class="">我回答的</a></li>
+                     </ul>
+                	<a href="#" class="pull-right"><img src="<?php echo $base.'img/xtb_006.png'?>" /></a>
+                </div>
+                <div class="panel-body"  id="asked">
+                    <ul class="main-list">
+						<?php foreach($my_asked_question as $item):?>
+                    	<li>
+                        	<a href="<?php echo $base.'question/'.$item['nId'];?>" class="title"><?php echo $item['text'];?></a>
+                            <p><?php echo $item['text'];?></p>
+                            <p class="bottom">
+                            	<img class="pull-left" src="<?php echo $base.'img/'.$item['avatar'];?>" /><span class="text-orange"><?php echo $item['username'];?></span>
+                            	<font class="icon-clock">发布于<?php echo $item['time'];?></font>
+                                <font class="view">查看数（<?php echo $item['question_view_num'];?>）</font>
+                    			<font class="design">回答数（<?php echo $item['question_answer_num'];?>）</font>
+                            </p>
+                        </li>
+						<?php endforeach;?>
+                    </ul>
+                    <div class="panel-footer">
+                    	<a href="#" class="btn-more">更多问题</a>
+                    </div>
+            	</div>
+				<div class="panel-body"  id="answered" style="display:none;">
+                    <ul class="main-list">
+						<?php foreach($my_answered_question as $item):?>
+                    	<li>
+                        	<a href="#" class="title"><?php echo $item['text'];?></a>
+                            <p><?php echo $item['text'];?></p>
+                            <p class="bottom">
+                            	<img class="pull-left" src="<?php echo $base.'img/'.$item['avatar'];?>" /><span class="text-orange"><?php echo $item['username'];?></span>
+                            	<font class="icon-clock">发布于<?php echo $item['time'];?></font>
+                                <font class="view">查看数（<?php echo $item['question_view_num'];?>）</font>
+                    			<font class="design">回答数（<?php echo $item['question_answer_num'];?>）</font>
+                            </p>
+                        </li>
+						<?php endforeach;?>
+                    </ul>
+                    <div class="panel-footer">
+                    	<a href="#" class="btn-more">更多问题</a>
+                    </div>
+            	</div>
+
+            </div>
+        </div>
+    </div>
+  </div>
+
+
+ 
    <div class="foot">
 	    <?php include("footer.php");?>
     </div><!--footer-->
   </body>
-  	<script type="text/javascript" src="<?php echo $base.'js/jquery-1.7.1.min.js';?>"; ?>" ></script>
-    <script src="<?php echo $base.'js/bootstrap-twipsy.js';?>"></script>
-    <script src="<?php echo $base.'js/bootstrap-dropdown.js';?>"></script>
-    <script src="<?php echo $base.'js/bootstrap-buttons.js';?>"></script>
-    <script src="<?php echo $base.'js/bootstrap-tabs.js';?>"></script>
-	<script src="<?php echo $base.'js/bootstrap-popover.js';?>"></script>
-	<script src="<?php echo $base.'js/question.js';?>"></script>
-	<script src="<?php echo $base.'js/kwapro_event.jquery.js';?>"></script>
+
 	<script src="<?php echo $base.'js/kwapro_search.js';?>" ></script>
 </html>   
     

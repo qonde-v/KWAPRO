@@ -28,7 +28,7 @@
 	function get_question_data($nId)
 	{
 
-        $sql = "select user.username,user.uId,
+        $sql = "select user.username,user.uId,user.avatar,
                         node.text,node.ntId,node.langCode,date(node.time) as time,node.stId,node.sendPlace,                  
                         question.question_score,question.question_view_num,question.question_follow_num,question.question_answer_num,question.question_participant_num,question.question_expire_time,question.question_stat_id
                 from user,node,question
@@ -44,6 +44,7 @@
 			$row = $query->row();
             $data = array('username' => $row->username,
 				               'uId' => $row->uId,
+						   'avatar' => $row->avatar,
 				               'nId' => $nId,
                               'text' => $row->text,
                               'ntId' => $row->ntId,
@@ -75,7 +76,7 @@
 	function get_answer_data($nId)
 	{
 
-       $sql = "select user.username,user.uId,
+       $sql = "select user.username,user.uId,user.avatar,
                         node.text,node.ntId,node.langCode,node.time,node.stId,node.sendPlace
                 from user,node,node_relation
                 where   node.nId=$nId and
@@ -87,6 +88,7 @@
             foreach($query->result() as $row)
             {
                 $data = array('username' => $row->username,
+					 'avatar' => $row->avatar,
 				                  'uId' => $row->uId,
 									 'nId' => $nId,
                                 'text' => $row->text,
