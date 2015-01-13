@@ -46,12 +46,13 @@
         </div>
         <div class="right">
 			<div class="panel active" id="tuku">
-        		<div class="panel-heading">我的图库&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        		<div class="panel-heading">我的图库<div id="collect" class="pull-right">采集功能：
 				<?php if($user_info['ifcollect']==0){ ?>
-				<a style="background-color: #fff;border: 1px solid #545454;border-radius: 4px;color: #535353;display: inline-block;font-size:14px;line-height:30px;" href="javaScript:set_collect(<?php echo $user_info['uId']?>,1)">采集/开启</a>
+				<a class="btn" href="javaScript:set_collect(<?php echo $user_info['uId']?>,1)">开　启</a>
 				<?php }else{?>
-				<a style="background-color: #fff;border: 1px solid #545454;border-radius: 4px;color: #535353;display: inline-block;font-size:14px;line-height:30px;" href="javaScript:set_collect(<?php echo $user_info['uId']?>,0)">采集/关闭</a>
+				<a class="btn" href="javaScript:set_collect(<?php echo $user_info['uId']?>,0)">关　闭</a>
 				<?php }?>
+				</div>
 				</div>
                 <div class="panel-body">
                     <ul class="img-list">

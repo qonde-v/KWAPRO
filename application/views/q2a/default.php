@@ -44,7 +44,7 @@ function PlayEve(){
 </script>
 </head>
 <div class="container">
- <?php include("header.php"); ?>
+ <?php include("header_d.php"); ?>
 <!------------ 头部结束 ------------->
 
 

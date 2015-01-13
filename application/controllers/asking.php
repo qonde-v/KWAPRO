@@ -10,6 +10,7 @@ class Asking extends CI_Controller
 		$this->load->model('q2a/Auth');
 		$this->load->model('q2a/Load_common_label');
 		$this->load->model('q2a/Mashup_search');
+		$this->load->model('q2a/Right_nav_data');
                 $this->load->model('q2a/Expert_finder');
                 $this->load->driver('cache');
 	}
@@ -25,14 +26,17 @@ class Asking extends CI_Controller
 		$label = $this->load_asking_label($lang);
 		$common_label = $this->Load_common_label->load_common_label($lang);
 		$data = array_merge($data,$label,$common_label);
-                $data['keyword'] = $this->input->get('search',TRUE);
-                
-                if(!empty ($data['keyword']))
-                {
-                    $data['mashup_data'] = $this->search_data_request(array('uId'=>$uId,'base'=>$data['base'],'keyword'=>$data['keyword']));
-                    $data['expert_data'] = $this->Expert_finder->get_expert_by_topic($data['mashup_data']['tags'], $uId);
-                }
-                $this->load->view('q2a/asking',$data);
+		$right_data = $this->Right_nav_data->get_rgiht_nav_data($uId);
+	   $data = array_merge($right_data,$data);
+
+		$data['keyword'] = $this->input->get('search',TRUE);
+		
+		if(!empty ($data['keyword']))
+		{
+			$data['mashup_data'] = $this->search_data_request(array('uId'=>$uId,'base'=>$data['base'],'keyword'=>$data['keyword']));
+			$data['expert_data'] = $this->Expert_finder->get_expert_by_topic($data['mashup_data']['tags'], $uId);
+		}
+		$this->load->view('q2a/asking',$data);
 	}
 	
         //get mashup data
@@ -48,12 +52,12 @@ class Asking extends CI_Controller
                 
                 $final_data = array();
                 $ret_data = array();
-                $mashup_data = $this->cache->memcached->get($keyword);
-                if(empty($mashup_data))
-                {
+                //$mashup_data = $this->cache->memcached->get($keyword);
+                //if(empty($mashup_data))
+                //{
                     $mashup_data = $this->Mashup_search->kwapro_box_search(array('text'=>$keyword, 'uId'=>$uId),5);
-                    $this->cache->memcached->save($keyword,$mashup_data,600);
-                }
+                    //$this->cache->memcached->save($keyword,$mashup_data,600);
+                //}
                 
                 if(!empty ($mashup_data))
                 {

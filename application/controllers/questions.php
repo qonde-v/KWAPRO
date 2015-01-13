@@ -56,6 +56,71 @@
 	   $this->load->view('q2a/private_question',$data);
 	}
 
+	function latest()
+	{
+	  // $this->output->enable_profiler(TRUE);
+	   $data = array();
+	   $user_id = "";
+
+       $language = $this->Ip_location->get_language();
+
+	   if($this->Auth->login_check())
+	   {
+	     $user_id = $this->session->userdata('uId');
+		 $data['login'] = "login";
+	   }
+
+	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
+	   $data = array_merge($right_data,$data);
+	   $data['headphoto_path'] = $this->User_data->get_user_headphotopath($user_id);
+	   $data['css_name'] = $this->Auth->ie_browser_check() ? $this->config->item('css4ie') : 'css';
+       $data['base'] = $this->config->item('base_url');
+	   $data['question_view'] = $this->generate_latest_question_view($user_id);
+	   $data['left_part_view'] = $this->generate_left_part_view($language);
+       $data['language'] = $language;
+       $label = $this->load_label($language);
+       $data = array_merge($data,$label);
+	   $this->load->view('q2a/latest_question',$data);
+	}
+
+	function generate_latest_question_view($uId)
+	{
+	   $html_view = "";
+	   $base = $this->config->item('base_url');
+	   $question_data_arr = $this->Question_process->get_latest_asked_question($uId,array('start'=>0,'end'=>5));
+       $language = $this->Ip_location->get_language();
+
+	   foreach($question_data_arr as $data)
+	   {
+            if(!$this->Auth->login_check())
+	        {
+		        $data['unlogin'] = "unlogin";
+	        }
+		   $data['base'] = $base;
+		   $data['homepage'] = "home";
+		   $data['question_answer_num'] = $this->Question_data->get_answer_num($data['nId']);
+		   $data['headphoto_path'] = $this->User_data->get_user_headphotopath($data['uId']);
+
+           //$label = $this->load_single_item_label($language);
+           //$data = array_merge($data,$label);
+
+		   //$html_view .= $this->load->view('q2a/mainleft/question_item',$data,true);
+	   }
+
+	   return $question_data_arr;
+	}
+	function generate_left_part_view($lang)
+	{
+		$data = array();
+		$this->lang->load('update',$lang);
+		$data['update_label'] = $this->lang->line('update_label');
+		$data['update_internal_test'] = $this->lang->line('update_internal_test');
+		
+		$this->lang->load('home',$lang);
+		$data['home_left_rss_news'] = $this->lang->line('home_left_rss_news');
+		return $this->load->view('q2a/mainleft/home_left',$data,true);
+	}
+
     //return the number of question that display in page
 	function get_pre_Q_num()
 	{
@@ -99,12 +164,12 @@
 
 	   $data = $this->Question_process->get_user_asked($uId,$range);
 
-	   $retStr = "";
+	   /*$retStr = "";
 	   foreach($data as $item)
 	   {
 	      $retStr .= $this->question_item_view($item);
-	   }
-	   return $retStr;
+	   }*/
+	   return $data;
 	}
 
 	function call_myasked_question_load()
@@ -121,14 +186,14 @@
 
 	   $uId = $this->session->userdata('uId');
 	   $data = $this->Question_process->get_user_answered($uId, $range);
-dump($data);
-	   $retStr = "";
+
+	   /*$retStr = "";
 	   foreach($data as $item)
 	   {
 	      $item_html = $this->question_item_view($item);
 	      $retStr .= $item_html;
-	   }
-	   return $retStr;
+	   }*/
+	   return $data;
 	}
 	
 	function call_myanswered_question_load()

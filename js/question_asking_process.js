@@ -1,7 +1,7 @@
 function question_ask_process(options)
 {
 	$('#'+options['submit_id']).click(function(){
-            $('#'+options['submit_id']).button('loading');
+            //$('#'+options['submit_id']).button('loading');
             var text = $('#'+options['text_id']).val();
             var tags = $('#'+options['tag_id']).val();
             var expert_id_str = get_select_expert_id_str(options['expert_cname']);
@@ -28,7 +28,7 @@ function _ajax_submit_question(para_data)
 		if(effect_id)
 		{
 		    effect_id = '#'+effect_id;	
-                    $(effect_id).button('reset');
+                    //$(effect_id).button('reset');
                     if(!isNaN(html))
                     {
                         var node_id = parseInt(html);

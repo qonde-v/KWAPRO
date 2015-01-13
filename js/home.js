@@ -1,12 +1,12 @@
 $(function(){
 	$('#header_home').addClass('active');
-	$('.online_user_image').popover();
+	//$('.online_user_image').popover();
 	//translate_popout_effect();
         //translate toggle
-        $('.translate_sw').live('click',function(){
+        /*$('.translate_sw').live('click',function(){
             var id_name = $(this).attr('id')+"_area";
             $("#"+id_name).slideToggle("normal");
-        });
+        });*/
 });
 
 /*function _ajax_translate_process(para_data)
