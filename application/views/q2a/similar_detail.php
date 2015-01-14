@@ -11,8 +11,9 @@ $(document).ready(function() {
 	$(".tab-btns a").click(function(){
 		$(".tab-btns a.black").removeClass("black");
 		$(this).addClass("black");
-		if($(this).attr("id") == "path"){
-			//$(".thumbs").show();
+		if($(this).attr("id") == "shushidu"){
+			$(".Comfort").show();
+			$(".surfacePlotDiv").hide();
 		}
 		else{
 			//$(".thumbs").hide();
@@ -30,20 +31,20 @@ $(document).ready(function() {
 <!------------ 内容开始 -------------> 
 <div id="sjlc" class="main flows"> 
 <div class="btns tab-btns">
-	<a id="path" href="javascript:;" class="black">舒适度</a>&nbsp;&nbsp;&nbsp;&nbsp;
-	<a href="javascript:;">皮肤湿度</a>
-	<a href="javascript:;">温度</a>
+	<a id="shushidu" href="javascript:;" class="black">舒适度</a>&nbsp;&nbsp;&nbsp;&nbsp;
+	<a id="shidu" href="javascript:;">皮肤湿度</a>
+	<a id="wendu" href="javascript:;">温度</a>
 </div>
-<div id="Comfort">
+<div id="Comfort" class="hide">
 </div>
-<div id='surfacePlotDiv'>
+<div id='surfacePlotDiv' class="">
 <!-- SurfacePlot goes here... -->
 	
 </div>
 </div>
 
 	  <?php
-		   $content = trim(file_get_contents($base.'SimResult/ComfortEvaluationRes.DAT'));
+		   $content = trim(file_get_contents($base.'cgi/SimPlan/ComfortEvaluationRes.DAT'));
 		   $arr = explode("\n", $content);
 		   $idx = 0;
 		   foreach ($arr as $v) {
@@ -176,7 +177,7 @@ $(document).ready(function() {
 
 <!-------------皮肤湿度开始---------------------->
     <?php
-	   $content = trim(file_get_contents($base.'SimResult/TempF.dat'));
+	   $content = trim(file_get_contents($base.'cgi/SimPlan/TempF.dat'));
 	   $arr = explode("\n", $content);
 	   $idx = 0;
 	   foreach ($arr as $v) {

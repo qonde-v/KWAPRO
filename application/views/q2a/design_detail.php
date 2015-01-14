@@ -42,30 +42,6 @@ function replace_em(str){
 		$("#design_pic").removeClass("hide");
 		$("#effect_pic").addClass("hide");
 	});
-
-	function subsim(design_id,demand_id)
-	{
-		var url = $('#base').val() + 'design/subsim/';
-		var post_str = 'design_id='+design_id+'&demand_id=' + demand_id;
-		
-		var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
-			subsim_n(html);
-			//window.location.reload();
-		}};
-		jQuery.ajax(ajax);
-	}
-
-	function subsim_n(fname)
-	{
-		var url = 'http://localhost/cgi-bin/GSim.cgi';
-		var post_str = 'Simplans='+fname+'&name=Henry';
-
-		var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
-			alert('提交成功');
-		}};
-		jQuery.ajax(ajax);
-	}
-
 	
 	function control(tt){
 		var html = document.getElementById('control_'+tt).innerHTML;
@@ -430,8 +406,8 @@ $(document).ready(function() {
                 </div>
 			</div>
             <div class="ysmlxz">样式的面料选择：
-			<a class="btn <?php if($design['status']==0) echo 'active';else echo '';?>" href="#" onclick="javascript:subsim(<?php echo $design['id'].','.$design['demand_id'];?>);">提交仿真</a>
-			<a class="btn <?php if($design['status']==1) echo 'active';else echo '';?>">等待仿真</a>
+			<a class="btn <?php if($design['status']==0) echo 'active';else echo '';?>" href="#" onclick="javascript:if(confirm('确定要提交仿真吗？')){subsim(<?php echo $design['id'].','.$design['demand_id'];?>);}">提交仿真</a>
+			<a class="btn <?php if($design['status']==1) echo 'active';else echo '';?>" href="javascript:alert('仿真进行中，请等待，谢谢');">等待仿真</a>
 			<a class="btn <?php if($design['status']==2) echo 'active';else echo '';?>" href="<?php echo $base.'design/similar_detail';?>">查看仿真</a></div>
             <div class="ysmlxz-content">
             	<table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -524,6 +500,19 @@ $(document).ready(function() {
 	<div class="modal-footer"><button class="btn primary" onclick="$('#msg_modal').addClass('hide');">确定</button></div>
 </div>
 
+
+<!------------提交仿真-------------->
+<div class="modal hide" id="iframe_modal" style="z-index:2000;">
+<iframe name="testIframeName" style="border:0;"></iframe>
+<button class="btn primary" onclick="$('#iframe_modal').addClass('hide');$('#iframe_modal_bg').addClass('hide');window.location.reload();">确定</button>
+</div>
+<div id="iframe_modal_bg" class="modal-backdrop hide"></div>
+<form id="submitform" style="display:none;" target="testIframeName" method="post" action="<?php echo $base.'cgi/GSim.cgi'?>">  
+<input type="text" id="name" name="name" value="Henry"/>  
+<input type="text" id="Simplans" name="Simplans" value=""/>  
+<input type="submit" value=" 提 交 " />  
+</form>  
+
 <!------------ 底部开始 ------------->
 <?php include("footer.php");?>
 <script src="<?php echo $base.'js/bootstrap-buttons.js';?>"></script>
@@ -583,6 +572,22 @@ function ajax_location_data(post_str,effect_id)
 				effect_id.prepend(option_html);
 			}
 		}
+	}};
+	jQuery.ajax(ajax);
+}
+function subsim(design_id,demand_id)
+{
+	var url = $('#base').val() + 'design/subsim/';
+	var post_str = 'design_id='+design_id+'&demand_id=' + demand_id;
+	
+	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
+		$('#Simplans').val('1SimPlan.xml');
+		$('#submitform').submit();
+		$('#iframe_modal_bg').removeClass('hide');
+		$('#iframe_modal').removeClass('hide');
+
+		//subsim_n(html);
+		//window.location.reload();
 	}};
 	jQuery.ajax(ajax);
 }
