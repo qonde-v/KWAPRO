@@ -23,7 +23,7 @@
 		 $this->load->model('q2a/Message_management');
                  $this->load->model('q2a/Mashup_search');
                  $this->load->model('q2a/Check_process');
-                 $this->load->driver('cache');
+                 //$this->load->driver('cache');
 
         }
 
@@ -61,12 +61,13 @@
 
 		   $question_data = $this->Question_data->get_dialogue_data($segs[2]);
                    
-		   //print_r($question_data);
+
 		  //$question_data['q']['question_answer_num'] = count($question_data['related']);
 		   $follow_data = array('user_id'=>$data['user_id'],'q_node_id'=>$data['q_node_id'],'collect_type'=>$data['collect_type']);
 
 		   $data['question_html_str'] = $this->generate_question_view(array_merge($question_data['q'],$follow_data));
-		   $data['reply_html_arr'] = $this->generate_reply_view($question_data['related']);
+		   //$data['reply_html_arr'] = $this->generate_reply_view($question_data['related']);
+		   $data['reply'] = $question_data['related'];
            //$data['quick_answer_html_str'] = $this->generate_quick_answer_view($question_data['quick_answer']);
 
 		   $label_data = $this->load_label($language);
@@ -144,7 +145,7 @@
                 $final_data = array('text'=>$text);
                 $ret_data = array();
                 
-                $mashup_data = $this->cache->memcached->get("question_related_data_".$node_id);
+                /*$mashup_data = $this->cache->memcached->get("question_related_data_".$node_id);
                 if(empty($mashup_data))
                 {
                     $mashup_data = $this->cache->memcached->get($text);
@@ -153,8 +154,8 @@
                         $mashup_data = $this->Mashup_search->kwapro_box_search(array('text'=>$text, 'uId'=>$uId),5);
                         $this->cache->memcached->save("question_related_data_".$node_id,$mashup_data,3600);
                     }
-                }
-				//$mashup_data = $this->Mashup_search->kwapro_box_search(array('text'=>$text, 'uId'=>$uId),5);
+                }*/
+				$mashup_data = $this->Mashup_search->kwapro_box_search(array('text'=>$text, 'uId'=>$uId),5);
                 
                 if(!empty ($mashup_data) && isset($mashup_data['search_result']))
                 {

@@ -89,9 +89,7 @@
 				$question_num = isset($activity_content_data[QUESTION]) ? $activity_content_data[QUESTION] : 0;
 				$follow_num = isset($activity_content_data[FOLLOW]) ? $activity_content_data[FOLLOW] : 0;
 				
-				$popover_content = "<div class='online_userinfo'><div class='online_userinfo_left'><img class='avatar_popover' src='".$base.$headphoto_path."'/></div>";
-				$popover_content .= "<div class='online_userinfo_right'>".$question_num.' '.$question_label.' '.$answer_num.' '.$answer_label.'<br>'.$follow_num.' '.$follow_label.' '.$kpc_score.' '.$kpc_label."</div>";
-				$item = array('headphoto_path'=>$headphoto_path,'user_id'=>$user_id, 'username'=>$username,'popover_content'=>$popover_content);
+				$item = array('headphoto_path'=>$headphoto_path,'user_id'=>$user_id, 'username'=>$username,'question_num'=>$question_num,'answer_num'=>$answer_num);
 				array_push($data,$item);
 			}
 		}

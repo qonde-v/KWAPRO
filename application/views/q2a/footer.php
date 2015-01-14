@@ -17,7 +17,6 @@
     </div>
   </div>
 
-<input type="hidden" value="<?php echo $base;?>" id="header_base" />
 
 <script type="text/javascript">
 $(document).ready(function() {

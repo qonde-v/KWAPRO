@@ -19,9 +19,11 @@ img{ border:none; }
 .text-red{ color:#F00; }
 .pull-left {float:left;}
 .pull-right {float:right;}
+.relative{ position:relative; }
 
 .hide{ display:none !important; }
 
+.modal{ position:absolute; left:28%; top:16%; background-color:#fff; z-index:2; display:; }
 .modal.login { width:605px; height:375px; background:url(../img/denglu_bg.png) no-repeat;display:none; }
 .modal.login .login-main{  position:relative; padding:119px 15%; }
 .login-main .input-control{ width:100%; border-radius:6px; background-color:#fff; height:50px; margin-bottom:5px; overflow:hidden; }
@@ -274,6 +276,9 @@ img{ border:none; }
 .search-box input{ height:30px; line-height:30px; padding:0 10px; width:270px; background-color:transparent; border-width:0; color:#c0c0c0; }
 .search-box a.search-btn{ display:block; float:right; width:30px; height:30px; }
 
+.head .search-box{ position:absolute; right:110px; top:40px; background:url(../img/index_ssbg.png) no-repeat; width:402px; height:30px; overflow: hidden; }
+.head .search-box input{ width:350px; }
+.head .search-box a.search-btn{ display:block; float:right; width:30px; height:30px; }
 
 
 .media{ height:195px; margin-bottom:10px; }
@@ -388,6 +393,8 @@ li.share{ width:40px; height:40px; cursor:pointer; }
 
 #personalSpace .lists .right .panel{ margin-right:8px; background-color:#fbfbfb; height:100%; }
 #personalSpace .lists .right .panel-heading{ background-color:transparent; border-bottom-width:0; font-weight:bold; font-size:14px; line-height:16px; padding:3px 5px; }
+#personalSpace .lists .right .panel-heading #collect{ font-size:16px; color:#777; }
+#personalSpace .lists .right .panel-heading #collect a.btn{ background-color:#fe5e03; color:#fff; font-size:14px; padding:4px 20px; border-radius:4px; }
 #personalSpace .lists .right .panel-body{ background-color:transparent; padding:5px; }
 #personalSpace .main-list li { overflow: auto; background-color:#fff; border:1px solid #eaeaea; border-radius:4px; margin-bottom:15px; padding:20px; position:relative; }
 #personalSpace .main-list li .btns{ position:absolute; right: 16px; top: 13px; }
@@ -807,6 +814,61 @@ td.borderleft0{ padding:10px 0; }
 .heads-row img{ width:126px; height:126px; }
 
 
+#qa1 .info{ background-color:#f1f2f6; padding:10px; overflow:auto; }
+#qa1 .info img{ margin-right:30px; width:125px; height:125px; }
+#qa1 .info span{ display:block; font-size:18px; color:#999; line-height:44px; }
+#qa1 .info p{ font-size:22px; color:#ff9501; }
+#qa1 .info-bottom{ text-align:right; background-color:#f5f6f8; font-size:14px; color:#767676; line-height:82px; }
+#qa1 .info-bottom .btn{ background-color:#535353; color:#fff; font-size:22px; padding:8px 68px; border-radius:4px; margin:0 15px; }
+
+#qa2 .info,#qa2 .qa-lists{ padding:0 10px; overflow:auto; }
+#qa2 .left,#qa2 .right{ float:left; }
+#qa2 .left{ width:25%; }
+#qa2 .info .left{ background-color:#f1f2f6; }
+.qa{ color:#929292; font-size:16px; line-height:30px; }
+#qa2 .info .left img{ margin-bottom:8px; margin-left:5px; margin-right:10px; }
+#qa2 .right{ width:75%; }
+#qa2 .info .right{ position:relative; overflow:hidden; height:149px; }
+#qa2 .info .right img{ width:100%; position:absolute; left:0px; top:-30px; }
+.qa-lists .list_title{ line-height:52px; font-size:16px; font-weight:lighter; text-indent:10px; }
+.onlinelists li{ width:50%; float:left; position:relative; height:65px; margin-bottom:10px; }
+.onlinelists li img{ width:62px; height:62px; position:absolute; left:5px; top: 0;}
+.onlinelists li span{ margin-left:75px; color:#929292; }
+.onlinelists li span strong{ color:#666; font-size:14px; line-height:25px; }
+#qa2 .right .panel-heading.black{ background-color:#777; color:#c3c3c3; padding: 5px 20px; font-size:18px; line-height:36px; margin-bottom:10px; }
+#qa2 .right .panel-heading.black input{ width:60%; height:36px; line-height:36px; margin:0 20px; border-radius:6px; border:none; font-size:16px; text-indent:15px; }
+.qa-lists .panel-body{ padding:0; background-color:transparent; }
+.qa-lists .main-list li{ background-color:#f1f2f6; margin-bottom:10px; padding:20px 30px; border-radius:6px 6px 0 0; }
+.qa-lists .main-list li .title{ font-size:22px; color:#313131; margin-bottom:12px; display:block; }
+.qa-lists .main-list li p{ font-size:14px; color:#616161; }
+.qa-lists .main-list li p.bottom{ margin-top:15px; }
+.qa-lists .main-list li p.bottom img{ width:30px; height:30px; margin-right:5px; }
+.qa-lists .main-list li p.bottom span{ font-size:15px; line-height:30px; margin-right:30px; }
+.qa-lists .main-list li p.bottom font{ font-size:15px; color:#c0c0c0; line-height:30px; margin-right:20px; }
+.qa-lists .main-list li p.bottom font.icon-clock{ background-position:0 2px; }
+.qa-lists .right .panel-heading.relative { height:38px; }
+.qa-lists .panel-footer { height:40px; padding-top:5px; }
+.qa-lists .panel-footer .btn-more{ display:block; width:186px; line-height:37px; font-size:16px; border:1px solid #a6a6a6; float:right; color:#535353; text-align:center; background:url(../img/xtb_a3.png) 20px 10px no-repeat #e3e2e8; border-radius:6px; text-indent:15px; }
+.qa-lists .relative .tab-btns{ position:absolute; top:0; left:0; }
+.qa-lists .relative .tab-btns li{ float:left; width:100px; text-align:center; }
+.qa-lists .relative .tab-btns li a{ font-size:16px; line-height:49px; color:#c4c4c4; display:block; }
+.qa-lists .relative .tab-btns li a.active{ background-color:#f1f2f6; color:#777; }
+
+#qa4 .info{ background-color:#f1f2f6; padding:22px 38px; }
+#qa4 .info .tabs{ overflow:auto; }
+#qa4 .info .title{ display:block; color:#ff9501; font-size:25px; line-height:60px; }
+#qa4 .info p{ font-size:14px; color:#777; }
+#qa4 .list_title a{ color:#999; font-size:16px; }
+#qa4 .list_title a img{ margin:12px 10px 0; }
+#qa4 .qa-lists .main-list li{ padding:10px 20px 15px 65px; position:relative; }
+#qa4 .qa-lists .main-list li img.header{ width:35px; height:35px; position:absolute; top:10px; left:20px; }
+#qa4 .qa-lists .main-list li .text-orange{ font-size:14px; line-height:36px; margin-bottom:10px; display:block; }
+#qa4 .qa-lists .main-list li p.bottom .message{ background:url(../img/xtp_xq.png) no-repeat; padding-left:35px; margin-left:10px; }
+#qa4 .qa-lists .main-list li p.bottom font.icon-clock { background-position: 0px 7px; margin-right:0; }
+.input-footer{ text-align:right; margin-top:15px; margin-bottom:30px; }
+.input-footer label{ font-size:16px; position:relative; line-height:37px; margin-right:30px; cursor:pointer;}
+.input-footer label input{ width:20px; height:20px; position:absolute; left:-20px; top:2px; }
+.input-footer a{ display:block; width:186px; line-height:37px; font-size:16px; border:1px solid #a6a6a6; float:right; color:#fff; text-align:center; border-radius:5px; background-color:#535353; }
 
 
 
