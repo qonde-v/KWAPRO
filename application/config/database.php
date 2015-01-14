@@ -42,6 +42,9 @@ $active_group = 'default';
 $active_record = TRUE;
 
 $db['default']['hostname'] = 'localhost';
+//$db['default']['hostname'] = '58.42.228.230';
+//$db['default']['username'] = 'tit';
+//$db['default']['password'] = 'kairen1048';
 //$db['default']['username'] = 'kwapro_user';
 //$db['default']['password'] = 'kwaprokendi851212';
 $db['default']['username'] = 'root';
