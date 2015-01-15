@@ -11,27 +11,67 @@
 <div class="container">
 <?php include("header.php"); ?>
 
-  <div id="qa1" class="main">
-	<div class="info">
-    	<img class="pull-left" src="<?php echo $base.$user_info['headphoto_path'];?>" />
-        <span>您的问题是：</span>
-        <p><?php echo isset($keyword)?$keyword: ""; ?></p>
-		<input type="hidden" id="question_text" value="<?php echo isset($keyword)?$keyword: ""; ?>"/>
-		<input type="hidden" id="keyword" value="<?php $tags= isset($mashup_data['tags'])?$mashup_data['tags']:array(); echo implode(',',$tags); ?>" />
+
+	  <div id="qa1" class="main">
+  <div class="outer">
+  	<div class="left">
+        <div class="info">
+                <img class="pull-left" src="<?php echo $base.$user_info['headphoto_path'];?>" />
+                <span>您搜索的内容是：</span>
+                <p><?php echo isset($keyword)?$keyword: ""; ?></p>
+            
+        </div>
+        <div class="info-bottom">
+            下面的信息没有给您带来帮助，您可以直接点击提问按钮进行问题的咨询
+            <a href="#"  id="question_submit" class="btn">提　问</a>
+        </div>
     </div>
-    <div class="info-bottom">
-    	下面信息没有给您带来帮助，请直接点击提问按钮
-        <a href="#" id="question_submit" class="btn">提　问</a>
+    <div class="right">
+    	<h1>熟悉该内容的用户</h1>
+    	<ul>
+        	<li>
+            	<img src="images/xiugai_tp_010.png" />
+                <label>test</label>
+                <p>1问题</p>
+                <p>0回答</p>
+            </li>
+            <li>
+            	<img src="images/xiugai_tp_010.png" />
+                <label>test</label>
+                <p>1问题</p>
+                <p>0回答</p>
+            </li>
+            <li>
+            	<img src="images/xiugai_tp_010.png" />
+                <label>test</label>
+                <p>1问题</p>
+                <p>0回答</p>
+            </li>
+            <li>
+            	<img src="images/xiugai_tp_010.png" />
+                <label>test</label>
+                <p>1问题</p>
+                <p>0回答</p>
+            </li>
+        </ul>
+       	</div>
     </div>
     <div class="qa-lists">
-        	<h3 class="list_title">相关问题与回复</h3>
         	<div class="panel">
+            	<div class="panel-heading black">相关问题与回复（3）
+                	<ul>
+                    	<li><a href="#">相关知识（2）</a></li>
+                        <li><a href="#">来自站内需求/设计库（3）</a></li>
+                        <li><a href="#">网上参考信息（5）</a></li>
+                    </ul>
+                	<a href="#" class="pull-right"><img src="<?php echo $base.'img/xtb_006.png'?>" /></a>
+                </div>
                   <div class="panel-body">
                     <ul class="main-list">
-					<?php if(!empty($mashup_data) && isset($mashup_data['data'])):
+                    	<?php if(!empty($mashup_data) && isset($mashup_data['data'])):
 						foreach($mashup_data['data'] as $item): 
 						if($item['type_string'] == $type_arr[$i]): 
-					?>                                            
+						?>                                            
                     	<li>
                         	<a href="<?php echo $item['url']; ?>" class="title"><?php echo $item['desc']; ?></a>
                             <p>留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言留言</p>
@@ -43,9 +83,9 @@
                             </p>
                         </li>
 						<?php 
-							endif;
-							endforeach; 
-							endif;
+						endif;
+						endforeach; 
+						endif;
 						?>
                     </ul>
                     <div class="panel-footer">
@@ -55,7 +95,6 @@
         </div>
     </div>
   </div>
-
 
 
  	<input type="hidden" value="<?php echo $base; ?>" id="header_base" />     
