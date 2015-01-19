@@ -2,6 +2,8 @@
   class Mashup_search extends CI_Model
   {
          var $is_question_more = 0;
+		 var $is_news_more = 0;
+		 var $is_demand_more = 0;
          var $is_rss_more = 0;
          var $is_note_more = 0;
          var $is_user_more = 0;
@@ -19,6 +21,8 @@
 	    $this->load->model('q2a/Sphinx_search');
             $this->load->model('q2a/Tag_process');
             $this->load->model('q2a/Question_data');
+			$this->load->model('q2a/News_data');
+			$this->load->model('q2a/Demand_management');
             $this->load->model('q2a/Rss_manage');            
             $this->load->model('q2a/Note_manage');
             $this->load->model('q2a/Search');
@@ -27,6 +31,8 @@
          function init_para()
          {
              $this->is_question_more = 0;
+			 $this->is_news_more = 0;
+			 $this->is_demand_more = 0;
              $this->is_rss_more = 0;
              $this->is_note_more = 0;
              $this->is_user_more = 0;
@@ -49,6 +55,15 @@
                 //retrieve mashup data from Q,R,N,U part
                 $question_data = $this->kwapro_Question_search($tag_data,$num);
                 $question_data = array('data'=>$question_data,'url_term'=>'question/','is_more'=>$this->is_question_more);
+
+				$news_data = $this->kwapro_News_search($tag_data,$num);
+                $news_data = array('data'=>$news_data,'url_term'=>'news/news_detail?id=','is_more'=>$this->is_news_more);
+
+				$demand_data = $this->kwapro_Demand_search($tag_data,$num);
+                $demand_data = array('data'=>$demand_data,'url_term'=>'demand/demand_detail?id=','is_more'=>$this->is_demand_more);
+
+				$design_data = $this->kwapro_Design_search($tag_data,$num);
+                $design_data = array('data'=>$design_data,'url_term'=>'design/design_detail?id=','is_more'=>$this->is_design_more);
                 
                 $rss_data = $this->kwapro_RSS_search($tag_data,$num);
                 $rss_data = array('data'=>$rss_data, 'url_term'=>'rss_message/article_detail/','is_more'=>$this->is_rss_more);
@@ -60,7 +75,7 @@
                 $user_data = array('data'=>$user_data,'url_term'=>'user_information/index/','is_more'=>$this->is_user_more);
                 
                 //return mashup data as search result
-                $mashup_data = array('Q'=>$question_data, 'R'=>$rss_data, 'N'=>$note_data, 'U'=>$user_data);
+                $mashup_data = array('Q'=>$question_data, 'D'=>$demand_data, 'N'=>$news_data, 'S'=>$design_data);
                 return array('search_result'=>$mashup_data,'T'=>$tag_data);
                
 	 }
@@ -146,6 +161,64 @@
                     {
 
                         $ret_data = $this->Question_data->get_question_text_id($qid_data);
+                    }
+                }
+                return $ret_data;
+	 }	
+
+	 function kwapro_News_search($data,$num)
+	 {
+                $ret_data = array();
+	 			$res = $this->Sphinx_search->news_search($data);
+                if(!empty($res) && isset($res['id_arr']))
+                {
+                    $total = isset($res['total']) ? $res['total'] : 0;
+                    $this->is_news_more = ($total>$num) ? 1:0;
+                    $total = ($total>$num) ? $num : $total; 
+                            
+                    $qid_data = array_slice($res['id_arr'],0, $total);
+                    if(!empty($qid_data))
+                    {
+
+                        $ret_data = $this->News_data->get_news_text_id($qid_data);
+                    }
+                }
+                return $ret_data;
+	 }
+	 function kwapro_Demand_search($data,$num)
+	 {
+                $ret_data = array();
+	 			$res = $this->Sphinx_search->demand_search($data);
+                if(!empty($res) && isset($res['id_arr']))
+                {
+                    $total = isset($res['total']) ? $res['total'] : 0;
+                    $this->is_demand_more = ($total>$num) ? 1:0;
+                    $total = ($total>$num) ? $num : $total; 
+                            
+                    $qid_data = array_slice($res['id_arr'],0, $total);
+                    if(!empty($qid_data))
+                    {
+
+                        $ret_data = $this->Demand_management->get_demand_text_id($qid_data);
+                    }
+                }
+                return $ret_data;
+	 }	
+	 function kwapro_Design_search($data,$num)
+	 {
+                $ret_data = array();
+	 			$res = $this->Sphinx_search->design_search($data);
+                if(!empty($res) && isset($res['id_arr']))
+                {
+                    $total = isset($res['total']) ? $res['total'] : 0;
+                    $this->is_design_more = ($total>$num) ? 1:0;
+                    $total = ($total>$num) ? $num : $total; 
+                            
+                    $qid_data = array_slice($res['id_arr'],0, $total);
+                    if(!empty($qid_data))
+                    {
+
+                        $ret_data = $this->Demand_management->get_design_text_id($qid_data);
                     }
                 }
                 return $ret_data;

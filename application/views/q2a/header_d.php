@@ -122,7 +122,7 @@ function hideLoginModal(){
 </div>
 <div class="modalBg" role="modal"></div>
 
-
+<input type="hidden" value="<?php if(isset($login))echo $login;else echo ''; ?>" id="logins" />
 <input type="hidden" value="<?php echo $base; ?>" id="header_base" />
 <input type="hidden" value="系统登录中，请稍候......" id="login_wait"/>
 <div id="login_msg_modal" class="modal hide">
