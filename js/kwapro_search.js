@@ -32,6 +32,7 @@ function autocomplete(options)
     {
          if(event.keyCode == 13)
          {
+			 if($('#logins').val()==''){showLoginModal();return;}
              var text = $(sid).val().trim();
              if(text !='')
              {
