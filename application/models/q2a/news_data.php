@@ -173,6 +173,18 @@
 		return 0;
 	 }
 
+	 function  get_news_text_id($id_arr)
+    {
+       $this->db->select('ID as id, title as text,content,viewnum,createTime as time');
+       $this->db->where_in('ID',$id_arr);
+       $query = $this->db->get('news');
+       if($query->num_rows() > 0)
+       {
+           return $query->result_array();
+       }
+       return array();
+    }
+
 
   }
 

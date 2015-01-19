@@ -69,7 +69,7 @@ class Asking extends CI_Controller
                         {
                             foreach($data['data'] as $item)
                             {
-                                $ret_data[] = array('type_string'=>$key,'desc'=>$item['text'],'url'=>$base.$data['url_term'].$item['id']);
+                                $ret_data[] = array('type_string'=>$key,'desc'=>$item['text'],'time'=>$item['time'],'url'=>$base.$data['url_term'].$item['id']);
                             }
                         }
                     }
