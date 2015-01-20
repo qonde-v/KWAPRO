@@ -35,6 +35,13 @@ class Asking extends CI_Controller
 		{
 			$data['mashup_data'] = $this->search_data_request(array('uId'=>$uId,'base'=>$data['base'],'keyword'=>$data['keyword']));
 			$data['expert_data'] = $this->Expert_finder->get_expert_by_topic($data['mashup_data']['tags'], $uId);
+
+			$url="http://58.42.228.230:3307/api/web_data.php?kw=".$data['keyword'];
+			$net_data = array();
+			$ret=file_get_contents($url);
+			$net_data=json_decode($ret,true);
+			$data['net_data'] = $net_data;
+
 		}
 		$this->load->view('q2a/asking',$data);
 	}
@@ -74,6 +81,7 @@ class Asking extends CI_Controller
                         }
                     }
                 }
+				
                 
             }//permission check
             $final_data['data'] = $ret_data;

@@ -33,7 +33,7 @@ function _ajax_submit_question(para_data)
                     {
                         var node_id = parseInt(html);
                         alert(options['finish_tips']);
-                        window.location.href = option['base_url'] + "question/" + node_id;
+                        //window.location.href = option['base_url'] + "question/" + node_id;
                     }
                     else
                     {
