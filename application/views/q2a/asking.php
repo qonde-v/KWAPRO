@@ -14,7 +14,7 @@ $(document).ready(function() {
 		$(this).css("color","#fff");
 		li=$(this).parent();
 		cur=li.index();
-		for(i=0;i<4;i++){
+		for(i=0;i<5;i++){
 			if(i==cur){
 				$('#tab'+i).css("display","");
 			}else{
@@ -85,6 +85,7 @@ $(document).ready(function() {
                     	<li><a href="#">相关知识</a></li>
                         <li><a href="#">来自站内需求库</a></li>
                         <li><a href="#">来自站内设计库</a></li>
+						<li><a href="#">网上参考信息</a></li>
                     </ul>
                 	<a href="#" class="pull-right"><img src="<?php echo $base.'img/xtb_006.png'?>" /></a>
                 </div>
@@ -174,6 +175,21 @@ $(document).ready(function() {
 						endif;?>
 						</span>
 
+						<span id='tab4' style="display:none;">
+						<?php foreach($net_data as $item): ?> 
+						<li>
+							<a href="<?php echo $item['link']; ?>" target="_blank" class="title"><?php echo $item['title']; ?></a>
+                            <p><?php echo utf8Substr($item['content'],0,100) ?></p>
+                            <p class="bottom">
+                            	<!-- <img class="pull-left" src="images/geren_tx.png" /><span class="text-orange"><?php echo $item['username']; ?></span> 
+                            	<font class="icon-clock">发布于<?php echo $item['time']; ?></font>
+                                <font class="view">查看数（28）</font>
+                    			<font class="design">回答数（4）</font> -->
+                            </p>
+						</li>
+						<?php endforeach; ?>
+						</span>
+
                     </ul>
                     <div class="panel-footer">
                     	<a href="#" class="btn-more">更多问题</a>
@@ -183,7 +199,15 @@ $(document).ready(function() {
     </div>
   </div>
 
-
+<?php   
+   //截取utf8字符串   
+   function utf8Substr($str, $from, $len)   
+   {   
+      return preg_replace('#^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,'.$from.'}'.   
+                         '((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,'.$len.'}).*#s',   
+                         '$1',$str);   
+   }   
+   ?>
 
  	<input type="hidden" value="<?php echo $base; ?>" id="header_base" />     
     	
@@ -197,7 +221,7 @@ $(document).ready(function() {
     <script src="<?php echo $base.'js/kwapro_search.js';?>" ></script> 
    <script>
 	$(function() {
-		question_ask_process({submit_id:'question_submit',expert_cname:'experts',text_id:'question_text',tag_id:'keyword', finish_tips:'<?php echo $asking_finish_tip;?>', base:'<?php echo $base; ?>'});
+		question_ask_process({submit_id:'question_submit',expert_cname:'experts',text_id:'question_text',tag_id:'keyword', finish_tips:'您的问题已提交，请等待回复！', base:'<?php echo $base; ?>'});
 	});
    </script>
 </html>   
