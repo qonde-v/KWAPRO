@@ -176,7 +176,8 @@ $(document).ready(function() {
 						</span>
 
 						<span id='tab4' style="display:none;">
-						<?php foreach($net_data as $item): ?> 
+						<?php if(!empty($net_data)):
+						foreach($net_data as $item): ?> 
 						<li>
 							<a href="<?php echo $item['link']; ?>" target="_blank" class="title"><?php echo $item['title']; ?></a>
                             <p><?php echo utf8Substr($item['content'],0,100) ?></p>
@@ -187,7 +188,7 @@ $(document).ready(function() {
                     			<font class="design">回答数（4）</font> -->
                             </p>
 						</li>
-						<?php endforeach; ?>
+						<?php endforeach; endif;?>
 						</span>
 
                     </ul>
