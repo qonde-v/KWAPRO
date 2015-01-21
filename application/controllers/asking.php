@@ -47,6 +47,10 @@ class Asking extends CI_Controller
 			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
 			$ret = curl_exec($ch);
+			if(curl_errno($ch))
+			 {
+				 print curl_error($ch);
+			 }
 			curl_close($ch);
 			$net_data=json_decode($ret,true);
 
