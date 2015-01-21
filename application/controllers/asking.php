@@ -38,8 +38,20 @@ class Asking extends CI_Controller
 
 			$url="http://58.42.228.230:3307/api/web_data.php?kw=".$data['keyword'];
 			$net_data = array();
-			$ret=file_get_contents($url);
+			//$ret=file_get_contents($url);
+			//$net_data=json_decode($ret,true);
+
+			$ch = curl_init();
+			$timeout = 5;
+			curl_setopt ($ch, CURLOPT_URL, $url);
+			curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+			$ret = curl_exec($ch);
+			curl_close($ch);
 			$net_data=json_decode($ret,true);
+
+
+
 			$data['net_data'] = $net_data;
 
 		}
