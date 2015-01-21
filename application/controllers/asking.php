@@ -36,7 +36,8 @@ class Asking extends CI_Controller
 			$data['mashup_data'] = $this->search_data_request(array('uId'=>$uId,'base'=>$data['base'],'keyword'=>$data['keyword']));
 			$data['expert_data'] = $this->Expert_finder->get_expert_by_topic($data['mashup_data']['tags'], $uId);
 
-			$url="http://58.42.228.230:3307/api/web_data.php?kw=".$data['keyword'];
+			//$url="http://58.42.228.230:3307/api/web_data.php?kw=".$data['keyword'];
+			$url="http://10.11.88.127/api/web_data.php?kw=".$data['keyword'];
 			$net_data = array();
 			//$ret=file_get_contents($url);
 			//$net_data=json_decode($ret,true);
@@ -49,7 +50,7 @@ class Asking extends CI_Controller
 			$ret = curl_exec($ch);
 			if(curl_errno($ch))
 			 {
-				 print curl_error($ch);
+				 print_r(curl_errno($ch));print curl_error($ch);
 			 }
 			curl_close($ch);
 			$net_data=json_decode($ret,true);
