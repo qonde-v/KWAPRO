@@ -44,7 +44,11 @@ $(document).ready(function() {
 </div>
 
 	  <?php
+<<<<<<< HEAD
 		   $content = trim(file_get_contents($base.'cgi/SimPlan/ComfortEvaluationRes.DAT'));
+=======
+		   $content = trim(file_get_contents($ComfortEvaluationRes));
+>>>>>>> fe267ea55aedfd264fe4c4b1fb28d79ba1d3b9e9
 		   $arr = explode("\n", $content);
 		   $idx = 0;
 		   foreach ($arr as $v) {
@@ -177,7 +181,11 @@ $(document).ready(function() {
 
 <!-------------皮肤湿度开始---------------------->
     <?php
+<<<<<<< HEAD
 	   $content = trim(file_get_contents($base.'cgi/SimPlan/TempF.dat'));
+=======
+	   $content = trim(file_get_contents($TempF));
+>>>>>>> fe267ea55aedfd264fe4c4b1fb28d79ba1d3b9e9
 	   $arr = explode("\n", $content);
 	   $idx = 0;
 	   foreach ($arr as $v) {
