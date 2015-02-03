@@ -175,6 +175,9 @@ $(document).ready(function() {
 
 
 <!-------------皮肤湿度开始---------------------->
+	<script type="text/javascript" src="<?php echo $base.'js/SurfacePlot.js';?>"></script>
+    <script type="text/javascript" src="<?php echo $base.'js/ColourGradient.js';?>"></script>
+    <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <?php
 	   $content = trim(file_get_contents($TempF));
 	   $arr = explode("\n", $content);
