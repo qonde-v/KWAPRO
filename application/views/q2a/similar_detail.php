@@ -43,7 +43,7 @@ $(document).ready(function() {
 </div>
 
 	  <?php
-		   $content = trim(file_get_contents($base.'SimResult/ComfortEvaluationRes.DAT'));
+		   $content = trim(file_get_contents($ComfortEvaluationRes));
 		   $arr = explode("\n", $content);
 		   $idx = 0;
 		   foreach ($arr as $v) {
@@ -176,7 +176,7 @@ $(document).ready(function() {
 
 <!-------------皮肤湿度开始---------------------->
     <?php
-	   $content = trim(file_get_contents($base.'SimResult/TempF.dat'));
+	   $content = trim(file_get_contents($TempF));
 	   $arr = explode("\n", $content);
 	   $idx = 0;
 	   foreach ($arr as $v) {
