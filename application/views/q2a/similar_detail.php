@@ -11,12 +11,19 @@ $(document).ready(function() {
 	$(".tab-btns a").click(function(){
 		$(".tab-btns a.black").removeClass("black");
 		$(this).addClass("black");
-		if($(this).attr("id") == "path"){
-			//$(".thumbs").show();
+		if($(this).attr("id") == "Comfort"){
+			$("#Comfort").removeClass('hide');
+			$("#surfacePlotDiv").addClass('hide');
+			$("#surfacePlotDiv1").addClass('hide');
 		}
-		else{
-			//$(".thumbs").hide();
-			//$('#detailname').html('整体');
+		else if($(this).attr("id") == "#surfacePlotDiv"){
+			$("#Comfort").addClass('hide');
+			$("#surfacePlotDiv").removeClass('hide');
+			$("#surfacePlotDiv1").addClass('hide');
+		}else{
+			$("#Comfort").addClass('hide');
+			$("#surfacePlotDiv").addClass('hide');
+			$("#surfacePlotDiv1").removeClass('hide');
 		}
 	});
 });
@@ -34,11 +41,11 @@ $(document).ready(function() {
 	<a href="javascript:;">皮肤湿度</a>
 	<a href="javascript:;">温度</a>
 </div>
-<div id="Comfort">
+<div id="Comfort" class='hide'>
 </div>
-<div id='surfacePlotDiv'>
-<!-- SurfacePlot goes here... -->
-	
+<div id='surfacePlotDiv'>	
+</div>
+<div id='surfacePlotDiv1'>	
 </div>
 </div>
 
