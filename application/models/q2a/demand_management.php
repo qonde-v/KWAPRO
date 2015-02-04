@@ -287,6 +287,30 @@
 		}
 	}
 
+	function  get_demand_text_id($id_arr)
+    {
+       $this->db->select('id, title as text,viewnum,createdate as time');
+       $this->db->where_in('id',$id_arr);
+       $query = $this->db->get('demand');
+       if($query->num_rows() > 0)
+       {
+           return $query->result_array();
+       }
+       return array();
+    }
+
+	function  get_design_text_id($id_arr)
+    {
+       $this->db->select('id, title as text,viewnum,createdate as time');
+       $this->db->where_in('id',$id_arr);
+       $query = $this->db->get('design');
+       if($query->num_rows() > 0)
+       {
+           return $query->result_array();
+       }
+       return array();
+    }
+
   }
   
   

@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 ini_set("memory_limit","100M");
   class Design extends CI_Controller
   {
@@ -172,13 +172,13 @@ ini_set("memory_limit","100M");
 				$html .= '		<a href="'.$base.'design/design_detail?id='.$item['id'].'" class="title">'. $i.'、'.$item['title'].'</a>';
 				$html .= '		<div class="btns">';
 				if($item['status']==0){
-					$html .= '<a href="#" onclick="javascript:subsim('.$item['id'].','.$item['demand_id'].')" >提交仿真</a>';
+					$html .= '<a href="#" onclick="javascript:if(confirm(\'确定要提交仿真吗？\')){subsim('.$item['id'].','.$item['demand_id'].')}" >提交仿真</a>';
 				}elseif($item['status']==1){
-					$html .= '<a href="#" class="black" >等待仿真</a>';
+					$html .= '<a href="javascript:alert(\'仿真进行中，请等待，谢谢\');" class="black" >等待仿真</a>';
 				}elseif($item['status']==2){
 					$html .= '<a href="'.$base.'design/similar_detail" class="black">查看仿真</a>';
 				}
-				$html .= '		<a href="'.$base.'design/order?id='.$item['id'].'">提交订单</a>';
+				$html .= '		<a href="javascript:;" onclick="showModal('.$item['id'].',\''.$item['title'].'\',\''.$item['createdate'].'\',\''.$item['design_pic'].'\',\''.$item['username'].'\') ">提交订单</a>';
 				$html .= '		</div>';
 				$html .= '		<p><span class="link link-liulan">浏览（'.$item['viewnum'].'）</span><span class="link link-liuyan">留言（'.$item['messnum'].'）</span><span class="pull-right">发布于'.$item['createdate'].'</span></p>';
 				$html .= '	</li>';
@@ -540,9 +540,9 @@ ini_set("memory_limit","100M");
 		//echo $xml;       
 		
 		//更新设计状态为等待仿真
-		$this->Demand_management->update_designstatus($design_id,1);
+		$this->Demand_management->update_designstatus($design_id,2);
 		
-		$filename = "c:\wamp\Apache2\cgi-bin\SP".$user_id.$design_id.".xml";
+		$filename = "d:\\xampp\htdocs\TIT\cgi\SimPlan\SP".$user_id.$design_id.".xml";
 		$f_name="SP".$user_id.$design_id.".xml";
 
 		$of = fopen($filename,'w');//创建并打开

@@ -160,8 +160,8 @@ $(document).ready(function() {
                         	<a href="<?php echo $base.'design/design_detail?id='.$item['id'];?>" class="title"><?php echo $i.'、'.$item['title']?></a>
                             <div class="btns">
 							<?php if($item['status']==0){?><a href="#" onclick="javascript:if(confirm('确定要提交仿真吗？')){subsim(<?php echo $item['id'].','.$item['demand_id'];?>);}">提交仿真</a><?php }?>
-							<?php if($item['status']==1){?><a href="javascript:alert('仿真进行中，结果将在第一时间发送给您，谢谢');" class="black">等待仿真</a><?php }?>
-							<?php if($item['status']==2){?><a href="<?php echo $base.'design/similar_detail';?>">查看仿真</a><?php }?>
+							<?php if($item['status']==1){?><a href="javascript:alert('仿真进行中，请等待，谢谢');" class="black">等待仿真</a><?php }?>
+							<?php if($item['status']==2){?><a href="<?php echo $base.'design/similar_detail';?>" class="black">查看仿真</a><?php }?>
 							<a  href="javascript:;" onclick="<?php echo 'showModal('.$item['id'].',\''.$item['title'].'\',\''.$item['createdate'].'\',\''.$item['design_pic'].'\',\''.$item['username'].'\')';?> ">提交订单</a>
 							</div>
                             <p><span class="link link-liulan">浏览（<?php echo $item['viewnum']?>）</span><span class="link link-liuyan">留言（<?php echo $item['messnum']?>）</span><span class="pull-right">发布于<?php echo $item['createdate']?></span></p>
@@ -294,6 +294,20 @@ $(document).ready(function() {
 	<div class="modal-footer"><button class="btn primary" onclick="$('#msg_modal').addClass('hide');">确定</button></div>
 </div>
 
+
+<!------------提交仿真-------------->
+<div class="modal hide" id="iframe_modal" style="left: 50%;width:330px;text-align:center;z-index:2000;">
+<iframe name="testIframeName" style="border:0;"></iframe><br>
+<span style="color:red;">请加载完成后再关闭该页面</span><br>
+<button class="btn primary" onclick="$('#iframe_modal').addClass('hide');$('#iframe_modal_bg').addClass('hide');window.location.reload();">确定</button>
+</div>
+<div id="iframe_modal_bg" class="modal-backdrop hide"></div>
+<form id="submitform" style="display:none;" target="testIframeName" method="post" action="<?php echo $base.'cgi/GSim.cgi'?>">  
+<input type="text" id="name" name="name" value="Henry"/>  
+<input type="text" id="Simplans" name="Simplans" value=""/>  
+<input type="submit" value=" 提 交 " />  
+</form>  
+
 <!------------ 底部开始 ------------->
 <?php include("footer.php");?>
 </div>
@@ -301,6 +315,7 @@ $(document).ready(function() {
 <script>
 $(function(){
 	$('.pagination ul li').live('click',switch_page);
+
 });
 
 function switch_page()
@@ -332,7 +347,12 @@ function subsim(design_id,demand_id)
 	var post_str = 'design_id='+design_id+'&demand_id=' + demand_id;
 	
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
-		subsim_n(html);
+		$('#Simplans').val('1SimPlan.xml');
+		$('#submitform').submit();
+		$('#iframe_modal_bg').removeClass('hide');
+		$('#iframe_modal').removeClass('hide');
+
+		//subsim_n(html);
 		//window.location.reload();
 	}};
 	jQuery.ajax(ajax);
@@ -340,11 +360,11 @@ function subsim(design_id,demand_id)
 
 function subsim_n(fname)
 {
-	var url = 'http://localhost/cgi-bin/GSim.cgi';
+	var url = $('#base').val() + '/cgi/GSim.cgi';
 	var post_str = 'Simplans='+fname+'&name=Henry';
 
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
-		alert('提交成功');
+		//alert('提交成功');
 	}};
 	jQuery.ajax(ajax);
 }

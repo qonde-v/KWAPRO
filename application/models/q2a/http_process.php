@@ -25,7 +25,8 @@
 	 	}
 	 	
 	 	$server_data['query'] = $query_str;
-	 	return $this->_send_http_request($server_data);
+		//tit提示fsockopen打开故障，故注释掉先
+	 	//return $this->_send_http_request($server_data);
 
 	 }
 	 

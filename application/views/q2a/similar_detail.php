@@ -11,12 +11,19 @@ $(document).ready(function() {
 	$(".tab-btns a").click(function(){
 		$(".tab-btns a.black").removeClass("black");
 		$(this).addClass("black");
-		if($(this).attr("id") == "path"){
-			//$(".thumbs").show();
+		if($(this).attr("id") == "Comfort"){
+			$("#Comfort").removeClass('hide');
+			$("#surfacePlotDiv").addClass('hide');
+			$("#surfacePlotDiv1").addClass('hide');
 		}
-		else{
-			//$(".thumbs").hide();
-			//$('#detailname').html('整体');
+		else if($(this).attr("id") == "#surfacePlotDiv"){
+			$("#Comfort").addClass('hide');
+			$("#surfacePlotDiv").removeClass('hide');
+			$("#surfacePlotDiv1").addClass('hide');
+		}else{
+			$("#Comfort").addClass('hide');
+			$("#surfacePlotDiv").addClass('hide');
+			$("#surfacePlotDiv1").removeClass('hide');
 		}
 	});
 });
@@ -36,14 +43,14 @@ $(document).ready(function() {
 </div>
 <div id="Comfort">
 </div>
-<div id='surfacePlotDiv'>
-<!-- SurfacePlot goes here... -->
-	
+<div id='surfacePlotDiv' class="hide">	
+</div>
+<div id='surfacePlotDiv1' class="hide">	
 </div>
 </div>
 
 	  <?php
-		   $content = trim(file_get_contents($base.'SimResult/ComfortEvaluationRes.DAT'));
+		   $content = trim(file_get_contents($ComfortEvaluationRes));
 		   $arr = explode("\n", $content);
 		   $idx = 0;
 		   foreach ($arr as $v) {
@@ -175,8 +182,11 @@ $(document).ready(function() {
 
 
 <!-------------皮肤湿度开始---------------------->
+	<script type="text/javascript" src="<?php echo $base.'js/SurfacePlot.js';?>"></script>
+    <script type="text/javascript" src="<?php echo $base.'js/ColourGradient.js';?>"></script>
+    <script type="text/javascript" src="<?php echo $base.'js/jsapi.js';?>"></script>
     <?php
-	   $content = trim(file_get_contents($base.'SimResult/TempF.dat'));
+	   $content = trim(file_get_contents($TempF));
 	   $arr = explode("\n", $content);
 	   $idx = 0;
 	   foreach ($arr as $v) {

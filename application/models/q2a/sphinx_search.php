@@ -47,6 +47,36 @@
 	 	return $this->sphinx_result_parse($res);
 	 }
 	 
+	 function news_search($keyword_arr, $range=array('start'=>0,'end'=>100))
+	 {
+	 	$this->sphinx_basic_setting($range);
+	 	$kw_str = implode(' ', $keyword_arr);
+                $this->sphinxclient->ResetFilters();
+	 	//$this->sphinxclient->SetFilter('aid',array(QUESTION));
+	 	$res = $this->sphinxclient->Query($kw_str ,'news_main;news_delta');
+	 	return $this->sphinx_result_parse($res);
+	 }
+
+	 function demand_search($keyword_arr, $range=array('start'=>0,'end'=>100))
+	 {
+	 	$this->sphinx_basic_setting($range);
+	 	$kw_str = implode(' ', $keyword_arr);
+                $this->sphinxclient->ResetFilters();
+	 	//$this->sphinxclient->SetFilter('aid',array(QUESTION));
+	 	$res = $this->sphinxclient->Query($kw_str ,'demand_main;demand_delta');
+	 	return $this->sphinx_result_parse($res);
+	 }
+
+	 function design_search($keyword_arr, $range=array('start'=>0,'end'=>100))
+	 {
+	 	$this->sphinx_basic_setting($range);
+	 	$kw_str = implode(' ', $keyword_arr);
+                $this->sphinxclient->ResetFilters();
+	 	//$this->sphinxclient->SetFilter('aid',array(QUESTION));
+	 	$res = $this->sphinxclient->Query($kw_str ,'design_main;design_delta');
+	 	return $this->sphinx_result_parse($res);
+	 }
+
 	 //
 	 function message_search($keyword_arr, $range=array('start'=>0,'end'=>100))
 	 {
