@@ -41,11 +41,11 @@ $(document).ready(function() {
 	<a href="javascript:;">皮肤湿度</a>
 	<a href="javascript:;">温度</a>
 </div>
-<div id="Comfort" class='hide'>
+<div id="Comfort">
 </div>
-<div id='surfacePlotDiv'>	
+<div id='surfacePlotDiv' class="hide">	
 </div>
-<div id='surfacePlotDiv1'>	
+<div id='surfacePlotDiv1' class="hide">	
 </div>
 </div>
 
