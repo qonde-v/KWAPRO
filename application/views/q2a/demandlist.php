@@ -49,7 +49,7 @@
             	<a class="title" href="<?php echo $base.'demand/demand_detail?id='.$item['id'];?>"><?=$item['title']?></a>
                 <ul class="views">
                     <li class="view">浏览（<?=$item['viewnum']?>）</li>
-                    <li class="design">设计（<?=$item['designnum']?>）</li>
+                    <li class="design">设计（<a href="<?php echo $base.'demand/demand_detail?id='.$item['id'];?>"><?=$item['designnum']?></a>）</li>
                   </ul>
                   <p></p>
                   <span class="bottom"><font class="icon-tag">发布人：<?=$item['username']?></font> <font class="icon-clock">发布于<?=$item['createdate']?></font><font class="pull-right"><?php $days=round((time()-strtotime($item['createdate']))/3600/24); if($days<15)echo (15-$days).'天后截止';else echo '已截止';?></font></span>
