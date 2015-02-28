@@ -322,11 +322,14 @@ function designok()
 			$('#msg_modal').removeClass("hide");
 			$('#msg_modal').show();
 		}else{
-			$("#flow5").html(html);
+			var strs= new Array(); //定义一数组
+			strs=html.split("&&&&"); //字符分割 
+	
+			$("#flow5").html(strs[0]);
 			$(".tab-content.active").removeClass("active");
 			$("#flow5").addClass("active");
 			if(confirm('是否要分享到微博')){
-				window.open('http://v.t.sina.com.cn/share/share.php?title=嗨，我刚才发布了一个休闲服装设计'+$('#d_url').attr('href')+'，来来提提意见呗？&url=&source=bookmark');
+				window.open('http://v.t.sina.com.cn/share/share.php?title=嗨，我刚才发布了一个休闲服装设计'+$('#base').val()+'design/design_detail?id='+strs[1]+'，来来提提意见呗？&url=&source=bookmark');
 			}
 		}
 

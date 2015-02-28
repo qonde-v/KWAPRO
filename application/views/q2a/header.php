@@ -2,8 +2,8 @@
         <script src="<?php echo $base.'js/bootstrap-dropdown.js';?>"></script>
         <script src="<?php echo $base.'js/bootstrap-buttons.js';?>"></script>
         <script src="<?php echo $base.'js/bootstrap-popover.js';?>"></script>
-	<script src="<?php echo $base.'js/bootstrap-modal.js';?>"></script> -->
-<script src="<?php echo $base.'js/home.js';?>"></script>
+	<script src="<?php echo $base.'js/bootstrap-modal.js';?>"></script> 
+<script src="<?php echo $base.'js/home.js';?>"></script>-->
  <script src="<?php echo $base.'js/login.js';?>" ></script>
 
 <script type="text/javascript"> 
@@ -49,7 +49,7 @@ function hideLoginModal(){
     <div class="logo pull-left"> <a href="<?php echo $base;?>"><img src="<?php echo $base.'img/logo.png';?>" /></a> </div>
 	<form>
 	<div class="search-box">
-    	<input type="text" id="search" name="search" placeholder="搜索休闲服装知识、动态" />
+    	<input type="text" id="search" placeholder="搜索休闲服装知识、动态" />
         <a href="#" class="search-btn"></a>
     </div>
 	</form>
@@ -132,5 +132,4 @@ function hideLoginModal(){
 </div>
 <div id="login_modal_bg" class="modal-backdrop hide"></div>
 
-<input type="hidden" value="<?php echo $base;?>" id="header_base" />
   <script src="<?php echo $base.'js/kwapro_search.js';?>" ></script>

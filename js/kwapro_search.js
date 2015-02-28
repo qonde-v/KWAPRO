@@ -36,7 +36,8 @@ function autocomplete(options)
              var text = $(sid).val().trim();
              if(text !='')
              {
-                window.location.href = $('#header_base').val() + "asking/?search="+encodeURI(text);
+				 url=$('#header_base').val() + "asking/?search="+encodeURI(text);
+                window.location.href = url;
              }
              else
              {

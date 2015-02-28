@@ -123,10 +123,15 @@ function updatestatus(demand_id,status)
 	
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
 		//alert(html);
-		window.location.reload();
+		//window.location.reload();
+		setTimeout("window.location.reload();",100);
 	}};
 	jQuery.ajax(ajax);
-	//
+	if(status==1){
+		if(confirm('是否要分享到微博')){
+			window.open('http://v.t.sina.com.cn/share/share.php?title=嗨， 我刚才发布了一个休闲服装功能需求'+$('#base').val()+'demand/demand_detail?id='+demand_id+'， 帮我来设计一下吧？&url=&source=bookmark');
+		}
+	}
 }
 </script>
 
