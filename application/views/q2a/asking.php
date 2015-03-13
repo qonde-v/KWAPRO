@@ -188,8 +188,8 @@ $(document).ready(function() {
                             <p><?php echo utf8Substr($item['content'],0,100) ?></p>
                             <p class="bottom">
                             	<!-- <img class="pull-left" src="images/geren_tx.png" /><span class="text-orange"><?php echo $item['username']; ?></span>  -->
-                            	<font class="icon-clock">时间<?php echo $item['time']; ?></font>
-                                <font class="view">来源<?php echo $item['source']; ?></font>
+                            	<font class="icon-clock">时间：<?php echo $item['time']; ?></font>
+                                <font class="view">来源：<?php echo $item['source']; ?></font>
                             </p>
 						</li>
 						<?php endforeach; endif;
