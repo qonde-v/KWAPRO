@@ -182,7 +182,7 @@ $(document).ready(function() {
 
 						<span id='tab4' style="display:none;">
 						<?php if(!empty($net_data)):$i=0;
-						foreach($net_data as $item): $i++;print_r($item);?> 
+						foreach($net_data as $item): $i++;?> 
 						<li>
 							<a href="<?php echo $item['link']; ?>" target="_blank" class="title"><?php echo $item['title']; ?></a>
                             <p><?php echo utf8Substr($item['content'],0,100) ?></p>
