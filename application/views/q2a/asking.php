@@ -182,15 +182,14 @@ $(document).ready(function() {
 
 						<span id='tab4' style="display:none;">
 						<?php if(!empty($net_data)):$i=0;
-						foreach($net_data as $item): $i++;?> 
+						foreach($net_data as $item): $i++;print_r($item);?> 
 						<li>
 							<a href="<?php echo $item['link']; ?>" target="_blank" class="title"><?php echo $item['title']; ?></a>
                             <p><?php echo utf8Substr($item['content'],0,100) ?></p>
                             <p class="bottom">
-                            	<!-- <img class="pull-left" src="images/geren_tx.png" /><span class="text-orange"><?php echo $item['username']; ?></span> 
-                            	<font class="icon-clock">发布于<?php echo $item['time']; ?></font>
-                                <font class="view">查看数（28）</font>
-                    			<font class="design">回答数（4）</font> -->
+                            	<!-- <img class="pull-left" src="images/geren_tx.png" /><span class="text-orange"><?php echo $item['username']; ?></span>  -->
+                            	<font class="icon-clock">时间<?php echo $item['time']; ?></font>
+                                <font class="view">来源<?php echo $item['source']; ?></font>
                             </p>
 						</li>
 						<?php endforeach; endif;
