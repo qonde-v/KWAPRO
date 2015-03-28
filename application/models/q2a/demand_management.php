@@ -252,7 +252,15 @@
            $this->db->update('design');
      }
 
-
+	 function savesimilar($design_id,$status,$memo,$similarpic)
+     {
+           $this->db->where('id',$design_id);
+           $this->db->set('status', $status);
+		   $this->db->set('memo', $memo);
+		   $this->db->set('similarpic', $similarpic);
+		   $this->db->set('similardate', date("Y-m-d H:i:s", time()));
+           $this->db->update('design');
+     }
 	 
 	//check if title of demand exist or not
 	function demand_title_exist($title)

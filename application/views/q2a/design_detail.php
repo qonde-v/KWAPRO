@@ -408,7 +408,7 @@ $(document).ready(function() {
             <div class="ysmlxz">样式的面料选择：
 			<a class="btn <?php if($design['status']==0) echo 'active';else echo '';?>" href="#" onclick="javascript:if(confirm('确定要提交仿真吗？')){subsim(<?php echo $design['id'].','.$design['demand_id'];?>);}">提交仿真</a>
 			<a class="btn <?php if($design['status']==1) echo 'active';else echo '';?>" href="javascript:alert('仿真进行中，请等待，谢谢');">等待仿真</a>
-			<a class="btn <?php if($design['status']==2) echo 'active';else echo '';?>" href="<?php echo $base.'design/similar_detail';?>">查看仿真</a></div>
+			<a class="btn <?php if($design['status']==2) echo 'active';else echo '';?>" href="<?php echo $base.'design/similar_detail?id='.$design['id'].'&uid='.$design['uId'];?>">查看仿真</a></div>
             <div class="ysmlxz-content">
             	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				  <?php if($design['fabric']!=0){?>
