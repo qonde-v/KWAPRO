@@ -90,7 +90,7 @@
 
 	function downloads(){
 		$name = $_GET['fn'];
-		$base_dir='D:/wamp/www/TIT/';
+		$base_dir='D:/xampp/htdocs/TIT/cgi/SimPlan/SP';
 		$filename = $base_dir.$name;
 		if (!file_exists($filename)){
 			header("Content-type: text/html; charset=utf-8");
