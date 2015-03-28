@@ -136,7 +136,7 @@
 			$user_id = $this->session->userdata('uId');
 			//print_r($_FILES);
 			$msg = $this->Photo_upload->user_photo_upload(array('user_id'=>$user_id, 'file_id'=>'f_pic'.$_GET['type']));
-			if($msg['msg'] == 'UPDATE_SUCCESS')
+			if(isset($msg['msg']) && $msg['msg'] == 'UPDATE_SUCCESS')
 			{
 				/*if($_GET['type']==1){
 					$file_name = $this->security->sanitize_filename($_FILES['f_design']['name']);

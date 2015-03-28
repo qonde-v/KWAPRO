@@ -270,8 +270,8 @@ function designok()
 	data['fabric'] = $('#fabric').val();
 	data['type'] = $('#type').val();
 	if(data['title']=='') hint=hint+'请输入作品名称<br/>';
-	if(data['design_pic']=='') hint=hint+'请上次设计文件<br/>';
-	if(data['effect_pic']=='') hint=hint+'请上传产品效果图<br/>';
+	if(data['design_pic']=='' || data['effect_pic']=='') hint=hint+'请上传设计文件或产品效果图<br/>';
+	//if(data['effect_pic']=='') hint=hint+'请上传产品效果图<br/>';
 	if(data['description']=='') hint=hint+'请输入对设计的描述<br/>';
 	if($('#path').attr('class')=='' && data['fabric']=='') hint=hint+'请选择整体面料<br/>';
 	
