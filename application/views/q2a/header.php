@@ -70,6 +70,7 @@ function hideLoginModal(){
             <li><a href="<?php echo $base.'news?type=21';?>">知识广场</a></li>
 			<?php if($user_info['permission']){?>
 			<li><a href="<?php echo $base.'order/orderlist';?>">订单管理</a></li>
+			<li><a href="<?php echo $base.'similarmanage';?>">仿真管理</a></li>
 			<?}?>
             <li><a href="<?php echo $base."login/logout";?>">退　　出</a></li>
         </ul>
