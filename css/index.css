@@ -15,6 +15,7 @@ img{ border:none; }
 .text-right{ text-align:right; }
 .text-center{ text-align:center; }
 .text-orange{ color:#f66e00; }
+.text-green{ color:#2a830a; }
 .text-gray{ color: #aeaeae; }
 .text-red{ color:#F00; }
 .pull-left {float:left;}
@@ -429,35 +430,70 @@ li.share{ width:40px; height:40px; cursor:pointer; }
 #messager-order .order-info{ overflow:auto; background-color:#f1f2f6; padding:10px 0 10px 10px; }
 .messager{ width:11.8%; text-align:center; }
 .messager label{ padding-top:5px; display:block; color:#a9a9a9; }
+.fz .messager label{ padding-top:15px; text-align:left; display:block; color:#333; font-size:14px; padding-left:29px; }
+.fz .messager label img{ float:left; margin-top:-10px;  }
 #messager-order .order-texts{ width:88.2%; }
 #messager-order .order-texts .title{ padding:14px 20px 14px 70px; font-size:14px; }
+#messager-order.fz .order-texts .title{ padding:0px 80px 8px 0px; font-size:14px; color:#999; }
 #messager-order .order-texts .title a{ font-size:14px; color:#333; *margin-top:-36px; *margin-right:15px; }
+#messager-order.fz .order-texts .title a{ color:#999; text-decoration:none; }
 .underline{ text-decoration:underline; }
 #messager-order .texts{ padding-left:14px; padding-top:10px; }
 #messager-order .texts li{ width:24.8%; float:left; text-align:center; border-right:1px solid #dadbde; }
+#messager-order.fz .texts li{ border-right:none; width:16%; margin-left:7.333%; margin-right:10%; }
 #messager-order .texts li.noborder{ border:none; }
 #messager-order .texts li a{ display:block; font-size:36px; color:#0473fc; }
+#messager-order.fz .texts li a{ background-color:#fff; color:#085ba9; border-radius:8px; }
 .texts li label{ line-height:24px; font-size:16px; color:#a9a9a9; }
+.fz .texts li label{ color:#777; }
 #messager-order .nav-tabs{ margin:0; border-radius:15px 15px 0 0; }
 #messager-order .nav li.tab-item{ width:25%; *width:24.94%; }
-#messager-order .nav li.tab-item a{ width:99.9%; border-radius:0; background:#777; border-right:1px solid #fff; font-size:18px; color:#b3b3b3; line-height:40px; }
+#messager-order.fz .nav li.tab-item{ width:33.3333%; *width:24.94%; }
+#messager-order .nav li.tab-item a{ width:99.6%; border-radius:0; background:#777; border-right:1px solid #fff; font-size:18px; color:#b3b3b3; line-height:40px; }
+#messager-order.fz .nav li.tab-item a{ color:#fff; }
 #messager-order .nav li.tab-item.active a{ color:#777; background:#d3d3d3;}
 #messager-order .tab-content {
     background-color: #F1f2f6;
     padding: 0 10px 0px;
 }
+#messager-order.fz .tab-content{padding-top:6px;}
 #messager-order .header,#messager-order .order-items ul{ overflow:auto; }
+#messager-order.fz .header{ background:#e3e2e8; margin:5px 0; border:1px solid #9e9ea0; border-radius:4px; }
 #messager-order .header li,#messager-order .order-items ul li{ width:12.5%; *width:12.49%; float:left; text-align:center; }
 #messager-order .header li{ line-height: 38px; color:#bababa; }
+#messager-order.fz .header li{ color:#535353; }
 #messager-order .order-items{ border:1px solid #ccc; padding:5px 0 0; background-color:#fff; box-shadow:0 0 3px #b0b0b0; margin-bottom:15px; }
 #messager-order .order-items ul li{ width:12.4%; line-height:60px; border-left:1px solid #f2f2f2; margin-top:14px;}
+#messager-order.fz .order-items ul li{ border:none; line-height:20px; margin-top:0; }
 #messager-order .order-items ul li.img,#messager-order .order-items ul li.text-left{ line-height:20px; border:none; margin:0; }
 #messager-order .order-items ul li.text-left{ text-align:left; }
 #messager-order .order-items ul li strong{ font-size:16px; display:block; margin-top:30px; }
 #messager-order .order-items img{ box-shadow:0 0 3px #b0b0b0; margin:3px; }
+#messager-order.fz .order-items img{ border-radius:4px; box-shadow:none; border:1px solid #ccc; }
+#messager-order.fz .order-items .xml{ padding-top:30px; }
+#messager-order.fz .order-items .xml label{ background-color:#fff; display:block; border-radius:8px; text-align:center; border:1px solid #ccc; line-height:25px; font-size:14px; padding:5px;}
+#messager-order.fz .order-items .xml label a{ font-size:14px; color:#ff7821; text-decoration:underline; margin:0 10px; }
+#messager-order.fz .order-items .upd{ width:57%; }
+#messager-order.fz .order-items .upload{ height: 37px; margin:3px 0;}
+#messager-order.fz .order-items .upload label{ text-align:right; display:inline-block; width:100px; color:#777; }
+#messager-order.fz .order-items .upload a{ text-align:center; padding:7px 15px; font-size:14px; margin-left:7px; border:1px solid #ccc; border-radius:6px; }
+#messager-order.fz .order-items .upload a.btn{  background-color:#4b4b4b; color:#fff; }
+#messager-order.fz .order-items .upload input[type='text']{ width:268px; height:34px; border-radius:4px; border:1px solid #ccc; }
+#messager-order.fz .order-items .step{ padding-top:50px; font-size:14px; width:9%; }
+#messager-order.fz .order-items .step span{ padding:8px 12px; background-color:#ff7822; font-size:16px; color:#fff; border-radius:6px;  }
 #messager-order .order-items .bottom{ padding:10px 20px; color:#aaa; background-color:#f5f5f5; }
+#messager-order.fz .order-items .bottom{ padding:10px 20px; color:#777; background-color:#e3e2e7; }
 #messager-order .order-items .bottom span{ margin-right:55px; }
 #messager-order .order-items .bottom a{ color:#aaa; *margin-top:-28px; }
+#messager-order.fz .modal{ position:fixed; left:30%; width:50%; border:1px solid #a3a4a8; border-radius:4px; background-color:#f1f2f6; z-index:1070; padding:0 5px 5px; }
+#messager-order.fz .modal-header{ font-size:14px; line-height:30px; }
+#messager-order.fz .modal-content{ padding: 30px 40px 24px 20px; background-color:#fff; overflow:auto; }
+#messager-order.fz .modal-content .form-label{ height:50px; }
+#messager-order.fz .modal-content label{ display:inline-block; width:10%; }
+#messager-order.fz .modal-content input,#messager-order.fz .modal-content select{ width:89%; height:30px; border-radius:6px; border:1px solid #ccc; }
+#messager-order.fz .modal-content .btns{ margin-top:20px; text-align:center; margin-bottom:50px; }
+#messager-order.fz .modal-content .btns a{ display:inline-block; width:110px; line-height:30px; font-size:14px; color:#545454; border:1px solid #545454; text-align:center; border-radius:4px; margin:0 5px; }
+#messager-order.fz .modal-content .btns a.black{ background-color:#454545; color:#fff; }
 
 .steps{ background:url(../img/xqlc_hui.png) 0 22px no-repeat; width:100%; height:80px; margin-top:24px; }
 .steps li{ width:188px; float:left; text-align:center; overflow:hidden; }
@@ -883,7 +919,19 @@ td.borderleft0{ padding:10px 0; }
 .input-footer label input{ width:20px; height:20px; position:absolute; left:-20px; top:2px; }
 .input-footer a{ display:block; width:186px; line-height:37px; font-size:16px; border:1px solid #a6a6a6; float:right; color:#fff; text-align:center; border-radius:5px; background-color:#535353; }
 
-
+#fangzhen .info{ background-color:#f1f2f6; padding:10px; overflow:auto; }
+#fangzhen .outer,#qa1 .outer .right ul{ overflow:auto; }
+#fangzhen .outer .right h1{ font-size:26px; font-weight:lighter; padding-bottom:15px; padding-top:5px; }
+#fangzhen .outer .right  ul li{ width:50%; float:left; height:75px; margin-bottom:10px; }
+#fangzhen .outer .right  ul li img{ width:75px; height:75px; float:left; margin-right:8px; }
+#fangzhen .outer .right  ul li label{ font-weight:bold; line-height:25px; font-size:16px; }
+#fangzhen .outer .right  ul li p{ line-height:20px; }
+#fangzhen .info img{ margin-right:30px; width:125px; height:125px; }
+#fangzhen .info span{ display:block; font-size:18px; color:#999; line-height:44px; }
+#fangzhen .info p{ font-size:22px; color:#ff9501; }
+#fangzhen .info-bottom{ text-align:right; background-color:#f5f6f8; font-size:14px; color:#767676; line-height:82px; }
+#fangzhen .info-bottom .btn{ background-color:#535353; color:#fff; font-size:22px; padding:8px 68px; border-radius:4px; margin:0 15px; }
+#fangzhen .panel .panel-heading{ margin-bottom:10px; background-color:#767676; color:#fff; padding:12px 20px; border-radius:0; font-size:14px; }
 
 
 
@@ -924,7 +972,7 @@ td.borderleft0{ padding:10px 0; }
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 1000;
+  z-index: 10000;
   opacity:0.7;
 }
 .modal-backdrop.fade {
