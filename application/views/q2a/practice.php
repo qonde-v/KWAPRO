@@ -128,8 +128,9 @@ $(document).ready(function() {
 });
 function gonext(bu){
 	if(bu>=2){
-		if($("#design_img").length==0 || $("#effect_img").length==0 || $("#title").val()==''){
-			$('.modal-body').html('请将步骤一里的信息填写完整');
+		//if($("#design_img").length==0 || $("#effect_img").length==0 || $("#title").val()==''){
+		if($("#title").val()==''){
+			$('.modal-body').html('请填写设计作品名称');
 			$('#msg_modal').removeClass("hide");
 			return;
 		}
@@ -270,7 +271,7 @@ function designok()
 	data['fabric'] = $('#fabric').val();
 	data['type'] = $('#type').val();
 	if(data['title']=='') hint=hint+'请输入作品名称<br/>';
-	if(data['design_pic']=='' || data['effect_pic']=='') hint=hint+'请上传设计文件或产品效果图<br/>';
+	//if(data['design_pic']=='' || data['effect_pic']=='') hint=hint+'请上传设计文件或产品效果图<br/>';
 	//if(data['effect_pic']=='') hint=hint+'请上传产品效果图<br/>';
 	if(data['description']=='') hint=hint+'请输入对设计的描述<br/>';
 	if($('#path').attr('class')=='' && data['fabric']=='') hint=hint+'请选择整体面料<br/>';
