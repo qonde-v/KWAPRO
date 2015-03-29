@@ -133,7 +133,7 @@ function upload_succ()
 			<?php $i=0; foreach($designs as $item): $i++?>
             <div class="order-items" id="divcontent">
             	<ul>
-                	<li class="img"><img style="width:73px;height:116px;" src="<?php echo $base.$base_photoupload_path.'temp/'.$item['design_pic'];?>" /></li>
+                	<li class="img"><img style="width:73px;height:116px;" src="<?php if(!empty($item['design_pic'])) echo $base.$base_photoupload_path.'temp/'.$item['design_pic'];else echo $base.'img/default.jpg';?>" /></li>
                     <li class="xml"><label><?php echo $item['uId'].$item['id'].'.xml'?><br /><a class="download" href="<?php echo $base.'similarmanage/downloads?fn='.$item['uId'].$item['id'].'.xml'?>" id="xml_<?php echo $item['id'];?>" >点击下载</a></label></li>
                     <li class="upd">
 						<form id="form_pic1<?echo $item['id']?>" name="form_pic" action="" method="POST" onsubmit="return false;">
