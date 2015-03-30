@@ -264,8 +264,11 @@ function designok()
 	var data = new Array();
 	var hint = '';
 	data['title'] = $('#title').val();
-	data['design_pic'] = getFileName($('#design_img').attr('src'));
-	data['effect_pic'] = getFileName($('#effect_img').attr('src'));
+	//data['design_pic'] = getFileName($('#design_img').attr('src'));
+	//data['effect_pic'] = getFileName($('#effect_img').attr('src'));
+	if($('#design_img').length>0)data['design_pic'] = getFileName($('#design_img').attr('src'));else data['design_pic']='default.jpg';
+	if($('#effect_img').length>0)data['effect_pic'] = getFileName($('#effect_img').attr('src'));else data['effect_pic']='default.jpg';
+
 	data['demand_id'] = $('#demand_id').val();
 	data['description'] = $('#description').val();
 	data['fabric'] = $('#fabric').val();
@@ -524,7 +527,7 @@ function getFileName(path){
         	<div class="impression">
             	<div class="left">
                 	<div class="title">产品效果图</div>
-                    <img id="effectimg" src="" width="498" height="498"/>
+                    <img id="effectimg" width="498" height="498" src="<?echo $base.$base_photoupload_path.'temp/default.jpg';?>"/>
                 </div>
                 <div class="right">
                 	<div class="title">添加产品特色样式：<small>（添加细节图片）</small></div>
@@ -568,7 +571,7 @@ function getFileName(path){
                         <a id="path" href="javascript:;" class="">各部位多面料设计</a>&nbsp;&nbsp;&nbsp;&nbsp;
                         <a href="javascript:;" class="black">整体单一面料设计</a>
                     </div>
-                    <img id="effectimg1" src="" width="498" height="498"/>
+                    <img id="effectimg1" src="<?echo $base.$base_photoupload_path.'temp/default.jpg';?>" width="498" height="498"/>
 					<input type="hidden" id="cropid" value="">
                     <ul class="thumbs">
                     	<!-- <li class="active"><img src="<?php echo $base.'img/sjlc_yifu_01.png';?>" /></li>

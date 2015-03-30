@@ -125,7 +125,7 @@ function upload_succ()
           	<ul class="header">
             	<li>设计产品</li>
                 <li>已提交的仿真件</li>
-                <li>上传仿真结果</li>
+                <li style="width: 44%;">上传仿真结果</li>
                 <li>确认结果</li>
                 <li>仿真状态</li>
             </ul>
