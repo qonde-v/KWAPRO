@@ -476,7 +476,7 @@ li.share{ width:40px; height:40px; cursor:pointer; }
 #messager-order.fz .order-items .upd{ width:57%; }
 #messager-order.fz .order-items .upload{ height: 37px; margin:3px 0;}
 #messager-order.fz .order-items .upload label{ text-align:right; display:inline-block; width:100px; color:#777; }
-#messager-order.fz .order-items .upload a{ text-align:center; padding:7px 15px; font-size:14px; margin-left:7px; border:1px solid #ccc; border-radius:6px; }
+#messager-order.fz .order-items .upload a{ text-align:center; padding:7px 7px; font-size:14px; margin-left:2px; border:1px solid #ccc; border-radius:6px; }
 #messager-order.fz .order-items .upload a.btn{  background-color:#4b4b4b; color:#fff; }
 #messager-order.fz .order-items .upload input[type='text']{ width:268px; height:34px; border-radius:4px; border:1px solid #ccc; }
 #messager-order.fz .order-items .step{ padding-top:50px; font-size:14px; width:9%; }
