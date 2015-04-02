@@ -150,7 +150,7 @@
 
 				 $img_src = $base.$base_photoupload_path.'temp/'.$file_name;
 
-				echo "<img id=\"img_".$_GET['type']."\" width=50 height=50 border=\"1\" style=\"display:\" src=\"".$img_src."\"/>";
+				echo "<img id=\"img_".$_GET['type']."\" width=30 height=30 border=\"1\" style=\"display:\" src=\"".$img_src."\"/>";
 				
 			}
 			else
@@ -164,23 +164,25 @@
 	{
 
 		$base = $this->config->item('base_url');
+		$base_photoupload_path = $this->config->item('base_photoupload_path');
 		$user_id = $this->session->userdata('uId');
 		$index = $this->input->post('index',TRUE);
+		$status = $this->input->post('status',TRUE);
 		$pre_num = $this->pre_msg_num;
 		$range = array('start'=>($index-1)*$pre_num, 'end'=>$index*$pre_num-1);
 		$data = array('uId'=>$user_id,'range'=>$range);
 
 		$designs=array();
 		$this->db->select('*');
-		if(isset($_GET['status']) && $_GET['status']==1)
+		if($status==1)
 			$this->db->where('status = 1');
-		elseif(isset($_GET['status']) && $_GET['status']==2)
+		elseif($status==2)
 			$this->db->where('status >= 2');
 		else
 			$this->db->where('status >',0);
 		$this->db->order_by('createdate','desc');
 		$this->db->limit($range['end']-$range['start']+1,$range['start']);
-		$query = $this->db->get('degign');
+		$query = $this->db->get('design');
 		foreach($query->result_array() as $row)
 		{
 			array_push($designs,$row);
@@ -190,31 +192,61 @@
 		if(!empty($designs))
 		{
 			$i=0;
-			foreach($demands as $item){
+			foreach($designs as $item){
 				$i++;
 
 				$html .= '<div class="order-items" id="divcontent">';
             	$html .= '<ul>';
                 $html .= '	<li class="img"><img style="width:73px;height:116px;" src="'.$base.$base_photoupload_path.'temp/'.$item['design_pic'].'" /></li>';
-				$html .= '     <li class="xml"><label>'.$item['uId'].$item['id'].'.xml<br /><a class="download" href="'.$base.'similarmanage/downloads?fn='.$item['uId'].$item['id'].'.xml" id="xml_'.$item['id'].'" >点击下载</a></label></li>';
+				$html .= '     <li class="xml" style="width:12%;"><label>'.$item['uId'].$item['id'].'.xml<br /><a class="download" href="'.$base.'similarmanage/downloads?fn='.$item['uId'].$item['id'].'.xml" id="xml_'.$item['id'].'" >点击下载</a></label></li>';
                 $html .= '    <li class="upd">';
 				$html .= '		<form id="form_pic1'.$item['id'].'" name="form_pic" action="" method="POST" onsubmit="return false;">';
-                $html .= '    	<div class="upload"><label>舒适度文件：</label><input type="text" id="spic1_<'.$item['id'].'" readonly/><a class="btn" id="a_pic1'.$item['id'].'">浏览</a><input type="file"  class="btn" id="f_pic1'.$item['id'].'" name="f_pic1'.$item['id'].'" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:50px;cursor:pointer;" onchange="document.getElementById(\'spic1_\'+'.$item['id'].').value=getFileName(this.value)" /><a href="#" class="ipload_btn" onclick="save_pic(1'.$item['id'].');">上传文件</a>';
-				$html .= '		<div id="photo_pic1'.$item['id'].'" style="text-align:center;display:none;"></div>';
+                $html .= '    	<div class="upload"><label>舒适度文件：</label><input type="text" id="spic1_'.$item['id'].'" readonly/><a class="btn" id="a_pic1'.$item['id'].'">浏览</a><input type="file"  class="btn" id="f_pic1'.$item['id'].'" name="f_pic1'.$item['id'].'" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:50px;cursor:pointer;" onchange="document.getElementById(\'spic1_\'+'.$item['id'].').value=getFileName(this.value)" />';
+				if($item['status']==1){
+					$html .='<a href="#" class="ipload_btn" onclick="save_pic(1'.$item['id'].');">上传文件</a>';
+				}
+				$html .= '		<span id="photo_pic1'.$item['id'].'" style="text-align:center;display:;">';
+				if($item['similarpic']){
+					$arr=explode('||',$item['similarpic']);
+					$html .='<img src="'.$base.$arr[0].'" style="width:30px;height:30px">';
+				}
+				$html .='</span>';
 				$html .= '		</div>';
 				$html .= '		</form>';
 				$html .= '		<form id="form_pic2'.$item['id'].'" name="form_pic" action="" method="POST" onsubmit="return false;">';
-                $html .= '    	<div class="upload"><label>舒适度文件：</label><input type="text" id="spic2_<'.$item['id'].'" readonly/><a class="btn" id="a_pic2'.$item['id'].'">浏览</a><input type="file"  class="btn" id="f_pic2'.$item['id'].'" name="f_pic2'.$item['id'].'" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:50px;cursor:pointer;" onchange="document.getElementById(\'spic2_\'+'.$item['id'].').value=getFileName(this.value)" /><a href="#" class="ipload_btn" onclick="save_pic(2'.$item['id'].');">上传文件</a>';
-				$html .= '		<div id="photo_pic2'.$item['id'].'" style="text-align:center;display:none;"></div>';
+                $html .= '    	<div class="upload"><label>舒适度文件：</label><input type="text" id="spic2_'.$item['id'].'" readonly/><a class="btn" id="a_pic2'.$item['id'].'">浏览</a><input type="file"  class="btn" id="f_pic2'.$item['id'].'" name="f_pic2'.$item['id'].'" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:50px;cursor:pointer;" onchange="document.getElementById(\'spic2_\'+'.$item['id'].').value=getFileName(this.value)" />';
+				if($item['status']==1){
+				$html .='<a href="#" class="ipload_btn" onclick="save_pic(2'.$item['id'].');">上传文件</a>';
+				}
+				$html .= '		<span id="photo_pic2'.$item['id'].'" style="text-align:center;display:;">';
+				if($item['similarpic']){
+					$arr=explode('||',$item['similarpic']);
+					$html .='<img src="'.$base.$arr[1].'" style="width:30px;height:30px">';
+				}
+				$html .='</span>';
 				$html .= '		</div>';
 				$html .= '		</form>';
 				$html .= '		<form id="form_pic3'.$item['id'].'" name="form_pic" action="" method="POST" onsubmit="return false;">';
-                $html .= '    	<div class="upload"><label>舒适度文件：</label><input type="text" id="spic3_<'.$item['id'].'" readonly/><a class="btn" id="a_pic3'.$item['id'].'">浏览</a><input type="file"  class="btn" id="f_pic3'.$item['id'].'" name="f_pic3'.$item['id'].'" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:50px;cursor:pointer;" onchange="document.getElementById(\'spic3_\'+'.$item['id'].').value=getFileName(this.value)" /><a href="#" class="ipload_btn" onclick="save_pic(3'.$item['id'].');">上传文件</a>';
-				$html .= '		<div id="photo_pic3'.$item['id'].'" style="text-align:center;display:none;"></div>';
+                $html .= '    	<div class="upload"><label>舒适度文件：</label><input type="text" id="spic3_'.$item['id'].'" readonly/><a class="btn" id="a_pic3'.$item['id'].'">浏览</a><input type="file"  class="btn" id="f_pic3'.$item['id'].'" name="f_pic3'.$item['id'].'" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:50px;cursor:pointer;" onchange="document.getElementById(\'spic3_\'+'.$item['id'].').value=getFileName(this.value)" />';
+				if($item['status']==1){
+				$html .='<a href="#" class="ipload_btn" onclick="save_pic(3'.$item['id'].');">上传文件</a>';
+				}
+				$html .= '		<span id="photo_pic3'.$item['id'].'" style="text-align:center;display:;">';
+				if($item['similarpic']){
+					$arr=explode('||',$item['similarpic']);
+					$html .='<img src="'.$base.$arr[0].'" style="width:30px;height:30px">';
+				}
+				$html .='</span>';
 				$html .= '		</div>';
 				$html .= '		</form>';
                 $html .= '    </li>';
-                $html .= '    <li class="step"><span style="cursor:pointer;" onclick="$(\'#designid\').val('. $item['id'].');$(\'#modalconfirm\').show();">仿真完成</span></li>';
+				if($item['status']==1){
+					$html .= '    <li class="step"><span style="cursor:pointer;" onclick="$(\'#designid\').val('. $item['id'].');$(\'#modalconfirm\').show();">仿真完成</span></li>';
+				}
+				else{
+					$html .= '    <li class="step"><span style="cursor:pointer;" onclick="$(\'#designid\').val('. $item['id'].');savestatus(3);">重新仿真</span></li>';
+				}
+
 				if($item['status']==1) $html .= '<li class="step text-orange">仿真进行中</li>';
 				if($item['status']==2) $html .= '<li class="step text-green">仿真完成</li>';
 				if($item['status']==3) $html .= '<li class="step text-red">仿真失败</li>';

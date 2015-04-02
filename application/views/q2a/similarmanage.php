@@ -123,35 +123,48 @@ function upload_succ()
         <div class="tab-content">
           <div class="tab-pane active" id="home">
           	<ul class="header">
-            	<li>设计产品</li>
-                <li>已提交的仿真件</li>
-                <li style="width: 44%;">上传仿真结果</li>
-                <li>确认结果</li>
-                <li>仿真状态</li>
+            	<li style="width: 12%;">设计产品</li>
+                <li style="width: 12%;">已提交的仿真</li>
+                <li style="width: 56%;">上传仿真结果</li>
+                <li style="width: 10%;">确认结果</li>
+                <li style="width: 10%;">仿真状态</li>
             </ul>
 			<div id="content">
 			<?php $i=0; foreach($designs as $item): $i++?>
             <div class="order-items" id="divcontent">
             	<ul>
                 	<li class="img"><img style="width:73px;height:116px;" src="<?php if(!empty($item['design_pic'])) echo $base.$base_photoupload_path.'temp/'.$item['design_pic'];else echo $base.'img/default.jpg';?>" /></li>
-                    <li class="xml"><label><?php echo $item['uId'].$item['id'].'.xml'?><br /><a class="download" href="<?php echo $base.'similarmanage/downloads?fn='.$item['uId'].$item['id'].'.xml'?>" id="xml_<?php echo $item['id'];?>" >点击下载</a></label></li>
+                    <li class="xml" style="width:12%;"><label><?php echo $item['uId'].$item['id'].'.xml'?><br /><a class="download" href="<?php echo $base.'similarmanage/downloads?fn='.$item['uId'].$item['id'].'.xml'?>" id="xml_<?php echo $item['id'];?>" >点击下载</a></label></li>
                     <li class="upd">
+						
 						<form id="form_pic1<?echo $item['id']?>" name="form_pic" action="" method="POST" onsubmit="return false;">
-                    	<div class="upload"><label>舒适度文件：</label><input type="text" id="spic1_<?echo $item['id']?>" readonly/><a class="btn" id="a_pic1<?echo $item['id']?>">浏览</a><input type="file"  class="btn" id="f_pic1<?echo $item['id']?>" name="f_pic1<?echo $item['id']?>" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:50px;cursor:pointer;" onchange="document.getElementById('spic1_'+<?echo $item['id']?>).value=getFileName(this.value)" /><a href="#" class="ipload_btn" onclick="save_pic(1<?echo $item['id']?>);">上传文件</a>
-						<div id="photo_pic1<?echo $item['id']?>" style="text-align:center;display:none;"></div>
+                    	<div class="upload"><label>舒适度文件：</label><input type="text" id="spic1_<?echo $item['id']?>" readonly/><a class="btn" id="a_pic1<?echo $item['id']?>">浏览</a><input type="file"  class="btn" id="f_pic1<?echo $item['id']?>" name="f_pic1<?echo $item['id']?>" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:50px;cursor:pointer;" onchange="document.getElementById('spic1_'+<?echo $item['id']?>).value=getFileName(this.value)" />
+						<?if($item['status']==1){?><a href="#" class="ipload_btn" onclick="save_pic(1<?echo $item['id']?>);">上传文件</a><?}?>
+						<span id="photo_pic1<?echo $item['id']?>" style="text-align:center;display:;">
+						<?if($item['similarpic']){$arr=explode('||',$item['similarpic'])?><img src="<?echo $base.$arr[0];?>" style="width:30px;height:30px"><?}?>
+						</span>
 						</div>
 						
 						</form>
 						<form id="form_pic2<?echo $item['id']?>" name="form_pic" action="" method="POST" onsubmit="return false;">
-                        <div class="upload"><label>皮肤湿度文件：</label><input type="text" id="spic2_<?echo $item['id']?>" readonly /><a class="btn"  id="a_pic2<?echo $item['id']?>">浏览</a><input type="file"  id="f_pic2<?echo $item['id']?>" name="f_pic2<?echo $item['id']?>" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:50px;cursor:pointer;" onchange="document.getElementById('spic2_'+<?echo $item['id']?>).value=getFileName(this.value)" /><a href="#" class="ipload_btn" onclick="save_pic(2<?echo $item['id']?>);">上传文件</a></div>
-						<div id="photo_pic2<?echo $item['id']?>" style="text-align:center;display:none"></div>
+                        <div class="upload"><label>皮肤湿度文件：</label><input type="text" id="spic2_<?echo $item['id']?>" readonly /><a class="btn"  id="a_pic2<?echo $item['id']?>">浏览</a><input type="file"  id="f_pic2<?echo $item['id']?>" name="f_pic2<?echo $item['id']?>" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:50px;cursor:pointer;" onchange="document.getElementById('spic2_'+<?echo $item['id']?>).value=getFileName(this.value)" />
+						<?if($item['status']==1){?><a href="#" class="ipload_btn" onclick="save_pic(2<?echo $item['id']?>);">上传文件</a><?}?>
+						<span id="photo_pic2<?echo $item['id']?>" style="text-align:center;display:">
+						<?if($item['similarpic']){$arr=explode('||',$item['similarpic'])?><img src="<?echo $base.$arr[1];?>" style="width:30px;height:30px"><?}?>
+						</span>
+						</div>
 						</form>
 						<form id="form_pic3<?echo $item['id']?>" name="form_pic" action="" method="POST" onsubmit="return false;">
-                        <div class="upload"><label>湿度文件：</label><input type="text" id="spic3_<?echo $item['id']?>" readonly /><a class="btn"  id="a_pic3<?echo $item['id']?>">浏览</a><input type="file"  id="f_pic3<?echo $item['id']?>" name="f_pic3<?echo $item['id']?>" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:50px;cursor:pointer;" onchange="document.getElementById('spic3_'+<?echo $item['id']?>).value=getFileName(this.value)" /><a href="#" class="ipload_btn" onclick="save_pic(3<?echo $item['id']?>);">上传文件</a></div>
-						<div id="photo_pic3<?echo $item['id']?>" style="text-align:center;display:none"></div>
+                        <div class="upload"><label>湿度文件：</label><input type="text" id="spic3_<?echo $item['id']?>" readonly /><a class="btn"  id="a_pic3<?echo $item['id']?>">浏览</a><input type="file"  id="f_pic3<?echo $item['id']?>" name="f_pic3<?echo $item['id']?>" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:50px;cursor:pointer;" onchange="document.getElementById('spic3_'+<?echo $item['id']?>).value=getFileName(this.value)" />
+						<?if($item['status']==1){?><a href="#" class="ipload_btn" onclick="save_pic(3<?echo $item['id']?>);">上传文件</a><?}?>
+						<span id="photo_pic3<?echo $item['id']?>" style="text-align:center;display:">
+						<?if($item['similarpic']){$arr=explode('||',$item['similarpic'])?><img src="<?echo $base.$arr[2];?>" style="width:30px;height:30px"><?}?>
+						</span>
+						</div>
 						</form>
+						
                     </li>
-                    <li class="step"><span style="cursor:pointer;" onclick="$('#designid').val(<?php echo $item['id'];?>);$('#modalconfirm').show();">仿真完成</span></li>
+                    <li class="step"><span style="cursor:pointer;" onclick="$('#designid').val(<?echo $item['id'];?>);<?if($item['status']==1) echo '$(\'#modalconfirm\').show();';else echo 'savestatus(3);'?>"><?if($item['status']==1)echo '仿真完成';else echo '重新仿真';?></span></li>
                     <?php if($item['status']==1){?><li class="step text-orange">仿真进行中</li><?}?>
 					<?php if($item['status']==2){?><li class="step text-green">仿真完成</li><?}?>
 					<?php if($item['status']==3){?><li class="step text-red">仿真失败</li><?}?>
@@ -210,8 +223,11 @@ function switch_page()
 	var lang = {'lang_first':$('.first a').html(),'lang_previous':$('.prev a').html(),'lang_next':$('.next a').html(),'lang_last':$('.last a').html()};
 	var pagena_num = (total_page_num > 5) ? 5 : total_page_num;
 	
-	var url = $('#base').val() + 'similarmange/sort_similar/';
+	var url = $('#base').val() + 'similarmanage/sort_similar/';
 	var post_str = 'index=' + index;
+	status =window.location.search;
+	status=status.substr(1);
+	post_str=post_str+'&'+status;
 	
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
 		$('#content').html(html);
@@ -220,11 +236,15 @@ function switch_page()
 	jQuery.ajax(ajax);
 }
 
-function savestatus()
+function savestatus(tt)
 {
 	var url = $('#base').val() + 'similarmanage/savestatus/';
 	status = $('#designstatus').val();
 	var post_str = 'designid=' + $('#designid').val() + '&status=' + status+ '&memo=' + $('#memo').val();
+	if(tt==3){
+		status=3;
+		post_str = 'designid=' + $('#designid').val() + '&status=1&memo=&similarpic=';
+	}
 	if(status==2){
 		type1 = 'img_1'+$('#designid').val();
 		type2 = 'img_2'+$('#designid').val();
