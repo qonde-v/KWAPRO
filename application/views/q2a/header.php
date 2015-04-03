@@ -22,7 +22,19 @@ $(function(){
 			}); 
 		}); 
 	}
-}); 
+});
+$(document).ready(function(){
+$("#searchbtn").click(function(){
+	if($('#logins').val()==''){showLoginModal();return;}
+	 var text = $('#search').val().trim();
+	 if(text !='')
+	 {
+		 url=$('#header_base').val() + "asking/?search="+encodeURI(text);
+		window.location.href = url;
+	 }
+
+})
+});
 </script>
 <script type="text/javascript"> 
 function showmenu(){
@@ -50,7 +62,7 @@ function hideLoginModal(){
 	<form>
 	<div class="search-box">
     	<input type="text" id="search" placeholder="搜索休闲服装知识、动态" />
-        <a href="#" class="search-btn"></a>
+        <a id="searchbtn" href="#" class="search-btn"></a>
     </div>
 	</form>
     <ul class="dropdown-menus">
