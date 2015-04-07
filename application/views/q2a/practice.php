@@ -477,10 +477,10 @@ function getFileName(path){
               </div>
         	<table width="100%" style="margin-bottom:30px;">
               <tr>
-                <td width="12%" height="52" >设计作品名称：
+                <td width="15%" height="52" >设计作品名称<span style="color:red;">(必填)</span>:
                 </td>
                 <td width="39%">
-                	<input id="title" name="title" type="text"/>
+                	<input id="title" name="title" type="text" value="<?php echo $demand['title'].'-'.$user_info['username'].'-'.$designnum?>"/>
                 </td>
                 <td width="15%">设计的产品类型：</td>
                 <td width="34%">
@@ -495,7 +495,7 @@ function getFileName(path){
                   </td>
               </tr>
               <tr>
-                <td height="52">上传设计：</td>
+                <td height="52">上传设计<span style="color:red;">(选填)</span>:</td>
 				<form id="form_designpic" name="form_pic" action="" method="POST" onsubmit="return false;">
                 <td><input name="design_pic" id="design_pic" type="text" readonly /></td>
                 <td colspan="2" class="btns">
@@ -507,7 +507,7 @@ function getFileName(path){
 				</form>
               </tr>
               <tr>
-                <td height="52">产品效果图：</td>
+                <td height="52">产品效果图<span style="color:red;">(选填)</span>:</td>
 				<form id="form_effectpic" name="form_pic" action="" method="POST" onsubmit="return false;">
                 <td><input name="effect_pic" id="effect_pic" type="text" readonly/></td>
                 <td colspan="2" class="btns">
@@ -543,15 +543,15 @@ function getFileName(path){
 						</span>
 						<form id="form_detailpic" name="form_pic" action="" method="POST" onsubmit="return false;">
                         <dt><img id="a_detail" width="100px" height="100px" src="<?php echo $base.'img/sjlc_yifu_tj.png';?>" />
-							<input type="file" id="f_detail" name="f_detail" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:100px;height:100px;cursor:pointer;" />
+							<input type="file" id="f_detail" name="f_detail" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:100px;height:100px;cursor:pointer;" disabled />
 						<dt>
                         <dd>
                         	<div class="form-items">
-                        	<label>细节：</label><input type="text" id="detail_name" />
+                        	<label>细节：</label><input type="text" id="detail_name" disabled />
                             </div>
                             <div class="btns">
-                            	<a  href="#" onclick="save_pic(3);" class="black">上传细节</a>
-                    			<a href="#" onclick="save_detailpic()">保存</a>
+                            	<a  href="#">上传细节</a>
+                    			<a href="#">保存</a>
 								<div id="detail_photo" style="text-align:center;display:inline-block"></div>
                             </div>
                         </dd>
@@ -568,8 +568,8 @@ function getFileName(path){
         	<div class="impression">
             	<div class="left">
                 	<div class="btns tab-btns">
-                        <a id="path" href="javascript:;" class="">各部位多面料设计</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="javascript:;" class="black">整体单一面料设计</a>
+                        <!-- <a id="path" href="javascript:;" class="">各部位多面料设计</a>&nbsp;&nbsp;&nbsp;&nbsp; -->
+                        <a href="javascript:;" class="black" style="float:left;">样式设计图</a>
                     </div>
                     <img id="effectimg1" src="<?echo $base.$base_photoupload_path.'temp/default.jpg';?>" width="498" height="498"/>
 					<input type="hidden" id="cropid" value="">
@@ -582,13 +582,15 @@ function getFileName(path){
                     </ul>
                 </div>
                 <div class="right">
-                	<h3 id="detailname">整体</h3><input type="hidden" id="fabric" >
+                	<h3 id="detailname"></h3><input type="hidden" id="fabric" >
                     <a class="btn-fabric" href="javascript:;" onClick="showModal()">点击选择面料&nbsp;▶&nbsp;</a>
                     <div class="fabric"><img id="fab_pic" width="230" height="120"></div>
                     <h4 id="fab_name"></h4>
                     <h4>介绍：</h4>
                     <p id="fab_description"></p>
                     <h4>特点：</h4>
+                    <p id="fab_feature"></p>
+					<h4>参考价格：</h4>
                     <p id="fab_feature"></p>
                 </div>
             </div>
