@@ -581,13 +581,13 @@ function subsim(design_id,demand_id)
 	var post_str = 'design_id='+design_id+'&demand_id=' + demand_id;
 	
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
-		$('#Simplans').val('1SimPlan.xml');
-		$('#submitform').submit();
-		$('#iframe_modal_bg').removeClass('hide');
-		$('#iframe_modal').removeClass('hide');
+		//$('#Simplans').val('1SimPlan.xml');
+		//$('#submitform').submit();
+		//$('#iframe_modal_bg').removeClass('hide');
+		//$('#iframe_modal').removeClass('hide');
 
 		//subsim_n(html);
-		//window.location.reload();
+		window.location.reload();
 	}};
 	jQuery.ajax(ajax);
 }
