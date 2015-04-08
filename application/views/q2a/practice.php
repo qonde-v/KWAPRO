@@ -55,6 +55,7 @@ $(document).ready(function() {
 		$("#fab_pic").attr('src',base.substr(0,base.lastIndexOf('TIT')) + 'PDB/uploads/fabric/2DImages//' + array[2]);
 		$("#fab_description").html(array[3]);
 		$("#fab_feature").html(array[4]);
+		$("#fab_price").html(array[5]);
 
 		if($('#path').attr('class')=='black'){
 			var id=$('#cropid').val();
@@ -178,6 +179,7 @@ function showthumb(obj){
 				$("#fab_pic").attr('src',$('#base').val() + 'img/' + array[2]);
 				$("#fab_description").html(array[3]);
 				$("#fab_feature").html(array[4]);
+				$("#fab_price").html(array[5]);
 			}};
 			jQuery.ajax(ajax);
 		}
@@ -266,8 +268,13 @@ function designok()
 	data['title'] = $('#title').val();
 	//data['design_pic'] = getFileName($('#design_img').attr('src'));
 	//data['effect_pic'] = getFileName($('#effect_img').attr('src'));
-	if($('#design_img').length>0)data['design_pic'] = getFileName($('#design_img').attr('src'));else data['design_pic']='default.jpg';
-	if($('#effect_img').length>0)data['effect_pic'] = getFileName($('#effect_img').attr('src'));else data['effect_pic']='default.jpg';
+	defaultimg='default_yundong.jpg';
+	if($('#sporttype')=='跑步')defaultimg='default_paobu.jpg';
+	if($('#sporttype')=='步行')defaultimg='default_jianxing.jpg';
+	if($('#sporttype')=='健身运动')defaultimg='default_yujia.jpg';
+	if($('#sporttype')=='自行车运动')defaultimg='default_zixingche.jpg';
+	if($('#design_img').length>0)data['design_pic'] = getFileName($('#design_img').attr('src'));else data['design_pic']=defaultimg;
+	if($('#effect_img').length>0)data['effect_pic'] = getFileName($('#effect_img').attr('src'));else data['effect_pic']=defaultimg;
 
 	data['demand_id'] = $('#demand_id').val();
 	data['description'] = $('#description').val();
@@ -375,7 +382,7 @@ function getFileName(path){
 <!------------ 内容开始 -------------> 
 <input type="hidden" id="base" value="<?php echo $base;?>"></input>
 <input type="hidden" id="demand_id" value="<?php echo $demand['id'];?>"></input>
-
+<input type="hidden" id="sporttype" value="<?php echo $demand['type'];?>"></input>
   <div id="sjlc" class="main flows"> 
 	<img src="<?php echo $base.'img/sub_top_dt.png';?>" />
   	<div class="modal" id="draggable" style="position:absolute;">
@@ -389,7 +396,7 @@ function getFileName(path){
                 <li>
                     <img width="106px" height="106px" src="<?php echo substr($base,0,strpos($base,"TIT")).'PDB/uploads/fabric/2DImages/'.$item['fabricFigure'];?>"/>
                     <label><?php echo $item['fabricName'];?></label>
-					<input type="hidden" value="<?php echo $item['fabricId'].'||'.$item['fabricName'].'||'.$item['fabricFigure'].'||'.$item['fabricStruct'].'||'.$item['fabricFunctionNote'];?>">
+					<input type="hidden" value="<?php echo $item['fabricId'].'||'.$item['fabricName'].'||'.$item['fabricFigure'].'||'.$item['fabricStruct'].'||'.$item['fabricFunctionNote'].'||'.$item['price'];?>">
                 </li>
 				<?php endforeach;?>
             </ul>
@@ -591,7 +598,7 @@ function getFileName(path){
                     <h4>特点：</h4>
                     <p id="fab_feature"></p>
 					<h4>参考价格：</h4>
-                    <p id="fab_feature"></p>
+                    <p id="fab_price"></p>
                 </div>
             </div>
             <div class="btns">
