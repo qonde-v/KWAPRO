@@ -534,7 +534,7 @@ function getFileName(path){
         	<div class="impression">
             	<div class="left">
                 	<div class="title">产品效果图</div>
-                    <img id="effectimg" width="498" height="498" src="<?echo $base.$base_photoupload_path.'temp/default.jpg';?>"/>
+                    <img id="effectimg" width="498" height="498" src="<?if($demand['type']=='跑步')$img='1_default_paobu.jpg';elseif($demand['type']=='自行车运动')$img='1_default_zixingche.jpg';elseif($demand['type']=='健身运动')$img='1_default_yujia.jpg';if($demand['type']=='步行')$img='1_default_jianxing.jpg';else $img='1_default_paobu.jpg';echo $base.$base_photoupload_path.'temp/'.$img;?>"/>
                 </div>
                 <div class="right">
                 	<div class="title">添加产品特色样式：<small>（添加细节图片）</small></div>
@@ -578,7 +578,7 @@ function getFileName(path){
                         <!-- <a id="path" href="javascript:;" class="">各部位多面料设计</a>&nbsp;&nbsp;&nbsp;&nbsp; -->
                         <a href="javascript:;" class="black" style="float:left;">样式设计图</a>
                     </div>
-                    <img id="effectimg1" src="<?echo $base.$base_photoupload_path.'temp/default.jpg';?>" width="498" height="498"/>
+                    <img id="effectimg1" src="<?if($demand['type']=='跑步')$img='1_default_paobu.jpg';elseif($demand['type']=='自行车运动')$img='1_default_zixingche.jpg';elseif($demand['type']=='健身运动')$img='1_default_yujia.jpg';if($demand['type']=='步行')$img='1_default_jianxing.jpg';else $img='1_default_paobu.jpg';echo $base.$base_photoupload_path.'temp/'.$img;?>" width="498" height="498"/>
 					<input type="hidden" id="cropid" value="">
                     <ul class="thumbs">
                     	<!-- <li class="active"><img src="<?php echo $base.'img/sjlc_yifu_01.png';?>" /></li>

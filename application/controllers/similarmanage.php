@@ -197,7 +197,11 @@
 
 				$html .= '<div class="order-items" id="divcontent">';
             	$html .= '<ul>';
-                $html .= '	<li class="img"><img style="width:73px;height:116px;" src="'.$base.$base_photoupload_path.'temp/'.$item['design_pic'].'" /></li>';
+				if(strpos($item['design_pic'],'default')!==false){
+					$html .= '	<li class="img"><img style="width:73px;height:116px;" src="'.$base.$base_photoupload_path.'temp/1_'.$item['design_pic'].'" /></li>';
+				}else{
+					$html .= '	<li class="img"><img style="width:73px;height:116px;" src="'.$base.$base_photoupload_path.'temp/'.$item['design_pic'].'" /></li>';
+				}
 				$html .= '     <li class="xml" style="width:12%;"><label>'.$item['uId'].$item['id'].'.xml<br /><a class="download" href="'.$base.'similarmanage/downloads?fn='.$item['uId'].$item['id'].'.xml" id="xml_'.$item['id'].'" >点击下载</a></label></li>';
                 $html .= '    <li class="upd">';
 				$html .= '		<form id="form_pic1'.$item['id'].'" name="form_pic" action="" method="POST" onsubmit="return false;">';

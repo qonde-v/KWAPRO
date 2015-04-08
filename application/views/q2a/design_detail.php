@@ -389,8 +389,8 @@ $(document).ready(function() {
 			
 			<div class="thumb">
 				<div class="left">
-                	<img id="effect_pic" class="" width="498px" height="498px" src="<?php echo $base.$base_photoupload_path.'temp/'.$design['effect_pic'];?>" />
-					<img id="design_pic" class="hide" width="498px" height="498px" src="<?php echo $base.$base_photoupload_path.'temp/'.$design['design_pic'];?>" />
+                	<img id="effect_pic" class="" width="498px" height="498px" src="<?php if(strpos($design['effect_pic'],'default')!==false)echo $base.$base_photoupload_path.'temp/1_'.$design['effect_pic']; else echo $base.$base_photoupload_path.'temp/'.$design['effect_pic'];?>" />
+					<img id="design_pic" class="hide" width="498px" height="498px" src="<?php if(strpos($design['design_pic'],'default')!==false)echo $base.$base_photoupload_path.'temp/1_'.$design['design_pic']; else echo $base.$base_photoupload_path.'temp/'.$design['design_pic'];?>" />
                 </div>
                 <div class="right">
                 	<div class="thumb-text">
