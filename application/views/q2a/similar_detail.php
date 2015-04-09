@@ -42,13 +42,13 @@ $(document).ready(function() {
 	<a id="path2" href="javascript:;">皮肤湿度</a>
 	<a id="path3" href="javascript:;">温度</a>
 </div>
-<div id="Comfort">
+<div id="Comfort" style="text-align:center;">
 <img style="width:500px;height:600px;" src="<?echo $base.$shushi?>"/>
 </div>
-<div id='surfacePlotDiv' class="hide">	
+<div id='surfacePlotDiv' class="hide" style="text-align:center;">	
 <img style="width:500px;height:500px;" src="<?echo $base.$pifu?>"/>
 </div>
-<div id='surfacePlotDiv1' class="hide">	
+<div id='surfacePlotDiv1' class="hide" style="text-align:center;">	
 <img style="width:500px;height:700px;" src="<?echo $base.$shidu?>"/>
 </div>
 </div>
