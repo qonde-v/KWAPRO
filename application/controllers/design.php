@@ -124,7 +124,7 @@ ini_set("memory_limit","100M");
 		//get fabrics
 		$fabric = array();
 		$this->db->select('*');
-		$this->db->limit(7,0);
+		$this->db->limit(8,0);
 		$query = $this->db->get('fabric');
 		foreach($query->result_array() as $val)
 		{
@@ -134,7 +134,15 @@ ini_set("memory_limit","100M");
 
 	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
 	   $data = array_merge($right_data,$data);
-
+		
+		//参与过的设计数
+		$this->db->select(' count(1)cnt');
+		$this->db->where('uId',$user_id);
+		$rs=$this->db->get('design' );
+		foreach($rs->result_array() as $val)
+		{
+			$data['designnum']=$val['cnt']+1; 
+		}
 
 	   $this->load->view('q2a/practice',$data);
 
@@ -175,8 +183,8 @@ ini_set("memory_limit","100M");
 					$html .= '<a href="#" onclick="javascript:if(confirm(\'确定要提交仿真吗？\')){subsim('.$item['id'].','.$item['demand_id'].')}" >提交仿真</a>';
 				}elseif($item['status']==1){
 					$html .= '<a href="javascript:alert(\'仿真进行中，请等待，谢谢\');" class="black" >等待仿真</a>';
-				}elseif($item['status']==2){
-					$html .= '<a href="'.$base.'design/similar_detail" class="black">查看仿真</a>';
+				}elseif($item['status']>=2){
+					$html .= '<a href="'.$base.'design/similar_detail?id='.$item['id'].'&uid='.$item['uId'].'" class="black">查看仿真</a>';
 				}
 				$html .= '		<a href="javascript:;" onclick="showModal('.$item['id'].',\''.$item['title'].'\',\''.$item['createdate'].'\',\''.$item['design_pic'].'\',\''.$item['username'].'\') ">提交订单</a>';
 				$html .= '		</div>';
@@ -318,7 +326,7 @@ ini_set("memory_limit","100M");
 			}elseif($_GET['type']==3){
 				$msg = $this->Photo_upload->user_photo_upload(array('user_id'=>$user_id, 'file_id'=>'f_detail'));
 			}
-			if(UPDATE_SUCCESS == $msg['msg'])
+			if(isset($msg['msg']) && $msg['msg'] == 'UPDATE_SUCCESS')
 			{
 				/*if($_GET['type']==1){
 					$file_name = $this->security->sanitize_filename($_FILES['f_design']['name']);
@@ -444,9 +452,17 @@ ini_set("memory_limit","100M");
         $html .= '    <div class="other_title">相关设计产品</div>';
         $html .= '    <ul class="others">';
 		foreach($result_s as $item){
-            	 $html .= '<li><a href="'.$base.'design/design_detail?id='.$item['id'].'"><img width="130" height="107" src="'.$base.$base_photoupload_path.'temp/'.$item['design_pic'].'" /></a></li>';
+				if(strpos($item['design_pic'],'default')!==false){
+					$html .= '	<li class="img"><img style="width:73px;height:116px;" src="'.$base.$base_photoupload_path.'temp/1_'.$item['design_pic'].'" /></li>';
+					$html .= '<li><a href="'.$base.'design/design_detail?id='.$item['id'].'"><img width="130" height="107" src="'.$base.$base_photoupload_path.'temp/1_'.$item['design_pic'].'" /></a></li>';
+				}else{
+					$html .= '<li><a href="'.$base.'design/design_detail?id='.$item['id'].'"><img width="130" height="107" src="'.$base.$base_photoupload_path.'temp/'.$item['design_pic'].'" /></a></li>';
+				}
+
+            	 
 	   }
         $html .= '    </ul>';
+		$html .= '&&&&'.$design_id;
 
 		echo $html;
 
@@ -461,6 +477,16 @@ ini_set("memory_limit","100M");
 		$result_d=$this->Demand_management->get_user_demand($demand_id);
 		foreach($result_d as $val){
 			  $demand=$val;
+		}
+		$rs_design=array();
+		$rs_design=$this->Demand_management->get_user_design($design_id);
+		foreach($rs_design as $val){
+			  $design=$val;
+		}
+		$rs_fabric=array();
+		$rs_fabric=$this->Demand_management->get_fabric($design['fabric']);
+		foreach($rs_fabric as $val){
+			  $fabric=$val;
 		}
 		//print_r($demand);
 		if($demand['target']=='女')$sex=1;else $sex=0;
@@ -504,43 +530,42 @@ ini_set("memory_limit","100M");
 		elseif($weather=='阴天')$windspeed = 3;
 		else $windspeed = 0;
          
-		 
-		$xml = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-		$xml .= "<SimPlan>\n";
-		$xml .= "	<SimPlanID>".$design_id.$user_id."</SimPlanID><!-- ID  用户编号 + 设计编号 -->\n";
-		$xml .= "	<BodySet>\n";
-		$xml .= "		<MetRate>".$MetRate."</MetRate>  <!-- 代谢率 -->\n";
-		$xml .= "		<Sex>".$sex."</Sex> <!-- 性别 0 男  1 女 -->\n";
-		$xml .= "		<Age>".$age."</Age> <!-- 年龄 -->\n";
-		$xml .= "		<Weight>".$weight."</Weight> <!-- 体重 -->\n";
-		$xml .= "	</BodySet>\n";
-		$xml .= "	<FabricSet> <!-- 这个节点是衣服原料的参数，等数据库的表整好了再做，暂时不用改就用这些参数 -->\n";
-		$xml .= "		<LayerCount>1</LayerCount>\n";
-		$xml .= "		<Layer>\n";
-		$xml .= "			<FabricID>1</FabricID>\n";
-		$xml .= "			<M0mtype>0</M0mtype>\n";
-		$xml .= "			<M1mtype>0</M1mtype>\n";
-		$xml .= "			<InnerIsContact>0</InnerIsContact>\n";
-		$xml .= "			<OuterIsContact>1</OuterIsContact>\n";
-		$xml .= "			<Thickness>0.0980</Thickness>\n";
-		$xml .= "		</Layer>\n";
-		$xml .= "	</FabricSet>\n";
-		$xml .= "	<EnvSet>\n";
-		$xml .= "		<EnvTem>".$demand['temperature']."</EnvTem> <!-- 温度 -->\n";
-		$xml .= "		<EnvRH>".$demand['humidity']."</EnvRH><!-- 湿度 -->\n";
-		$xml .= "		<EnvWind>".$windspeed."</EnvWind><!-- 风速 -->\n";
-		$xml .= "	</EnvSet>\n";
-		$xml .= "	<SimSet> <!-- 仿真计算参数，不用改就用这些参数 -->\n";
-		$xml .= "		<SimTime>20.00</SimTime>\n";
-		$xml .= "		<TimeStep>1.0000</TimeStep>\n";
-		$xml .= "		<DiscreteLimit>0.0186</DiscreteLimit>\n";
-		$xml .= "		<SaveFrequence>1.00</SaveFrequence>\n";
-		$xml .= "	</SimSet>\n";
-		$xml .= "</SimPlan>\n";
-		//echo $xml;       
+$xml = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>\n";
+$xml .= "<SimPlan>\n";
+$xml .= "    <SimPlanID>".$user_id.$design_id."</SimPlanID>\n";
+$xml .= "    <BodySet>\n";
+$xml .= "        <MetRate>".$MetRate."</MetRate>\n";
+$xml .= "        <Sex>".$sex."</Sex>\n";
+$xml .= "        <Age>".$age."</Age>\n";
+$xml .= "        <Weight>".$weight."</Weight>\n";
+$xml .= "    </BodySet>\n";
+$xml .= "    <FabricSet>\n";
+$xml .= "        <LayerCount>1</LayerCount>\n";
+$xml .= "        <Layer>\n";
+$xml .= "            <FabricID>".$fabric['fabricId']."</FabricID>\n";
+$xml .= "            <M0mtype>0</M0mtype>\n";
+$xml .= "            <M1mtype>0</M1mtype>\n";
+$xml .= "            <InnerIsContact>0</InnerIsContact>\n";
+$xml .= "            <OuterIsContact>0</OuterIsContact>\n";
+$xml .= "            <Thickness>".(isset($fabric['fabricThick'])?$fabric['fabricThick']:0)."</Thickness>\n";
+$xml .= "        </Layer>\n";
+$xml .= "    </FabricSet>\n";
+$xml .= "    <EnvSet>\n";
+$xml .= "        <EnvTem>".$demand['temperature']."</EnvTem>\n";
+$xml .= "        <EnvRH>".$demand['humidity']."</EnvRH>\n";
+$xml .= "        <EnvWind>".$windspeed."</EnvWind>\n";
+$xml .= "    </EnvSet>\n";
+$xml .= "    <SimSet>\n";
+$xml .= "        <SimTime>10.00</SimTime>\n";
+$xml .= "        <TimeStep>1.0000</TimeStep>\n";
+$xml .= "        <DiscreteLimit>0.0186</DiscreteLimit>\n";
+$xml .= "        <SaveFrequence>1.00</SaveFrequence>\n";
+$xml .= "    </SimSet>\n";
+$xml .= "</SimPlan>\n";
+   
 		
 		//更新设计状态为等待仿真
-		$this->Demand_management->update_designstatus($design_id,2);
+		$this->Demand_management->update_designstatus($design_id,1);
 		
 		$filename = "d:\\xampp\htdocs\TIT\cgi\SimPlan\SP".$user_id.$design_id.".xml";
 		$f_name="SP".$user_id.$design_id.".xml";
@@ -576,9 +601,17 @@ ini_set("memory_limit","100M");
 	   $right_data = $this->Right_nav_data->get_rgiht_nav_data($user_id);
 	   $data = array_merge($right_data,$data);
 		
-
+		$fileid = $_GET['uid'].$_GET['id'];
+		
+		$query = $this->db->query("select similarpic from design where id=".$_GET['id']);
+		$sum =$query->row_array();
+		$picarr = explode('||',$sum['similarpic']);
+		$data['shushi'] = isset($picarr[0])?$picarr[0]:0;
+		$data['pifu'] = isset($picarr[1])?$picarr[1]:0;
+		$data['shidu'] = isset($picarr[2])?$picarr[2]:0;
+		
 		//处理舒适度DAT文件 取后三列
-	   $data['ComfortEvaluationRes']=$base."SimResult/ComfortEvaluationRes.DAT";
+	   $data['ComfortEvaluationRes']="d:\\xampp\htdocs\TIT\cgi\SimResult".$fileid."/ComfortEvaluationRes.DAT";
 	   /*$content = trim(file_get_contents($data['ComfortEvaluationRes']));
 	   $arr = explode("\n", $content);
 	   $newcontent = "";
@@ -595,7 +628,7 @@ ini_set("memory_limit","100M");
 
 
 	   //处理皮肤湿度DAT文件
-	   $data['SkinWetness']=$base."SimResult/SkinWetness.DAT";
+	   $data['SkinWetness']="d:\\xampp\htdocs\TIT\cgi\SimResult".$fileid."/SkinWetness.DAT";
 	   /*$content = trim(file_get_contents($data['SkinWetness']));
 	   $arr = explode("\n", $content);
 	   $newcontent = "";
@@ -611,7 +644,7 @@ ini_set("memory_limit","100M");
 
 
 		//处理温度DAT文件
-	   $data['Temperature']=$base."SimResult/Temperature.DAT";
+	   $data['TempF']="d:\\xampp\htdocs\TIT\cgi\SimResult".$fileid."/TempF.DAT";
 	   /*if(!file_exists("C:\wamp\www\TIT\SimResult\Temperature.DAT")){
 		   $content = trim(file_get_contents($base."SimResult/CoreTem.DAT"));
 		   $content1 = trim(file_get_contents($base."SimResult/SkinTem.DAT"));
