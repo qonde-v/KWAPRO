@@ -55,6 +55,7 @@ $(document).ready(function() {
 		$("#fab_pic").attr('src',base.substr(0,base.lastIndexOf('TIT')) + 'PDB/uploads/fabric/2DImages//' + array[2]);
 		$("#fab_description").html(array[3]);
 		$("#fab_feature").html(array[4]);
+		$("#fab_price").html(array[5]);
 
 		if($('#path').attr('class')=='black'){
 			var id=$('#cropid').val();
@@ -128,8 +129,9 @@ $(document).ready(function() {
 });
 function gonext(bu){
 	if(bu>=2){
-		if($("#design_img").length==0 || $("#effect_img").length==0 || $("#title").val()==''){
-			$('.modal-body').html('请将步骤一里的信息填写完整');
+		//if($("#design_img").length==0 || $("#effect_img").length==0 || $("#title").val()==''){
+		if($("#title").val()==''){
+			$('.modal-body').html('请填写设计作品名称');
 			$('#msg_modal').removeClass("hide");
 			return;
 		}
@@ -177,6 +179,7 @@ function showthumb(obj){
 				$("#fab_pic").attr('src',$('#base').val() + 'img/' + array[2]);
 				$("#fab_description").html(array[3]);
 				$("#fab_feature").html(array[4]);
+				$("#fab_price").html(array[5]);
 			}};
 			jQuery.ajax(ajax);
 		}
@@ -263,15 +266,23 @@ function designok()
 	var data = new Array();
 	var hint = '';
 	data['title'] = $('#title').val();
-	data['design_pic'] = getFileName($('#design_img').attr('src'));
-	data['effect_pic'] = getFileName($('#effect_img').attr('src'));
+	//data['design_pic'] = getFileName($('#design_img').attr('src'));
+	//data['effect_pic'] = getFileName($('#effect_img').attr('src'));
+	defaultimg='default_yundong.jpg';
+	if($('#sporttype')=='跑步')defaultimg='default_paobu.jpg';
+	if($('#sporttype')=='步行')defaultimg='default_jianxing.jpg';
+	if($('#sporttype')=='健身运动')defaultimg='default_yujia.jpg';
+	if($('#sporttype')=='自行车运动')defaultimg='default_zixingche.jpg';
+	if($('#design_img').length>0)data['design_pic'] = getFileName($('#design_img').attr('src'));else data['design_pic']=defaultimg;
+	if($('#effect_img').length>0)data['effect_pic'] = getFileName($('#effect_img').attr('src'));else data['effect_pic']=defaultimg;
+
 	data['demand_id'] = $('#demand_id').val();
 	data['description'] = $('#description').val();
 	data['fabric'] = $('#fabric').val();
 	data['type'] = $('#type').val();
 	if(data['title']=='') hint=hint+'请输入作品名称<br/>';
-	if(data['design_pic']=='') hint=hint+'请上次设计文件<br/>';
-	if(data['effect_pic']=='') hint=hint+'请上传产品效果图<br/>';
+	//if(data['design_pic']=='' || data['effect_pic']=='') hint=hint+'请上传设计文件或产品效果图<br/>';
+	//if(data['effect_pic']=='') hint=hint+'请上传产品效果图<br/>';
 	if(data['description']=='') hint=hint+'请输入对设计的描述<br/>';
 	if($('#path').attr('class')=='' && data['fabric']=='') hint=hint+'请选择整体面料<br/>';
 	
@@ -322,11 +333,14 @@ function designok()
 			$('#msg_modal').removeClass("hide");
 			$('#msg_modal').show();
 		}else{
-			$("#flow5").html(html);
+			var strs= new Array(); //定义一数组
+			strs=html.split("&&&&"); //字符分割 
+	
+			$("#flow5").html(strs[0]);
 			$(".tab-content.active").removeClass("active");
 			$("#flow5").addClass("active");
 			if(confirm('是否要分享到微博')){
-				window.open('http://v.t.sina.com.cn/share/share.php?title=嗨，我刚才发布了一个休闲服装设计'+$('#d_url').attr('href')+'，来来提提意见呗？&url=&source=bookmark');
+				window.open('http://v.t.sina.com.cn/share/share.php?title=嗨，我刚才发布了一个休闲服装设计'+$('#base').val()+'design/design_detail?id='+strs[1]+'，来来提提意见呗？&url=&source=bookmark');
 			}
 		}
 
@@ -368,7 +382,7 @@ function getFileName(path){
 <!------------ 内容开始 -------------> 
 <input type="hidden" id="base" value="<?php echo $base;?>"></input>
 <input type="hidden" id="demand_id" value="<?php echo $demand['id'];?>"></input>
-
+<input type="hidden" id="sporttype" value="<?php echo $demand['type'];?>"></input>
   <div id="sjlc" class="main flows"> 
 	<img src="<?php echo $base.'img/sub_top_dt.png';?>" />
   	<div class="modal" id="draggable" style="position:absolute;">
@@ -382,7 +396,7 @@ function getFileName(path){
                 <li>
                     <img width="106px" height="106px" src="<?php echo substr($base,0,strpos($base,"TIT")).'PDB/uploads/fabric/2DImages/'.$item['fabricFigure'];?>"/>
                     <label><?php echo $item['fabricName'];?></label>
-					<input type="hidden" value="<?php echo $item['fabricId'].'||'.$item['fabricName'].'||'.$item['fabricFigure'].'||'.$item['fabricStruct'].'||'.$item['fabricFunctionNote'];?>">
+					<input type="hidden" value="<?php echo $item['fabricId'].'||'.$item['fabricName'].'||'.$item['fabricFigure'].'||'.$item['fabricStruct'].'||'.$item['fabricFunctionNote'].'||'.$item['price'];?>">
                 </li>
 				<?php endforeach;?>
             </ul>
@@ -470,10 +484,10 @@ function getFileName(path){
               </div>
         	<table width="100%" style="margin-bottom:30px;">
               <tr>
-                <td width="12%" height="52" >设计作品名称：
+                <td width="15%" height="52" >设计作品名称<span style="color:red;">(必填)</span>:
                 </td>
                 <td width="39%">
-                	<input id="title" name="title" type="text"/>
+                	<input id="title" name="title" type="text" value="<?php echo $demand['title'].'-'.$user_info['username'].'-'.$designnum?>"/>
                 </td>
                 <td width="15%">设计的产品类型：</td>
                 <td width="34%">
@@ -488,7 +502,7 @@ function getFileName(path){
                   </td>
               </tr>
               <tr>
-                <td height="52">上传设计：</td>
+                <td height="52">上传设计<span style="color:red;">(选填)</span>:</td>
 				<form id="form_designpic" name="form_pic" action="" method="POST" onsubmit="return false;">
                 <td><input name="design_pic" id="design_pic" type="text" readonly /></td>
                 <td colspan="2" class="btns">
@@ -500,7 +514,7 @@ function getFileName(path){
 				</form>
               </tr>
               <tr>
-                <td height="52">产品效果图：</td>
+                <td height="52">产品效果图<span style="color:red;">(选填)</span>:</td>
 				<form id="form_effectpic" name="form_pic" action="" method="POST" onsubmit="return false;">
                 <td><input name="effect_pic" id="effect_pic" type="text" readonly/></td>
                 <td colspan="2" class="btns">
@@ -520,7 +534,7 @@ function getFileName(path){
         	<div class="impression">
             	<div class="left">
                 	<div class="title">产品效果图</div>
-                    <img id="effectimg" src="" width="498" height="498"/>
+                    <img id="effectimg" width="498" height="498" src="<?if($demand['type']=='跑步')$img='1_default_paobu.jpg';elseif($demand['type']=='自行车运动')$img='1_default_zixingche.jpg';elseif($demand['type']=='健身运动')$img='1_default_yujia.jpg';if($demand['type']=='步行')$img='1_default_jianxing.jpg';else $img='1_default_paobu.jpg';echo $base.$base_photoupload_path.'temp/'.$img;?>"/>
                 </div>
                 <div class="right">
                 	<div class="title">添加产品特色样式：<small>（添加细节图片）</small></div>
@@ -536,15 +550,15 @@ function getFileName(path){
 						</span>
 						<form id="form_detailpic" name="form_pic" action="" method="POST" onsubmit="return false;">
                         <dt><img id="a_detail" width="100px" height="100px" src="<?php echo $base.'img/sjlc_yifu_tj.png';?>" />
-							<input type="file" id="f_detail" name="f_detail" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:100px;height:100px;cursor:pointer;" />
+							<input type="file" id="f_detail" name="f_detail" style="position:absolute;filter:alpha(opacity:0);opacity: 0;width:100px;height:100px;cursor:pointer;" disabled />
 						<dt>
                         <dd>
                         	<div class="form-items">
-                        	<label>细节：</label><input type="text" id="detail_name" />
+                        	<label>细节：</label><input type="text" id="detail_name" disabled />
                             </div>
                             <div class="btns">
-                            	<a  href="#" onclick="save_pic(3);" class="black">上传细节</a>
-                    			<a href="#" onclick="save_detailpic()">保存</a>
+                            	<a  href="#">上传细节</a>
+                    			<a href="#">保存</a>
 								<div id="detail_photo" style="text-align:center;display:inline-block"></div>
                             </div>
                         </dd>
@@ -561,10 +575,10 @@ function getFileName(path){
         	<div class="impression">
             	<div class="left">
                 	<div class="btns tab-btns">
-                        <a id="path" href="javascript:;" class="">各部位多面料设计</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="javascript:;" class="black">整体单一面料设计</a>
+                        <!-- <a id="path" href="javascript:;" class="">各部位多面料设计</a>&nbsp;&nbsp;&nbsp;&nbsp; -->
+                        <a href="javascript:;" class="black" style="float:left;">样式设计图</a>
                     </div>
-                    <img id="effectimg1" src="" width="498" height="498"/>
+                    <img id="effectimg1" src="<?if($demand['type']=='跑步')$img='1_default_paobu.jpg';elseif($demand['type']=='自行车运动')$img='1_default_zixingche.jpg';elseif($demand['type']=='健身运动')$img='1_default_yujia.jpg';if($demand['type']=='步行')$img='1_default_jianxing.jpg';else $img='1_default_paobu.jpg';echo $base.$base_photoupload_path.'temp/'.$img;?>" width="498" height="498"/>
 					<input type="hidden" id="cropid" value="">
                     <ul class="thumbs">
                     	<!-- <li class="active"><img src="<?php echo $base.'img/sjlc_yifu_01.png';?>" /></li>
@@ -575,7 +589,7 @@ function getFileName(path){
                     </ul>
                 </div>
                 <div class="right">
-                	<h3 id="detailname">整体</h3><input type="hidden" id="fabric" >
+                	<h3 id="detailname"></h3><input type="hidden" id="fabric" >
                     <a class="btn-fabric" href="javascript:;" onClick="showModal()">点击选择面料&nbsp;▶&nbsp;</a>
                     <div class="fabric"><img id="fab_pic" width="230" height="120"></div>
                     <h4 id="fab_name"></h4>
@@ -583,6 +597,8 @@ function getFileName(path){
                     <p id="fab_description"></p>
                     <h4>特点：</h4>
                     <p id="fab_feature"></p>
+					<h4>参考价格：</h4>
+                    <p id="fab_price"></p>
                 </div>
             </div>
             <div class="btns">

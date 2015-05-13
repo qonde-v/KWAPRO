@@ -45,7 +45,7 @@
 							<?php if($item['status']==0){?><a href="#" onclick="javascript:if(confirm('确定要发布需求吗？'))updatestatus(<?=$item['id']?>,1);">发布</a><?php }else{?><a href="#" onclick="javascript:if(confirm('确定要不发布需求吗？'))updatestatus(<?=$item['id']?>,0);" class="black">不发布</a><?php }?>
 							<a href="<?php echo $base.'design/practice?id='.$item['id'];?>">去设计</a>
 							</div>
-                            <p><span class="link link-sheji">设计（<?php echo $item['designnum']?>）</span><span class="link link-liulan">浏览（<?php echo $item['viewnum']?>）</span><span class="link link-liuyan">留言（<?php echo $item['messnum']?>）</span><span class="pull-right">发布者：【<?php echo $item['username']?>】发布于<?php echo $item['createdate']?></span></p>
+                            <p><span class="link link-sheji">设计（<?php echo $item['designnum']?>）</span><span class="link link-liulan">浏览（<?php echo $item['viewnum']?>）</span><span class="link link-liuyan">留言（<?php echo $item['messnum']?>）</span><span class="pull-right">发布者：【<?php echo $item['username']?>】提交于<?php echo $item['createdate']?></span></p>
                         </li>
 						<?php endforeach; ?>
                     </ul>
@@ -123,10 +123,15 @@ function updatestatus(demand_id,status)
 	
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
 		//alert(html);
-		window.location.reload();
+		//window.location.reload();
+		setTimeout("window.location.reload();",100);
 	}};
 	jQuery.ajax(ajax);
-	//
+	if(status==1){
+		if(confirm('是否要分享到微博')){
+			window.open('http://v.t.sina.com.cn/share/share.php?title=嗨， 我刚才发布了一个休闲服装功能需求'+$('#base').val()+'demand/demand_detail?id='+demand_id+'， 帮我来设计一下吧？&url=&source=bookmark');
+		}
+	}
 }
 </script>
 

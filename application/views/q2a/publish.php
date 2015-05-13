@@ -7,7 +7,6 @@
 <link href="<?php echo $base.'css/jquery-ui.css';?>" rel="stylesheet" type="text/css" />
 <link href="<?php echo $base.'css/index.css';?>" rel="stylesheet" type="text/css">
 <script src="<?php echo $base.'js/jquery.min.js';?>" type="text/javascript"></script>
-<script src="<?php echo $base.'js/jquery-ui.min.js';?>" type="text/javascript"></script>
 
 <script>
 $(document).ready(function() {
@@ -185,6 +184,8 @@ $(function(){
 <!------------ 内容开始 -------------> 
 
 <input type="hidden" id="base" value="<?php echo $base;?>"></input>
+<script src="<?php echo $base.'js/jquery-ui.min.js';?>" type="text/javascript"></script>
+
   <div id="xqlc" class="main flows">
 	<img src="<?php echo $base.'img/sub_top_dt.png';?>" />
   	<div class="modal" style="width:650px;padding_top:30%;padding_;left:40%;">
@@ -402,7 +403,7 @@ $(function(){
             </table>
             <div class="btns">
             	<a href="javascript:gonext(3)">上一步</a>
-            	<a class="black" href="#" onclick="javascript:if(confirm('确定要发布需求吗？')){publishok();}">提交</a>
+            	<a class="black" href="#" onclick="javascript:if(confirm('确认提交该需求吗？')){publishok();}">提交</a>
             </div>
       </div>
       <div id="flowxq5" class="tab-content">
@@ -512,9 +513,9 @@ function publishok()
 			$("#flowxq5").html(html);
 			$(".tab-content.active").removeClass("active");
 			$("#flowxq5").addClass("active");
-			if(confirm('是否要分享到微博')){
-				window.open('http://v.t.sina.com.cn/share/share.php?title=嗨， 我刚才发布了一个休闲服装功能需求'+$('#d_url').attr('href')+'， 帮我来设计一下吧？&url=&source=bookmark');
-			}
+			//if(confirm('是否要分享到微博')){
+			//	window.open('http://v.t.sina.com.cn/share/share.php?title=嗨， 我刚才发布了一个休闲服装功能需求'+$('#d_url').attr('href')+'， 帮我来设计一下吧？&url=&source=bookmark');
+			//}
 		}
 	}};
 	jQuery.ajax(ajax);

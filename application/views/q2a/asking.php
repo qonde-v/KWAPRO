@@ -92,9 +92,9 @@ $(document).ready(function() {
                   <div class="panel-body">
                     <ul class="main-list">
 						<span id='tab0'>
-                    	<?php if(!empty($mashup_data) && isset($mashup_data['data'])):
+                    	<?php if(!empty($mashup_data) && isset($mashup_data['data'])):$i=0;
 						foreach($mashup_data['data'] as $item): 
-						if($item['type_string'] == 'Q'): 
+						if($item['type_string'] == 'Q'): $i++;
 						?> 
                     	<li>
                         	<a href="<?php echo $item['url']; ?>" class="title"><?php echo $item['desc']; ?></a>
@@ -109,13 +109,15 @@ $(document).ready(function() {
 						<?php 
 						endif;
 						endforeach; 
-						endif;?>
+						endif;
+						if($i==0)echo '很抱歉，本类别内没有您要相关的内容，请尝试邻近的类别';
+						?>
 						</span>
 
 						<span id='tab1' style="display:none;">
-                    	<?php if(!empty($mashup_data) && isset($mashup_data['data'])):
+                    	<?php if(!empty($mashup_data) && isset($mashup_data['data'])):$i=0;
 						foreach($mashup_data['data'] as $item): 
-						if($item['type_string'] == 'N'): 
+						if($item['type_string'] == 'N'): $i++;
 						?> 
                     	<li>
                         	<a href="<?php echo $item['url']; ?>" class="title"><?php echo $item['desc']; ?></a>
@@ -130,13 +132,14 @@ $(document).ready(function() {
 						<?php 
 						endif;
 						endforeach; 
-						endif;?>
+						endif;
+						if($i==0)echo '很抱歉，本类别内没有您要相关的内容，请尝试邻近的类别';?>
 						</span>
 
 						<span id='tab2' style="display:none;">
-                    	<?php if(!empty($mashup_data) && isset($mashup_data['data'])):
+                    	<?php if(!empty($mashup_data) && isset($mashup_data['data'])):$i=0;
 						foreach($mashup_data['data'] as $item): 
-						if($item['type_string'] == 'D'): 
+						if($item['type_string'] == 'D'): $i++;
 						?> 
                     	<li>
                         	<a href="<?php echo $item['url']; ?>" class="title"><?php echo $item['desc']; ?></a>
@@ -151,13 +154,14 @@ $(document).ready(function() {
 						<?php 
 						endif;
 						endforeach; 
-						endif;?>
+						endif;
+						if($i==0)echo '很抱歉，本类别内没有您要相关的内容，请尝试邻近的类别';?>
 						</span>
 
 						<span id='tab3' style="display:none;">
-                    	<?php if(!empty($mashup_data) && isset($mashup_data['data'])):
+                    	<?php if(!empty($mashup_data) && isset($mashup_data['data'])):$i=0;
 						foreach($mashup_data['data'] as $item): 
-						if($item['type_string'] == 'S'): 
+						if($item['type_string'] == 'S'): $i++;
 						?> 
                     	<li>
                         	<a href="<?php echo $item['url']; ?>" class="title"><?php echo $item['desc']; ?></a>
@@ -172,23 +176,24 @@ $(document).ready(function() {
 						<?php 
 						endif;
 						endforeach; 
-						endif;?>
+						endif;
+						if($i==0)echo '很抱歉，本类别内没有您要相关的内容，请尝试邻近的类别';?>
 						</span>
 
 						<span id='tab4' style="display:none;">
-						<?php if(!empty($net_data)):
-						foreach($net_data as $item): ?> 
+						<?php if(!empty($net_data)):$i=0;
+						foreach($net_data as $item): $i++;?> 
 						<li>
 							<a href="<?php echo $item['link']; ?>" target="_blank" class="title"><?php echo $item['title']; ?></a>
                             <p><?php echo utf8Substr($item['content'],0,100) ?></p>
                             <p class="bottom">
-                            	<!-- <img class="pull-left" src="images/geren_tx.png" /><span class="text-orange"><?php echo $item['username']; ?></span> 
-                            	<font class="icon-clock">发布于<?php echo $item['time']; ?></font>
-                                <font class="view">查看数（28）</font>
-                    			<font class="design">回答数（4）</font> -->
+                            	<!-- <img class="pull-left" src="images/geren_tx.png" /><span class="text-orange"><?php echo $item['username']; ?></span>  -->
+                            	<font class="icon-clock">时间：<?php echo $item['time']; ?></font>
+                                <font class="view">来源：<?php echo $item['source']; ?></font>
                             </p>
 						</li>
-						<?php endforeach; endif;?>
+						<?php endforeach; endif;
+						if($i==0)echo '很抱歉，本类别内没有您要相关的内容，请尝试邻近的类别';?>
 						</span>
 
                     </ul>

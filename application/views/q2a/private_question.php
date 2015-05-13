@@ -42,7 +42,7 @@ $(document).ready(function() {
               </tr>
             </table>
         </div>
-      <div class="right"><img src="<?php echo $base.'img/xiugai_d_0'.$user_info['subpic'].'.png';?>" /></div>
+      <div class="right"><img src="<?php echo $base.'img/xiugai_d_0'.($user_info['subpic']?$user_info['subpic']:1).'.png';?>" /></div>
     </div>
     <div class="qa-lists">
     	<div class="left">

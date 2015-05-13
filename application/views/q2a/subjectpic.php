@@ -88,7 +88,7 @@
               </tr>
             </table>
         </div>
-      <div class="right"><img src="<?php echo $base.'img/xiugai_d_0'.$user_info['subpic'].'.png';?>" /></div>
+      <div class="right"><img src="<?php echo $base.'img/xiugai_d_0'.($user_info['subpic']?$user_info['subpic']:1).'.png';?>" /></div>
 	  <div id="detail-panel">
       	<table width="100%" border="0" cellspacing="1" cellpadding="0">
           <tr>

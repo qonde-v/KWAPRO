@@ -389,8 +389,8 @@ $(document).ready(function() {
 			
 			<div class="thumb">
 				<div class="left">
-                	<img id="effect_pic" class="" width="498px" height="498px" src="<?php echo $base.$base_photoupload_path.'temp/'.$design['effect_pic'];?>" />
-					<img id="design_pic" class="hide" width="498px" height="498px" src="<?php echo $base.$base_photoupload_path.'temp/'.$design['design_pic'];?>" />
+                	<img id="effect_pic" class="" width="498px" height="498px" src="<?php if(strpos($design['effect_pic'],'default')!==false)echo $base.$base_photoupload_path.'temp/1_'.$design['effect_pic']; else echo $base.$base_photoupload_path.'temp/'.$design['effect_pic'];?>" />
+					<img id="design_pic" class="hide" width="498px" height="498px" src="<?php if(strpos($design['design_pic'],'default')!==false)echo $base.$base_photoupload_path.'temp/1_'.$design['design_pic']; else echo $base.$base_photoupload_path.'temp/'.$design['design_pic'];?>" />
                 </div>
                 <div class="right">
                 	<div class="thumb-text">
@@ -408,7 +408,7 @@ $(document).ready(function() {
             <div class="ysmlxz">样式的面料选择：
 			<a class="btn <?php if($design['status']==0) echo 'active';else echo '';?>" href="#" onclick="javascript:if(confirm('确定要提交仿真吗？')){subsim(<?php echo $design['id'].','.$design['demand_id'];?>);}">提交仿真</a>
 			<a class="btn <?php if($design['status']==1) echo 'active';else echo '';?>" href="javascript:alert('仿真进行中，请等待，谢谢');">等待仿真</a>
-			<a class="btn <?php if($design['status']==2) echo 'active';else echo '';?>" href="<?php echo $base.'design/similar_detail';?>">查看仿真</a></div>
+			<a class="btn <?php if($design['status']==2) echo 'active';else echo '';?>" href="<?php echo $base.'design/similar_detail?id='.$design['id'].'&uid='.$design['uId'];?>">查看仿真</a></div>
             <div class="ysmlxz-content">
             	<table width="100%" border="0" cellspacing="0" cellpadding="0">
 				  <?php if($design['fabric']!=0){?>
@@ -581,13 +581,13 @@ function subsim(design_id,demand_id)
 	var post_str = 'design_id='+design_id+'&demand_id=' + demand_id;
 	
 	var ajax = {url:url, data:post_str, type: 'POST', dataType: 'text', cache: false,success: function(html){
-		$('#Simplans').val('1SimPlan.xml');
-		$('#submitform').submit();
-		$('#iframe_modal_bg').removeClass('hide');
-		$('#iframe_modal').removeClass('hide');
+		//$('#Simplans').val('1SimPlan.xml');
+		//$('#submitform').submit();
+		//$('#iframe_modal_bg').removeClass('hide');
+		//$('#iframe_modal').removeClass('hide');
 
 		//subsim_n(html);
-		//window.location.reload();
+		window.location.reload();
 	}};
 	jQuery.ajax(ajax);
 }

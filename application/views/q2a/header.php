@@ -2,9 +2,10 @@
         <script src="<?php echo $base.'js/bootstrap-dropdown.js';?>"></script>
         <script src="<?php echo $base.'js/bootstrap-buttons.js';?>"></script>
         <script src="<?php echo $base.'js/bootstrap-popover.js';?>"></script>
-	<script src="<?php echo $base.'js/bootstrap-modal.js';?>"></script>
-<script src="<?php echo $base.'js/home.js';?>"></script> -->
+	<script src="<?php echo $base.'js/bootstrap-modal.js';?>"></script> 
+<script src="<?php echo $base.'js/home.js';?>"></script>-->
  <script src="<?php echo $base.'js/login.js';?>" ></script>
+
 <script type="text/javascript"> 
 $(function(){
 	if($('#ifcollect').val()==1){
@@ -21,7 +22,19 @@ $(function(){
 			}); 
 		}); 
 	}
-}); 
+});
+$(document).ready(function(){
+$("#searchbtn").click(function(){
+	if($('#logins').val()==''){showLoginModal();return;}
+	 var text = $('#search').val().trim();
+	 if(text !='')
+	 {
+		 url=$('#header_base').val() + "asking/?search="+encodeURI(text);
+		window.location.href = url;
+	 }
+
+})
+});
 </script>
 <script type="text/javascript"> 
 function showmenu(){
@@ -43,10 +56,15 @@ function hideLoginModal(){
 </script>
 
 <body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" >
-<input type="hidden" value="<?php echo $base;?>" id="header_base" />
 
   <div class="head">
     <div class="logo pull-left"> <a href="<?php echo $base;?>"><img src="<?php echo $base.'img/logo.png';?>" /></a> </div>
+	<form>
+	<div class="search-box">
+    	<input type="text" id="search" placeholder="搜索休闲服装知识、动态" />
+        <a id="searchbtn" href="#" class="search-btn"></a>
+    </div>
+	</form>
     <ul class="dropdown-menus">
 	  <?php if(!isset($login)):?>
       <li><a href="#" onclick="javascript:showLoginModal();">登录</a></li>
@@ -57,13 +75,14 @@ function hideLoginModal(){
       	<ul id="dropmenu" style="display:none;">
         	<li><a href="<?php echo $base.'demand/';?>">个人空间</a></li>
             <li><a href="<?php echo $base.'questions/';?>">我的问题</a></li>
-            <li><a href="<?php echo $base.'questions/latest';?>">最新问题</a></li>
+            <li><a href="<?php echo $base.'demand/';?>">最新问题</a></li>
             <!-- <li><a href="#">我的粉丝</a></li> -->
             <li><a href="<?php echo $base.'design/';?>">我的设计</a></li>
             <li><a href="<?php echo $base.'demand/demandlist/';?>">需求广场</a></li>
             <li><a href="<?php echo $base.'news?type=21';?>">知识广场</a></li>
 			<?php if($user_info['permission']){?>
 			<li><a href="<?php echo $base.'order/orderlist';?>">订单管理</a></li>
+			<li><a href="<?php echo $base.'similarmanage';?>">仿真管理</a></li>
 			<?}?>
             <li><a href="<?php echo $base."login/logout";?>">退　　出</a></li>
         </ul>
@@ -116,7 +135,7 @@ function hideLoginModal(){
 </div>
 <div class="modalBg" role="modal"></div>
 
-
+<input type="hidden" value="<?php if(isset($login))echo $login;else echo ''; ?>" id="logins" />
 <input type="hidden" value="<?php echo $base; ?>" id="header_base" />
 <input type="hidden" value="系统登录中，请稍候......" id="login_wait"/>
 <div id="login_msg_modal" class="modal hide">
@@ -125,3 +144,5 @@ function hideLoginModal(){
 	<div class="modal-footer"><button class="btn primary" onclick="$('#login_msg_modal').addClass('hide');$('#login_modal_bg').addClass('hide');">确定</button></div>
 </div>
 <div id="login_modal_bg" class="modal-backdrop hide"></div>
+
+  <script src="<?php echo $base.'js/kwapro_search.js';?>" ></script>

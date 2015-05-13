@@ -153,7 +153,7 @@ class User extends CI_Controller{
 			$data = array(
 				'id'=>$_POST['id'],
 				'userCode' => $_POST['userCode'],
-				'pwd' => $_POST['pwd2'],
+				'pwd' => md5($_POST['pwd2']),
 				'nickname' => $_POST['nickname']
 			);
 			
